@@ -25,18 +25,12 @@
 	\begin{itemize}
 		\item Socialiniai bruožai
 			\begin{itemize}
-				\item gerai sekėsi vadovauti prieš ankstesniems komandiniams darbams;
 				\item patinka klausytis paskaitose;
-				\item patinka kalbėti su dėstytojais;
-				\item patinka bendrauti;
+				\item kalbėti su dėstytojais;
+				\item 
 			\end{itemize}
 		\item Techniniai įgūdžiai
-			\begin{itemize}
-				\item mėgstu scriptinti per Unity arba GTA V su .NET/C\#;
-				\item gerai suprantu PSI, PSK modulius;
-				\item mėgstu projektuoti architektūrą;
-				\item Java ir C\# galiu programuoti, bet JavaEE platformos dar daug nesimokiau;
-			\end{itemize}
+			
 	\end{itemize}
 	
 \end{document}
