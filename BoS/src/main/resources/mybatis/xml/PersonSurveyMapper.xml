@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lt.vu.dao.datamapper.PersonSurveyMapper">
+
+  <resultMap id="BaseResultMap" type="lt.vu.entities.mybatis.PersonSurvey">
+    <id column="person_id" jdbcType="INTEGER" property="personId" />
+    <id column="survey_id" jdbcType="INTEGER" property="surveyId" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from public.person_survey
+    where person_id = #{personId,jdbcType=INTEGER}
+      and survey_id = #{surveyId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="PersonSurvey">
+    insert into public.person_survey (person_id, survey_id)
+    values (#{personId,jdbcType=INTEGER}, #{surveyId,jdbcType=INTEGER})
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select person_id, survey_id
+    from public.person_survey
+  </select>
+</mapper>

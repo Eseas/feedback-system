@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+<h:head>
+    <h:outputStylesheet name="css/styles.css" />
+    <title>Laboratory classes</title>
+</h:head>
+
+<h:body>
+    <h1>BoS</h1>
+    <h2>Builder of Surveys</h2>
+    <h:button outcome="people" value="People management"/>
+    <h:button outcome="surveys" value="Surveys management"/>
+
+    <h1>Laboratory classes for the 1st assignment</h1>
+    <dl>
+        <dt><b>Transactions</b></dt>
+        <dd><p>#{firstComp.sayHello()}</p></dd>
+
+        <dt>Papildoma medžiaga: <b>Asynchronous calls</b></dt>
+        <dd><p>#{compA.sayHello()}</p></dd>
+
+        <dt>Papildoma medžiaga: <b>Cache propagation</b></dt>
+        <dd><p>#{comp1.sayHello()}</p></dd>
+    </dl>
+</h:body>
+</html>

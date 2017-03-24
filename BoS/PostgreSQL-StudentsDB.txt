@@ -1,0 +1,40 @@
+﻿CREATE TABLE person (
+  id serial PRIMARY KEY,
+  first_name CHARACTER VARYING(20),
+  last_name CHARACTER VARYING(20),
+  email CHARACTER VARYING(40),
+  password CHARACTER VARYING(20),
+  opt_lock_version INTEGER
+);
+
+CREATE TABLE survey (
+  id serial PRIMARY KEY,
+  name CHARACTER VARYING(50),
+  opt_lock_version INTEGER
+);
+
+CREATE TABLE question (
+    id serial PRIMARY KEY,
+    text CHARACTER VARYING(100) NOT NULL,
+    survey_id INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (survey_id) REFERENCES survey (id)
+);
+
+CREATE TABLE person_survey
+(
+	person_id      INTEGER,
+	survey_id       INTEGER,
+	PRIMARY KEY (person_id, survey_id),
+	FOREIGN KEY (person_id) REFERENCES person (id),
+	FOREIGN KEY (survey_id) REFERENCES survey (id)
+);
+
+CREATE TABLE answer
+(
+    id serial PRIMARY KEY,
+    answer_text CHARACTER VARYING(100),
+    question_id INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (question_id) REFERENCES question (id)
+);
