@@ -1,0 +1,136 @@
+﻿﻿CREATE TABLE "User" (
+  id serial PRIMARY KEY,
+  first_name CHARACTER VARYING(20),
+  last_name CHARACTER VARYING(20),
+  email CHARACTER VARYING(40),
+  password CHARACTER VARYING(20),
+  opt_lock_version INTEGER
+);
+CREATE TABLE PotentialUser (
+  id serial PRIMARY KEY,
+  email CHARACTER VARYING(40),
+  opt_lock_version INTEGER
+);
+CREATE TABLE UserAdmin (
+  id serial PRIMARY KEY,
+  user_id INTEGER,
+  opt_lock_version INTEGER,
+  FOREIGN KEY (user_id) REFERENCES "User" (id)
+);
+CREATE TABLE Survey (
+  id serial PRIMARY KEY,
+  creator_id INTEGER,
+  title CHARACTER VARYING(30),
+  description CHARACTER VARYING(150),
+  opt_lock_version INTEGER,
+  FOREIGN KEY (creator_id) REFERENCES "User" (id)
+);
+CREATE TABLE UserSurvey (
+    user_id INTEGER,
+    survey_id INTEGER,
+    time timestamp,
+    opt_lock_version INTEGER,
+    Primary KEY(user_id,survey_id),
+    FOREIGN KEY (survey_id) REFERENCES Survey (id),
+    FOREIGN KEY (user_id) REFERENCES "User" (id)
+);
+CREATE TABLE Question (
+    id serial PRIMARY KEY,
+    survey_id INTEGER,
+    question_type CHARACTER VARYING(40) NOT NULL,
+    question_text CHARACTER VARYING(150) NOT NULL,
+    position INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (survey_id) REFERENCES Survey (id)
+);
+CREATE TABLE Slider
+(
+	id serial PRIMARY KEY,
+    lowerbound CHARACTER VARYING(40) NOT NULL,
+    upperbound CHARACTER VARYING(150) NOT NULL,
+    question_id INTEGER,
+    position INTEGER,
+    increment serial,
+    opt_lock_version INTEGER,
+	FOREIGN KEY (question_id) REFERENCES Question (id)
+);
+CREATE TABLE Option
+(
+    id serial PRIMARY KEY,
+    answer_text CHARACTER VARYING(100),
+    question_id INTEGER,
+    position INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (question_id) REFERENCES Question (id)
+);
+CREATE TABLE OptionResult
+(
+    id serial PRIMARY KEY,
+    option_id INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (option_id) REFERENCES Option (id)
+);
+CREATE TABLE UserSurveyOptionResult
+(
+    id serial PRIMARY KEY,
+    option_choice_result_id INTEGER,
+    survey_id INTEGER,
+    user_id INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (user_id,survey_id) REFERENCES UserSurvey(user_id,survey_id),
+    FOREIGN KEY (option_choice_result_id) REFERENCES OptionResult (id)
+);
+CREATE TABLE OptionNextQuestion
+(
+    option_result_id serial PRIMARY KEY,
+    next_question_id INTEGER,
+    opt_lock_version INTEGER,
+    FOREIGN KEY (next_question_id) REFERENCES Question (id),
+    FOREIGN KEY (option_result_id) REFERENCES OptionResult (id)
+);
+CREATE TABLE SliderResult
+(
+	id serial PRIMARY KEY,
+    data INTEGER,
+    slider_id INTEGER,
+    opt_lock_version INTEGER,
+	FOREIGN KEY (slider_id) REFERENCES Slider (id)
+);
+CREATE TABLE UserSurveySliderResult
+(
+	id serial PRIMARY KEY,
+    slider_choice_result_id INTEGER,
+    survey_id INTEGER,
+    user_id INTEGER,
+    opt_lock_version INTEGER,
+	FOREIGN KEY (slider_choice_result_id) REFERENCES SliderResult (id),
+	FOREIGN KEY (user_id,survey_id) REFERENCES UserSurvey(user_id,survey_id)
+);
+CREATE TABLE SliderNextQuestion
+(
+	slider_result_id serial PRIMARY KEY,
+    lowerbound CHARACTER VARYING(40) NOT NULL,
+    upperbound CHARACTER VARYING(150) NOT NULL,
+    next_question_id INTEGER,
+    increment serial,
+    opt_lock_version INTEGER,
+	FOREIGN KEY (slider_result_id) REFERENCES SliderResult (id),
+	FOREIGN KEY (next_question_id) REFERENCES Question (id)
+);
+CREATE TABLE FreeTextResult
+(
+	id serial PRIMARY KEY,
+    data INTEGER,
+    question_id INTEGER,
+    opt_lock_version INTEGER,
+	FOREIGN KEY (question_id) REFERENCES Question (id)
+);
+CREATE TABLE UserSurveyFreeTextResult
+(
+	id serial PRIMARY KEY,
+    data INTEGER,
+    survey_id INTEGER,
+    user_id INTEGER,
+    opt_lock_version INTEGER,
+	FOREIGN KEY (user_id,survey_id) REFERENCES UserSurvey(user_id,survey_id)
+);
