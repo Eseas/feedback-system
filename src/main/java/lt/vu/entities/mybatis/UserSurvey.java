@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PersonSurvey {
+public class UserSurvey {
 //    generated with plugin
-    private Integer personId;
+    private Integer userId;
     private Integer surveyId;
 }

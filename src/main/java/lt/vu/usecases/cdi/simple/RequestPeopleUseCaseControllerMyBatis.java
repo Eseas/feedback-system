@@ -2,11 +2,11 @@ package lt.vu.usecases.cdi.simple;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import lt.vu.dao.datamapper.PersonMapper;
-import lt.vu.dao.datamapper.PersonSurveyMapper;
+import lt.vu.dao.datamapper.UserMapper;
+import lt.vu.dao.datamapper.UserSurveyMapper;
 import lt.vu.dao.datamapper.SurveyMapper;
-import lt.vu.entities.mybatis.Person;
-import lt.vu.entities.mybatis.PersonSurvey;
+import lt.vu.entities.mybatis.User;
+import lt.vu.entities.mybatis.UserSurvey;
 import lt.vu.entities.mybatis.Survey;
 
 import javax.enterprise.inject.Model;
@@ -18,20 +18,20 @@ import java.util.List;
 @Slf4j
 public class RequestPeopleUseCaseControllerMyBatis {
     @Getter
-    private Person person = new Person();
+    private User user = new User();
     @Getter
     private Survey survey = new Survey();
 
     @Inject
-    private PersonMapper personMapper;
+    private UserMapper userMapper;
     @Inject
     private SurveyMapper surveyMapper;
     @Inject
-    private PersonSurveyMapper personSurveyMapper;
+    private UserSurveyMapper userSurveyMapper;
 
-    public List<Person> getAllPeople() {
-        List<Person> people = personMapper.selectAll();
-        for (Person p: people
+    public List<User> getAllPeople() {
+        List<User> people = userMapper.selectAll();
+        for (User p: people
              ) {
             System.out.println("I am " + p.getFirstName());
             for (Survey s: p.getSurveyList()
@@ -45,27 +45,27 @@ public class RequestPeopleUseCaseControllerMyBatis {
     @Transactional
     public void createCourseStudent() {
         surveyMapper.insert(survey);
-        personMapper.insert(person);
-        PersonSurvey personSurvey = new PersonSurvey();
-        personSurvey.setSurveyId(survey.getId());
-        personSurvey.setPersonId(person.getId());
-        personSurveyMapper.insert(personSurvey);
+        userMapper.insert(user);
+        UserSurvey userSurvey = new UserSurvey();
+        userSurvey.setSurveyId(survey.getId());
+        userSurvey.setUserId(user.getId());
+        userSurveyMapper.insert(userSurvey);
         log.info("Maybe OK...");
     }
 
     @Transactional
-    public void createPerson() {
-//        checkEmail(person.getEmail());
-        personMapper.insert(person);
+    public void createUser() {
+//        checkEmail(user.getEmail());
+        userMapper.insert(user);
     }
 
     @Transactional
-    public void removePersonByEmail(String email) {
-        List<Person> people = personMapper.selectAll();
-        for (Person person:
+    public void removeUserByEmail(String email) {
+        List<User> people = userMapper.selectAll();
+        for (User user:
              people) {
-            if (person.getEmail().equals(email)) {
-                personMapper.deleteByPrimaryKey(person.getId());
+            if (user.getEmail().equals(email)) {
+                userMapper.deleteByPrimaryKey(user.getId());
                 break;
             }
         }

@@ -5,8 +5,8 @@
 <configuration>
     <typeAliases>
         <typeAlias type="lt.vu.entities.mybatis.Survey" alias="Survey"/>
-        <typeAlias type="lt.vu.entities.mybatis.Person" alias="Person"/>
-        <typeAlias type="lt.vu.entities.mybatis.PersonSurvey" alias="PersonSurvey"/>
+        <typeAlias type="lt.vu.entities.mybatis.User" alias="User"/>
+        <typeAlias type="lt.vu.entities.mybatis.UserSurvey" alias="UserSurvey"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -19,7 +19,7 @@
     </environments>
     <mappers>
         <mapper resource="mybatis/xml/SurveyMapper.xml"/>
-        <mapper resource="mybatis/xml/PersonMapper.xml"/>
-        <mapper resource="mybatis/xml/PersonSurveyMapper.xml"/>
+        <mapper resource="mybatis/xml/UserMapper.xml"/>
+        <mapper resource="mybatis/xml/UserSurveyMapper.xml"/>
     </mappers>
 </configuration>

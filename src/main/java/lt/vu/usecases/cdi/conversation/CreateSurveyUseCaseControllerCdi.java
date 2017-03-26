@@ -4,11 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.dao.orm.QuestionDAO;
-import lt.vu.entities.jpa.Person;
-import lt.vu.entities.jpa.Question;
 import lt.vu.entities.jpa.Survey;
-import lt.vu.dao.orm.PersonDAO;
+import lt.vu.dao.orm.UserDAO;
 import lt.vu.dao.orm.SurveyDAO;
+import lt.vu.entities.jpa.User;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
@@ -47,16 +46,16 @@ public class CreateSurveyUseCaseControllerCdi implements Serializable {
     @Inject
     private QuestionDAO questionDAO;
     @Inject
-    private PersonDAO personDAO;
+    private UserDAO userDAO;
 
     @Getter
     private Survey survey = new Survey();
     @Getter
     private List<Question> questions = new ArrayList<>();
     @Getter
-    private Person person;
+    private User user;
     @Getter
-    private List<Person> assignees = new ArrayList<>();
+    private List<User> assignees = new ArrayList<>();
 
     @Setter
     @Getter
@@ -80,15 +79,15 @@ public class CreateSurveyUseCaseControllerCdi implements Serializable {
     /**
      * The second conversation step.
      */
-    public void assignPersonByEmail() {
-        List<Person> people = personDAO.getAllPeople();
-        for (Person tempP:  people) {
-//            Jei person fieldai nuliniai, tada tyliai nucrashina
+    public void assignUserByEmail() {
+        List<User> people = userDAO.getAllPeople();
+        for (User tempP:  people) {
+//            Jei user fieldai nuliniai, tada tyliai nucrashina
             System.out.println("mano id= " + tempP.getId());
             if (tempP.getEmail().equals(email)) {
                 assignees.add(tempP);
                 tempP.getSurveyList().add(survey);
-                survey.getPersonList().add(tempP);
+                survey.getUserList().add(tempP);
                 break;
             }
         }
@@ -124,10 +123,10 @@ public class CreateSurveyUseCaseControllerCdi implements Serializable {
     public String ok() {
         try {
             surveyDAO.create(survey);
-            for (Person p:
+            for (User p:
                  assignees) {
-                Person foundP = personDAO.getPersonById(p.getId());
-                personDAO.merge(foundP);
+                User foundP = userDAO.getUserById(p.getId());
+                userDAO.merge(foundP);
             }
             for (Question q: questions
                  ) {
@@ -159,8 +158,8 @@ public class CreateSurveyUseCaseControllerCdi implements Serializable {
 
 
 
-    public List<Person> getAllPeople() {
-        return personDAO.getAllPeople();
+    public List<User> getAllPeople() {
+        return userDAO.getAllPeople();
     }
     public List<Survey> getAllSurveys() {
         return surveyDAO.getAllSurveys();

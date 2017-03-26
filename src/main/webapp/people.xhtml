@@ -15,18 +15,18 @@
         <h2>DAO implemented with DataMapper/MyBatis technology</h2>
         <h:form>
             <p:fieldset legend="All people" toggleable="true" style="width: 50%">
-                <p:dataTable value="#{requestPeopleUseCaseControllerMyBatis.getAllPeople()}" var="person">
+                <p:dataTable value="#{requestPeopleUseCaseControllerMyBatis.getAllPeople()}" var="user">
                     <p:column headerText="Email">
-                        <h:outputText value="#{person.email}"/>
+                        <h:outputText value="#{user.email}"/>
                     </p:column>
                     <p:column headerText="First name">
-                        <h:outputText value="#{person.firstName}"/>
+                        <h:outputText value="#{user.firstName}"/>
                     </p:column>
                     <p:column headerText="Last name">
-                        <h:outputText value="#{person.lastName}"/>
+                        <h:outputText value="#{user.lastName}"/>
                     </p:column>
                     <p:column headerText="Surveys">
-                        <ui:repeat var="survey" value="#{person.surveyList}">
+                        <ui:repeat var="survey" value="#{user.surveyList}">
                             <h:outputText value="#{survey.name}" />
                             <br/>
                         </ui:repeat>
@@ -34,46 +34,46 @@
                 </p:dataTable>
             </p:fieldset>
 
-            <h2>Add new person</h2>
+            <h2>Add new user</h2>
             <table>
                 <tr>
                     <td>
                         <h:panelGrid columns="3">
                             <p:outputLabel for="firstName" value="First name"/>
-                            <p:inputText id="firstName" value="#{requestPeopleUseCaseControllerMyBatis.person.firstName}"/>
+                            <p:inputText id="firstName" value="#{requestPeopleUseCaseControllerMyBatis.user.firstName}"/>
                             <p:message for="firstName"/>
 
                             <p:outputLabel for="lastName" value="Last name"/>
-                            <p:inputText id="lastName" value="#{requestPeopleUseCaseControllerMyBatis.person.lastName}"/>
+                            <p:inputText id="lastName" value="#{requestPeopleUseCaseControllerMyBatis.user.lastName}"/>
                             <p:message for="lastName"/>
 
                             <p:outputLabel for="email" value="Email"/>
-                            <p:inputText id="email" value="#{requestPeopleUseCaseControllerMyBatis.person.email}"/>
+                            <p:inputText id="email" value="#{requestPeopleUseCaseControllerMyBatis.user.email}"/>
                             <p:message for="email"/>
                         </h:panelGrid>
                     </td>
                 </tr>
             </table>
 
-            <p:commandButton value="Add person!"
-                             actionListener="#{requestPeopleUseCaseControllerMyBatis.createPerson()}"
+            <p:commandButton value="Add user!"
+                             actionListener="#{requestPeopleUseCaseControllerMyBatis.createUser()}"
                              ajax="false"/>
 
-            <h2>Remove person</h2>
+            <h2>Remove user</h2>
             <table>
                 <tr>
                     <td>
                         <h:panelGrid columns="3">
                             <p:outputLabel for="email" value="Email"/>
-                            <p:inputText binding="#{personEmailToRemove}"/>
+                            <p:inputText binding="#{userEmailToRemove}"/>
                             <p:message for="email"/>
                         </h:panelGrid>
                     </td>
                 </tr>
             </table>
 
-            <p:commandButton value="Remove person!"
-                             actionListener="#{requestPeopleUseCaseControllerMyBatis.removePersonByEmail(personEmailToRemove.value)}"
+            <p:commandButton value="Remove user!"
+                             actionListener="#{requestPeopleUseCaseControllerMyBatis.removeUserByEmail(userEmailToRemove.value)}"
                              ajax="false"/>
 
             <p:messages globalOnly="true"/>

@@ -37,9 +37,9 @@
                             <br/>
                         </ui:repeat>
                     </p:column>
-                    <p:column headerText="Person">
-                        <ui:repeat var="person" value="#{survey.personList}">
-                            <h:outputText value="#{person.firstName} #{person.lastName} #{person.email}" />
+                    <p:column headerText="User">
+                        <ui:repeat var="user" value="#{survey.userList}">
+                            <h:outputText value="#{user.firstName} #{user.lastName} #{user.email}" />
                             <br/>
                         </ui:repeat>
                     </p:column>
@@ -60,15 +60,15 @@
             </p:outputPanel>
 
             <p:outputPanel id="panel111" rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('ASSIGN_PERSON')}">
-                <h1>Assign a person</h1>
+                <h1>Assign a user</h1>
                 <h:panelGrid id="grid" columns="3">
                     <p:outputLabel for="email" value="Email"/>
                     <p:inputText id="email" value="#{createSurveyUseCaseControllerCdi.email}"/>
                     <p:message for="email"/>
                 </h:panelGrid>
 
-                <p:commandButton value="Assign person"
-                                 actionListener="#{createSurveyUseCaseControllerCdi.assignPersonByEmail()}"
+                <p:commandButton value="Assign user"
+                                 actionListener="#{createSurveyUseCaseControllerCdi.assignUserByEmail()}"
                                  update="@form"/>
                 <p:commandButton value="Quit assigns"
                                  actionListener="#{createSurveyUseCaseControllerCdi.quitPeopleAssigning()}"

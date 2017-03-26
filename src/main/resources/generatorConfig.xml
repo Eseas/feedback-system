@@ -11,7 +11,7 @@
                         <!--password="sa">-->
         <!--</jdbcConnection>-->
         <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://localhost/surveysdb"
+                        connectionURL="jdbc:postgresql://localhost/feedbackdb"
                         userId="postgres"
                         password="testpass">
         </jdbcConnection>
@@ -40,12 +40,12 @@
         </table>
         <table schema="public" tableName="student_course">
         </table>
-        <table schema="public" tableName="person">
+        <table schema="public" tableName="user">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
 
             <ignoreColumn column="opt_lock_version" />
         </table>
-        <table schema="public" tableName="person_survey">
+        <table schema="public" tableName="user_survey">
         </table>
         <table schema="public" tableName="survey">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />

@@ -2,7 +2,7 @@
 ALTER SEQUENCE feedback.emails_id_seq RESTART WITH 1;
 
 
-CREATE TABLE person (
+CREATE TABLE user (
   id serial PRIMARY KEY,
   first_name CHARACTER VARYING(20),
   last_name CHARACTER VARYING(20),
@@ -25,12 +25,12 @@ CREATE TABLE question (
     FOREIGN KEY (survey_id) REFERENCES survey (id)
 );
 
-CREATE TABLE person_survey
+CREATE TABLE user_survey
 (
-	person_id      INTEGER,
+	user_id      INTEGER,
 	survey_id       INTEGER,
-	PRIMARY KEY (person_id, survey_id),
-	FOREIGN KEY (person_id) REFERENCES person (id),
+	PRIMARY KEY (user_id, survey_id),
+	FOREIGN KEY (user_id) REFERENCES user (id),
 	FOREIGN KEY (survey_id) REFERENCES survey (id)
 );
 

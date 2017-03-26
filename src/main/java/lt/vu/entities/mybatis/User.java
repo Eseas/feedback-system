@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Person {
+public class User {
     private Integer id;
     private String firstName;
     private String lastName;

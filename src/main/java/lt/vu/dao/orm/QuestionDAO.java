@@ -1,8 +1,5 @@
 package lt.vu.dao.orm;
 
-import lt.vu.entities.jpa.Question;
-import lt.vu.entities.jpa.Survey;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

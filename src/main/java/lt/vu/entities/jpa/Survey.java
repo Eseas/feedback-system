@@ -39,13 +39,13 @@ public class Survey implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @Version
-    @Column(name = "OPT_LOCK_VERSION")
-    private Integer optLockVersion;
+//    @Version
+//    @Column(name = "OPT_LOCK_VERSION")
+//    private Integer optLockVersion;
 
-    @ManyToMany(mappedBy = "surveyList")
-    private List<Person> personList = new ArrayList<>();
+//    @ManyToMany(mappedBy = "surveyList")
+//    private List<User> userList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
-    private List<Question> questionList = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
+//    private List<Question> questionList = new ArrayList<>();
 }
