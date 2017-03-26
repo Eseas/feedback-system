@@ -1,4 +1,8 @@
-﻿CREATE TABLE person (
+﻿// for future ref:
+ALTER SEQUENCE feedback.emails_id_seq RESTART WITH 1;
+
+
+CREATE TABLE person (
   id serial PRIMARY KEY,
   first_name CHARACTER VARYING(20),
   last_name CHARACTER VARYING(20),
