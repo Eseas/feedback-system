@@ -2,7 +2,7 @@
 
 CREATE SCHEMA feedback;
 
-CREATE TABLE feedback.emails
+CREATE TABLE feedback.potential_users
 (
     id serial PRIMARY KEY,
     email CHARACTER VARYING(40)
@@ -11,21 +11,21 @@ CREATE TABLE feedback.emails
 CREATE TABLE feedback.users
 (
     id serial PRIMARY KEY,
-    email_id INTEGER,
+    email CHARACTER VARYING(40),
     first_name CHARACTER VARYING(20),
     last_name CHARACTER VARYING(20),
     password CHARACTER VARYING(20),
     is_admin BOOLEAN,
-    is_blocked BOOLEAN,
-    FOREIGN KEY (email_id) REFERENCES feedback.emails (id)
+    is_blocked BOOLEAN
 );
 
 CREATE TABLE feedback.surveys
 (
     id serial PRIMARY KEY,
     creator_id INTEGER,
-    title CHARACTER VARYING(200),
     is_private BOOLEAN,
+    title CHARACTER VARYING(200),
+    description CHARACTER VARYING(200),
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
 
@@ -33,11 +33,11 @@ CREATE TABLE feedback.slider_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    title CHARACTER VARYING(200),
     is_required BOOLEAN,
     lower_bound INTEGER,
     upper_bound INTEGER,
     step INTEGER,
+    title CHARACTER VARYING(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 

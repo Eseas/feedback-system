@@ -13,8 +13,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "feedback.users")
@@ -37,6 +35,10 @@ public class User implements Serializable {
     private Integer id;
 
     @Size(min = 3, max = 20)
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Size(min = 3, max = 20)
     @Column(name = "FIRST_NAME")
     private String firstName;
 
@@ -53,11 +55,6 @@ public class User implements Serializable {
     @Column(name = "IS_BLOCKED")
     private Boolean blocked;
 
-    @OneToOne(optional = false)
-    @JoinColumn(
-            name = "EMAIL_ID", unique = true, nullable = false
-    )
-    private Email email;
 
 //    @JoinTable(name = "PERSON_SURVEY", joinColumns = {
 //            @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")}, inverseJoinColumns = {

@@ -21,8 +21,8 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
-    @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.name = :name"),
-    @NamedQuery(name = "Survey.findByOptLockVersion", query = "SELECT c FROM Survey c WHERE c.optLockVersion = :optLockVersion")})
+    @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.name = :name")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = "name")

@@ -53,7 +53,7 @@
             <p:outputPanel id="panel111" rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('ASSIGN_PERSON')}">
                 <h1>Assign a user</h1>
                 <h:panelGrid id="grid" columns="3">
-                    <p:outputLabel for="email" value="Email"/>
+                    <p:outputLabel for="email" valPotentialUsermail"/>
                     <p:inputText id="email" value="#{createSurveyUseCaseControllerCdi.email}"/>
                     <p:message for="email"/>
                 </h:panelGrid>
