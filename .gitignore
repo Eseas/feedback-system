@@ -1,5 +1,4 @@
-*.log
-*.bak
-*.aux
-*.synctex
-*.synctex.gz
+# IntelliJ IDEA setting files
+.idea/
+*.iml
+target/
