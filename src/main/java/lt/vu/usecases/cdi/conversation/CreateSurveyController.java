@@ -1,15 +1,19 @@
 package lt.vu.usecases.cdi.conversation;
 
 import lombok.extern.slf4j.Slf4j;
+import lt.vu.dao.SurveyDAO;
+import lt.vu.entities.Survey;
 
 import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ConversationScoped
 @Slf4j
-public class CreateSurveyUseCaseControllerCdi implements Serializable {
+public class CreateSurveyController implements Serializable {
 //
 //    private static final String PAGE_INDEX_REDIRECT = "surveys?faces-redirect=true";
 //
@@ -24,8 +28,8 @@ public class CreateSurveyUseCaseControllerCdi implements Serializable {
 //    @Getter
 //    private Conversation conversation;
 //
-//    @Inject
-//    private SurveyDAO surveyDAO;
+    @Inject
+    private SurveyDAO surveyDAO;
 //    @Inject
 //    private QuestionDAO questionDAO;
 //    @Inject
@@ -144,7 +148,7 @@ public class CreateSurveyUseCaseControllerCdi implements Serializable {
 //    public List<User> getAllPeople() {
 //        return userDAO.getAllPeople();
 //    }
-//    public List<Survey> getAllSurveys() {
-//        return surveyDAO.getAllSurveys();
-//    }
+    public List<Survey> getAllSurveys() {
+        return surveyDAO.getAllSurveys();
+    }
 }

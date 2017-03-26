@@ -14,8 +14,8 @@
         <h1>Users</h1>
 
         <h:form>
-            <p:fieldset legend="Registered users" toggleable="true" style="width: 50%">
-                <p:dataTable value="#{requestUsersUseCaseController.getAllUsers()}" var="user">
+            <p:fieldset legend="Registered users" toggleable="true" style="width: 70%">
+                <p:dataTable value="#{requestUsersController.getAllUsers()}" var="user">
                     <p:column headerText="Email">
                         <h:outputText value="#{user.email}"/>
                     </p:column>
@@ -28,8 +28,8 @@
                 </p:dataTable>
             </p:fieldset>
 
-            <p:fieldset legend="Potential users" toggleable="true" style="width: 50%">
-                <p:dataTable value="#{requestUsersUseCaseController.getAllPotentialUsers()}" var="potentialUser">
+            <p:fieldset legend="Potential users" toggleable="true" style="width: 40%">
+                <p:dataTable value="#{requestUsersController.getAllPotentialUsers()}" var="potentialUser">
                     <p:column headerText="Email">
                         <h:outputText value="#{potentialUser.email}"/>
                     </p:column>
@@ -42,14 +42,14 @@
                     <td>
                         <h:panelGrid columns="3">
                             <p:outputLabel for="email" value="Email"/>
-                            <p:inputText id="email" value="#{requestUsersUseCaseController.potentialUser.email}"/>
+                            <p:inputText id="email" value="#{requestUsersController.potentialUser.email}"/>
                             <p:message for="email"/>
                         </h:panelGrid>
                     </td>
                 </tr>
             </table>
             <p:commandButton value="Add"
-                             actionListener="#{requestUsersUseCaseController.createPotentialUser()}"
+                             actionListener="#{requestUsersController.createPotentialUser()}"
                              ajax="false"/>
         </h:form>
         <h:form>
@@ -59,7 +59,7 @@
                     <td>
                         <h:panelGrid columns="3">
                             <p:outputLabel for="emailToRemove" value="Email"/>
-                            <p:inputText id="emailToRemove" value="#{requestUsersUseCaseController.potentialUserToRemove.email}"/>
+                            <p:inputText id="emailToRemove" value="#{requestUsersController.potentialUserToRemove.email}"/>
                             <p:message for="emailToRemove"/>
                         </h:panelGrid>
                     </td>
@@ -67,7 +67,7 @@
             </table>
 
             <p:commandButton value="Remove"
-                             actionListener="#{requestUsersUseCaseController.removePotentialUser()}"
+                             actionListener="#{requestUsersController.removePotentialUser()}"
                              ajax="false"/>
 
             <p:messages globalOnly="true"/>

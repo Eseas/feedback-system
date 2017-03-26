@@ -15,7 +15,7 @@ import java.util.List;
 
 @Model // tas pats kaip: @Named ir @RequestScoped
 @Slf4j
-public class RequestUsersUseCaseController {
+public class RequestUsersController {
     @Getter
     private PotentialUser potentialUser = new PotentialUser();
     @Getter
@@ -28,12 +28,6 @@ public class RequestUsersUseCaseController {
 //
     public List<User> getAllUsers() {
         List<User> users = userDAO.getAllUsers();
-        for (User u: users) {
-            System.out.println("I am " + u.getFirstName());
-//            for (Survey s: p.getSurveyList()) {
-//                System.out.println("Also, I have survey: " + s.getName());
-//            }
-        }
         return users;
     }
 

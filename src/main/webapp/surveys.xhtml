@@ -12,31 +12,37 @@
     </h:head>
 
     <h:body>
-        <h2>Conversation implementation with CDI</h2>
-<!--
+        <h1>Surveys</h1>
         <h:form>
-
-
-            <p:fieldset legend="All people" toggleable="true" style="width: 50%">
-                <p:dataTable value="#{createSurveyUseCaseControllerCdi.allSurveys}" var="survey">
-                    <p:column headerText="Survey">
-                        <h:outputText value="#{survey.name}" />
+            <p:fieldset legend="Surveys" toggleable="true" style="width: 90%">
+                <p:dataTable value="#{createSurveyController.getAllSurveys()}" var="survey">
+                    <p:column headerText="Title">
+                        <h:outputText value="#{survey.title}" />
                     </p:column>
-                    <p:column headerText="Question">
-                        <ui:repeat var="question" value="#{survey.questionList}">
-                            <h:outputText value="#{question.text}" />
-                            <br/>
-                        </ui:repeat>
+                    <p:column headerText="Description">
+                        <h:outputText value="#{survey.description}" />
                     </p:column>
-                    <p:column headerText="User">
-                        <ui:repeat var="user" value="#{survey.userList}">
-                            <h:outputText value="#{user.firstName} #{user.lastName} #{user.email}" />
-                            <br/>
-                        </ui:repeat>
+                    <p:column headerText="Creator">
+                        <h:outputText value="#{survey.creator.getFirstName()} #{survey.creator.getLastName()}" />
+                        <br/>
+                        <h:outputText value="#{survey.creator.getEmail()}" />
                     </p:column>
+                    <!--<p:column headerText="Question">-->
+                        <!--<ui:repeat var="question" value="#{survey.questionList}">-->
+                            <!--<h:outputText value="#{question.text}" />-->
+                            <!--<br/>-->
+                        <!--</ui:repeat>-->
+                    <!--</p:column>-->
+                    <!--<p:column headerText="User">-->
+                        <!--<ui:repeat var="user" value="#{survey.userList}">-->
+                            <!--<h:outputText value="#{user.firstName} #{user.lastName} #{user.email}" />-->
+                            <!--<br/>-->
+                        <!--</ui:repeat>-->
+                    <!--</p:column>-->
                 </p:dataTable>
             </p:fieldset>
-
+        </h:form>
+<!--
             <p:outputPanel rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('CREATE_SURVEY')}">
                 <h1>Create new survey</h1>
                 <h:panelGrid id="grid1" columns="3">

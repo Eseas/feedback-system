@@ -13,6 +13,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "feedback.users")
@@ -62,5 +64,6 @@ public class User implements Serializable {
 //    @ManyToMany
 //    private List<Survey> surveyList = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "creator")
+    private List<Survey> createdSurveys = new ArrayList<>();
 }

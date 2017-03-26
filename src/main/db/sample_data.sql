@@ -21,7 +21,7 @@ TRUNCATE TABLE feedback.surveys CASCADE;
 ALTER SEQUENCE feedback.surveys_id_seq RESTART WITH 1;
 
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, true, 'Patogumas dirbti', 'Prašome atsakyti į klausimus');
-INSERT INTO feedback.surveys VALUES (DEFAULT, 2, true,'Atlyginimas', 'Prašome atsakyti į klausimus');
-INSERT INTO feedback.surveys VALUES (DEFAULT, 1, true,'Socialinės garantijos', 'Prašome atsakyti į klausimus');
-INSERT INTO feedback.surveys VALUES (DEFAULT, 3, true,'Laisvalaikis', 'Prašome atsakyti į klausimus');
-INSERT INTO feedback.surveys VALUES (DEFAULT, 4, true,'Pramogos', 'Prašome atsakyti į klausimus');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 2, true,'Atlyginimas', 'Maloniai prašome atsakyti į klausimus');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 1, true,'Socialinės garantijos', 'Jūsų nuomonė labai svarbi');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 3, true,'Laisvalaikis', 'Prašome atidžiai perskaityti klausimus');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 4, true,'Pramogos', 'Jūsų atsakymas padės sukurti geresnę aplinką įmonėje');

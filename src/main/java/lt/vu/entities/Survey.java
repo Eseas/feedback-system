@@ -17,16 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "SURVEY")
+@Table(name = "FEEDBACK.SURVEYS")
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
-    @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.name = :name")
+    @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.title = :title")
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = "name")
-@ToString(of = {"id", "name"})
+@EqualsAndHashCode(of = "title")
+@ToString(of = {"id", "title"})
 public class Survey implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,10 +35,16 @@ public class Survey implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    @Size(min = 4, max = 50)
-    @Column(name = "NAME")
-    private String name;
+    @Size(min = 4, max = 200)
+    @Column(name = "TITLE")
+    private String title;
 
+    @Size(min = 4, max = 200)
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+//    @Column(name = "IS_PRIVATE")
+//    private Boolean private;
 //    @Version
 //    @Column(name = "OPT_LOCK_VERSION")
 //    private Integer optLockVersion;
@@ -48,4 +54,9 @@ public class Survey implements Serializable {
 
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
 //    private List<Question> questionList = new ArrayList<>();
+
+    @ManyToOne(optional=false)
+    @JoinColumn(
+            name="CREATOR_ID", nullable=false, updatable=false)
+    public User creator;
 }
