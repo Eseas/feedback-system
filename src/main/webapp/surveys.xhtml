@@ -13,17 +13,8 @@
 
     <h:body>
         <h2>Conversation implementation with CDI</h2>
+<!--
         <h:form>
-            <p>
-                All conversation steps are placed in one page (so called Single Page Application approach), navigation
-                between steps is being performed with the help of AJAX (all PrimeFaces components use AJAX by default).
-                This approach has following advantages:
-            </p>
-            <ol>
-                <li>The browser address bar contains a single URL - user may bookmark this address without problems.</li>
-                <li><code>Conversation ID</code> is not being displayed.</li>
-                <li>Button "Back" doesn't navigate through conversation steps (but goes back to the page preceding the conversation).</li>
-            </ol>
 
 
             <p:fieldset legend="All people" toggleable="true" style="width: 50%">
@@ -93,14 +84,13 @@
 
             <p:outputPanel rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('CONFIRMATION')}">
                 <h1>Confirmation: are you sure?</h1>
-                <!-- This is the last step - turn-off AJAX, use HTTP-POST based navigation: -->
                 <p:commandButton value="OK" action="#{createSurveyUseCaseControllerCdi.ok}" ajax="false"/>
                 <p:commandButton value="Cancel" action="#{createSurveyUseCaseControllerCdi.cancel}" ajax="false"/>
             </p:outputPanel>
 
             <p:messages globalOnly="true"/>
         </h:form>
-
+-->
     </h:body>
 </html>
 

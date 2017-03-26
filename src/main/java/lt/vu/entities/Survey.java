@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.entities.jpa;
+package lt.vu.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

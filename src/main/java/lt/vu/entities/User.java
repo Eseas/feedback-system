@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.entities.jpa;
+package lt.vu.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,25 +33,31 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private Integer id;
 
     @Size(min = 3, max = 20)
-    @Column(name = "first_name")
+    @Column(name = "FIRST_NAME")
     private String firstName;
 
     @Size(min = 3, max = 20)
-    @Column(name = "last_name")
+    @Column(name = "LAST_NAME")
     private String lastName;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "is_admin")
+    @Column(name = "IS_ADMIN")
     private Boolean admin;
 
-    @Column(name = "is_blocked")
+    @Column(name = "IS_BLOCKED")
     private Boolean blocked;
+
+    @OneToOne(optional = false)
+    @JoinColumn(
+            name = "EMAIL_ID", unique = true, nullable = false
+    )
+    private Email email;
 
 //    @JoinTable(name = "PERSON_SURVEY", joinColumns = {
 //            @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")}, inverseJoinColumns = {

@@ -1,6 +1,6 @@
-package lt.vu.dao.orm;
+package lt.vu.dao;
 
-import lt.vu.entities.jpa.User;
+import lt.vu.entities.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package lt.vu.entities.jpa;
+package lt.vu.entities;
 
 /**
  * Created by kazim on 2017-03-26.
