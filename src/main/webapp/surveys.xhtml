@@ -27,76 +27,10 @@
                         <br/>
                         <h:outputText value="#{survey.creator.getEmail()}" />
                     </p:column>
-                    <!--<p:column headerText="Question">-->
-                        <!--<ui:repeat var="question" value="#{survey.questionList}">-->
-                            <!--<h:outputText value="#{question.text}" />-->
-                            <!--<br/>-->
-                        <!--</ui:repeat>-->
-                    <!--</p:column>-->
-                    <!--<p:column headerText="User">-->
-                        <!--<ui:repeat var="user" value="#{survey.userList}">-->
-                            <!--<h:outputText value="#{user.firstName} #{user.lastName} #{user.email}" />-->
-                            <!--<br/>-->
-                        <!--</ui:repeat>-->
-                    <!--</p:column>-->
                 </p:dataTable>
             </p:fieldset>
         </h:form>
-<!--
-            <p:outputPanel rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('CREATE_SURVEY')}">
-                <h1>Create new survey</h1>
-                <h:panelGrid id="grid1" columns="3">
-                    <p:outputLabel for="surveyName" value="Survey name"/>
-                    <p:inputText id="surveyName" value="#{createSurveyUseCaseControllerCdi.survey.name}"/>
-                    <p:message for="surveyName"/>
-                </h:panelGrid>
 
-                <p:commandButton value="Create survey"
-                                 actionListener="#{createSurveyUseCaseControllerCdi.createSurvey()}"
-                                 update="@form"/>
-            </p:outputPanel>
-
-            <p:outputPanel id="panel111" rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('ASSIGN_PERSON')}">
-                <h1>Assign a user</h1>
-                <h:panelGrid id="grid" columns="3">
-                    <p:outputLabel for="email" valPotentialUsermail"/>
-                    <p:inputText id="email" value="#{createSurveyUseCaseControllerCdi.email}"/>
-                    <p:message for="email"/>
-                </h:panelGrid>
-
-                <p:commandButton value="Assign user"
-                                 actionListener="#{createSurveyUseCaseControllerCdi.assignUserByEmail()}"
-                                 update="@form"/>
-                <p:commandButton value="Quit assigns"
-                                 actionListener="#{createSurveyUseCaseControllerCdi.quitPeopleAssigning()}"
-                                 update="@form"/>
-            </p:outputPanel>
-
-            <p:outputPanel rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('CREATE_QUESTION')}">
-                <h1>Create question</h1>
-                <h:panelGrid columns="3">
-                    <p:outputLabel for="questionText" value="Question text"/>
-                    <p:inputText id="questionText" binding="#{questionText}"/>
-                    <p:message for="questionText"/>
-                </h:panelGrid>
-
-                <p:commandButton value="Create question"
-                                 actionListener="#{createSurveyUseCaseControllerCdi.createQuestion(questionText.value)}"
-                                 update="@form"/>
-                <p:commandButton value="Quit question creation"
-                                 actionListener="#{createSurveyUseCaseControllerCdi.quitQuestionCreation()}"
-                                 update="@form"/>
-            </p:outputPanel>
-
-            <p:outputPanel rendered="#{createSurveyUseCaseControllerCdi.isCurrentForm('CONFIRMATION')}">
-                <h1>Confirmation: are you sure?</h1>
-                <p:commandButton value="OK" action="#{createSurveyUseCaseControllerCdi.ok}" ajax="false"/>
-                <p:commandButton value="Cancel" action="#{createSurveyUseCaseControllerCdi.cancel}" ajax="false"/>
-            </p:outputPanel>
-
-            <p:messages globalOnly="true"/>
-        </h:form>
--->
     </h:body>
 </html>
 
