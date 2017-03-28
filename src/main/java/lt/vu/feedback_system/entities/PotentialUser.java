@@ -1,4 +1,4 @@
-package lt.vu.entities;
+package lt.vu.feedback_system.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

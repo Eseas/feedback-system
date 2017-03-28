@@ -1,6 +1,6 @@
-package lt.vu.dao;
+package lt.vu.feedback_system.dao;
 
-import lt.vu.entities.User;
+import lt.vu.feedback_system.entities.User;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.entities;
+package lt.vu.feedback_system.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,8 +13,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "FEEDBACK.SURVEYS")
