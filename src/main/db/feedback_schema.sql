@@ -45,8 +45,8 @@ CREATE TABLE feedback.text_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    title CHARACTER VARYING(200),
     is_required BOOLEAN,
+    title CHARACTER VARYING(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -54,9 +54,9 @@ CREATE TABLE feedback.option_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    title CHARACTER VARYING(200),
     is_required BOOLEAN,
     is_multiple BOOLEAN,
+    title CHARACTER VARYING(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -79,30 +79,30 @@ CREATE TABLE feedback.answered_surveys
 CREATE TABLE feedback.slider_answers
 (
     id serial PRIMARY KEY,
-    question_id INTEGER,
+    slider_question_id INTEGER,
     answered_survey_id INTEGER,
     value INTEGER,
-    FOREIGN KEY (question_id) REFERENCES feedback.slider_questions (id),
+    FOREIGN KEY (slider_question_id) REFERENCES feedback.slider_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
 
 CREATE TABLE feedback.text_answers
 (
     id serial PRIMARY KEY,
-    question_id INTEGER,
+    text_question_id INTEGER,
     answered_survey_id INTEGER,
     value CHARACTER VARYING(200),
-    FOREIGN KEY (question_id) REFERENCES feedback.text_questions (id),
+    FOREIGN KEY (text_question_id) REFERENCES feedback.text_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
 
 CREATE TABLE feedback.option_answers
 (
     id serial PRIMARY KEY,
-    question_id INTEGER,
+    option_question_id INTEGER,
     answered_survey_id INTEGER,
     option_id INTEGER,
-    FOREIGN KEY (question_id) REFERENCES feedback.option_questions (id),
+    FOREIGN KEY (option_question_id) REFERENCES feedback.option_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id),
     FOREIGN KEY (option_id) REFERENCES feedback.option_values (id)
 );
