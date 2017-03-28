@@ -5,16 +5,16 @@ CREATE SCHEMA feedback;
 CREATE TABLE feedback.potential_users
 (
     id serial PRIMARY KEY,
-    email CHARACTER VARYING(40)
+    email VARCHAR(40)
 );
 
 CREATE TABLE feedback.users
 (
     id serial PRIMARY KEY,
-    email CHARACTER VARYING(40),
-    first_name CHARACTER VARYING(20),
-    last_name CHARACTER VARYING(20),
-    password CHARACTER VARYING(20),
+    email VARCHAR(40),
+    first_name VARCHAR(20),
+    last_name VARCHAR(20),
+    password VARCHAR(20),
     is_admin BOOLEAN,
     is_blocked BOOLEAN
 );
@@ -24,8 +24,8 @@ CREATE TABLE feedback.surveys
     id serial PRIMARY KEY,
     creator_id INTEGER,
     is_private BOOLEAN,
-    title CHARACTER VARYING(200),
-    description CHARACTER VARYING(200),
+    title VARCHAR(200),
+    description VARCHAR(200),
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
 
@@ -37,7 +37,7 @@ CREATE TABLE feedback.slider_questions
     lower_bound INTEGER,
     upper_bound INTEGER,
     step INTEGER,
-    title CHARACTER VARYING(200),
+    title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -45,8 +45,8 @@ CREATE TABLE feedback.text_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    title CHARACTER VARYING(200),
     is_required BOOLEAN,
+    title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -54,9 +54,9 @@ CREATE TABLE feedback.option_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    title CHARACTER VARYING(200),
     is_required BOOLEAN,
     is_multiple BOOLEAN,
+    title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE feedback.option_values
 (
     id serial PRIMARY KEY,
     question_id INTEGER,
-    value CHARACTER VARYING(200),
+    value VARCHAR(200),
     FOREIGN KEY (question_id) REFERENCES feedback.option_questions (id)
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE feedback.text_answers
     id serial PRIMARY KEY,
     question_id INTEGER,
     answered_survey_id INTEGER,
-    value CHARACTER VARYING(200),
+    value VARCHAR(200),
     FOREIGN KEY (question_id) REFERENCES feedback.text_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
