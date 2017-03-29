@@ -64,7 +64,7 @@ CREATE TABLE feedback.option_values
 (
     id serial PRIMARY KEY,
     question_id INTEGER,
-    value VARCHAR(200),
+    title VARCHAR(200),
     FOREIGN KEY (question_id) REFERENCES feedback.option_questions (id)
 );
 

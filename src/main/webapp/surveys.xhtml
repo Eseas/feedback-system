@@ -14,13 +14,37 @@
     <h:body>
         <h1>Surveys</h1>
         <h:form>
-            <p:fieldset legend="Surveys" toggleable="true" style="width: 90%">
+            <p:fieldset legend="Surveys" toggleable="true">
                 <p:dataTable value="#{createSurveyController.getAllSurveys()}" var="survey">
                     <p:column headerText="Title">
                         <h:outputText value="#{survey.title}" />
                     </p:column>
                     <p:column headerText="Description">
                         <h:outputText value="#{survey.description}" />
+                    </p:column>
+                    <p:column headerText="Text Questions">
+                        <ui:repeat value="#{survey.textQuestionList}" var="textQuestion">
+                            <h:outputText value="#{textQuestion.title}"/>
+                            <br/>
+                        </ui:repeat>
+                    </p:column>
+                    <p:column headerText="Option Questions">
+                        <ui:repeat value="#{survey.optionQuestionList}" var="optionQuestion">
+                            <h:outputText value="#{optionQuestion.title}"/>
+                            <br/>
+                            <ui:repeat value="#{optionQuestion.optionValueList}" var="optionValue">
+                                <h:outputText value="->#{optionValue.title}"/>
+                                <br/>
+                            </ui:repeat>
+                        </ui:repeat>
+                    </p:column>
+                    <p:column headerText="Slider Questions">
+                        <ui:repeat value="#{survey.sliderQuestionList}" var="sliderQuestion">
+                            <h:outputText value="#{sliderQuestion.title}"/>
+                            <br/>
+                            <h:outputText value="#{sliderQuestion.lowerBound}..#{sliderQuestion.upperBound}"/>
+                            <br/>
+                        </ui:repeat>
                     </p:column>
                     <p:column headerText="Creator">
                         <h:outputText value="#{survey.creator.getFirstName()} #{survey.creator.getLastName()}" />
@@ -29,7 +53,86 @@
                     </p:column>
                 </p:dataTable>
             </p:fieldset>
+
+            <h2>Create a new survey</h2>
+            <table>
+                <tr>
+                    <td>
+                        <h:panelGrid columns="3">
+                            <p:outputLabel for="title" value="Title"/>
+                            <p:inputText id="title" value="#{createSurveyController.survey.title}"/>
+                            <p:message for="title"/>
+
+                            <p:outputLabel for="description" value="Description"/>
+                            <p:inputText id="description" value="#{createSurveyController.survey.description}"/>
+                            <p:message for="description"/>
+                        </h:panelGrid>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- TextQuestion creation-->
+            <h:dataTable value="#{createSurveyController.survey.textQuestionList}" var="textQuestion">
+                <h:column>
+                    <p:outputLabel for="textQuestionTitle" value="Text question"/>
+                    <h:inputText id="textQuestionTitle" value="#{textQuestion.title}" />
+                    <h:commandButton value="remove" action="#{createSurveyController.removeTextQuestion(textQuestion)}"/>
+                    <p:message for="textQuestionTitle"/>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="add text question" actionListener="#{createSurveyController.addTextQuestion()}" />
+
+            <!-- OptionQuestion creation -->
+            <h:dataTable value="#{createSurveyController.survey.optionQuestionList}" var="optionQuestion">
+                <h:column>
+                    <p:outputLabel for="optionQuestionTitle" value="Option question"/>
+                    <h:inputText id="optionQuestionTitle" value="#{optionQuestion.title}" />
+                    <h:commandButton value="remove" action="#{createSurveyController.removeOptionQuestion(optionQuestion)}"/>
+                    <p:message for="optionQuestionTitle"/>
+
+                    <h:dataTable value="#{optionQuestion.optionValueList}" var="optionValue">
+                        <h:column>
+                            <p:outputLabel for="optionValueTitle" value="Option value"/>
+                            <h:inputText id="optionValueTitle" value="#{optionValue.title}" />
+                            <h:commandButton value="remove" action="#{createSurveyController.removeOptionValue(optionQuestion, optionValue)}"/>
+                            <p:message for="optionValueTitle"/>
+
+
+                        </h:column>
+                    </h:dataTable>
+                    <h:commandButton value="add option value" actionListener="#{createSurveyController.addOptionValue(optionQuestion)}" />
+
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="add option question" actionListener="#{createSurveyController.addOptionQuestion()}" />
+
+            <!-- SliderQuestion creation-->
+            <h:dataTable value="#{createSurveyController.survey.sliderQuestionList}" var="sliderQuestion">
+                <h:column>
+                    <p:outputLabel for="sliderQuestionTitle" value="Slider question"/>
+                    <h:inputText id="sliderQuestionTitle" value="#{sliderQuestion.title}" />
+                    <h:commandButton value="remove" action="#{createSurveyController.removeSliderQuestion(sliderQuestion)}"/>
+                    <p:message for="sliderQuestionTitle"/>
+
+                    <p:outputLabel for="lowerBound" value="Lower bound"/>
+                    <p:inputText id="lowerBound" value="#{sliderQuestion.lowerBound}"/>
+                    <p:message for="lowerBound"/>
+
+                    <p:outputLabel for="upperBound" value="Upper bound"/>
+                    <p:inputText id="upperBound" value="#{sliderQuestion.upperBound}"/>
+                    <p:message for="upperBound"/>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="add slider question" actionListener="#{createSurveyController.addSliderQuestion()}" />
+
+
+            <!-- Ending creation -->
+            <br/>
+            <h:commandButton value="save" action="#{createSurveyController.create()}" />
+
+            <p:messages globalOnly="true"/>
         </h:form>
+
 
     </h:body>
 </html>
