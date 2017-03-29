@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 /**
- * Created by kazim on 2017-03-26.
+ * Created by kazim on 2017-03-26.  
  */
 @Entity
 @Table(name = "FEEDBACK.SLIDER_QUESTIONS")
