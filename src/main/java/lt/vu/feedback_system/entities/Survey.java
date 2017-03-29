@@ -13,6 +13,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "FEEDBACK.SURVEYS")
@@ -43,18 +45,25 @@ public class Survey implements Serializable {
 
 //    @Column(name = "IS_PRIVATE")
 //    private Boolean private;
-//    @Version
-//    @Column(name = "OPT_LOCK_VERSION")
-//    private Integer optLockVersion;
 
 //    @ManyToMany(mappedBy = "surveyList")
 //    private List<User> userList = new ArrayList<>();
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
-//    private List<Question> questionList = new ArrayList<>();
+    @OneToMany(mappedBy = "survey")
+    private List<TextQuestion> textQuestionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "survey")
+    private List<SliderQuestion> sliderQuestionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "survey")
+    private List<OptionQuestion> optionQuestionList = new ArrayList<>();
+
+
 
     @ManyToOne(optional=false)
     @JoinColumn(
             name="CREATOR_ID", nullable=false, updatable=false)
     public User creator;
+
+
 }
