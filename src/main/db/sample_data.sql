@@ -6,7 +6,7 @@ INSERT INTO feedback.users VALUES (DEFAULT, 'tyler.gallagher@gmail.com', 'Tyler'
 INSERT INTO feedback.users VALUES (DEFAULT, 'bradley.bell@gmail.com', 'Bradley', 'Bell', 'testpassword', true, false);
 INSERT INTO feedback.users VALUES (DEFAULT, 'conner.russo@gmail.com', 'Conner', 'Russo', 'testpassword', true, false);
 
-INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE, 'Workplace Confort', 'Please answer a few questions');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask ypu to answer some questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 2, TRUE,'Social Security', 'This survey is anonymous');
 

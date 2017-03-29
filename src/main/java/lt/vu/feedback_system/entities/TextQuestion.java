@@ -26,6 +26,9 @@ public class TextQuestion {
     @Column(name = "ID")
     private Integer id;
 
+    @Column(name = "REQUIRED")
+    private Boolean required;
+
     @Size(min = 4, max = 200)
     @Column(name = "TITLE")
     private String title;

@@ -32,6 +32,12 @@ public class OptionQuestion {
     @Column(name = "TITLE")
     private String title;
 
+    @Column(name = "REQUIRED")
+    private Boolean required;
+
+    @Column(name = "MULTIPLE")
+    private Boolean multiple;
+
     @JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")
     @ManyToOne
     private Survey survey;

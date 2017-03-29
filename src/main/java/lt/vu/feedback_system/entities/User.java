@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "feedback.users")
+@Table(name = "FEEDBACK.USERS")
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT s FROM User s"),
         @NamedQuery(name = "User.findById", query = "SELECT s FROM User s WHERE s.id = :id"),
@@ -51,18 +51,11 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "IS_ADMIN")
+    @Column(name = "ADMIN")
     private Boolean admin;
 
-    @Column(name = "IS_BLOCKED")
+    @Column(name = "BLOCKED")
     private Boolean blocked;
-
-
-//    @JoinTable(name = "PERSON_SURVEY", joinColumns = {
-//            @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
-//            @JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")})
-//    @ManyToMany
-//    private List<Survey> surveyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "creator")
     private List<Survey> createdSurveys = new ArrayList<>();

@@ -43,11 +43,8 @@ public class Survey implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-//    @Column(name = "IS_PRIVATE")
-//    private Boolean private;
-
-//    @ManyToMany(mappedBy = "surveyList")
-//    private List<User> userList = new ArrayList<>();
+    @Column(name = "CONFIDENTIAL")
+    private Boolean confidential;
 
     @OneToMany(mappedBy = "survey")
     private List<TextQuestion> textQuestionList = new ArrayList<>();

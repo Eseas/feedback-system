@@ -30,7 +30,7 @@ public class SliderQuestion {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "IS_REQUIRED")
+    @Column(name = "REQUIRED")
     private Boolean required;
 
     @Column(name = "LOWER_BOUND")
