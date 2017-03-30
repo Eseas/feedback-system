@@ -17,23 +17,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(schema = "FEEDBACK", name = "ANSWERED_SURVEYS")
+@Table(schema = "feedback", name = "answered_surveys")
 @NamedQueries({
         @NamedQuery(name = "AnsweredSurvey.findAll", query = "SELECT c FROM AnsweredSurvey c"),
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
-@ToString(of = {"id"})
+@EqualsAndHashCode(of = "survey")
+@ToString(of = {"id", "survey"})
 public class AnsweredSurvey implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="SURVEY_ID")
+    @JoinColumn(name="survey_id")
     private Survey survey;
 }

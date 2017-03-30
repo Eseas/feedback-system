@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * Created by kazim on 2017-03-26.
  */
 @Entity
-@Table(schema = "FEEDBACK", name = "OPTION_VALUES")
+@Table(schema = "feedback", name = "option_values")
 @NamedQueries({
         @NamedQuery(name = "OptionValue.findAll", query = "SELECT c FROM OptionValue c")})
 @Getter
@@ -23,14 +23,14 @@ public class OptionValue {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @Size(min = 4, max = 200)
-    @Column(name = "TITLE")
+    @Column(name = "title")
     private String title;
 
-    @JoinColumn(name = "QUESTION_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private OptionQuestion question;
 }

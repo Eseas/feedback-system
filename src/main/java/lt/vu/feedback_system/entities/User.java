@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(schema = "FEEDBACK", name = "USERS")
+@Table(schema = "feedback", name = "users")
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT s FROM User s"),
         @NamedQuery(name = "User.findById", query = "SELECT s FROM User s WHERE s.id = :id"),
@@ -33,28 +33,28 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @Size(min = 3, max = 20)
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     private String email;
 
     @Size(min = 3, max = 20)
-    @Column(name = "FIRST_NAME")
+    @Column(name = "first_name")
     private String firstName;
 
     @Size(min = 3, max = 20)
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "IS_ADMIN")
+    @Column(name = "is_admin")
     private Boolean admin;
 
-    @Column(name = "IS_BLOCKED")
+    @Column(name = "is_blocked")
     private Boolean blocked;
 
     @OneToMany(mappedBy = "creator")
