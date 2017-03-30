@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * Created by kazim on 2017-03-26.  
  */
 @Entity
-@Table(name = "FEEDBACK.SLIDER_QUESTIONS")
+@Table(schema = "feedback", name = "slider_questions")
 @NamedQueries({
         @NamedQuery(name = "SliderQuestion.findAll", query = "SELECT c FROM SliderQuestion c")})
 @Getter
@@ -23,23 +23,23 @@ public class SliderQuestion {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @Size(min = 4, max = 200)
-    @Column(name = "TITLE")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "IS_REQUIRED")
+    @Column(name = "is_required")
     private Boolean required;
 
-    @Column(name = "LOWER_BOUND")
+    @Column(name = "lower_bound")
     private Integer lowerBound;
 
-    @Column(name = "UPPER_BOUND")
+    @Column(name = "upper_bound")
     private Integer upperBound;
 
-    @JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "survey_id", referencedColumnName = "id")
     @ManyToOne
     private Survey survey;
 }

@@ -23,7 +23,7 @@ CREATE TABLE feedback.surveys
 (
     id serial PRIMARY KEY,
     creator_id INTEGER,
-    is_private BOOLEAN,
+    is_confidential BOOLEAN,
     title VARCHAR(200),
     description VARCHAR(200),
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)

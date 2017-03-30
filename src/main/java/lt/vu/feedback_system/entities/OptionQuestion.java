@@ -14,25 +14,31 @@ import java.util.List;
  * Created by kazim on 2017-03-26.
  */
 @Entity
-@Table(name = "FEEDBACK.OPTION_QUESTIONS")
+@Table(schema = "feedback", name = "option_questions")
 @NamedQueries({
         @NamedQuery(name = "OptionQuestion.findAll", query = "SELECT c FROM OptionQuestion c")})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
-@ToString(of = {"id", "title"})
+@ToString(of = {"id", "title", "required", "multiple", "survey"})
 public class OptionQuestion {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @Size(min = 4, max = 200)
-    @Column(name = "TITLE")
+    @Column(name = "title")
     private String title;
 
-    @JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")
+    @Column(name = "is_required")
+    private Boolean required;
+
+    @Column(name = "is_multiple")
+    private Boolean multiple;
+
+    @JoinColumn(name = "survey_id", referencedColumnName = "ID")
     @ManyToOne
     private Survey survey;
 
