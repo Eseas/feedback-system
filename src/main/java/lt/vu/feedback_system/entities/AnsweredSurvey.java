@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "FEEDBACK.ANSWERED_SURVEYS")
+@Table(schema = "FEEDBACK", name = "ANSWERED_SURVEYS")
 @NamedQueries({
         @NamedQuery(name = "AnsweredSurvey.findAll", query = "SELECT c FROM AnsweredSurvey c"),
 })

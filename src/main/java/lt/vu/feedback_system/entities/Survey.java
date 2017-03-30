@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "FEEDBACK.SURVEYS")
+@Table(schema = "FEEDBACK", name = "SURVEYS")
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
@@ -43,7 +43,7 @@ public class Survey implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "CONFIDENTIAL")
+    @Column(name = "IS_CONFIDENTIAL")
     private Boolean confidential;
 
     @OneToMany(mappedBy = "survey")

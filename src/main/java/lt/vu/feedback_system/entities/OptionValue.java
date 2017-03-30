@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * Created by kazim on 2017-03-26.
  */
 @Entity
-@Table(name = "FEEDBACK.OPTION_VALUES")
+@Table(schema = "FEEDBACK", name = "OPTION_VALUES")
 @NamedQueries({
         @NamedQuery(name = "OptionValue.findAll", query = "SELECT c FROM OptionValue c")})
 @Getter

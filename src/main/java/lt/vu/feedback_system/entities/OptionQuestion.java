@@ -14,7 +14,7 @@ import java.util.List;
  * Created by kazim on 2017-03-26.
  */
 @Entity
-@Table(name = "FEEDBACK.OPTION_QUESTIONS")
+@Table(schema = "FEEDBACK", name = "OPTION_QUESTIONS")
 @NamedQueries({
         @NamedQuery(name = "OptionQuestion.findAll", query = "SELECT c FROM OptionQuestion c")})
 @Getter
@@ -32,10 +32,10 @@ public class OptionQuestion {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "REQUIRED")
+    @Column(name = "IS_REQUIRED")
     private Boolean required;
 
-    @Column(name = "MULTIPLE")
+    @Column(name = "IS_MULTIPLE")
     private Boolean multiple;
 
     @JoinColumn(name = "SURVEY_ID", referencedColumnName = "ID")

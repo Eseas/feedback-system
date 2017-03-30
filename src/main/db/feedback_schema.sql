@@ -15,15 +15,15 @@ CREATE TABLE feedback.users
     first_name VARCHAR(20),
     last_name VARCHAR(20),
     password VARCHAR(20),
-    admin BOOLEAN,
-    blocked BOOLEAN
+    is_admin BOOLEAN,
+    is_blocked BOOLEAN
 );
 
 CREATE TABLE feedback.surveys
 (
     id serial PRIMARY KEY,
     creator_id INTEGER,
-    confidential BOOLEAN,
+    is_confidential BOOLEAN,
     title VARCHAR(200),
     description VARCHAR(200),
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
@@ -33,7 +33,7 @@ CREATE TABLE feedback.slider_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    required BOOLEAN,
+    is_required BOOLEAN,
     lower_bound INTEGER,
     upper_bound INTEGER,
     step INTEGER,
@@ -45,7 +45,7 @@ CREATE TABLE feedback.text_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    required BOOLEAN,
+    is_required BOOLEAN,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
@@ -54,8 +54,8 @@ CREATE TABLE feedback.option_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    required BOOLEAN,
-    multiple BOOLEAN,
+    is_required BOOLEAN,
+    is_multiple BOOLEAN,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );

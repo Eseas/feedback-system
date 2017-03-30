@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * Created by kazim on 2017-03-26.  
  */
 @Entity
-@Table(name = "FEEDBACK.SLIDER_QUESTIONS")
+@Table(schema = "FEEDBACK", name = "SLIDER_QUESTIONS")
 @NamedQueries({
         @NamedQuery(name = "SliderQuestion.findAll", query = "SELECT c FROM SliderQuestion c")})
 @Getter
@@ -30,7 +30,7 @@ public class SliderQuestion {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "REQUIRED")
+    @Column(name = "IS_REQUIRED")
     private Boolean required;
 
     @Column(name = "LOWER_BOUND")

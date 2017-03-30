@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "FEEDBACK.USERS")
+@Table(schema = "FEEDBACK", name = "USERS")
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT s FROM User s"),
         @NamedQuery(name = "User.findById", query = "SELECT s FROM User s WHERE s.id = :id"),
