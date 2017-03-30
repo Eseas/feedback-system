@@ -51,10 +51,10 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "ADMIN")
+    @Column(name = "IS_ADMIN")
     private Boolean admin;
 
-    @Column(name = "BLOCKED")
+    @Column(name = "IS_BLOCKED")
     private Boolean blocked;
 
     @OneToMany(mappedBy = "creator")
