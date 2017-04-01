@@ -1,4 +1,4 @@
-package lt.vu.usecases.cdi;
+package lt.vu.feedback_system.usecases;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
@@ -16,11 +16,8 @@ public class JPAResources {
     private EntityManagerFactory emf;
 
     @Produces
-    @RequestScoped // Smalsiems: kodel ne @TransactionScoped? Kada @RequestScoped bus blogai o @TransactionScoped - gerai?
+    @RequestScoped
     private EntityManager createJTAEntityManager() {
-        /*
-         * From JavaDoc: Create a new JTA application-managed EntityManager...
-         */
         return emf.createEntityManager(SynchronizationType.SYNCHRONIZED);
     }
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.entities;
+package lt.vu.feedback_system.entities;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "FEEDBACK.SURVEYS")
+@Table(schema = "feedback", name = "surveys")
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
@@ -32,31 +32,35 @@ public class Survey implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @Size(min = 4, max = 200)
-    @Column(name = "TITLE")
+    @Column(name = "title")
     private String title;
 
     @Size(min = 4, max = 200)
-    @Column(name = "DESCRIPTION")
+    @Column(name = "description")
     private String description;
 
-//    @Column(name = "IS_PRIVATE")
-//    private Boolean private;
-//    @Version
-//    @Column(name = "OPT_LOCK_VERSION")
-//    private Integer optLockVersion;
+    @Column(name = "is_confidential")
+    private Boolean confidential;
 
-//    @ManyToMany(mappedBy = "surveyList")
-//    private List<User> userList = new ArrayList<>();
+    @OneToMany(mappedBy = "survey")
+    private List<TextQuestion> textQuestionList = new ArrayList<>();
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surveyId")
-//    private List<Question> questionList = new ArrayList<>();
+    @OneToMany(mappedBy = "survey")
+    private List<SliderQuestion> sliderQuestionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "survey")
+    private List<OptionQuestion> optionQuestionList = new ArrayList<>();
+
+
 
     @ManyToOne(optional=false)
     @JoinColumn(
-            name="CREATOR_ID", nullable=false, updatable=false)
+            name="creator_id", nullable=false, updatable=false)
     public User creator;
+
+
 }

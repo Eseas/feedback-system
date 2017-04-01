@@ -1,19 +1,18 @@
-package lt.vu.usecases.cdi.simple;
+package lt.vu.feedback_system.usecases.users;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import lt.vu.dao.PotentialUserDAO;
-import lt.vu.dao.UserDAO;
-import lt.vu.entities.PotentialUser;
-import lt.vu.entities.User;
+import lt.vu.feedback_system.entities.PotentialUser;
+import lt.vu.feedback_system.entities.User;
+import lt.vu.feedback_system.dao.PotentialUserDAO;
+import lt.vu.feedback_system.dao.UserDAO;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
-@Model // tas pats kaip: @Named ir @RequestScoped
+@Model
 @Slf4j
 public class RequestUsersController {
     @Getter
@@ -25,10 +24,9 @@ public class RequestUsersController {
     private UserDAO userDAO;
     @Inject
     private PotentialUserDAO potentialUserDAO;
-//
+
     public List<User> getAllUsers() {
-        List<User> users = userDAO.getAllUsers();
-        return users;
+        return userDAO.getAllUsers();
     }
 
     public List<PotentialUser> getAllPotentialUsers() {
