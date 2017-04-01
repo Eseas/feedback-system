@@ -79,6 +79,12 @@
             <artifactId>postgresql</artifactId>
             <version>9.4.1212</version>
         </dependency>
-    </dependencies>
 
+        <!-- SHA1 encoding -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+    </dependencies>
 </project>

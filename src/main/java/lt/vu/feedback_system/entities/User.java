@@ -23,6 +23,7 @@ import java.util.List;
         @NamedQuery(name = "User.findById", query = "SELECT s FROM User s WHERE s.id = :id"),
         @NamedQuery(name = "User.findByFirstName", query = "SELECT s FROM User s WHERE s.firstName LIKE :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT s FROM User s WHERE s.lastName LIKE :lastName"),
+        @NamedQuery(name = "User.findByEmailAndPassword", query = "SELECT s FROM User s WHERE s.email LIKE :email AND s.password LIKE :password"),
 })
 @Getter
 @Setter
