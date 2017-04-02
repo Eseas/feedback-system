@@ -4,12 +4,16 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.dao.UserDAO;
 import lt.vu.feedback_system.entities.User;
+import org.omnifaces.util.Messages;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @SessionScoped
@@ -21,6 +25,8 @@ public class UserController implements Serializable {
 
     @Getter
     private User user = new User();
+    @Getter
+    private User userToRemove = new User();
 
     @Inject
     private UserDAO userDAO;
@@ -48,4 +54,54 @@ public class UserController implements Serializable {
 
         return ON_LOGIN_REDIRECT;
     }
+    @Transactional
+    public void setAdminTrue(){
+        try {
+            user = userDAO.getUserByEmail(
+                    user.getEmail()
+            );
+            user.setAdmin(true);
+        } catch (javax.persistence.NoResultException ex) {
+            Messages.addGlobalError("Wrong email");
+        }
+    }
+    @Transactional
+    public void setAdminFalse() {
+        try {
+            user = userDAO.getUserByEmail(
+                    user.getEmail()
+            );
+            user.setAdmin(false);
+        } catch (javax.persistence.NoResultException ex) {
+            Messages.addGlobalError("Wrong email");
+        }
+    }
+    @Transactional
+    public void setBlockedTrue(){
+        try {
+            user = userDAO.getUserByEmail(
+                    user.getEmail()
+            );
+            user.setBlocked(true);
+        }
+        catch(javax.persistence.NoResultException ex) {
+            Messages.addGlobalError("Wrong email");
+        }
+
+
+    }
+    @Transactional
+    public void setBlockedFalse() {
+        try {
+            user = userDAO.getUserByEmail(
+                    user.getEmail()
+            );
+            user.setBlocked(false);
+        } catch (javax.persistence.NoResultException ex) {
+            Messages.addGlobalError("Wrong email");
+        }
+    }
+
+
+
 }

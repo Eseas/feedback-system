@@ -26,10 +26,16 @@ public class UserDAO {
     public User getUserById(int id) {
         return em.find(User.class, id);
     }
+
     public User getUserByEmailAndPassword(String email, String password) {
         return em.createNamedQuery("User.findByEmailAndPassword", User.class)
                 .setParameter("email", email)
                 .setParameter("password", password)
+                .getSingleResult();
+    }
+    public User getUserByEmail(String email) {
+        return em.createNamedQuery("User.findByEmail", User.class)
+                .setParameter("email", email)
                 .getSingleResult();
     }
     public List<User> getAllUsers() {

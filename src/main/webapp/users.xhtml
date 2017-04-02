@@ -14,8 +14,10 @@
         <h1>Users</h1>
 
         <h:form>
+
             <p:fieldset legend="Registered users" toggleable="true" style="width: 70%">
                 <p:dataTable value="#{requestUsersController.getAllUsers()}" var="user">
+
                     <p:column headerText="Email">
                         <h:outputText value="#{user.email}"/>
                     </p:column>
@@ -25,9 +27,46 @@
                     <p:column headerText="Last name">
                         <h:outputText value="#{user.lastName}"/>
                     </p:column>
+                    <p:column headerText="Admin">
+                        <p:selectBooleanCheckbox value="#{user.admin}" />
+
+                    </p:column>
+                    <p:column headerText="Blocked">
+                        <p:selectBooleanCheckbox value="#{user.blocked}"/>
+                    </p:column>
                 </p:dataTable>
             </p:fieldset>
+        </h:form>
+        <h:form>
+            <h2>User panel</h2>
+            <table>
+                <tr>
+                    <td>
+                        <h:panelGrid columns="3">
+                            <p:outputLabel for="admin" value="Email"/>
+                            <p:inputText id="admin" value="#{userController.user.email}"/>
+                            <p:message for="admin"/>
+                        </h:panelGrid>
+                    </td>
+                </tr>
+            </table>
 
+            <p:commandButton value="Give admin"
+                             actionListener="#{userController.setAdminTrue()}"
+                             ajax="false"/>
+            <p:commandButton value="Remove admin"
+                             actionListener="#{userController.setAdminFalse()}"
+                             ajax="false"/>
+            <p:commandButton value="Block user"
+                             actionListener="#{userController.setBlockedTrue()}"
+                             ajax="false"/>
+            <p:commandButton value="Unblock user"
+                             actionListener="#{userController.setBlockedFalse()}"
+                             ajax="false"/>
+
+        </h:form>
+
+        <h:form>
             <p:fieldset legend="Potential users" toggleable="true" style="width: 40%">
                 <p:dataTable value="#{requestUsersController.getAllPotentialUsers()}" var="potentialUser">
                     <p:column headerText="Email">
@@ -71,6 +110,11 @@
                              ajax="false"/>
 
             <p:messages globalOnly="true"/>
+
+
+
+
+
         </h:form>
     </h:body>
 </html>
