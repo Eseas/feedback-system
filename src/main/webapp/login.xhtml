@@ -38,7 +38,7 @@
                     <p:inputText class="input" id="user_email" value="#{userController.user.email}" placeholder="Email" required="true" />
                     <p:password class="input" id="user_password" value="#{userController.user.password}" placeholder="Password" required="true"/>
                     <h:commandButton class="button" value="Login" action="#{userController.doLogin()}" />
-                    <p class="message">Cannot sign in? <a href="remember">Remember password</a></p>
+                    <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
                 </h:form>
             </div>
         </c:otherwise>

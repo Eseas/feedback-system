@@ -1,6 +1,6 @@
-.login-page{
+.login-page, .remember-page{
     width: 360px;
-    padding: 8% 0 0;
+    padding: 70px 0 0;
     margin: auto;
 }
 .logo{
@@ -68,9 +68,10 @@
     font-size: 12px;
     margin: 15px;
 }
-.form .message a {
+.form .remember {
     color: #E74C3C;
     text-decoration: none;
+    font: inherit;
 }
 .container {
     position: relative;
