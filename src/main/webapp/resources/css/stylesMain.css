@@ -1,0 +1,52 @@
+.mainLogo{
+    color: #00426B;
+    position: relative;
+    width: 100%;
+    padding: 112px 0 50px;
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+.mainLogo h1{
+    font-size: 4em;
+    margin: 0 auto;
+}
+.mainLogo p{
+    font-style: italic;
+    font-size: 2em;
+}
+.mainLogo em {
+    letter-spacing: 0.09em;
+}
+.navButtons {
+    display: block;
+    font-weight: normal;
+    line-height: normal;
+    width: 100%;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    border: 0;
+    border-radius: 3px;
+    padding: 15px !important;
+    color: #F9F9F9;
+    font-size: 14px;
+    -webkit-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+.navButtons #navCreate{
+    background: #2B9B57 !important;
+}
+.navButtons #navSurveys, #navUsers{
+    background: #2B9B7F !important;
+}
+
+body {
+    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
+    font-family: "Roboto", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+}
