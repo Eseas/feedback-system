@@ -44,7 +44,7 @@
                     <td>
                         <h:panelGrid columns="3">
                             <p:outputLabel for="admin" value="Email"/>
-                            <p:inputText id="admin" value="#{userController.user.email}"/>
+                            <p:inputText id="admin" value="#{userManagementController.user.email}"/>
                             <p:message for="admin"/>
                         </h:panelGrid>
                     </td>
@@ -52,16 +52,16 @@
             </table>
 
             <p:commandButton value="Give admin"
-                             actionListener="#{userController.setAdminTrue()}"
+                             actionListener="#{userManagementController.setAdminTrue()}"
                              ajax="false"/>
             <p:commandButton value="Remove admin"
-                             actionListener="#{userController.setAdminFalse()}"
+                             actionListener="#{userManagementController.setAdminFalse()}"
                              ajax="false"/>
             <p:commandButton value="Block user"
-                             actionListener="#{userController.setBlockedTrue()}"
+                             actionListener="#{userManagementController.setBlockedTrue()}"
                              ajax="false"/>
             <p:commandButton value="Unblock user"
-                             actionListener="#{userController.setBlockedFalse()}"
+                             actionListener="#{userManagementController.setBlockedFalse()}"
                              ajax="false"/>
 
         </h:form>

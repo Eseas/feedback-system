@@ -50,53 +50,7 @@ public class UserController implements Serializable {
 
         return ON_LOGIN_REDIRECT;
     }
-    @Transactional
-    public void setAdminTrue(){
-        try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setAdmin(true);
-        } catch (javax.persistence.NoResultException ex) {
-            Messages.addGlobalError("Wrong email");
-        }
-    }
-    @Transactional
-    public void setAdminFalse() {
-        try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setAdmin(false);
-        } catch (javax.persistence.NoResultException ex) {
-            Messages.addGlobalError("Wrong email");
-        }
-    }
-    @Transactional
-    public void setBlockedTrue(){
-        try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setBlocked(true);
-        }
-        catch(javax.persistence.NoResultException ex) {
-            Messages.addGlobalError("Wrong email");
-        }
 
-
-    }
-    @Transactional
-    public void setBlockedFalse() {
-        try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setBlocked(false);
-        } catch (javax.persistence.NoResultException ex) {
-            Messages.addGlobalError("Wrong email");
-        }
-    }
 
 
 
