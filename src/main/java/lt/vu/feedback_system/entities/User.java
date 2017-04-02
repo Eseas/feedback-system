@@ -23,6 +23,7 @@ import java.util.List;
         @NamedQuery(name = "User.findById", query = "SELECT s FROM User s WHERE s.id = :id"),
         @NamedQuery(name = "User.findByFirstName", query = "SELECT s FROM User s WHERE s.firstName LIKE :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT s FROM User s WHERE s.lastName LIKE :lastName"),
+        @NamedQuery(name = "User.findByEmail", query = "SELECT s FROM User s WHERE s.email LIKE :email"),
         @NamedQuery(name = "User.findByEmailAndPassword", query = "SELECT s FROM User s WHERE s.email LIKE :email AND s.password LIKE :password"),
 })
 @Getter
@@ -37,7 +38,7 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 40)
     @Column(name = "email")
     private String email;
 
