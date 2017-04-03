@@ -4,7 +4,7 @@
     <!-- see http://tomee.apache.org/datasource-config.html -->
 
     <!-- PostgreSQL Database -->
-    <Resource id="StudentsDataSource" type="DataSource">
+    <Resource id="FeedbackSystemDataSource" type="DataSource">
         JdbcDriver = org.postgresql.Driver
         JdbcUrl = jdbc:postgresql://localhost/feedbackdb
         UserName = postgres
