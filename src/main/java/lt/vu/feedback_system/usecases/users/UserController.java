@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.dao.UserDAO;
 import lt.vu.feedback_system.entities.User;
+import org.mindrot.jbcrypt.BCrypt;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.password.Password;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -30,7 +32,7 @@ public class UserController implements Serializable {
     public String doLogin() {
         try {
             user = userDAO.getUserByEmailAndPassword(
-                    user.getEmail(), user.getPassword());
+                    user.getEmail(), getUserPassword());
         } catch (javax.persistence.NoResultException ex) {
             return ON_LOGIN_FAIL_REDIRECT;
         }
@@ -51,7 +53,13 @@ public class UserController implements Serializable {
         return ON_LOGIN_REDIRECT;
     }
 
-
-
+    private String getUserPassword() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Password pw = (Password)context.getViewRoot().findComponent("login-form:user-password");
+        // dummy result for testing
+        return (String)pw.getValue();
+        // actual result
+        // return BCrypt.hashpw((String)pw.getValue(), BCrypt.gensalt());
+    }
 
 }
