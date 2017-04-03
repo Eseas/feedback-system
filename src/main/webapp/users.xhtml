@@ -52,16 +52,16 @@
             </table>
 
             <p:commandButton value="Give admin"
-                             actionListener="#{userManagementController.setAdminTrue()}"
+                             actionListener="#{userManagementController.setAdmin(true)}"
                              ajax="false"/>
             <p:commandButton value="Remove admin"
-                             actionListener="#{userManagementController.setAdminFalse()}"
+                             actionListener="#{userManagementController.setAdmin(false)}"
                              ajax="false"/>
             <p:commandButton value="Block user"
-                             actionListener="#{userManagementController.setBlockedTrue()}"
+                             actionListener="#{userManagementController.setBlock(true)}"
                              ajax="false"/>
             <p:commandButton value="Unblock user"
-                             actionListener="#{userManagementController.setBlockedFalse()}"
+                             actionListener="#{userManagementController.setBlock(false)}"
                              ajax="false"/>
 
         </h:form>

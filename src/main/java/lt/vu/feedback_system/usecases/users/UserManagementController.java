@@ -20,49 +20,22 @@ public class UserManagementController {
     private UserDAO userDAO;
 
     @Transactional
-    public void setAdminTrue(){
+    public void setAdmin(boolean current_state) {
         try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setAdmin(true);
-        } catch (javax.persistence.NoResultException ex) {
+            user = userDAO.getUserByEmail(user.getEmail());
+            user.setAdmin(current_state);
+        }
+        catch (javax.persistence.NoResultException ex) {
             Messages.addGlobalError("Wrong email");
         }
     }
     @Transactional
-    public void setAdminFalse() {
+    public void setBlock(boolean current_state) {
         try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setAdmin(false);
-        } catch (javax.persistence.NoResultException ex) {
-            Messages.addGlobalError("Wrong email");
+            user = userDAO.getUserByEmail(user.getEmail());
+            user.setBlocked(current_state);
         }
-    }
-    @Transactional
-    public void setBlockedTrue(){
-        try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setBlocked(true);
-        }
-        catch(javax.persistence.NoResultException ex) {
-            Messages.addGlobalError("Wrong email");
-        }
-
-
-    }
-    @Transactional
-    public void setBlockedFalse() {
-        try {
-            user = userDAO.getUserByEmail(
-                    user.getEmail()
-            );
-            user.setBlocked(false);
-        } catch (javax.persistence.NoResultException ex) {
+        catch (javax.persistence.NoResultException ex) {
             Messages.addGlobalError("Wrong email");
         }
     }
