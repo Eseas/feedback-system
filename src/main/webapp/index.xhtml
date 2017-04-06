@@ -13,15 +13,20 @@
 </h:head>
 
 <h:body class="main">
-    <div class="mainLogo">
+    <div class="image"></div>
+
+    <div class="main">
+    <div class="logo">
         <h1>B<em>o</em>S</h1>
         <p>Builder of Surveys</p>
     </div>
 
-    <div class="navButtons">
-        <h:button id="navCreate" outcome="create" value="Create Survey"/>
-        <h:button id="navUsers" outcome="users" value="User Management"/>
-        <h:button id="navSurveys" outcome="surveys" value="Survey Management"/>
+    <div class="buttons">
+        <h:button id="create" outcome="create" value="Create Survey"/>
+        <h:button id="upload" outcome="create" value="Create Survey"/>
+        <h:button id="users" outcome="users" value="User Management"/>
+        <h:button id="surveys" outcome="surveys" value="Survey Management"/>
+    </div>
     </div>
 </h:body>
 </html>

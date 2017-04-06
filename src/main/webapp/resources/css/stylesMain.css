@@ -1,4 +1,4 @@
-.mainLogo{
+.logo{
     color: #00426B;
     position: relative;
     width: 100%;
@@ -6,18 +6,20 @@
     text-align: center;
     font-family: 'Josefin Sans', sans-serif !important;
 }
-.mainLogo h1{
+.logo h1{
     font-size: 4em;
-    margin: 0 auto;
+    font-weight: 200;
+    margin-top: 40px;
+    margin-bottom: 0;
 }
-.mainLogo p{
+.logo p{
     font-style: italic;
     font-size: 2em;
 }
-.mainLogo em {
+.logo em {
     letter-spacing: 0.09em;
 }
-.navButtons {
+.buttons {
     display: block;
     font-weight: normal;
     line-height: normal;
@@ -35,13 +37,18 @@
     transition: all 0.15s ease;
     cursor: pointer;
 }
-.navButtons #navCreate{
-    background: #2B9B57 !important;
-}
-.navButtons #navSurveys, #navUsers{
-    background: #2B9B7F !important;
-}
 
+.image{
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 33%;
+    background-image: url(/workspace_stock.jpg);
+    background-size: cover;
+    background-position: center center;
+}
 body {
     background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
     background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
