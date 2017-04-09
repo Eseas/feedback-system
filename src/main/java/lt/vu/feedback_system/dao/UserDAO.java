@@ -24,8 +24,10 @@ public class UserDAO {
     }
 
     public User getUserById(int id) {
+
         return em.find(User.class, id);
     }
+
     public User getUserByEmailAndPassword(String email, String password) {
         return em.createNamedQuery("User.findByEmailAndPassword", User.class)
                 .setParameter("email", email)

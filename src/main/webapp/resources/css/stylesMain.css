@@ -1,29 +1,72 @@
-.logo{
-    color: #00426B;
-    position: relative;
+.top-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 112px 0 50px;
-    text-align: center;
+    background: #FFF;
+    border-bottom: 0;
+    height: 60px;
+    z-index: 10;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2);
+}
+ol{
+    padding: 0;
+}
+.header #logo{
+    position: relative;
+    font-family: 'Josefin Sans', sans-serif !important;
+    margin-top: -10px;
+    margin-bottom: 0;
+    margin-left: 40px;
+    color: #00426B;
+}
+.header #logo, #user{
+    outline: 0;
+    padding: 0;
+    display: inline-block;
+}
+.header #user{
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
+    color: #00426B;
+    font-style: italic;
+}
+#user a{
+    color: #00426B;
+}
+.definition{
+    position: relative;
+    outline: 0;
     font-family: 'Josefin Sans', sans-serif !important;
 }
-.logo h1{
-    font-size: 4em;
-    font-weight: 200;
-    margin-top: 40px;
-    margin-bottom: 0;
-}
-.logo p{
+.definition h2{
+    margin-top: 0;
+    width: 100%;
+    padding: 140px 0 0;
+    text-align: center;
     font-style: italic;
-    font-size: 2em;
+    font-size: 3em;
+    font-weight: bold;
+    color: #FFFFFF;
 }
-.logo em {
+.definition p{
+    width: 100%;
+    padding: 0 0 50px;
+    text-align: center;
+    font-style: normal;
+    font-size: 2em;
+    font-weight: normal;
+    color: #FFFFFF;
+}
+.header em {
     letter-spacing: 0.09em;
 }
-.buttons {
+button, html input[type=button], input[type=submit] {
     display: block;
     font-weight: normal;
     line-height: normal;
-    width: 100%;
+    width: 270px;
     text-align: center;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
@@ -31,29 +74,34 @@
     border: 0;
     border-radius: 3px;
     padding: 15px !important;
+    margin: 15px auto;
     color: #F9F9F9;
+    background: #114B5F;
     font-size: 14px;
-    -webkit-transition: all 0.15s ease;
     transition: all 0.15s ease;
-    cursor: pointer;
 }
-
-.image{
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
+footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
     width: 100%;
-    height: 33%;
-    background-image: url(/workspace_stock.jpg);
-    background-size: cover;
-    background-position: center center;
 }
 body {
-    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
+    background: rgba(61,174,65,1);
+    background: -moz-linear-gradient(45deg, rgba(61,174,65,1) 0%, rgba(135,214,138,0.69) 100%);
+    background: -webkit-gradient(radial, left bottom, right top, color-stop(0%, rgba(61,174,65,1)), color-stop(100%, rgba(135,214,138,0.69)));
+    background: -webkit-linear-gradient(45deg, rgba(61,174,65,1) 0%, rgba(135,214,138,0.69) 100%);
+    background: -o-linear-gradient(45deg, rgba(61,174,65,1) 0%, rgba(135,214,138,0.69) 100%);
+    background: -ms-linear-gradient(45deg, rgba(61,174,65,1) 0%, rgba(135,214,138,0.69) 100%);
+    background: linear-gradient(45deg, rgba(61,174,65,1) 0%, rgba(135,214,138,0.69) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3dae41', endColorstr='#87d68a', GradientType=1 );
     font-family: "Roboto", sans-serif !important;
     -webkit-font-smoothing: antialiased;
 }
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
