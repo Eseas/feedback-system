@@ -24,6 +24,7 @@ public class UserDAO {
     }
 
     public User getUserById(int id) {
+
         return em.find(User.class, id);
     }
 

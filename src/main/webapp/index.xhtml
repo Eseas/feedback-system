@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
 >
 <h:head>
     <meta charset="utf-8" />
@@ -13,15 +14,33 @@
 </h:head>
 
 <h:body class="main">
-    <div class="mainLogo">
-        <h1>B<em>o</em>S</h1>
-        <p>Builder of Surveys</p>
+
+    <div class="top-bar">
+            <ol class="header">
+                <li id="logo"><h1>B<em>o</em>S</h1></li>
+                <li id="user">
+                    <span class="glyphicon glyphicon-user">
+                    </span>
+                    <p:link value="  Kazimieras Senavaitis"></p:link>
+                </li>  <!--insert function to retrieve signed in user's name-->
+            </ol>
     </div>
 
-    <div class="navButtons">
-        <h:button id="navCreate" outcome="create" value="Create Survey"/>
-        <h:button id="navUsers" outcome="users" value="User Management"/>
-        <h:button id="navSurveys" outcome="surveys" value="Survey Management"/>
+    <div class="content">
+        <div class="definition">
+            <h2>Builder of Surveys</h2>
+            <p>Create, Share and Review</p>
+        </div>
+        <div class="buttons">
+            <h:button id="create" outcome="create" value="Create Survey"/>
+            <h:button id="upload" outcome="upload" value="Upload Survey"/>
+            <h:button id="users" outcome="users" value="User Management"/>
+            <h:button id="surveys" outcome="surveys" value="Survey Management"/>
+        </div>
     </div>
+    <footer>
+        <p>WhySoft, 2017</p>
+    </footer>
+
 </h:body>
 </html>
