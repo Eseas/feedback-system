@@ -44,5 +44,8 @@ public class OptionQuestion {
 
     @OneToMany(mappedBy = "question")
     private List<OptionValue> optionValueList = new ArrayList<>();
+    @OneToMany(mappedBy = "question")
+    private List<OptionAnswer> optionAnswerList = new ArrayList<>();
+
 }
 

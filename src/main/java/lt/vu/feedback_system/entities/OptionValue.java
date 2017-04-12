@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kazim on 2017-03-26.
@@ -33,5 +35,7 @@ public class OptionValue {
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private OptionQuestion question;
+    @OneToMany(mappedBy = "value")
+    private List<OptionAnswer> optionAnswerList = new ArrayList<>();
 }
 

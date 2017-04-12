@@ -55,7 +55,8 @@ public class Survey implements Serializable {
     @OneToMany(mappedBy = "survey")
     private List<OptionQuestion> optionQuestionList = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "survey")
+    private List<AnsweredSurvey> answeredSurveyList = new ArrayList<>();
 
     @ManyToOne(optional=false)
     @JoinColumn(

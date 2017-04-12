@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kazim on 2017-03-26.  
@@ -42,5 +44,7 @@ public class SliderQuestion {
     @JoinColumn(name = "survey_id", referencedColumnName = "id")
     @ManyToOne
     private Survey survey;
+    @OneToMany(mappedBy = "question")
+    private List<SliderAnswer> sliderAnswerList = new ArrayList<>();
 }
 

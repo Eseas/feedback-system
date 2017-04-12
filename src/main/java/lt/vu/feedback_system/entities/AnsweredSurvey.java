@@ -5,6 +5,7 @@
  */
 package lt.vu.feedback_system.entities;
 
+import javafx.scene.control.Slider;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,4 +37,10 @@ public class AnsweredSurvey implements Serializable {
     @ManyToOne
     @JoinColumn(name="survey_id")
     private Survey survey;
+    @OneToMany(mappedBy = "survey")
+    private List<OptionAnswer> optionAnswerList = new ArrayList<>();
+    @OneToMany(mappedBy = "survey")
+    private List<SliderAnswer> sliderAnswerList = new ArrayList<>();
+    @OneToMany(mappedBy = "survey")
+    private List<TextAnswer> textAnswerList = new ArrayList<>();
 }

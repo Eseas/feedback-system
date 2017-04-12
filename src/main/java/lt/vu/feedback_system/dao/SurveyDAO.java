@@ -19,4 +19,10 @@ public class SurveyDAO {
     public List<Survey> getAllSurveys() {
         return em.createNamedQuery("Survey.findAll", Survey.class).getResultList();
     }
+    public Survey getSurveyByName(String title) {
+        return em.createNamedQuery("Survey.findByName", Survey.class)
+                .setParameter("title", title)
+                .getSingleResult();
+    }
+
 }
