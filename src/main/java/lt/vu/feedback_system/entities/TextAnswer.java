@@ -10,13 +10,10 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kazim on 2017-03-26.
- */
 @Entity
-@Table(schema = "feedback", name = "option_answers")
+@Table(schema = "feedback", name = "text_answers")
 @NamedQueries({
-        @NamedQuery(name = "OptionAnswer.findAll", query = "SELECT c FROM OptionAnswer c")})
+        @NamedQuery(name = "TextAnswer.findAll", query = "SELECT c FROM TextAnswer c")})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})

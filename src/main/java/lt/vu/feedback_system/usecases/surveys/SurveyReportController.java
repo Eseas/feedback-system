@@ -19,14 +19,12 @@ public class SurveyReportController implements Serializable {
 
     @Inject
     private SurveyDAO surveyDAO;
-
+    @Inject
+    private AnsweredSurveyDAO answeredSurveyDAO;
     @Getter
-    private Survey survey = new Survey();
+    private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
+    public List<AnsweredSurvey> getAllAnswers() {return answeredSurveyDAO.getAllAnswers();}
 
-    public List<Survey> getAllSurveys() {
-        return surveyDAO.getAllSurveys();
-    }
-    public Survey getUsersSurvey(){return surveyDAO.getSurveyByName("Salary");}
 
 }

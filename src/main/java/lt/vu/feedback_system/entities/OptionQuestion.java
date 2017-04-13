@@ -10,9 +10,6 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kazim on 2017-03-26.
- */
 @Entity
 @Table(schema = "feedback", name = "option_questions")
 @NamedQueries({
