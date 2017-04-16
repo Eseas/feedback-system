@@ -30,10 +30,13 @@ CREATE TABLE feedback.surveys
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
 
+
+
 CREATE TABLE feedback.slider_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    position INTEGER,
     is_required BOOLEAN,
     lower_bound INTEGER,
     upper_bound INTEGER,
@@ -41,20 +44,20 @@ CREATE TABLE feedback.slider_questions
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
-
 CREATE TABLE feedback.text_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    position INTEGER,
     is_required BOOLEAN,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
-
 CREATE TABLE feedback.option_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    position INTEGER,
     is_required BOOLEAN,
     is_multiple BOOLEAN,
     title VARCHAR(200),

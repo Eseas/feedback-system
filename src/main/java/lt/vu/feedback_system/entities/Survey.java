@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.questions.OptionQuestion;
+import lt.vu.feedback_system.entities.questions.SliderQuestion;
+import lt.vu.feedback_system.entities.questions.TextQuestion;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -35,11 +38,11 @@ public class Survey implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Size(min = 4, max = 200)
+    @Size(min = 1, max = 200)
     @Column(name = "title")
     private String title;
 
-    @Size(min = 4, max = 200)
+    @Size(min = 1, max = 200)
     @Column(name = "description")
     private String description;
 
@@ -47,20 +50,16 @@ public class Survey implements Serializable {
     private Boolean confidential;
 
     @OneToMany(mappedBy = "survey")
-    private List<TextQuestion> textQuestionList = new ArrayList<>();
+    private List<TextQuestion> textQuestions = new ArrayList<>();
 
     @OneToMany(mappedBy = "survey")
-    private List<SliderQuestion> sliderQuestionList = new ArrayList<>();
+    private List<SliderQuestion> sliderQuestions = new ArrayList<>();
 
     @OneToMany(mappedBy = "survey")
-    private List<OptionQuestion> optionQuestionList = new ArrayList<>();
-
-
+    private List<OptionQuestion> optionQuestions = new ArrayList<>();
 
     @ManyToOne(optional=false)
     @JoinColumn(
             name="creator_id", nullable=false, updatable=false)
-    public User creator;
-
-
+    private User creator;
 }
