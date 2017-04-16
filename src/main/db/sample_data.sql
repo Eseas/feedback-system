@@ -2,6 +2,7 @@
 INSERT INTO feedback.potential_users VALUES (DEFAULT, 'alfie.byrne@gmail.com');
 INSERT INTO feedback.potential_users VALUES (DEFAULT, 'kian.watts@gmail.com');
 
+INSERT INTO feedback.users VALUES (DEFAULT, 'test', 'TESTT', 'TESTTT', 'test', true, false);
 INSERT INTO feedback.users VALUES (DEFAULT, 'tyler.gallagher@gmail.com', 'Tyler', 'Gallagher', 'testpassword', true, false);
 INSERT INTO feedback.users VALUES (DEFAULT, 'bradley.bell@gmail.com', 'Bradley', 'Bell', 'testpassword', true, false);
 INSERT INTO feedback.users VALUES (DEFAULT, 'conner.russo@gmail.com', 'Conner', 'Russo', 'testpassword', true, false);

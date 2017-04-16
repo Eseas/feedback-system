@@ -21,28 +21,16 @@
     </div>
 
     <div class="login-page">
-    <c:choose>
-        <c:when test="#{userController.user.id ne null}" >
-            <p>You're already logged in.</p>
+        <p:messages autoUpdate="true" />
 
-            <h:button value="Logout" outcome="#{userController.doLogout()}" />
-        </c:when>
-
-        <c:otherwise>
-            <c:if test="${param.error ne null}" >
-                <p>Wrong email or password! Please try again.</p>
-            </c:if>
-
-            <div class="form">
-                <h:form id="login-form" class="login-form">
-                    <p:inputText class="input" id="user-email" value="#{userController.user.email}" placeholder="Email" required="true" />
-                    <p:password class="input" id="user-password" placeholder="Password" required="true"/>
-                    <h:commandButton class="button" value="Login" action="#{userController.doLogin()}" />
-                    <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
-                </h:form>
-            </div>
-        </c:otherwise>
-    </c:choose>
+        <div class="form">
+            <h:form id="login-form" class="login-form">
+                <p:inputText class="input" id="user-email" value="#{loginController.email}" placeholder="Email" required="true" />
+                <p:password class="input" id="user-password" value="#{loginController.password}" placeholder="Password" required="true"/>
+                <h:commandButton class="button" value="Login" action="#{loginController.doLogin()}" />
+                <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
+            </h:form>
+        </div>
     </div>
 </h:body>
 </html>
