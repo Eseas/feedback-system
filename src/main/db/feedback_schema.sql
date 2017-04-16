@@ -16,7 +16,8 @@ CREATE TABLE feedback.users
     last_name VARCHAR(20),
     password VARCHAR(20),
     is_admin BOOLEAN,
-    is_blocked BOOLEAN
+    is_blocked BOOLEAN,
+    opt_lock_version INTEGER
 );
 
 CREATE TABLE feedback.surveys

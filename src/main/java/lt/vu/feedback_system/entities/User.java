@@ -25,6 +25,7 @@ import java.util.List;
         @NamedQuery(name = "User.findByLastName", query = "SELECT s FROM User s WHERE s.lastName LIKE :lastName"),
         @NamedQuery(name = "User.findByEmail", query = "SELECT s FROM User s WHERE s.email LIKE :email"),
         @NamedQuery(name = "User.findByEmailAndPassword", query = "SELECT s FROM User s WHERE s.email LIKE :email AND s.password LIKE :password"),
+        @NamedQuery(name = "User.findByOptLockVersion", query = "SELECT s FROM User s WHERE s.optLockVersion = :optLockVersion"),
 })
 @Getter
 @Setter
@@ -61,4 +62,8 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "creator")
     private List<Survey> createdSurveys = new ArrayList<>();
+
+    @Version
+    @Column(name = "opt_lock_version")
+    private Integer optLockVersion;
 }
