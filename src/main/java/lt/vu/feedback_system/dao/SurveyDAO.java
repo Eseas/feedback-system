@@ -19,4 +19,8 @@ public class SurveyDAO {
     public List<Survey> getAllSurveys() {
         return em.createNamedQuery("Survey.findAll", Survey.class).getResultList();
     }
+
+    public Survey getSurveyById(Integer id) {
+        return em.createNamedQuery("Survey.findById", Survey.class).setParameter("id", id).getSingleResult();
+    }
 }

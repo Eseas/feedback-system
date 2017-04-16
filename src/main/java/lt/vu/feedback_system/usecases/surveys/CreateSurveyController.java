@@ -1,116 +1,170 @@
 package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import lt.vu.feedback_system.dao.*;
-import lt.vu.feedback_system.entities.*;
+import lt.vu.feedback_system.dao.OptionValueDAO;
+import lt.vu.feedback_system.dao.QuestionDAO;
+import lt.vu.feedback_system.dao.SurveyDAO;
+import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.questions.OptionValue;
+import lt.vu.feedback_system.entities.questions.OptionQuestion;
+import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.entities.questions.SliderQuestion;
+import lt.vu.feedback_system.entities.questions.TextQuestion;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Named
 @ViewScoped
-@Slf4j
 public class CreateSurveyController implements Serializable {
 
     @Inject
     private SurveyDAO surveyDAO;
+
     @Inject
-    private TextQuestionDAO textQuestionDAO;
-    @Inject
-    private OptionQuestionDAO optionQuestionDAO;
-    @Inject
-    private SliderQuestionDAO sliderQuestionDAO;
+    private QuestionDAO questionDAO;
     @Inject
     private OptionValueDAO optionValueDAO;
 
     @Getter
     private Survey survey = new Survey();
 
-    @Getter
-    private TextQuestion textQuestion = new TextQuestion();
+    private Integer position = 1;
+
+    public void moveUp(Question q) {
+        List<Question> questions = getQuestions();
+
+        if (q.getPosition() == 1)
+            return;
+
+        for (Question tempQ : questions) {
+            if (tempQ.getPosition() + 1 == q.getPosition()) {
+                q.setPosition(q.getPosition() - 1);
+                tempQ.setPosition(tempQ.getPosition() + 1);
+                break;
+            }
+        }
+    }
+
+    public void moveDown(Question q) {
+        List<Question> questions = getQuestions();
+
+        if (q.getPosition() == questions.size())
+            return;
+
+        for (Question tempQ : questions) {
+            if (tempQ.getPosition() != q.getPosition())
+                if (tempQ.getPosition() == (q.getPosition() + 1)) {
+                    q.setPosition(q.getPosition() + 1);
+                    tempQ.setPosition(tempQ.getPosition() - 1);
+                    break;
+                }
+        }
+    }
+
+    public List<Question> getQuestions() {
+        List<Question> questions = new ArrayList<>();
+
+        questions.addAll(survey.getTextQuestions());
+        questions.addAll(survey.getSliderQuestions());
+        questions.addAll(survey.getOptionQuestions());
+
+        return sort(questions);
+    }
+
+    public List<Question> sort(List<Question> questions) {
+        Collections.sort(questions, (lhs, rhs) -> {
+            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+            return lhs.getPosition() > rhs.getPosition() ? 1 : (lhs.getPosition() < rhs.getPosition() ) ? -1 : 0;
+        });
+        return questions;
+    }
 
     public List<Survey> getAllSurveys() {
         return surveyDAO.getAllSurveys();
-    }
+    } // wrong usage
 
     /**
-     * Text question...
+     * Text...
      */
     public void addTextQuestion() {
-//        TextQuestion textQuestion = new TextQuestion();
-        textQuestion.setSurvey(survey);
-        survey.getTextQuestionList().add(textQuestion);
-        textQuestion = new TextQuestion();
+        TextQuestion q = new TextQuestion();
+
+        q.setPosition(position++);
+        q.setSurvey(survey);
+
+        survey.getTextQuestions().add(q);
     }
 
-    public void removeTextQuestion(TextQuestion textQuestion) {
-        survey.getTextQuestionList().remove(textQuestion);
-    }
+    public void removeQuestion(Question q) {
+        for (Question tempQ : getQuestions()) {
+            if (tempQ.getPosition() > q.getPosition())
+                tempQ.setPosition(tempQ.getPosition() - 1);
+        }
 
+        switch (q.getType()) {
+            case "TextQuestion":
+                survey.getTextQuestions().remove(q);
+            case "SliderQuestion":
+                survey.getSliderQuestions().remove(q);
+            case "OptionQuestion":
+                survey.getOptionQuestions().remove(q);
+        }
+    }
 
     /**
-     * Option question...
+     * Slider...
      */
-    public void addOptionQuestion() {
-        OptionQuestion optionQuestion = new OptionQuestion();
-        optionQuestion.setSurvey(survey);
-        survey.getOptionQuestionList().add(optionQuestion);
+    public void addSliderQuestion() {
+        SliderQuestion q = new SliderQuestion();
+
+        q.setPosition(position++);
+        q.setSurvey(survey);
+
+        survey.getSliderQuestions().add(q);
     }
 
-    public void removeOptionQuestion(OptionQuestion optionQuestion) {
-        survey.getOptionQuestionList().remove(optionQuestion);
+    /**
+     * Option...
+     */
+    public void addOptionQuestion() {
+        OptionQuestion q = new OptionQuestion();
+
+        q.setPosition(position++);
+        q.setSurvey(survey);
+
+        survey.getOptionQuestions().add(q);
     }
 
     public void addOptionValue(OptionQuestion optionQuestion) {
         OptionValue optionValue = new OptionValue();
-        optionQuestion.getOptionValueList().add(optionValue);
+        optionQuestion.getOptionValues().add(optionValue);
         optionValue.setQuestion(optionQuestion);
     }
 
-    /**
-     * Works only when optionQuestion and optionValue is not persisted.
-     * @param optionQuestion
-     * @param optionValue
-     */
     public void removeOptionValue(OptionQuestion optionQuestion, OptionValue optionValue) {
-        optionQuestion.getOptionValueList().remove(optionValue);
+        optionQuestion.getOptionValues().remove(optionValue);
     }
-
-    /**
-     * Slider question...
-     */
-    public void addSliderQuestion() {
-        SliderQuestion sliderQuestion = new SliderQuestion();
-        sliderQuestion.setSurvey(survey);
-        survey.getSliderQuestionList().add(sliderQuestion);
-    }
-
-    public void removeSliderQuestion(SliderQuestion sliderQuestion) {
-        survey.getSliderQuestionList().remove(sliderQuestion);
-    }
-
 
 
     @Transactional
     public String create() {
-        for (TextQuestion textQuestion : survey.getTextQuestionList()) {
-            textQuestionDAO.create(textQuestion);
-        }
-        for (OptionQuestion optionQuestion : survey.getOptionQuestionList()) {
-            optionQuestionDAO.create(optionQuestion);
-            for (OptionValue optionValue : optionQuestion.getOptionValueList()) {
-                optionValueDAO.create(optionValue);
-            }
-        }
-        for (SliderQuestion sliderQuestion : survey.getSliderQuestionList()) {
-            sliderQuestionDAO.create(sliderQuestion);
-        }
         surveyDAO.create(survey);
+        for (TextQuestion q: survey.getTextQuestions())
+            questionDAO.create(q);
+        for (SliderQuestion q: survey.getSliderQuestions())
+            questionDAO.create(q);
+        for (OptionQuestion q: survey.getOptionQuestions()) {
+            questionDAO.create(q);
+            for (OptionValue ov : q.getOptionValues())
+                optionValueDAO.create(ov);
+        }
         return "surveys?faces-redirect=true";
     }
 }
