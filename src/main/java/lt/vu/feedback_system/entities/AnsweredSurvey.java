@@ -5,7 +5,6 @@
  */
 package lt.vu.feedback_system.entities;
 
-import javafx.scene.control.Slider;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
