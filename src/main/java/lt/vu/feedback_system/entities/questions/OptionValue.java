@@ -1,4 +1,4 @@
-package lt.vu.feedback_system.entities;
+package lt.vu.feedback_system.entities.questions;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,31 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(schema = "feedback", name = "text_questions")
+@Table(schema = "feedback", name = "option_values")
 @NamedQueries({
-        @NamedQuery(name = "TextQuestion.findAll", query = "SELECT c FROM TextQuestion c")})
+        @NamedQuery(name = "OptionValue.findAll", query = "SELECT c FROM OptionValue c")})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
 @ToString(of = {"id", "title"})
-public class TextQuestion {
+public class OptionValue {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "is_required")
-    private Boolean required;
-
     @Size(min = 4, max = 200)
     @Column(name = "title")
     private String title;
 
-    @JoinColumn(name = "survey_id", referencedColumnName = "id")
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
-    private Survey survey;
-    @OneToMany(mappedBy = "question")
-    private List<TextAnswer> textAnswerList = new ArrayList<>();
+    private OptionQuestion question;
+    @OneToMany(mappedBy = "value")
+    private List<OptionAnswer> optionAnswerList = new ArrayList<>();
 }
 

@@ -25,4 +25,7 @@ public class SurveyDAO {
                 .getSingleResult();
     }
 
+    public Survey getSurveyById(Integer id) {
+        return em.createNamedQuery("Survey.findById", Survey.class).setParameter("id", id).getSingleResult();
+    }
 }

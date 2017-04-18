@@ -2,25 +2,25 @@
 INSERT INTO feedback.potential_users VALUES (DEFAULT, 'alfie.byrne@gmail.com');
 INSERT INTO feedback.potential_users VALUES (DEFAULT, 'kian.watts@gmail.com');
 
-INSERT INTO feedback.users VALUES (DEFAULT, 'tyler.gallagher@gmail.com', 'Tyler', 'Gallagher', 'testpassword', true, false);
-INSERT INTO feedback.users VALUES (DEFAULT, 'bradley.bell@gmail.com', 'Bradley', 'Bell', 'testpassword', true, false);
-INSERT INTO feedback.users VALUES (DEFAULT, 'conner.russo@gmail.com', 'Conner', 'Russo', 'testpassword', true, false);
+INSERT INTO feedback.users VALUES (DEFAULT, 'tyler.gallagher@gmail.com', 'Tyler', 'Gallagher', 'testpassword', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'bradley.bell@gmail.com', 'Bradley', 'Bell', 'testpassword', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'conner.russo@gmail.com', 'Conner', 'Russo', 'testpassword', true, false, 1);
 
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask ypu to answer some questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 2, TRUE,'Social Security', 'This survey is anonymous');
 
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, TRUE, 1, 6, 1, 'Assess office environment');
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, FALSE, 1, 10, 1, 'Do you like your chair?');
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 3, TRUE, 1, 8, 1, 'Do you need a new monitor?');
+INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, TRUE, 1, 6, 1, 'Rate office environment');
+INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, 3,FALSE, 1, 10, 1, 'Do you like your chair?');
+INSERT INTO feedback.slider_questions VALUES (DEFAULT, 3, 2,TRUE, 1, 8, 1, 'Do you need a new monitor?');
 
-INSERT INTO feedback.text_questions VALUES (DEFAULT, 1, TRUE, 'Assess office environment');
-INSERT INTO feedback.text_questions VALUES (DEFAULT, 2, FALSE, 'Do you like your chair?');
-INSERT INTO feedback.text_questions VALUES (DEFAULT, 3, TRUE, 'Do you need a new monitor?');
+INSERT INTO feedback.text_questions VALUES (DEFAULT, 1, 2, TRUE, 'Tell us about office environment');
+INSERT INTO feedback.text_questions VALUES (DEFAULT, 2, 2, FALSE, 'Do you like your chair?');
+INSERT INTO feedback.text_questions VALUES (DEFAULT, 3, 1,TRUE, 'Do you need a new monitor?');
 
-INSERT INTO feedback.option_questions VALUES (DEFAULT, 1, TRUE, TRUE, 'Assess office environment');
-INSERT INTO feedback.option_questions VALUES (DEFAULT, 2, FALSE, TRUE, 'Do you like your chair?');
-INSERT INTO feedback.option_questions VALUES (DEFAULT, 3, TRUE, FALSE,'Do you need a new monitor?');
+INSERT INTO feedback.option_questions VALUES (DEFAULT, 1, 3, TRUE, TRUE, 'Which option represent your situation?');
+INSERT INTO feedback.option_questions VALUES (DEFAULT, 2, 1,FALSE, TRUE, 'Do you like your chair?');
+INSERT INTO feedback.option_questions VALUES (DEFAULT, 3, 3,TRUE, FALSE,'Do you need a new monitor?');
 
 INSERT INTO feedback.option_values VALUES (DEFAULT, 1, 'Great');
 INSERT INTO feedback.option_values VALUES (DEFAULT, 1, 'Medium');
