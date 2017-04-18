@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.TextAnswer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by kazim on 2017-03-26.
- */
 @Entity
 @Table(schema = "feedback", name = "text_questions")
 @NamedQueries({
@@ -46,5 +46,7 @@ public class TextQuestion implements Question {
     @ManyToOne
     private Survey survey;
 
+    @OneToMany(mappedBy = "question")
+    private List<TextAnswer> textAnswers = new ArrayList<>();
 }
 

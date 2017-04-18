@@ -4,13 +4,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.OptionAnswer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by kazim on 2017-03-26.
- */
 @Entity
 @Table(schema = "feedback", name = "option_values")
 @NamedQueries({
@@ -26,12 +26,14 @@ public class OptionValue {
     @Column(name = "id")
     private Integer id;
 
-    @Size(min = 4, max = 200)
+    @Size(min = 1, max = 200)
     @Column(name = "title")
     private String title;
 
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private OptionQuestion question;
+    @OneToMany(mappedBy = "value")
+    private List<OptionAnswer> optionAnswers = new ArrayList<>();
 }
 

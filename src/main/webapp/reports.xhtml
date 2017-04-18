@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<h:head>
+    <h:outputStylesheet name="css/styles.css" />
+    <title>Conversation implementation with CDI</title>
+</h:head>
+
+<h:body>
+    <h1>Surveys</h1>
+    <h:form >
+        <p:fieldset legend="Survey reports" toggleable="true">
+            <p:dataTable value="#{surveyReportController.getAllAnswers()}" var="answer">
+                <p:column headerText="Survey Title" >
+                    <h:outputText value="#{answer.survey.title}" />
+                </p:column>
+                <p:column headerText="Text Answers">
+                    <ui:repeat value="#{answer.survey.textQuestions}" var="textQuestion">
+                        <h:outputText value="#{textQuestion.title}"/>
+                        <br/>
+                        <ui:repeat value="#{textQuestion.textAnswers}" var="textAnswer">
+                        <h:outputText value="#{textAnswer.value}"/>
+                        <br/>
+                        </ui:repeat>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Option Answers">
+                    <ui:repeat value="#{answer.survey.optionQuestions}" var="optionQuestion">
+                        <h:outputText value="#{optionQuestion.title}"/>
+                            <br/>
+                            <ui:repeat value="#{optionQuestion.optionAnswers}" var="optionAnswer">
+                                <h:outputText value="#{optionAnswer.value.title}"/>
+                                <br/>
+                            </ui:repeat>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Slider Answers">
+                    <ui:repeat value="#{answer.survey.sliderQuestions}" var="sliderQuestion">
+                        <h:outputText value="#{sliderQuestion.title}"/>
+                        <br/>
+                        <ui:repeat value="#{sliderQuestion.sliderAnswers}" var="sliderAnswer">
+                            <h:outputText value="#{sliderAnswer.value}"/>
+                            <br/>
+                        </ui:repeat>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="Reporter">
+                    <h:outputText value="Ateityje bus pridėta jei reikės adminui" />
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+        <p:messages globalOnly="true"/>
+    </h:form>
+</h:body>
+</html>
+

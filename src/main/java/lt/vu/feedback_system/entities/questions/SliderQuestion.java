@@ -4,14 +4,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.SliderAnswer;
 import lt.vu.feedback_system.entities.Survey;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by kazim on 2017-03-26.  
- */
 @Entity
 @Table(schema = "feedback", name = "slider_questions")
 @NamedQueries({
@@ -48,8 +48,11 @@ public class SliderQuestion implements Question {
     @Column(name = "upper_bound")
     private Integer upperBound;
 
-    @JoinColumn(name = "survey_id", referencedColumnName = "ID")
+    @JoinColumn(name = "survey_id", referencedColumnName = "id")
     @ManyToOne
-    protected Survey survey;
+    private Survey survey;
+
+    @OneToMany(mappedBy = "question")
+    private List<SliderAnswer> sliderAnswers = new ArrayList<>();
 }
 
