@@ -18,7 +18,7 @@
     <h:form >
         <p:fieldset legend="Survey reports" toggleable="true">
             <p:dataTable value="#{surveyReportController.getAllAnswers()}" var="answer">
-                <p:column headerText="Betkas" >
+                <p:column headerText="Survey Title" >
                     <h:outputText value="#{answer.survey.title}" />
                 </p:column>
                 <p:column headerText="Text Answers">
