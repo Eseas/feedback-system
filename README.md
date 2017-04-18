@@ -9,8 +9,19 @@
 4. Find `sample_data.sql` under `src/main/db`
 5. Right-click `Run 'sample_data.sql'...`
 
+## How to resolve conflicts
+1. Open Intellij with our project.
+2. VCS -> Git -> Branches
+3. Select a branch you want to resolve conflicts with master.
+4. Click "Checkout as a new local branch"
+5. VCS -> Git -> Pull...
+6. Pull master
+7. Resolve all conflics:
+left part is your local code, middle is result, right is code in master.  
+8. Done.
 
-
+## Coding standard
+1. List naming: we use plural, ex.: apples, not appleList.
 
 
 
