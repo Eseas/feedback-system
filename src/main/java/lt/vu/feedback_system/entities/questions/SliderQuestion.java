@@ -53,6 +53,6 @@ public class SliderQuestion implements Question {
     private Survey survey;
 
     @OneToMany(mappedBy = "question")
-    private List<SliderAnswer> sliderAnswerList = new ArrayList<>();
+    private List<SliderAnswer> sliderAnswers = new ArrayList<>();
 }
 

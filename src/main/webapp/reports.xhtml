@@ -22,30 +22,30 @@
                     <h:outputText value="#{answer.survey.title}" />
                 </p:column>
                 <p:column headerText="Text Answers">
-                    <ui:repeat value="#{answer.survey.textQuestionList}" var="textQuestion">
+                    <ui:repeat value="#{answer.survey.textQuestions}" var="textQuestion">
                         <h:outputText value="#{textQuestion.title}"/>
                         <br/>
-                        <ui:repeat value="#{textQuestion.textAnswerList}" var="textAnswer">
+                        <ui:repeat value="#{textQuestion.textAnswers}" var="textAnswer">
                         <h:outputText value="#{textAnswer.value}"/>
                         <br/>
                         </ui:repeat>
                     </ui:repeat>
                 </p:column>
                 <p:column headerText="Option Answers">
-                    <ui:repeat value="#{answer.survey.optionQuestionList}" var="optionQuestion">
+                    <ui:repeat value="#{answer.survey.optionQuestions}" var="optionQuestion">
                         <h:outputText value="#{optionQuestion.title}"/>
                             <br/>
-                            <ui:repeat value="#{optionQuestion.optionAnswerList}" var="optionAnswer">
+                            <ui:repeat value="#{optionQuestion.optionAnswers}" var="optionAnswer">
                                 <h:outputText value="#{optionAnswer.value.title}"/>
                                 <br/>
                             </ui:repeat>
                     </ui:repeat>
                 </p:column>
                 <p:column headerText="Slider Answers">
-                    <ui:repeat value="#{answer.survey.sliderQuestionList}" var="sliderQuestion">
+                    <ui:repeat value="#{answer.survey.sliderQuestions}" var="sliderQuestion">
                         <h:outputText value="#{sliderQuestion.title}"/>
                         <br/>
-                        <ui:repeat value="#{sliderQuestion.sliderAnswerList}" var="sliderAnswer">
+                        <ui:repeat value="#{sliderQuestion.sliderAnswers}" var="sliderAnswer">
                             <h:outputText value="#{sliderAnswer.value}"/>
                             <br/>
                         </ui:repeat>

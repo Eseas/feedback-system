@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.questions.SliderQuestion;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -35,5 +36,4 @@ public class SliderAnswer {
     @JoinColumn(name = "answered_survey_id", referencedColumnName = "ID")
     @ManyToOne
     private AnsweredSurvey survey;
-
-   }
+}
