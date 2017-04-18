@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 <h:head>
     <meta charset="utf-8" />
@@ -21,28 +20,15 @@
     </div>
 
     <div class="login-page">
-    <c:choose>
-        <c:when test="#{userController.user.id ne null}" >
-            <p>You're already logged in.</p>
-
-            <h:button value="Logout" outcome="#{userController.doLogout()}" />
-        </c:when>
-
-        <c:otherwise>
-            <c:if test="${param.error ne null}" >
-                <p>Wrong email or password! Please try again.</p>
-            </c:if>
-
-            <div class="form">
-                <h:form id="login-form" class="login-form">
-                    <p:inputText class="input" id="user-email" value="#{userController.user.email}" placeholder="Email" required="true" />
-                    <p:password class="input" id="user-password" placeholder="Password" required="true"/>
-                    <h:commandButton class="button" value="Login" action="#{userController.doLogin()}" />
-                    <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
-                </h:form>
-            </div>
-        </c:otherwise>
-    </c:choose>
+        <div class="form">
+            <h:form id="login-form" class="login-form">
+                <p:inputText class="input" id="user-email" value="#{loginController.email}" placeholder="Email" required="true" />
+                <p:password class="input" id="user-password" value="#{loginController.password}" placeholder="Password" required="true"/>
+                <p:messages autoUpdate="true" />
+                <h:commandButton class="button" value="Login" action="#{loginController.doLogin()}" />
+                <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
+            </h:form>
+        </div>
     </div>
 </h:body>
 </html>
