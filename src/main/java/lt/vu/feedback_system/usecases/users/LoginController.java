@@ -1,10 +1,8 @@
 package lt.vu.feedback_system.usecases.users;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.businesslogic.users.Session;
 import org.mindrot.jbcrypt.BCrypt;
-import org.omnifaces.util.Messages;
 import org.primefaces.component.password.Password;
 
 import javax.enterprise.inject.Model;
@@ -39,8 +37,7 @@ public class LoginController {
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            return null;
-            //return navigationController.redirectToLogin();
+            return navigationController.toLogin();
         }
     }
 
