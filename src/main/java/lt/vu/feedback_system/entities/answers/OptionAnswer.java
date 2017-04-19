@@ -39,8 +39,12 @@ public class OptionAnswer implements Answer {
     @ManyToOne
     private AnsweredSurvey answeredSurvey;
 
-    @JoinColumn(name = "option_id", referencedColumnName = "id")
-    @ManyToOne
-    private OptionValue value;
+    @OneToMany(mappedBy = "optionAnswer")
+    private List<OptionValueAnswer> optionValueAnswers;
+
+//    Justas approach
+//
+//    @OneToMany
+//    private List<OptionValue> optionValues;
 
 }

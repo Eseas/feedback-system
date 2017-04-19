@@ -104,8 +104,15 @@ CREATE TABLE feedback.option_answers
     id serial PRIMARY KEY,
     question_id INTEGER,
     answered_survey_id INTEGER,
-    option_id INTEGER,
     FOREIGN KEY (question_id) REFERENCES feedback.option_questions (id),
-    FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id),
-    FOREIGN KEY (option_id) REFERENCES feedback.option_values (id)
+    FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
+);
+
+CREATE TABLE feedback.option_value_answers
+(
+    id serial PRIMARY KEY,
+    answer_id INTEGER,
+    option_value_id INTEGER,
+    FOREIGN KEY (answer_id) REFERENCES feedback.option_answers (id),
+    FOREIGN KEY (option_value_id) REFERENCES feedback.option_values (id)
 );

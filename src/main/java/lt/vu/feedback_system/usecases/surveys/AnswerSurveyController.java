@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
+import lt.vu.feedback_system.dao.OptionValueAnswerDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.AnsweredSurvey;
-import lt.vu.feedback_system.entities.answers.OptionAnswer;
-import lt.vu.feedback_system.entities.answers.SliderAnswer;
-import lt.vu.feedback_system.entities.answers.TextAnswer;
-import lt.vu.feedback_system.entities.answers.Answer;
+import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
 
 import javax.faces.view.ViewScoped;
@@ -33,6 +31,8 @@ public class AnswerSurveyController implements Serializable {
     private SurveyDAO surveyDAO;
     @Inject
     private AnsweredSurveyDAO answeredSurveyDAO;
+    @Inject
+    private OptionValueAnswerDAO optionValueAnswerDAO;
 
     @Inject
     private AnswerDAO answerDAO;
@@ -98,8 +98,8 @@ public class AnswerSurveyController implements Serializable {
             answerDAO.create(a);
         for (OptionAnswer a: answeredSurvey.getOptionAnswers()) {
             answerDAO.create(a);
-            for (OptionValue ov : q.getOptionValues())
-                optionValueDAO.create(ov);
+            for (OptionValueAnswer ova : a.getOptionValueAnswers())
+                optionValueAnswerDAO.create(ova);
         }
         return "surveys?faces-redirect=true";
     }

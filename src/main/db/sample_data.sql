@@ -10,9 +10,9 @@ INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Pl
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask ypu to answer some questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 2, TRUE,'Social Security', 'This survey is anonymous');
 
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, TRUE, 1, 6, 1, 'Rate office environment');
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, 3, FALSE, 1, 10, 1, 'Do you like your chair?');
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 3, 2, TRUE, 1, 8, 1, 'Do you need a new monitor?');
+INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, TRUE, 1, 6, 'Rate office environment');
+INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, 3, FALSE, 1, 10, 'Do you like your chair?');
+INSERT INTO feedback.slider_questions VALUES (DEFAULT, 3, 2, TRUE, 1, 8, 'Do you need a new monitor?');
 
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 1, 2, TRUE, 'Tell us about office environment');
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 2, 2, FALSE, 'Do you like your chair?');
@@ -42,6 +42,8 @@ INSERT INTO feedback.text_answers VALUES (DEFAULT, 1, 1, 'Perfect!');
 INSERT INTO feedback.text_answers VALUES (DEFAULT, 2, 2, 'Not at all');
 INSERT INTO feedback.text_answers VALUES (DEFAULT, 3, 3, 'ASAP');
 
-INSERT INTO feedback.option_answers VALUES (DEFAULT, 1, 1, 2);
-INSERT INTO feedback.option_answers VALUES (DEFAULT, 2, 2, 4);
-INSERT INTO feedback.option_answers VALUES (DEFAULT, 3, 3, 6);
+INSERT INTO feedback.option_answers VALUES (DEFAULT, 1, 1);
+INSERT INTO feedback.option_answers VALUES (DEFAULT, 2, 2);
+INSERT INTO feedback.option_answers VALUES (DEFAULT, 3, 3);
+
+INSERT INTO feedback.option_value_answers VALUES (DEFAULT, 1, 2);
