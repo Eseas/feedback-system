@@ -12,6 +12,7 @@ import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.questions.SliderQuestion;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

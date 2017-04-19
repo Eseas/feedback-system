@@ -12,8 +12,8 @@ public interface Question {
     public Integer getPosition();
     public void setPosition(Integer position);
 
-    public boolean isRequired();
-    public void setRequired(boolean value);
+    public Boolean getRequired();
+    public void setRequired(Boolean value);
 //    public Survey getSurvey();
 //    public void setSurvey(Survey survey);
 

@@ -37,7 +37,7 @@ public class SliderQuestion implements Question {
     private String title;
 
     @Column(name = "is_required")
-    private boolean required = false;
+    private Boolean required;
 
     @Column(name = "position")
     private Integer position;
