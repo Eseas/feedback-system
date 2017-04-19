@@ -23,28 +23,29 @@
             <h1>#{answerSurveyController.survey.title}</h1>
             <h:form>
                 <p:fieldset legend="Surveys" toggleable="true">
-                    <ui:repeat value="#{answerSurveyController.questions}" var="question">
-                        <p:outputLabel value="#{question.position}. #{question.title}"/>
+                    <ui:repeat value="#{answerSurveyController.answers}" var="answer">
+                        <p:outputLabel value="#{answer.question.position}. #{answer.question.title}"/>
                         <br/>
 
-                        <ui:fragment rendered="#{question.type == 'TextQuestion'}">
-
+                        <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
+                            <h:inputText/>
                         </ui:fragment>
 
-                        <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                            <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
+                        <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
+                            <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
                             <h:panelGrid columns="1" style="margin-bottom: 10px">
-                                <p:inputText id="txt1" value="#{question.}" />
+                                <p:inputText id="txt1" value="#{answer.value}" />
                                 <p:slider  for="txt1" minValue="#{question.lowerBound}" maxValue="#{question.upperBound}"/>
                             </h:panelGrid>
                         </ui:fragment>
-
+                        <!--
                         <ui:fragment rendered="#{question.type == 'OptionQuestion'}">
                             <ui:repeat value="#{question.optionValues}" var="optionValue">
                                 <p:outputLabel value="-> #{optionValue.title}"/>
                                 <br/>
                             </ui:repeat>
                         </ui:fragment>
+                        -->
                         <br/>
                     </ui:repeat>
                 </p:fieldset>

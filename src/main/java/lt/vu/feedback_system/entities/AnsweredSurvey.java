@@ -9,9 +9,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.OptionAnswer;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
+import lt.vu.feedback_system.entities.answers.TextAnswer;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class AnsweredSurvey implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="survey_id")
-    private Survey answeredSurvey;
+    private Survey survey;
 
     @OneToMany(mappedBy = "survey")
     private List<OptionAnswer> optionAnswers = new ArrayList<>();
