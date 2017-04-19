@@ -1,5 +1,7 @@
 package lt.vu.feedback_system.usecases.users;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.businesslogic.users.Session;
 import org.mindrot.jbcrypt.BCrypt;
@@ -15,7 +17,9 @@ import javax.transaction.Transactional;
 @Slf4j
 public class LoginController {
 
+    @Getter @Setter
     private String email;
+    @Getter @Setter
     private String password;
 
     @Inject
@@ -55,22 +59,6 @@ public class LoginController {
 
     public boolean isAdmin() {
         return session.isAdmin();
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return this.password;
     }
 
     private String getUserPassword() {

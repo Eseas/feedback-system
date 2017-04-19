@@ -10,8 +10,7 @@ import javax.enterprise.inject.Model;
 @Slf4j
 public class RememberController {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private String email;
 
     public void rememberPassword() {
