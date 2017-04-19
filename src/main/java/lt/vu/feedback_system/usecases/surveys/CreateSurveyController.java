@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
+import lt.vu.feedback_system.businesslogic.users.Session;
 import lt.vu.feedback_system.dao.OptionValueDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
@@ -11,6 +12,7 @@ import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.questions.SliderQuestion;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +25,8 @@ import java.util.List;
 @Named
 @ViewScoped
 public class CreateSurveyController implements Serializable {
+    @Inject
+    private Session session;
 
     @Inject
     private SurveyDAO surveyDAO;
@@ -36,6 +40,11 @@ public class CreateSurveyController implements Serializable {
     private Survey survey = new Survey();
 
     private Integer position = 1;
+
+    @PostConstruct
+    private void init() {
+        survey.setConfidential(true);
+    }
 
     public void moveUp(Question q) {
         List<Question> questions = getQuestions();
@@ -95,6 +104,7 @@ public class CreateSurveyController implements Serializable {
      */
     public void addTextQuestion() {
         TextQuestion q = new TextQuestion();
+        q.setRequired(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -123,6 +133,7 @@ public class CreateSurveyController implements Serializable {
      */
     public void addSliderQuestion() {
         SliderQuestion q = new SliderQuestion();
+        q.setRequired(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -135,6 +146,8 @@ public class CreateSurveyController implements Serializable {
      */
     public void addOptionQuestion() {
         OptionQuestion q = new OptionQuestion();
+        q.setRequired(false);
+        q.setMultiple(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -152,9 +165,9 @@ public class CreateSurveyController implements Serializable {
         optionQuestion.getOptionValues().remove(optionValue);
     }
 
-
     @Transactional
     public String create() {
+        survey.setCreator(session.getUser());
         surveyDAO.create(survey);
         for (TextQuestion q: survey.getTextQuestions())
             questionDAO.create(q);
@@ -165,6 +178,9 @@ public class CreateSurveyController implements Serializable {
             for (OptionValue ov : q.getOptionValues())
                 optionValueDAO.create(ov);
         }
+
+
+
         return "surveys?faces-redirect=true";
     }
 }
