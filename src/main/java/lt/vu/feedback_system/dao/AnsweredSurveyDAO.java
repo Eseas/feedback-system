@@ -13,8 +13,8 @@ public class AnsweredSurveyDAO {
     @Inject
     private EntityManager em;
 
-    public void create(AnsweredSurvey answer) {
-        em.persist(answer);
+    public void create(AnsweredSurvey answeredSurvey) {
+        em.persist(answeredSurvey);
     }
 
     public List<AnsweredSurvey> getAllAnswers() {

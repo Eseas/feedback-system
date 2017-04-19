@@ -28,7 +28,7 @@
                         <br/>
 
                         <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
-                            <h:inputText/>
+                            <h:inputText value="#{answer.value}"/>
                         </ui:fragment>
 
                         <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
@@ -51,6 +51,9 @@
                     </ui:repeat>
                 </p:fieldset>
 
+                <h:commandButton value="Submit" action="#{answerSurveyController.answer()}" />
+
+                <p:messages globalOnly="true"/>
             </h:form>
         </h:body>
     </f:view>

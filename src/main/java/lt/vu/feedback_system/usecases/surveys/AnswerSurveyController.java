@@ -2,20 +2,20 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.dao.AnswerDAO;
+import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.AnsweredSurvey;
 import lt.vu.feedback_system.entities.answers.OptionAnswer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.answers.Answer;
-import lt.vu.feedback_system.entities.questions.OptionQuestion;
-import lt.vu.feedback_system.entities.questions.Question;
-import lt.vu.feedback_system.entities.questions.SliderQuestion;
-import lt.vu.feedback_system.entities.questions.TextQuestion;
+import lt.vu.feedback_system.entities.questions.*;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +31,12 @@ public class AnswerSurveyController implements Serializable {
 
     @Inject
     private SurveyDAO surveyDAO;
+    @Inject
+    private AnsweredSurveyDAO answeredSurveyDAO;
 
-//    @Getter
-//    private Survey survey;
+    @Inject
+    private AnswerDAO answerDAO;
+
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
@@ -86,4 +89,18 @@ public class AnswerSurveyController implements Serializable {
         answeredSurvey.getSliderAnswers().add(a);
     }
 
+    @Transactional
+    public String answer() {
+        answeredSurveyDAO.create(answeredSurvey);
+        for (TextAnswer a: answeredSurvey.getTextAnswers())
+            answerDAO.create(a);
+        for (SliderAnswer a: answeredSurvey.getSliderAnswers())
+            answerDAO.create(a);
+        for (OptionAnswer a: answeredSurvey.getOptionAnswers()) {
+            answerDAO.create(a);
+            for (OptionValue ov : q.getOptionValues())
+                optionValueDAO.create(ov);
+        }
+        return "surveys?faces-redirect=true";
+    }
 }

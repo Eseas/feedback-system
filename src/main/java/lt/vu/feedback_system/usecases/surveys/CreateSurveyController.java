@@ -178,9 +178,6 @@ public class CreateSurveyController implements Serializable {
             for (OptionValue ov : q.getOptionValues())
                 optionValueDAO.create(ov);
         }
-
-
-
         return "surveys?faces-redirect=true";
     }
 }
