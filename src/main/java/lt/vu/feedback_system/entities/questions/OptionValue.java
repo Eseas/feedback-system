@@ -33,7 +33,8 @@ public class OptionValue {
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private OptionQuestion question;
-    @OneToMany(mappedBy = "value")
-    private List<OptionAnswer> optionAnswers = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "value") // bad mapping name here
+//    private List<OptionAnswer> optionAnswers = new ArrayList<>();
 }
 

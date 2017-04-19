@@ -43,8 +43,13 @@
                         <ui:fragment rendered="#{answer.question.type == 'OptionQuestion'}">
                             <ui:repeat value="#{answer.question.optionValues}" var="optionValue">
                                 <p:outputLabel value="-> #{optionValue.title}"/>
+
                                 <br/>
+
                             </ui:repeat>
+                            <p:selectOneRadio id="city" value="#{answer.optionValueAnswers}"  layout="grid" columns="3">
+                                <f:selectItems value="#{radioView.cities}" var="c" itemLabel="#{city}" itemValue="#{city}"/>
+                            </p:selectOneRadio>
                         </ui:fragment>
 
                         <br/>
