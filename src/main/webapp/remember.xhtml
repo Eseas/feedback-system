@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 <h:head>
     <meta charset="utf-8" />
@@ -22,11 +21,11 @@
 
     <div class="remember-page">
         <div class="form">
-            <form class="remember-form">
+            <h:form id="remember-form" class="remember-form">
                 <p class="message">Enter your registration email:</p>
-                <p:inputText class="input" value="#{loginController.user.email}" placeholder="Email" required="true" />
-                <h:button class="button" outcome="login" value="Send"/> <!--update to sending email and success msg-->
-            </form>
+                <p:inputText class="input" value="#{rememberController.email}" placeholder="Email" required="true" />
+                <h:commandButton class="button" value="Send" action="#{rememberController.rememberPassword()}" />
+            </h:form>
         </div>
     </div>
 
