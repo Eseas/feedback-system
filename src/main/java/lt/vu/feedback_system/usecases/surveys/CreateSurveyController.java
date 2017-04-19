@@ -41,6 +41,11 @@ public class CreateSurveyController implements Serializable {
 
     private Integer position = 1;
 
+    @PostConstruct
+    private void init() {
+        survey.setConfidential(true);
+    }
+
     public void moveUp(Question q) {
         List<Question> questions = getQuestions();
 
@@ -99,6 +104,7 @@ public class CreateSurveyController implements Serializable {
      */
     public void addTextQuestion() {
         TextQuestion q = new TextQuestion();
+        q.setRequired(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -127,6 +133,7 @@ public class CreateSurveyController implements Serializable {
      */
     public void addSliderQuestion() {
         SliderQuestion q = new SliderQuestion();
+        q.setRequired(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -139,6 +146,8 @@ public class CreateSurveyController implements Serializable {
      */
     public void addOptionQuestion() {
         OptionQuestion q = new OptionQuestion();
+        q.setRequired(false);
+        q.setMultiple(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -155,7 +164,6 @@ public class CreateSurveyController implements Serializable {
     public void removeOptionValue(OptionQuestion optionQuestion, OptionValue optionValue) {
         optionQuestion.getOptionValues().remove(optionValue);
     }
-
 
     @Transactional
     public String create() {

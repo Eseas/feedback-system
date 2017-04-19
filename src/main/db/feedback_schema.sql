@@ -40,7 +40,6 @@ CREATE TABLE feedback.slider_questions
     is_required BOOLEAN,
     lower_bound INTEGER,
     upper_bound INTEGER,
-    step INTEGER,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
