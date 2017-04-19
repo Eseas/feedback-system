@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString(of = {"id","question","survey","value"})
+@ToString(of = {"id", "question", "value"})
 public class TextAnswer implements Answer {
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,12 +33,12 @@ public class TextAnswer implements Answer {
     @Column(name = "value")
     private String value;
 
-    @JoinColumn(name = "question_id", referencedColumnName = "ID")
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private TextQuestion question;
 
-    @JoinColumn(name = "answered_survey_id", referencedColumnName = "ID")
+    @JoinColumn(name = "answered_survey_id", referencedColumnName = "id")
     @ManyToOne
-    private AnsweredSurvey survey;
+    private AnsweredSurvey answeredSurvey;
 
 }

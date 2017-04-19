@@ -20,7 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString(of = {"id","question","survey"})
+@ToString(of = {"id", "question"})
 public class OptionAnswer implements Answer {
     private static final long serialVersionUID = 1L;
     @Id
@@ -31,15 +31,15 @@ public class OptionAnswer implements Answer {
     @Transient
     private final String type = "text";
 
-    @JoinColumn(name = "question_id", referencedColumnName = "ID")
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private OptionQuestion question;
 
-    @JoinColumn(name = "answered_survey_id", referencedColumnName = "ID")
+    @JoinColumn(name = "answered_survey_id", referencedColumnName = "id")
     @ManyToOne
-    private AnsweredSurvey survey;
+    private AnsweredSurvey answeredSurvey;
 
-    @JoinColumn(name = "option_id", referencedColumnName = "ID")
+    @JoinColumn(name = "option_id", referencedColumnName = "id")
     @ManyToOne
     private OptionValue value;
 
