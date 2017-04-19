@@ -35,5 +35,5 @@ public class SliderAnswer {
 
     @JoinColumn(name = "answered_survey_id", referencedColumnName = "ID")
     @ManyToOne
-    private AnsweredSurvey survey;
+    private AnsweredSurvey answeredSurvey;
 }

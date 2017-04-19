@@ -35,11 +35,14 @@ public class AnsweredSurvey implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="survey_id")
-    private Survey survey;
+    private Survey answeredSurvey;
+
     @OneToMany(mappedBy = "survey")
     private List<OptionAnswer> optionAnswers = new ArrayList<>();
+
     @OneToMany(mappedBy = "survey")
     private List<SliderAnswer> sliderAnswers = new ArrayList<>();
+
     @OneToMany(mappedBy = "survey")
     private List<TextAnswer> textAnswers = new ArrayList<>();
 }

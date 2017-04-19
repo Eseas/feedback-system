@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+>
+    <f:view>
+        <f:metadata>
+            <f:viewParam name="id" value="#{answerSurveyController.id}"/>
+            <f:viewAction action="#{answerSurveyController.loadData}"/>
+        </f:metadata>
+
+        <h:head>
+            <h:outputStylesheet name="css/styles.css" />
+            <title>Conversation implementation with CDI</title>
+        </h:head>
+
+        <h:body>
+            <h1>#{answerSurveyController.survey.title}</h1>
+            <h:form>
+                <p:fieldset legend="Surveys" toggleable="true">
+                    <ui:repeat value="#{answerSurveyController.questions}" var="question">
+                        <p:outputLabel value="#{question.position}. #{question.title}"/>
+                        <br/>
+
+                        <ui:fragment rendered="#{question.type == 'TextQuestion'}">
+
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
+                            <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
+                            <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                <p:inputText id="txt1" value="#{question.}" />
+                                <p:slider  for="txt1" minValue="#{question.lowerBound}" maxValue="#{question.upperBound}"/>
+                            </h:panelGrid>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{question.type == 'OptionQuestion'}">
+                            <ui:repeat value="#{question.optionValues}" var="optionValue">
+                                <p:outputLabel value="-> #{optionValue.title}"/>
+                                <br/>
+                            </ui:repeat>
+                        </ui:fragment>
+                        <br/>
+                    </ui:repeat>
+                </p:fieldset>
+
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
+
