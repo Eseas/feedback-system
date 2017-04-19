@@ -40,7 +40,7 @@ public class TextQuestion implements Question {
     private Integer position;
 
     @Column(name = "is_required")
-    private Boolean required;
+    private boolean required = false;
 
     @JoinColumn(name = "survey_id", referencedColumnName = "ID")
     @ManyToOne

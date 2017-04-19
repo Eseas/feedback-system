@@ -1,5 +1,6 @@
 package lt.vu.feedback_system.businesslogic.users;
 
+import lombok.Getter;
 import lt.vu.feedback_system.dao.UserDAO;
 import lt.vu.feedback_system.entities.User;
 
@@ -12,6 +13,7 @@ public class Session implements Serializable {
 
     private static final long serialVersionUID = 5451465415614894L;
 
+    @Getter
     private User user = new User();
 
     @Inject

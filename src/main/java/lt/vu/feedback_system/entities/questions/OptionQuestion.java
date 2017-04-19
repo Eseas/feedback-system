@@ -37,13 +37,13 @@ public class OptionQuestion implements Question {
     private String title;
 
     @Column(name = "is_required")
-    private Boolean required;
+    private boolean required = false;
 
     @Column(name = "position")
     private Integer position;
 
     @Column(name = "is_multiple")
-    private Boolean multiple;
+    private Boolean multiple = false;
 
     @OneToMany(mappedBy = "question")
     private List<OptionValue> optionValues = new ArrayList<>();

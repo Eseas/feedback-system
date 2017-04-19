@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 <h:head>
     <h:outputStylesheet name="css/styles.css" />
@@ -14,7 +14,7 @@
 
 <h:body>
     <h1>Surveys</h1>
-    <h:form>
+    <h:form id="creation-form">
         <h2>Create a new survey</h2>
         <table>
             <tr>
@@ -27,6 +27,13 @@
                         <p:outputLabel for="description" value="Description"/>
                         <p:inputText id="description" value="#{createSurveyController.survey.description}"/>
                         <p:message for="description"/>
+
+                        <h:outputText value="Results"/>
+                        <p:selectOneButton value="#{createSurveyController.survey.confidential}">
+                            <f:selectItem itemLabel="Private" itemValue="true" />
+                            <f:selectItem itemLabel="Public" itemValue="false" />
+                        </p:selectOneButton>
+
                     </h:panelGrid>
                 </td>
             </tr>
@@ -41,6 +48,11 @@
                 <h:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(question)}"/>
                 <h:commandButton value="up" actionListener="#{createSurveyController.moveUp(question)}"/>
                 <h:commandButton value="down" actionListener="#{createSurveyController.moveDown(question)}"/>
+
+                <p:selectOneButton value="#{question.required}">
+                    <f:selectItem itemLabel="Required" itemValue="true" />
+                    <f:selectItem itemLabel="Optional" itemValue="false" />
+                </p:selectOneButton>
                 <br/>
 
                 <!-- TextQuestion -->
@@ -63,6 +75,11 @@
 
                 <!-- OptionQuestion -->
                 <ui:fragment rendered="#{question.type == 'OptionQuestion'}">
+                    <p:selectOneButton value="#{question.multiple}">
+                        <f:selectItem itemLabel="Single" itemValue="false" />
+                        <f:selectItem itemLabel="Multiple" itemValue="true" />
+                    </p:selectOneButton>
+
                     <h:dataTable value="#{question.optionValues}" var="optionValue">
                         <h:column>
                             <p:outputLabel for="optionValueTitle" value="Option value"/>

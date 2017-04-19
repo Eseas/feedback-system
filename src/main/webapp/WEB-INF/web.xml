@@ -26,6 +26,8 @@
         <filter-name>UserPermissionFilter</filter-name>
         <url-pattern>/surveys.html</url-pattern>
         <url-pattern>/users.html</url-pattern>
+        <url-pattern>/create-survey.html</url-pattern>
+        <url-pattern>/survey-reports.html</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminPermissionFilter</filter-name>

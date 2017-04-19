@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
+import lt.vu.feedback_system.businesslogic.users.Session;
 import lt.vu.feedback_system.dao.OptionValueDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
@@ -23,6 +24,8 @@ import java.util.List;
 @Named
 @ViewScoped
 public class CreateSurveyController implements Serializable {
+    @Inject
+    private Session session;
 
     @Inject
     private SurveyDAO surveyDAO;
@@ -155,6 +158,7 @@ public class CreateSurveyController implements Serializable {
 
     @Transactional
     public String create() {
+        survey.setCreator(session.getUser());
         surveyDAO.create(survey);
         for (TextQuestion q: survey.getTextQuestions())
             questionDAO.create(q);
@@ -165,6 +169,9 @@ public class CreateSurveyController implements Serializable {
             for (OptionValue ov : q.getOptionValues())
                 optionValueDAO.create(ov);
         }
+
+
+
         return "surveys?faces-redirect=true";
     }
 }
