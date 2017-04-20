@@ -82,6 +82,7 @@ public class CreateSurveyController implements Serializable {
 
         questions.addAll(survey.getTextQuestions());
         questions.addAll(survey.getSliderQuestions());
+        questions.addAll(survey.getRadioQuestions());
         questions.addAll(survey.getCheckboxQuestions());
 
         return sort(questions);
@@ -149,7 +150,6 @@ public class CreateSurveyController implements Serializable {
     public void addCheckboxQuestion() {
         CheckboxQuestion q = new CheckboxQuestion();
         q.setRequired(false);
-        q.setMultiple(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);
@@ -163,7 +163,6 @@ public class CreateSurveyController implements Serializable {
     public void addRadioQuestion() {
         RadioQuestion q = new RadioQuestion();
         q.setRequired(false);
-        q.setMultiple(false);
 
         q.setPosition(position++);
         q.setSurvey(survey);

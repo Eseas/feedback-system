@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.answers.OptionAnswer;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
 import lt.vu.feedback_system.entities.Survey;
 
 import javax.persistence.*;
@@ -13,15 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(schema = "feedback", name = "option_questions")
-@NamedQueries({
-        @NamedQuery(name = "OptionQuestion.findAll", query = "SELECT c FROM CheckboxQuestion c"),
-        @NamedQuery(name = "OptionQuestion.findBySurveyId", query = "SELECT s FROM CheckboxQuestion s WHERE s.survey = :survey")
-})
+@Table(schema = "feedback", name = "checkbox_questions")
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
-@ToString(of = {"id", "title", "position", "required", "multiple", "survey"})
+@ToString(of = {"id", "title", "position", "required", "survey"})
 public class CheckboxQuestion implements Question {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,9 +38,6 @@ public class CheckboxQuestion implements Question {
     @Column(name = "position")
     private Integer position;
 
-    @Column(name = "is_multiple")
-    private Boolean multiple;
-
     @OneToMany(mappedBy = "question")
     private List<Checkbox> checkboxes = new ArrayList<>();
 
@@ -53,6 +46,6 @@ public class CheckboxQuestion implements Question {
     private Survey survey;
 
     @OneToMany(mappedBy = "question")
-    private List<OptionAnswer> optionAnswers = new ArrayList<>();
+    private List<CheckboxAnswer> optionAnswers = new ArrayList<>();
 }
 

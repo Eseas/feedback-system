@@ -39,6 +39,17 @@
                             </h:panelGrid>
                         </ui:fragment>
 
+                        <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
+                            <ui:repeat value="#{answer.question.radioButtons}" var="radioButton">
+                                <p:outputLabel value="-> #{radioButton.title}"/>
+
+                                <br/>
+
+                            </ui:repeat>
+                            <p:selectOneRadio value="#{answer.radioButton}"  layout="grid" columns="3">
+                                <f:selectItems value="#{answer.question.radioView.cities}" var="c" itemLabel="#{city}" itemValue="#{city}"/>
+                            </p:selectOneRadio>
+                        </ui:fragment>
 
                         <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
                             <ui:repeat value="#{answer.question.optionValues}" var="optionValue">

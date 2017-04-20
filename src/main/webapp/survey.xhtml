@@ -35,9 +35,16 @@
                             <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
                         </ui:fragment>
 
+                        <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                            <ui:repeat value="#{question.radioButtons}" var="radioButton">
+                                <p:outputLabel value="-> #{radioButton.title}"/>
+                                <br/>
+                            </ui:repeat>
+                        </ui:fragment>
+
                         <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                            <ui:repeat value="#{question.optionValues}" var="optionValue">
-                                <p:outputLabel value="-> #{optionValue.title}"/>
+                            <ui:repeat value="#{question.checkboxes}" var="checkbox">
+                                <p:outputLabel value="-> #{checkbox.title}"/>
                                 <br/>
                             </ui:repeat>
                         </ui:fragment>

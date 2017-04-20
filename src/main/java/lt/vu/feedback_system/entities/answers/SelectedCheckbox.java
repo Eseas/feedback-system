@@ -7,10 +7,10 @@ import lt.vu.feedback_system.entities.questions.Checkbox;
 import javax.persistence.*;
 
 @Entity
-@Table(schema = "feedback", name = "option_value_answers")
+@Table(schema = "feedback", name = "selected_checkboxes")
 @Getter
 @Setter
-public class OptionValueAnswer {
+public class SelectedCheckbox {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +19,11 @@ public class OptionValueAnswer {
 
     @JoinColumn(name = "answer_id", referencedColumnName = "id")
     @ManyToOne
-    private OptionAnswer optionAnswer;
+    private CheckboxAnswer checkboxAnswer;
 
-    @JoinColumn(name = "option_value_id", referencedColumnName = "id")
+    @JoinColumn(name = "checkbox_id", referencedColumnName = "id")
     @OneToOne
-    private Checkbox optionValue;
+    private Checkbox checkbox;
+
 }
 

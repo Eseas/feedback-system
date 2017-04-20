@@ -9,7 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.answers.OptionAnswer;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 
@@ -40,11 +41,14 @@ public class AnsweredSurvey implements Serializable {
     private Survey survey;
 
     @OneToMany(mappedBy = "answeredSurvey")
-    private List<OptionAnswer> optionAnswers = new ArrayList<>();
+    private List<TextAnswer> textAnswers = new ArrayList<>();
 
     @OneToMany(mappedBy = "answeredSurvey")
     private List<SliderAnswer> sliderAnswers = new ArrayList<>();
 
     @OneToMany(mappedBy = "answeredSurvey")
-    private List<TextAnswer> textAnswers = new ArrayList<>();
+    private List<RadioAnswer> radioAnswers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answeredSurvey")
+    private List<CheckboxAnswer> checkboxAnswers = new ArrayList<>();
 }

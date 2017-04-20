@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
-import lt.vu.feedback_system.dao.OptionValueAnswerDAO;
+import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.AnsweredSurvey;
 import lt.vu.feedback_system.entities.answers.*;
@@ -32,7 +32,7 @@ public class AnswerSurveyController implements Serializable {
     @Inject
     private AnsweredSurveyDAO answeredSurveyDAO;
     @Inject
-    private OptionValueAnswerDAO optionValueAnswerDAO;
+    private SelectedCheckboxDAO selectedCheckboxDAO;
 
     @Inject
     private AnswerDAO answerDAO;
@@ -60,8 +60,13 @@ public class AnswerSurveyController implements Serializable {
             a.setQuestion(q);
             answers.add(a);
         }
+        for (RadioQuestion q : answeredSurvey.getSurvey().getRadioQuestions()) {
+            RadioAnswer a = new RadioAnswer();
+            a.setQuestion(q);
+            answers.add(a);
+        }
         for (CheckboxQuestion q : answeredSurvey.getSurvey().getCheckboxQuestions()) {
-            OptionAnswer a = new OptionAnswer();
+            CheckboxAnswer a = new CheckboxAnswer();
             a.setQuestion(q);
             answers.add(a);
         }
@@ -96,10 +101,13 @@ public class AnswerSurveyController implements Serializable {
             answerDAO.create(a);
         for (SliderAnswer a: answeredSurvey.getSliderAnswers())
             answerDAO.create(a);
-        for (OptionAnswer a: answeredSurvey.getOptionAnswers()) {
+        for (RadioAnswer a: answeredSurvey.getRadioAnswers()) {
+            answerDAO.create(a);         // possible error
+        }
+        for (CheckboxAnswer a: answeredSurvey.getCheckboxAnswers()) {
             answerDAO.create(a);
-            for (OptionValueAnswer ova : a.getOptionValueAnswers())
-                optionValueAnswerDAO.create(ova);
+            for (SelectedCheckbox sc : a.getSelectedCheckboxes())
+                selectedCheckboxDAO.create(sc);
         }
         return "surveys?faces-redirect=true";
     }

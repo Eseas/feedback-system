@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(schema = "feedback", name = "option_values")
+@Table(schema = "feedback", name = "checkboxes")
 @NamedQueries({
         @NamedQuery(name = "OptionValue.findAll", query = "SELECT c FROM Checkbox c")})
 @Getter
@@ -32,6 +32,6 @@ public class Checkbox {
     private CheckboxQuestion question;
 //
 //    @OneToMany(mappedBy = "value") // bad mapping name here
-//    private List<OptionAnswer> optionAnswers = new ArrayList<>();
+//    private List<CheckboxAnswer> optionAnswers = new ArrayList<>();
 }
 
