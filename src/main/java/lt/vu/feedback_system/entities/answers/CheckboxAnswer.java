@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(schema = "feedback", name = "option_answers")
+@Table(schema = "feedback", name = "checkbox_answers")
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})

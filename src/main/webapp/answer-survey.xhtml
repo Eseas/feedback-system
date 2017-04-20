@@ -40,27 +40,15 @@
                         </ui:fragment>
 
                         <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
-                            <ui:repeat value="#{answer.question.radioButtons}" var="radioButton">
-                                <p:outputLabel value="-> #{radioButton.title}"/>
-
-                                <br/>
-
-                            </ui:repeat>
-                            <p:selectOneRadio value="#{answer.radioButton}"  layout="grid" columns="3">
-                                <f:selectItems value="#{answer.question.radioView.cities}" var="c" itemLabel="#{city}" itemValue="#{city}"/>
+                            <p:selectOneRadio value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
+                                <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                             </p:selectOneRadio>
                         </ui:fragment>
 
                         <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
-                            <ui:repeat value="#{answer.question.optionValues}" var="optionValue">
-                                <p:outputLabel value="-> #{optionValue.title}"/>
-
-                                <br/>
-
-                            </ui:repeat>
-                            <p:selectOneRadio id="city" value="#{answer.optionValueAnswers}"  layout="grid" columns="3">
-                                <f:selectItems value="#{radioView.cities}" var="c" itemLabel="#{city}" itemValue="#{city}"/>
-                            </p:selectOneRadio>
+                            <p:selectManyCheckbox value="#{answer.selectedCheckboxes}" layout="grid" columns="3">
+                                <f:selectItems value="#{answer.question.checkboxes}" var="checkbox" itemLabel="#{checkbox}" itemValue="#{checkbox}" />
+                            </p:selectManyCheckbox>
                         </ui:fragment>
 
                         <br/>

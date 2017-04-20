@@ -40,7 +40,7 @@ public class AnswerSurveyController implements Serializable {
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
-    private List<Answer> answers = new ArrayList<>();
+//    private List<Answer> answers = new ArrayList<>();
     private List<Question> questions = new ArrayList<>();
 
 
@@ -53,27 +53,37 @@ public class AnswerSurveyController implements Serializable {
         for (TextQuestion q : answeredSurvey.getSurvey().getTextQuestions()) {
             TextAnswer a = new TextAnswer();
             a.setQuestion(q);
-            answers.add(a);
+            answeredSurvey.getTextAnswers().add(a);
         }
         for (SliderQuestion q : answeredSurvey.getSurvey().getSliderQuestions()) {
             SliderAnswer a = new SliderAnswer();
             a.setQuestion(q);
-            answers.add(a);
+            answeredSurvey.getSliderAnswers().add(a);
         }
         for (RadioQuestion q : answeredSurvey.getSurvey().getRadioQuestions()) {
             RadioAnswer a = new RadioAnswer();
             a.setQuestion(q);
-            answers.add(a);
+            answeredSurvey.getRadioAnswers().add(a);
         }
         for (CheckboxQuestion q : answeredSurvey.getSurvey().getCheckboxQuestions()) {
             CheckboxAnswer a = new CheckboxAnswer();
             a.setQuestion(q);
-            answers.add(a);
+            answeredSurvey.getCheckboxAnswers().add(a);
         }
     }
 
-
     public List<Answer> getAnswers() {
+        List<Answer> answers = new ArrayList<>();
+
+        answers.addAll(answeredSurvey.getTextAnswers());
+        answers.addAll(answeredSurvey.getSliderAnswers());
+        answers.addAll(answeredSurvey.getRadioAnswers());
+        answers.addAll(answeredSurvey.getCheckboxAnswers());
+
+        return sort(answers);
+    }
+
+    public List<Answer> sort(List<Answer> answers) {
 
         Collections.sort(answers, new Comparator<Answer>() {
             @Override
