@@ -60,7 +60,7 @@ public class AnswerSurveyController implements Serializable {
             a.setQuestion(q);
             answers.add(a);
         }
-        for (OptionQuestion q : answeredSurvey.getSurvey().getOptionQuestions()) {
+        for (CheckboxQuestion q : answeredSurvey.getSurvey().getCheckboxQuestions()) {
             OptionAnswer a = new OptionAnswer();
             a.setQuestion(q);
             answers.add(a);

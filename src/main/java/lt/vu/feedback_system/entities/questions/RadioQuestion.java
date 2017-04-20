@@ -15,14 +15,14 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "option_questions")
 @NamedQueries({
-        @NamedQuery(name = "OptionQuestion.findAll", query = "SELECT c FROM OptionQuestion c"),
-        @NamedQuery(name = "OptionQuestion.findBySurveyId", query = "SELECT s FROM OptionQuestion s WHERE s.survey = :survey")
+        @NamedQuery(name = "OptionQuestion.findAll", query = "SELECT c FROM CheckboxQuestion c"),
+        @NamedQuery(name = "OptionQuestion.findBySurveyId", query = "SELECT s FROM CheckboxQuestion s WHERE s.survey = :survey")
 })
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
 @ToString(of = {"id", "title", "position", "required", "multiple", "survey"})
-public class OptionQuestion implements Question {
+public class RadioQuestion implements Question {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class OptionQuestion implements Question {
     private Integer id;
 
     @Transient
-    private final String type = "OptionQuestion";
+    private final String type = "RadioQuestion";
 
     @Size(min = 1, max = 200)
     @Column(name = "title")
@@ -46,7 +46,7 @@ public class OptionQuestion implements Question {
     private Boolean multiple;
 
     @OneToMany(mappedBy = "question")
-    private List<OptionValue> optionValues = new ArrayList<>();
+    private List<RadioButton> radioButtons = new ArrayList<>();
 
     @JoinColumn(name = "survey_id", referencedColumnName = "ID")
     @ManyToOne

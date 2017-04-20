@@ -5,12 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.AnsweredSurvey;
-import lt.vu.feedback_system.entities.questions.OptionQuestion;
-import lt.vu.feedback_system.entities.questions.OptionValue;
+import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,7 +30,7 @@ public class OptionAnswer implements Answer {
 
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
-    private OptionQuestion question;
+    private CheckboxQuestion question;
 
     @JoinColumn(name = "answered_survey_id", referencedColumnName = "id")
     @ManyToOne
@@ -45,6 +42,6 @@ public class OptionAnswer implements Answer {
 //    Justas approach
 //
 //    @OneToMany
-//    private List<OptionValue> optionValues;
+//    private List<Checkbox> optionValues;
 
 }

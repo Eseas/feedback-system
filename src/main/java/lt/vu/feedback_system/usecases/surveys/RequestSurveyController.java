@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.Survey;
-import lt.vu.feedback_system.entities.questions.OptionQuestion;
+import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.questions.SliderQuestion;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
@@ -46,7 +46,7 @@ public class RequestSurveyController implements Serializable {
             questions.add(q);
         for (SliderQuestion q: survey.getSliderQuestions())
             questions.add(q);
-        for (OptionQuestion q: survey.getOptionQuestions())
+        for (CheckboxQuestion q: survey.getCheckboxQuestions())
             questions.add(q);
     }
 

@@ -18,17 +18,29 @@ INSERT INTO feedback.text_questions VALUES (DEFAULT, 1, 2, TRUE, 'Tell us about 
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 2, 2, FALSE, 'Do you like your chair?');
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 3, 1, TRUE, 'Do you need a new monitor?');
 
-INSERT INTO feedback.option_questions VALUES (DEFAULT, 1, 3, TRUE, TRUE, 'Which option represent your situation?');
-INSERT INTO feedback.option_questions VALUES (DEFAULT, 2, 1,FALSE, TRUE, 'Do you like your chair?');
-INSERT INTO feedback.option_questions VALUES (DEFAULT, 3, 3,TRUE, FALSE,'Do you need a new monitor?');
+INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 1, 3, TRUE, 'Which option represent your situation?');
+INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 2, 1,FALSE, 'Do you like your chair?');
+INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 3, 3,TRUE, 'Do you need a new monitor?');
 
-INSERT INTO feedback.option_values VALUES (DEFAULT, 1, 'Great');
-INSERT INTO feedback.option_values VALUES (DEFAULT, 1, 'Medium');
-INSERT INTO feedback.option_values VALUES (DEFAULT, 1, 'Bad');
-INSERT INTO feedback.option_values VALUES (DEFAULT, 2, 'Yes');
-INSERT INTO feedback.option_values VALUES (DEFAULT, 2, 'No');
-INSERT INTO feedback.option_values VALUES (DEFAULT, 3, 'ASAP');
-INSERT INTO feedback.option_values VALUES (DEFAULT, 3, 'No.');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 1, 'Great');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 1, 'Medium');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 1, 'Bad');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 2, 'Yes');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 2, 'No');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 3, 'ASAP');
+INSERT INTO feedback.checkboxes VALUES (DEFAULT, 3, 'No.');
+
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 1, 3, TRUE, 'Which option represent your situation?');
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 2, 1,FALSE, 'Do you like your chair?');
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 3, 3,TRUE, 'Do you need a new monitor?');
+
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Great');
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Medium');
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Bad');
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 2, 'Yes');
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 2, 'No');
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 3, 'ASAP');
+INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 3, 'No.');
 
 INSERT INTO feedback.answered_surveys VALUES (DEFAULT, 1, TO_TIMESTAMP('2013-07-02 06:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'));
 INSERT INTO feedback.answered_surveys VALUES (DEFAULT, 2, TO_TIMESTAMP('2014-07-02 06:14:00.742000000', 'YYYY-MM-DD HH24:MI:SS.FF'));
@@ -42,8 +54,15 @@ INSERT INTO feedback.text_answers VALUES (DEFAULT, 1, 1, 'Perfect!');
 INSERT INTO feedback.text_answers VALUES (DEFAULT, 2, 2, 'Not at all');
 INSERT INTO feedback.text_answers VALUES (DEFAULT, 3, 3, 'ASAP');
 
-INSERT INTO feedback.option_answers VALUES (DEFAULT, 1, 1);
-INSERT INTO feedback.option_answers VALUES (DEFAULT, 2, 2);
-INSERT INTO feedback.option_answers VALUES (DEFAULT, 3, 3);
+INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 2);
+INSERT INTO feedback.radio_answers VALUES (DEFAULT, 2, 2, 5);
+INSERT INTO feedback.radio_answers VALUES (DEFAULT, 3, 3, 6);
 
-INSERT INTO feedback.option_value_answers VALUES (DEFAULT, 1, 2);
+INSERT INTO feedback.checkbox_answers VALUES (DEFAULT, 1, 1);
+INSERT INTO feedback.checkbox_answers VALUES (DEFAULT, 2, 2);
+INSERT INTO feedback.checkbox_answers VALUES (DEFAULT, 3, 3);
+
+INSERT INTO feedback.selected_checkboxes VALUES (DEFAULT, 1, 1);
+INSERT INTO feedback.selected_checkboxes VALUES (DEFAULT, 1, 2);
+INSERT INTO feedback.selected_checkboxes VALUES (DEFAULT, 2, 5);
+INSERT INTO feedback.selected_checkboxes VALUES (DEFAULT, 3, 7);

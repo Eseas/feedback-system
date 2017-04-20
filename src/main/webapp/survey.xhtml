@@ -35,7 +35,7 @@
                             <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
                         </ui:fragment>
 
-                        <ui:fragment rendered="#{question.type == 'OptionQuestion'}">
+                        <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
                             <ui:repeat value="#{question.optionValues}" var="optionValue">
                                 <p:outputLabel value="-> #{optionValue.title}"/>
                                 <br/>

@@ -1,17 +1,10 @@
 package lt.vu.feedback_system.entities.answers;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import lt.vu.feedback_system.entities.answers.OptionAnswer;
-import lt.vu.feedback_system.entities.questions.OptionQuestion;
-import lt.vu.feedback_system.entities.questions.OptionValue;
+import lt.vu.feedback_system.entities.questions.Checkbox;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "option_value_answers")
@@ -30,6 +23,6 @@ public class OptionValueAnswer {
 
     @JoinColumn(name = "option_value_id", referencedColumnName = "id")
     @OneToOne
-    private OptionValue optionValue;
+    private Checkbox optionValue;
 }
 

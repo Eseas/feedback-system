@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.dao;
 
-import lt.vu.feedback_system.entities.questions.OptionQuestion;
+import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.entities.questions.RadioQuestion;
 import lt.vu.feedback_system.entities.questions.SliderQuestion;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
 
@@ -21,7 +22,11 @@ public class QuestionDAO {
         em.persist(q);
     }
 
-    public void create(OptionQuestion q) {
+    public void create(CheckboxQuestion q) {
+        em.persist(q);
+    }
+
+    public void create(RadioQuestion q) {
         em.persist(q);
     }
 }

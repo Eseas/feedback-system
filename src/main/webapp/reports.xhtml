@@ -32,10 +32,10 @@
                     </ui:repeat>
                 </p:column>
                 <p:column headerText="Option Answers">
-                    <ui:repeat value="#{answer.survey.optionQuestions}" var="optionQuestion">
-                        <h:outputText value="#{optionQuestion.title}"/>
+                    <ui:repeat value="#{answer.survey.optionQuestions}" var="checkboxQuestion">
+                        <h:outputText value="#{checkboxQuestion.title}"/>
                             <br/>
-                            <ui:repeat value="#{optionQuestion.optionAnswers}" var="optionAnswer">
+                            <ui:repeat value="#{checkboxQuestion.optionAnswers}" var="optionAnswer">
                                 <h:outputText value="#{optionAnswer.value.title}"/>
                                 <br/>
                             </ui:repeat>

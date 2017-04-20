@@ -40,7 +40,7 @@
                         </ui:fragment>
 
 
-                        <ui:fragment rendered="#{answer.question.type == 'OptionQuestion'}">
+                        <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
                             <ui:repeat value="#{answer.question.optionValues}" var="optionValue">
                                 <p:outputLabel value="-> #{optionValue.title}"/>
 

@@ -73,22 +73,31 @@
                 </ui:fragment>
 
 
-                <!-- OptionQuestion -->
-                <ui:fragment rendered="#{question.type == 'OptionQuestion'}">
-                    <p:selectOneButton value="#{question.multiple}">
-                        <f:selectItem itemLabel="Single" itemValue="false" />
-                        <f:selectItem itemLabel="Multiple" itemValue="true" />
-                    </p:selectOneButton>
-
-                    <h:dataTable value="#{question.optionValues}" var="optionValue">
+                <!-- RadioQuestiontion -->
+                <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                    <h:dataTable value="#{question.radioButtons}" var="radioButton">
                         <h:column>
-                            <p:outputLabel for="optionValueTitle" value="Option value"/>
-                            <h:inputText id="optionValueTitle" value="#{optionValue.title}" />
-                            <h:commandButton value="remove" action="#{createSurveyController.removeOptionValue(question, optionValue)}"/>
-                            <p:message for="optionValueTitle"/>
+                            <p:outputLabel for="radioButtonTitle" value="Radio Button"/>
+                            <h:inputText id="radioButtonTitle" value="#{radioButton.title}" />
+                            <h:commandButton value="remove" action="#{createSurveyController.removeRadioButton(question, radioButton)}"/>
+                            <p:message for="radioButtonTitle"/>
                         </h:column>
                     </h:dataTable>
-                    <h:commandButton value="add option value" actionListener="#{createSurveyController.addOptionValue(question)}" />
+                    <h:commandButton value="add radio button" actionListener="#{createSurveyController.addRadioButton(question)}" />
+
+                </ui:fragment>
+
+                <!-- CheckboxQuestiontion -->
+                <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
+                    <h:dataTable value="#{question.checkboxes}" var="checkbox">
+                        <h:column>
+                            <p:outputLabel for="checkboxTitle" value="Checkbox"/>
+                            <h:inputText id="checkboxTitle" value="#{checkbox.title}" />
+                            <h:commandButton value="remove" action="#{createSurveyController.removeCheckbox(question, checkbox)}"/>
+                            <p:message for="checkboxTitle"/>
+                        </h:column>
+                    </h:dataTable>
+                    <h:commandButton value="add option value" actionListener="#{createSurveyController.addCheckbox(question)}" />
 
                 </ui:fragment>
 
@@ -99,7 +108,8 @@
 
         <h:commandButton value="add text question" actionListener="#{createSurveyController.addTextQuestion()}" />
         <h:commandButton value="add slider question" actionListener="#{createSurveyController.addSliderQuestion()}" />
-        <h:commandButton value="add option question" actionListener="#{createSurveyController.addOptionQuestion()}" />
+        <h:commandButton value="add radio question" actionListener="#{createSurveyController.addRadioQuestion()}" />
+        <h:commandButton value="add checkbox question" actionListener="#{createSurveyController.addCheckboxQuestion()}" />
         <!-- Ending creation -->
         <br/>
         <h:commandButton value="save" action="#{createSurveyController.create()}" />
