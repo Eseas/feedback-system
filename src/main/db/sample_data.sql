@@ -1,13 +1,14 @@
-﻿INSERT INTO feedback.potential_users VALUES (DEFAULT, 'harry.ryan@gmail.com');
-INSERT INTO feedback.potential_users VALUES (DEFAULT, 'alfie.byrne@gmail.com');
-INSERT INTO feedback.potential_users VALUES (DEFAULT, 'kian.watts@gmail.com');
+﻿INSERT INTO feedback.potential_users VALUES (DEFAULT, 'user.potential1@mailinator.com');
+INSERT INTO feedback.potential_users VALUES (DEFAULT, 'user.potential2@mailinator.com');
+INSERT INTO feedback.potential_users VALUES (DEFAULT, 'user.potential3@mailinator.com');
 
-INSERT INTO feedback.users VALUES (DEFAULT, 'tyler.gallagher@gmail.com', 'Tyler', 'Gallagher', 'testpassword', true, false, 1);
-INSERT INTO feedback.users VALUES (DEFAULT, 'bradley.bell@gmail.com', 'Bradley', 'Bell', 'testpassword', true, false, 1);
-INSERT INTO feedback.users VALUES (DEFAULT, 'conner.russo@gmail.com', 'Conner', 'Russo', 'testpassword', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin1@mailinator.com', 'User', 'Admin1', 'testpassword', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin2@mailinator.com', 'User', 'Admin2', 'testpassword', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular1@mailinator.com', 'User', 'Regular1', 'testpassword', false, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular2@mailinator.com', 'User', 'Regular2', 'testpassword', false, false, 1);
 
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
-INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask ypu to answer some questions');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask you to answer some questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 2, TRUE,'Social Security', 'This survey is anonymous');
 
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, TRUE, 1, 6, 'Rate office environment');
