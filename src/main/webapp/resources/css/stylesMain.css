@@ -35,12 +35,12 @@ ol{
 #user a{
     color: #00426B;
 }
-.definition{
+.definition_a, .definition_r{
     position: relative;
     outline: 0;
     font-family: 'Josefin Sans', sans-serif !important;
 }
-.definition h2{
+.definition_a h2, .definition_r h2{
     margin-top: 0;
     width: 100%;
     padding: 140px 0 0;
@@ -50,7 +50,7 @@ ol{
     font-weight: bold;
     color: #FFFFFF;
 }
-.definition p{
+.definition_a p, .definition_r p{
     width: 100%;
     padding: 0 0 50px;
     text-align: center;
