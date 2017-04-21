@@ -4,6 +4,9 @@ package lt.vu.feedback_system.entities.questions;
  * Created by kazim on 2017-04-04.
  */
 public interface Question {
+    public Integer getId();
+    public void setId(Integer id);
+
     public String getType();
 
     public String getTitle();

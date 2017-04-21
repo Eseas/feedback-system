@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.SliderAnswer;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.Survey;
 
 import javax.persistence.*;

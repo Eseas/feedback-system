@@ -9,9 +9,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.RadioAnswer;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
+import lt.vu.feedback_system.entities.answers.TextAnswer;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,9 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "answered_surveys")
 @NamedQueries({
+        @NamedQuery(name = "AnsweredSurvey.findById", query = "SELECT c FROM AnsweredSurvey c WHERE c.id = :id"),
         @NamedQuery(name = "AnsweredSurvey.findAll", query = "SELECT c FROM AnsweredSurvey c"),
+        @NamedQuery(name = "AnsweredSurvey.findAllBySurveyId", query = "SELECT c FROM AnsweredSurvey c WHERE c.survey.id = :id")
 })
 @Getter
 @Setter
@@ -36,10 +41,16 @@ public class AnsweredSurvey implements Serializable {
     @ManyToOne
     @JoinColumn(name="survey_id")
     private Survey survey;
-    @OneToMany(mappedBy = "survey")
-    private List<OptionAnswer> optionAnswers = new ArrayList<>();
-    @OneToMany(mappedBy = "survey")
-    private List<SliderAnswer> sliderAnswers = new ArrayList<>();
-    @OneToMany(mappedBy = "survey")
+
+    @OneToMany(mappedBy = "answeredSurvey")
     private List<TextAnswer> textAnswers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answeredSurvey")
+    private List<SliderAnswer> sliderAnswers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answeredSurvey")
+    private List<RadioAnswer> radioAnswers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answeredSurvey")
+    private List<CheckboxAnswer> checkboxAnswers = new ArrayList<>();
 }
