@@ -3,19 +3,20 @@
     padding: 70px 0 0;
     margin: auto;
 }
-.logo{
+
+.header{
     color: #00426B;
     position: relative;
     font-family: 'Josefin Sans', sans-serif !important;
 }
-.logo h1{
+.header h1{
     margin: 10px 0px 0px 40px;
 }
-.logo p{
+.header p{
     font-style: italic;
     margin: 0px 0px 0px 20px;
 }
-.logo em{
+.header em{
     letter-spacing: 0.09em;
 }
 .form {
@@ -33,8 +34,9 @@
     width: 100%;
     font-family: "Roboto", sans-serif;
     outline: 0;
-    background: #f2f2f2;
+    background: #f0f0f0;
     border: 0 !important;
+    box-shadow: none;
     border-radius: 3px;
     margin: 0 0 15px !important;
     padding: 15px !important;
@@ -45,11 +47,11 @@
     display: block;
     font-weight: normal;
     line-height: normal;
-    width: 100%;
+    width: 270px;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
-    background: #56AA1C !important;
+    background: #3dae41;
     border: 0;
     border-radius: 3px;
     padding: 15px !important;
@@ -106,6 +108,18 @@
 .container .info span .fa {
     color: #EF3B3A;
 }
+.ui-messages-error-icon{
+    visibility: hidden;
+}
+.ui-messages-error, .ui-messages-error-summary{
+    margin-left: 0 !important;
+    font-weight: 300 !important;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    text-align: left;
+    padding: 10px 0 !important;
+    color: #c00;
+ }
 body {
     background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
     background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);

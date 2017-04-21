@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+>
+<f:view>
+    <f:metadata>
+        <f:viewParam name="id" value="#{requestSurveyController.id}"/>
+        <f:viewAction action="#{requestSurveyController.loadData}"/>
+    </f:metadata>
+
+    <h:head>
+        <h:outputStylesheet name="css/stylesLogin.css" />
+        <title>Conversation implementation with CDI</title>
+    </h:head>
+
+    <h:body>
+        <h1>#{requestSurveyController.survey.title}</h1>
+        <h:form>
+            <p:fieldset legend="Surveys" toggleable="true">
+                <ui:repeat value="#{requestSurveyController.questions}" var="question">
+                    <p:outputLabel value="#{question.position}. #{question.title}"/>
+                    <br/>
+
+                    <ui:fragment rendered="#{question.type == 'TextQuestion'}">
+
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
+                        <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                        <ui:repeat value="#{question.radioButtons}" var="radioButton">
+                            <p:outputLabel value="-> #{radioButton.title}"/>
+                            <br/>
+                        </ui:repeat>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
+                        <ui:repeat value="#{question.checkboxes}" var="checkbox">
+                            <p:outputLabel value="-> #{checkbox.title}"/>
+                            <br/>
+                        </ui:repeat>
+                    </ui:fragment>
+                    <br/>
+                </ui:repeat>
+            </p:fieldset>
+            <h:button value="Modify" outcome="create-survey">
+                <f:param name="id" value="#{requestSurveyController.survey.id}"/>
+                <f:param name="modify" value="true"/>
+            </h:button>
+        </h:form>
+    </h:body>
+</f:view>
+
+</html>
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+>
+    <f:view>
+        <f:metadata>
+            <f:viewParam name="id" value="#{answerSurveyController.id}"/>
+            <f:viewAction action="#{answerSurveyController.loadData}"/>
+        </f:metadata>
+
+        <h:head>
+            <h:outputStylesheet name="css/styles.css" />
+            <title>Conversation implementation with CDI</title>
+        </h:head>
+
+        <h:body>
+            <h1>#{answerSurveyController.answeredSurvey.survey.title}</h1>
+            <h:form>
+                <p:fieldset legend="Surveys" toggleable="true">
+                    <ui:repeat value="#{answerSurveyController.answers}" var="answer">
+                        <p:outputLabel value="#{answer.question.position}. #{answer.question.title}"/>
+                        <br/>
+
+                        <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
+                            <h:inputText value="#{answer.value}"/>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
+                            <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
+                            <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                <p:inputText id="txt1" value="#{answer.value}" />
+                                <p:slider  for="txt1" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}"/>
+                            </h:panelGrid>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
+                            <p:selectOneRadio value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
+                                <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
+                            </p:selectOneRadio>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
+                            <p:selectManyCheckbox value="#{answer.tempSelectedCheckboxes}" converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
+                                <f:selectItems value="#{answer.question.checkboxes}" var="checkbox" itemLabel="#{checkbox.title}" itemValue="#{checkbox}" />
+                            </p:selectManyCheckbox>
+                        </ui:fragment>
+
+                        <br/>
+                    </ui:repeat>
+                </p:fieldset>
+
+                <h:commandButton value="Submit" action="#{answerSurveyController.answer()}" />
+
+                <p:messages globalOnly="true"/>
+            </h:form>
+        </h:body>
+    </f:view>
+
+</html>
+

@@ -16,7 +16,8 @@ CREATE TABLE feedback.users
     last_name VARCHAR(20),
     password VARCHAR(20),
     is_admin BOOLEAN,
-    is_blocked BOOLEAN
+    is_blocked BOOLEAN,
+    opt_lock_version INTEGER
 );
 
 CREATE TABLE feedback.surveys
@@ -33,39 +34,57 @@ CREATE TABLE feedback.slider_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    position INTEGER,
     is_required BOOLEAN,
     lower_bound INTEGER,
     upper_bound INTEGER,
-    step INTEGER,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
-
 CREATE TABLE feedback.text_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    position INTEGER,
     is_required BOOLEAN,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
-
-CREATE TABLE feedback.option_questions
+CREATE TABLE feedback.checkbox_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    position INTEGER,
     is_required BOOLEAN,
-    is_multiple BOOLEAN,
+    title VARCHAR(200),
+    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
+);
+CREATE TABLE feedback.radio_questions
+(
+    id serial PRIMARY KEY,
+    survey_id INTEGER,
+    position INTEGER,
+    is_required BOOLEAN,
     title VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
-CREATE TABLE feedback.option_values
+
+
+CREATE TABLE feedback.checkboxes
 (
     id serial PRIMARY KEY,
     question_id INTEGER,
     title VARCHAR(200),
-    FOREIGN KEY (question_id) REFERENCES feedback.option_questions (id)
+    FOREIGN KEY (question_id) REFERENCES feedback.checkbox_questions (id)
+);
+
+CREATE TABLE feedback.radio_buttons
+(
+    id serial PRIMARY KEY,
+    question_id INTEGER,
+    title VARCHAR(200),
+    FOREIGN KEY (question_id) REFERENCES feedback.radio_questions (id)
 );
 
 CREATE TABLE feedback.answered_surveys
@@ -96,13 +115,30 @@ CREATE TABLE feedback.text_answers
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
 
-CREATE TABLE feedback.option_answers
+CREATE TABLE feedback.radio_answers
 (
     id serial PRIMARY KEY,
     question_id INTEGER,
     answered_survey_id INTEGER,
-    option_id INTEGER,
-    FOREIGN KEY (question_id) REFERENCES feedback.option_questions (id),
-    FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id),
-    FOREIGN KEY (option_id) REFERENCES feedback.option_values (id)
+    radio_button_id INTEGER,
+    FOREIGN KEY (question_id) REFERENCES feedback.radio_questions (id),
+    FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
+);
+
+CREATE TABLE feedback.checkbox_answers
+(
+    id serial PRIMARY KEY,
+    question_id INTEGER,
+    answered_survey_id INTEGER,
+    FOREIGN KEY (question_id) REFERENCES feedback.checkbox_questions (id),
+    FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
+);
+
+CREATE TABLE feedback.selected_checkboxes
+(
+    id serial PRIMARY KEY,
+    answer_id INTEGER,
+    checkbox_id INTEGER,
+    FOREIGN KEY (answer_id) REFERENCES feedback.checkbox_answers (id),
+    FOREIGN KEY (checkbox_id) REFERENCES feedback.checkboxes (id)
 );

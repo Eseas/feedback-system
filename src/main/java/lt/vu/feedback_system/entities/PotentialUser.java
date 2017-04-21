@@ -8,9 +8,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-/**
- * Created by kazim on 2017-03-26.
- */
 @Entity
 @Table(schema = "feedback", name = "potential_users")
 @NamedQueries({

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>lt.vu.mif</groupId>
-    <artifactId>JavaEEstarter</artifactId>
+    <artifactId>FeedbackSystem</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -35,11 +35,11 @@
         </dependency>
 
         <!-- JSF add-ons -->
-        <!-- http://showcase.omnifaces.org/ -->
+        <!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces -->
         <dependency>
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
-            <version>2.6</version>
+            <version>2.6.2</version>
         </dependency>
         <!-- http://www.primefaces.org/showcase/ -->
         <dependency>
@@ -80,11 +80,18 @@
             <version>9.4.1212</version>
         </dependency>
 
-        <!-- SHA1 encoding -->
+        <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 </project>

@@ -16,7 +16,20 @@ public class SurveyDAO {
         em.persist(survey);
     }
 
+    public void update(Survey survey) {
+        em.merge(survey);
+    }
+
     public List<Survey> getAllSurveys() {
         return em.createNamedQuery("Survey.findAll", Survey.class).getResultList();
+    }
+    public Survey getSurveyByName(String title) {
+        return em.createNamedQuery("Survey.findByName", Survey.class)
+                .setParameter("title", title)
+                .getSingleResult();
+    }
+
+    public Survey getSurveyById(Integer id) {
+        return em.createNamedQuery("Survey.findById", Survey.class).setParameter("id", id).getSingleResult();
     }
 }
