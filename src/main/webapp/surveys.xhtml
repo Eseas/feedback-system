@@ -32,8 +32,8 @@
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
-                <p:column headerText="Report">
-                    <h:button value="View report" outcome="survey-report">
+                <p:column headerText="Answer">
+                    <h:button value="Answer" outcome="answer-survey">
                         <f:param name="id" value="#{survey.id}"/>
                     </h:button>
                 </p:column>
