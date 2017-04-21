@@ -30,9 +30,9 @@ INSERT INTO feedback.checkboxes VALUES (DEFAULT, 2, 'No');
 INSERT INTO feedback.checkboxes VALUES (DEFAULT, 3, 'ASAP');
 INSERT INTO feedback.checkboxes VALUES (DEFAULT, 3, 'No.');
 
-INSERT INTO feedback.radio_questions VALUES (DEFAULT, 1, 3, TRUE, 'Which option represent your situation?');
-INSERT INTO feedback.radio_questions VALUES (DEFAULT, 2, 1,FALSE, 'Do you like your chair?');
-INSERT INTO feedback.radio_questions VALUES (DEFAULT, 3, 3,TRUE, 'Do you need a new monitor?');
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 1, 4, TRUE, 'Which option represent your situation?');
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 2, 4,FALSE, 'Do you like your chair?');
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 3, 4,TRUE, 'Do you need a new monitor?');
 
 INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Great');
 INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Medium');

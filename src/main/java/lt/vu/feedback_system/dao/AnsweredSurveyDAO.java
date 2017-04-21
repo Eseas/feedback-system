@@ -17,8 +17,15 @@ public class AnsweredSurveyDAO {
         em.persist(answeredSurvey);
     }
 
-    public List<AnsweredSurvey> getAllAnswers() {
+    public List<AnsweredSurvey> getAllAnsweredSurveys() {
         return em.createNamedQuery("AnsweredSurvey.findAll", AnsweredSurvey.class).getResultList();
     }
 
+    public AnsweredSurvey getAnsweredSurveyById(Integer id) {
+        return em.createNamedQuery("AnsweredSurvey.findById", AnsweredSurvey.class).setParameter("id", id).getSingleResult();
+    }
+
+    public List<AnsweredSurvey> getAnsweredSurveysBySurveyId(Integer id) {
+        return em.createNamedQuery("AnsweredSurvey.findAllBySurveyId", AnsweredSurvey.class).setParameter("id", id).getResultList();
+    }
 }

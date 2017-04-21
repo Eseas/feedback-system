@@ -22,7 +22,9 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "answered_surveys")
 @NamedQueries({
+        @NamedQuery(name = "AnsweredSurvey.findById", query = "SELECT c FROM AnsweredSurvey c WHERE c.id = :id"),
         @NamedQuery(name = "AnsweredSurvey.findAll", query = "SELECT c FROM AnsweredSurvey c"),
+        @NamedQuery(name = "AnsweredSurvey.findAllBySurveyId", query = "SELECT c FROM AnsweredSurvey c WHERE c.survey.id = :id")
 })
 @Getter
 @Setter

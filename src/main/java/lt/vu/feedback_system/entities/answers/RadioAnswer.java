@@ -14,6 +14,9 @@ import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "radio_answers")
+@NamedQueries({
+        @NamedQuery(name = "RadioAnswer.findAllByQuestionId", query = "SELECT c FROM RadioAnswer c WHERE c.question.id = :id"),
+        @NamedQuery(name = "RadioAnswer.findAll", query = "SELECT c FROM RadioAnswer c")})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})

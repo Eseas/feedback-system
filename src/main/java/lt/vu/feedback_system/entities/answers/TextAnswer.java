@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "text_answers")
 @NamedQueries({
+        @NamedQuery(name = "TextAnswer.findAllByQuestionId", query = "SELECT c FROM TextAnswer c WHERE c.question.id = :id"),
         @NamedQuery(name = "TextAnswer.findAll", query = "SELECT c FROM TextAnswer c")})
 @Getter
 @Setter

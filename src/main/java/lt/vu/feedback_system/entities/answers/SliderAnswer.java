@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "slider_answers")
 @NamedQueries({
+        @NamedQuery(name = "SliderAnswer.findAllByQuestionId", query = "SELECT c FROM SliderAnswer c WHERE c.question.id = :id"),
         @NamedQuery(name = "SliderAnswer.findAll", query = "SELECT c FROM SliderAnswer c")})
 @Getter
 @Setter
