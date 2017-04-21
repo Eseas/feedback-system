@@ -3,6 +3,7 @@
     padding: 70px 0 0;
     margin: auto;
 }
+
 .header{
     color: #00426B;
     position: relative;
@@ -107,6 +108,18 @@
 .container .info span .fa {
     color: #EF3B3A;
 }
+.ui-messages-error-icon{
+    visibility: hidden;
+}
+.ui-messages-error, .ui-messages-error-summary{
+    margin-left: 0 !important;
+    font-weight: 300 !important;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    text-align: left;
+    padding: 10px 0 !important;
+    color: #c00;
+ }
 body {
     background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
     background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);

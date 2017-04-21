@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
-    <h:outputStylesheet name="css/styles.css" />
+    <h:outputStylesheet name="css/stylesLogin.css" />
     <title>Builder of Surveys</title>
 </h:head>
 
@@ -24,7 +24,7 @@
             <h:form id="login-form" class="login-form">
                 <p:inputText class="input" id="user-email" value="#{loginController.email}" placeholder="Email" required="true" />
                 <p:password class="input" id="user-password" value="#{loginController.password}" placeholder="Password" required="true"/>
-                <p:messages autoUpdate="true" />
+                <p:messages autoUpdate="true" display="text"/>
                 <h:commandButton class="button" value="Login" action="#{loginController.doLogin()}" />
                 <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
             </h:form>
