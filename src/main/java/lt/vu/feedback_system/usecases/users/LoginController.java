@@ -4,14 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.businesslogic.users.Session;
-import org.mindrot.jbcrypt.BCrypt;
 import org.primefaces.component.password.Password;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 @Model
 @Slf4j
@@ -21,6 +19,8 @@ public class LoginController {
     private String email;
     @Getter @Setter
     private String password;
+    @Getter @Setter
+    private String redirectUrl;
 
     @Inject
     private Session session;
@@ -35,7 +35,11 @@ public class LoginController {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getSessionMap().put("session", session);
 
-            return navigationController.redirectToIndex();
+            if (redirectUrl != null && !redirectUrl.isEmpty()) {
+                return navigationController.redirectToWithParam(redirectUrl);
+            } else {
+                return navigationController.redirectToIndex();
+            }
         } else {
             FacesMessage msg = new FacesMessage("Wrong email or password!", "No details.");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);

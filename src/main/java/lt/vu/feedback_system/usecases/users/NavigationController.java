@@ -1,5 +1,7 @@
 package lt.vu.feedback_system.usecases.users;
 
+import lt.vu.feedback_system.utils.FacesUtil;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
@@ -36,5 +38,13 @@ public class NavigationController {
      */
     public String toIndex() {
         return "/index.xhtml";
+    }
+
+    /**
+     * Redirect to a page and keep parameters.
+     * @return Page to redirect with all parameters.
+     */
+    public String redirectToWithParam(String redirectUrl) {
+        return FacesUtil.redirectTo(redirectUrl);
     }
 }
