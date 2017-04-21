@@ -46,8 +46,8 @@
                         </ui:fragment>
 
                         <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
-                            <p:selectManyCheckbox value="#{answer.selectedCheckboxes}" layout="grid" columns="3">
-                                <f:selectItems value="#{answer.question.checkboxes}" var="checkbox" itemLabel="#{checkbox}" itemValue="#{checkbox}" />
+                            <p:selectManyCheckbox value="#{answer.tempSelectedCheckboxes}" converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
+                                <f:selectItems value="#{answer.question.checkboxes}" var="checkbox" itemLabel="#{checkbox.title}" itemValue="#{checkbox}" />
                             </p:selectManyCheckbox>
                         </ui:fragment>
 

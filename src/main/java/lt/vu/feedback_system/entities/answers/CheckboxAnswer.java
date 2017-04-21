@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.AnsweredSurvey;
+import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 
 import javax.persistence.*;
@@ -37,9 +38,7 @@ public class CheckboxAnswer implements Answer {
     @OneToMany(mappedBy = "checkboxAnswer")
     private List<SelectedCheckbox> selectedCheckboxes;
 
-//    Justas approach
-//
-//    @OneToMany
-//    private List<Checkbox> optionValues;
+    @Transient
+    private List<Checkbox> tempSelectedCheckboxes;
 
 }

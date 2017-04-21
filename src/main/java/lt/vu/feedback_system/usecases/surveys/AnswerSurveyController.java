@@ -53,21 +53,29 @@ public class AnswerSurveyController implements Serializable {
         for (TextQuestion q : answeredSurvey.getSurvey().getTextQuestions()) {
             TextAnswer a = new TextAnswer();
             a.setQuestion(q);
+            a.setAnsweredSurvey(answeredSurvey);
+
             answeredSurvey.getTextAnswers().add(a);
         }
         for (SliderQuestion q : answeredSurvey.getSurvey().getSliderQuestions()) {
             SliderAnswer a = new SliderAnswer();
             a.setQuestion(q);
+            a.setAnsweredSurvey(answeredSurvey);
+
             answeredSurvey.getSliderAnswers().add(a);
         }
         for (RadioQuestion q : answeredSurvey.getSurvey().getRadioQuestions()) {
             RadioAnswer a = new RadioAnswer();
             a.setQuestion(q);
+            a.setAnsweredSurvey(answeredSurvey);
+
             answeredSurvey.getRadioAnswers().add(a);
         }
         for (CheckboxQuestion q : answeredSurvey.getSurvey().getCheckboxQuestions()) {
             CheckboxAnswer a = new CheckboxAnswer();
             a.setQuestion(q);
+            a.setAnsweredSurvey(answeredSurvey);
+
             answeredSurvey.getCheckboxAnswers().add(a);
         }
     }
@@ -94,14 +102,6 @@ public class AnswerSurveyController implements Serializable {
             }
         });
         return answers;
-    }
-
-    public void addSliderAnswer(SliderQuestion q) {
-        SliderAnswer a = new SliderAnswer();
-        a.setQuestion(q);
-        a.setAnsweredSurvey(answeredSurvey);
-
-        answeredSurvey.getSliderAnswers().add(a);
     }
 
     @Transactional
