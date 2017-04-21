@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
+import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.users.Session;
 import lt.vu.feedback_system.dao.CheckboxDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
@@ -23,6 +24,14 @@ import java.util.List;
 @Named
 @ViewScoped
 public class CreateSurveyController implements Serializable {
+    @Getter
+    @Setter
+    private Integer id;
+
+    @Getter
+    @Setter
+    private Boolean modify;
+
     @Inject
     private Session session;
 
@@ -44,6 +53,17 @@ public class CreateSurveyController implements Serializable {
     @PostConstruct
     private void init() {
         survey.setConfidential(true);
+    }
+
+    public void loadData() {
+        survey = surveyDAO.getSurveyById(id);
+
+//        for (TextQuestion q: survey.getTextQuestions())
+//            questions.add(q);
+//        for (SliderQuestion q: survey.getSliderQuestions())
+//            questions.add(q);
+//        for (CheckboxQuestion q: survey.getCheckboxQuestions())
+//            questions.add(q);
     }
 
     public void moveUp(Question q) {
@@ -207,6 +227,27 @@ public class CreateSurveyController implements Serializable {
             questionDAO.create(q);
             for (Checkbox c : q.getCheckboxes())
                 checkboxDAO.create(c);
+        }
+        return "surveys?faces-redirect=true";
+    }
+
+    @Transactional
+    public String update() {
+//        survey.setCreator(session.getUser());
+        surveyDAO.update(survey);
+        for (TextQuestion q: survey.getTextQuestions())
+            questionDAO.update(q);
+        for (SliderQuestion q: survey.getSliderQuestions())
+            questionDAO.update(q);
+        for (RadioQuestion q: survey.getRadioQuestions()) {
+            questionDAO.update(q);
+            for (RadioButton rb : q.getRadioButtons())
+                radioButtonDAO.update(rb);
+        }
+        for (CheckboxQuestion q: survey.getCheckboxQuestions()) {
+            questionDAO.update(q);
+            for (Checkbox c : q.getCheckboxes())
+                checkboxDAO.update(c);
         }
         return "surveys?faces-redirect=true";
     }

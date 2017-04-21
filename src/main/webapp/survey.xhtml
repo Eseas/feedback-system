@@ -51,7 +51,10 @@
                     <br/>
                 </ui:repeat>
             </p:fieldset>
-            <p:commandButton action="#{requestSurveyController.}"
+            <h:button value="Modify" outcome="create-survey">
+                <f:param name="id" value="#{requestSurveyController.survey.id}"/>
+                <f:param name="modify" value="true"/>
+            </h:button>
         </h:form>
     </h:body>
 </f:view>

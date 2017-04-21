@@ -29,4 +29,20 @@ public class QuestionDAO {
     public void create(RadioQuestion q) {
         em.persist(q);
     }
+
+    public void update(TextQuestion q) {
+        em.merge(q);
+    }
+
+    public void update(SliderQuestion q) {
+        em.merge(q);
+    }
+
+    public void update(CheckboxQuestion q) {
+        em.merge(q);
+    }
+
+    public void update(RadioQuestion q) {
+        em.merge(q);
+    }
 }

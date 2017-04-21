@@ -16,4 +16,7 @@ public class RadioButtonDAO {
     public void create(RadioButton radioButton) {
         em.persist(radioButton);
     }
+    public void update(RadioButton radioButton) {
+        em.merge(radioButton);
+    }
 }
