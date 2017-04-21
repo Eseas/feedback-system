@@ -1,7 +1,9 @@
 package lt.vu.feedback_system.businesslogic.users;
 
 import lombok.Getter;
+import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.dao.UserDAO;
+import lt.vu.feedback_system.entities.Survey;
 import lt.vu.feedback_system.entities.User;
 
 import javax.enterprise.context.SessionScoped;
@@ -18,6 +20,9 @@ public class Session implements Serializable {
 
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private SurveyDAO surveyDAO;
 
     public void login(String username, String password) {
         try {
@@ -42,6 +47,20 @@ public class Session implements Serializable {
         if (user.getId() != null) {
             return user.getAdmin();
         }
+        return false;
+    }
+
+    public boolean isSurveyCreator(Integer surveyId) {
+        try {
+            Survey survey = surveyDAO.getSurveyById(surveyId);
+
+            if (user.getId().equals(survey.getCreator().getId())) {
+                return true;
+            }
+        } catch (javax.persistence.NoResultException ex) {
+        } catch (NullPointerException ex) {
+        }
+
         return false;
     }
 }

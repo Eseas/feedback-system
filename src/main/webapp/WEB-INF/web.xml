@@ -17,6 +17,10 @@
         <filter-name>AdminPermissionFilter</filter-name>
         <filter-class>lt.vu.feedback_system.filters.AdminPermissionFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>SurveyCreatorPermissionFilter</filter-name>
+        <filter-class>lt.vu.feedback_system.filters.SurveyCreatorPermissionFilter</filter-class>
+    </filter>
 
     <filter-mapping>
         <filter-name>NoLoginAgainFilter</filter-name>
@@ -26,12 +30,19 @@
         <filter-name>UserPermissionFilter</filter-name>
         <url-pattern>/surveys.html</url-pattern>
         <url-pattern>/users.html</url-pattern>
+        <url-pattern>/survey.html</url-pattern>
         <url-pattern>/create-survey.html</url-pattern>
         <url-pattern>/survey-reports.html</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminPermissionFilter</filter-name>
         <url-pattern>/users.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SurveyCreatorPermissionFilter</filter-name>
+        <url-pattern>/survey.html</url-pattern>
+        <url-pattern>/create-survey.html</url-pattern>
+        <url-pattern>/survey-report.html</url-pattern>
     </filter-mapping>
 
     <servlet>
