@@ -37,6 +37,11 @@
                         <f:param name="id" value="#{survey.id}"/>
                     </h:button>
                 </p:column>
+                <p:column headerText="Report">
+                    <h:button value="View report" outcome="survey-report">
+                        <f:param name="id" value="#{survey.id}"/>
+                    </h:button>
+                </p:column>
             </p:dataTable>
         </p:fieldset>
 

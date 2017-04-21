@@ -3,19 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
 >
 <f:view>
     <f:metadata>
         <f:viewParam name="id" value="#{createSurveyController.id}"/>
         <f:viewParam name="modify" value="#{createSurveyController.modify}"/>
-        <f:viewAction action="#{createSurveyController.loadData}"/>
+        <o:viewAction action="#{createSurveyController.loadData}" rendered="#{param.modify ne null}"/>
     </f:metadata>
 
     <h:head>
+        <!--
         <h:outputStylesheet name="css/styles.css" />
+        -->
         <title>Conversation implementation with CDI</title>
     </h:head>
 
