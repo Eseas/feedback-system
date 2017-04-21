@@ -7,6 +7,7 @@ import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.dao.PotentialUserDAO;
 import lt.vu.feedback_system.dao.UserDAO;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -19,14 +20,19 @@ public class RequestUsersController {
     private PotentialUser potentialUser = new PotentialUser();
     @Getter
     private PotentialUser potentialUserToRemove = new PotentialUser();
+    @Getter
+    private List<User> users ;
+    @Getter
+    private User user;
 
     @Inject
     private UserDAO userDAO;
     @Inject
     private PotentialUserDAO potentialUserDAO;
 
-    public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+    @PostConstruct
+    public void loadData() {
+        users = userDAO.getAllUsers();
     }
 
     public List<PotentialUser> getAllPotentialUsers() {
@@ -50,4 +56,11 @@ public class RequestUsersController {
         }
         potentialUserToRemove = new PotentialUser();
     }
+    @Transactional
+    public void update(){
+        for (User user: users) {
+            userDAO.merge(user);
+        }
+    }
+
 }
