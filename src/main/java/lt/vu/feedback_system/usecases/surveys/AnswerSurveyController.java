@@ -116,8 +116,13 @@ public class AnswerSurveyController implements Serializable {
         }
         for (CheckboxAnswer a: answeredSurvey.getCheckboxAnswers()) {
             answerDAO.create(a);
-            for (SelectedCheckbox sc : a.getSelectedCheckboxes())
-                selectedCheckboxDAO.create(sc);
+            for (Checkbox checkbox : a.getTempSelectedCheckboxes()) {
+                SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
+                selectedCheckbox.setCheckbox(checkbox);
+                selectedCheckbox.setCheckboxAnswer(a);
+                selectedCheckboxDAO.create(selectedCheckbox);
+            }
+
         }
         return "surveys?faces-redirect=true";
     }
