@@ -16,7 +16,7 @@
         <h:form>
 
             <p:fieldset legend="Registered users" toggleable="true" style="width: 70%">
-                <p:dataTable value="#{requestUsersController.getAllUsers()}" var="user">
+                <p:dataTable value="#{requestUsersController.users}" var="user">
 
                     <p:column headerText="Email">
                         <h:outputText value="#{user.email}"/>
@@ -28,43 +28,18 @@
                         <h:outputText value="#{user.lastName}"/>
                     </p:column>
                     <p:column headerText="Admin">
-                        <p:selectBooleanCheckbox value="#{user.admin}" />
-
+                        <p:selectBooleanCheckbox value="#{user.admin}"/>
                     </p:column>
                     <p:column headerText="Blocked">
                         <p:selectBooleanCheckbox value="#{user.blocked}"/>
                     </p:column>
                 </p:dataTable>
             </p:fieldset>
+            <p:commandButton value="Save"
+                             actionListener="#{requestUsersController.update()}"
+                             ajax="false"/>
         </h:form>
-        <h:form>
-            <h2>User panel</h2>
-            <table>
-                <tr>
-                    <td>
-                        <h:panelGrid columns="3">
-                            <p:outputLabel for="admin" value="Email"/>
-                            <p:inputText id="admin" value="#{userManagementController.user.email}"/>
-                            <p:message for="admin"/>
-                        </h:panelGrid>
-                    </td>
-                </tr>
-            </table>
 
-            <p:commandButton value="Give admin"
-                             actionListener="#{userManagementController.setAdmin(true)}"
-                             ajax="false"/>
-            <p:commandButton value="Remove admin"
-                             actionListener="#{userManagementController.setAdmin(false)}"
-                             ajax="false"/>
-            <p:commandButton value="Block user"
-                             actionListener="#{userManagementController.setBlock(true)}"
-                             ajax="false"/>
-            <p:commandButton value="Unblock user"
-                             actionListener="#{userManagementController.setBlock(false)}"
-                             ajax="false"/>
-
-        </h:form>
 
         <h:form>
             <p:fieldset legend="Potential users" toggleable="true" style="width: 40%">
