@@ -2,10 +2,13 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.users.Session;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.entities.questions.*;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,19 +29,26 @@ public class RequestSurveyController implements Serializable {
 
     @Inject
     private SurveyDAO surveyDAO;
+    @Inject
+    private Session session;
 
     @Getter
     private Survey survey;
+    @Getter
+    private List<Survey> userSurveys = new ArrayList<>();
 
     private List<Question> questions = new ArrayList<>();
 
 
     @Getter
     private TextQuestion textQuestion = new TextQuestion();
-
+    @PostConstruct
+    public void loadData2(){
+        User user = session.getUser();
+        userSurveys = surveyDAO.getSurveyByCreatorId(user.getId());
+    }
     public void loadData() {
         survey = surveyDAO.getSurveyById(id);
-
         for (TextQuestion q: survey.getTextQuestions())
             questions.add(q);
         for (SliderQuestion q: survey.getSliderQuestions())

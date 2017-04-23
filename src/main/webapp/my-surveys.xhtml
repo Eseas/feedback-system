@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+    <h:head>
+        <h:outputStylesheet name="css/stylesLogin.css" />
+        <title>Conversation implementation with CDI</title>
+    </h:head>
+
+    <h:body>
+       <h1>Surveys</h1>
+       <h:form>
+          <p:fieldset legend="Surveys" toggleable="true">
+            <p:dataTable value="#{requestSurveyController.userSurveys}" var="survey">
+                <p:column headerText="Title">
+                    <h:link value="#{survey.title}" outcome="survey">
+                        <f:param name="id" value="#{survey.id}"/>
+                    </h:link>
+                </p:column>
+                <p:column headerText="Description">
+                    <h:outputText value="#{survey.description}" />
+                </p:column>
+                <p:column headerText="Confidential">
+                    <h:outputText value="#{survey.confidential}" />
+                </p:column>
+                <p:column headerText="Report">
+                    <h:button value="View report" outcome="survey-report">
+                        <f:param name="id" value="#{survey.id}"/>
+                    </h:button>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+
+        </h:form>
+    </h:body>
+
+</html>
+
