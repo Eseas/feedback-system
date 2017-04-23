@@ -24,7 +24,6 @@ public class UserDAO {
     }
 
     public User getUserById(int id) {
-
         return em.find(User.class, id);
     }
 
@@ -34,11 +33,13 @@ public class UserDAO {
                 .setParameter("password", password)
                 .getSingleResult();
     }
+
     public User getUserByEmail(String email) {
         return em.createNamedQuery("User.findByEmail", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }
+
     public List<User> getAllUsers() {
         return em.createNamedQuery("User.findAll", User.class).getResultList();
     }

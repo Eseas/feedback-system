@@ -28,9 +28,6 @@ public class RadioAnswer implements Answer {
     @Column(name = "id")
     private Integer id;
 
-    @Transient
-    private final String type = "text";
-
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private RadioQuestion question;

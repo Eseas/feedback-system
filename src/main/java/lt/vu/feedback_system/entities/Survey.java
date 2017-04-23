@@ -25,7 +25,8 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
-    @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.title = :title")
+    @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.title = :title"),
+    @NamedQuery(name = "Survey.findAllByCreatorId", query = "SELECT c FROM Survey c WHERE c.creator.id = :id")
 })
 @Getter
 @Setter

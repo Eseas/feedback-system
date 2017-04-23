@@ -5,21 +5,18 @@ import lombok.Setter;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.Survey;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.utils.Sorter;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Named
 @ViewScoped
 public class RequestSurveyController implements Serializable {
-//    For URL safety check here: (Now needs logged in user)
-//    http://stackoverflow.com/questions/24744718/how-to-safely-init-a-viewscoped-bean-with-url-get-request-parameters
     @Getter
     @Setter
     private Integer id;
@@ -32,13 +29,11 @@ public class RequestSurveyController implements Serializable {
 
     private List<Question> questions = new ArrayList<>();
 
-
     @Getter
     private TextQuestion textQuestion = new TextQuestion();
 
     public void loadData() {
         survey = surveyDAO.getSurveyById(id);
-
         for (TextQuestion q: survey.getTextQuestions())
             questions.add(q);
         for (SliderQuestion q: survey.getSliderQuestions())
@@ -51,16 +46,7 @@ public class RequestSurveyController implements Serializable {
 
 
     public List<Question> getQuestions() {
-
-        Collections.sort(questions, new Comparator<Question>() {
-            @Override
-            public int compare(Question lhs, Question rhs) {
-                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-
-                return lhs.getPosition() > rhs.getPosition() ? 1 : (lhs.getPosition() < rhs.getPosition() ) ? -1 : 0;
-            }
-        });
-        return questions;
+        return Sorter.sortQuestionsAscending(questions);
     }
 
 }
