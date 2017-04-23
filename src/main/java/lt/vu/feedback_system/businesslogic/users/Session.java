@@ -7,7 +7,6 @@ import lt.vu.feedback_system.entities.User;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.List;
 
 @SessionScoped
 public class Session implements Serializable {
@@ -16,7 +15,6 @@ public class Session implements Serializable {
 
     @Getter
     private User user = new User();
-
 
     @Inject
     private UserDAO userDAO;
@@ -45,8 +43,5 @@ public class Session implements Serializable {
             return user.getAdmin();
         }
         return false;
-    }
-    public int getUserID(){
-        return user.getId();
     }
 }
