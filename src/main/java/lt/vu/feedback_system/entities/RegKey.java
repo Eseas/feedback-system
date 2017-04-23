@@ -3,16 +3,21 @@ package lt.vu.feedback_system.entities;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 
 @Entity
 @Table(schema = "feedback", name = "reg_keys")
+@NamedQueries({
+    @NamedQuery(name = "RegKey.findAll", query = "SELECT k FROM RegKey k"),
+    @NamedQuery(name = "RegKey.findByCode", query = "SELECT k FROM RegKey k WHERE k.code = :code")
+})
 @Data
 @EqualsAndHashCode(exclude = "id")
 public class RegKey {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -23,5 +28,6 @@ public class RegKey {
     private boolean used;
 
     @Column(name = "expires", nullable = false)
-    private Timestamp expires;
+    private LocalDateTime expires;
+
 }

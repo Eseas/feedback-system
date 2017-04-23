@@ -5,7 +5,7 @@ CREATE SCHEMA feedback;
 CREATE TABLE feedback.reg_keys
 (
   id SERIAL PRIMARY KEY,
-  code CHAR(8) NOT NULL,
+  code CHAR(32) NOT NULL UNIQUE,
   used BOOLEAN NOT NULL DEFAULT FALSE,
   expires TIMESTAMP NOT NULL
 );
