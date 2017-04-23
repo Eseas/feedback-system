@@ -5,7 +5,6 @@ import lt.vu.feedback_system.businesslogic.users.Session;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Null;
 import java.io.IOException;
 
 /**

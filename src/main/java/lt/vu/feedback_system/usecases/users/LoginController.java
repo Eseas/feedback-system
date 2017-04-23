@@ -26,7 +26,7 @@ public class LoginController {
     private Session session;
 
     @Inject
-    private NavigationController navigationController;
+    private NavigationBean navigationBean;
 
     public String doLogin() {
         session.login(email, password);
@@ -36,16 +36,16 @@ public class LoginController {
             context.getExternalContext().getSessionMap().put("session", session);
 
             if (redirectUrl != null && !redirectUrl.isEmpty()) {
-                return navigationController.redirectToWithParam(redirectUrl);
+                return navigationBean.redirectTo(redirectUrl);
             } else {
-                return navigationController.redirectToIndex();
+                return navigationBean.redirectToIndex();
             }
         } else {
             FacesMessage msg = new FacesMessage("Wrong email or password!", "No details.");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            return navigationController.toLogin();
+            return navigationBean.toLogin();
         }
     }
 
@@ -54,7 +54,7 @@ public class LoginController {
 
         session.logout();
 
-        return navigationController.toIndex();
+        return navigationBean.toIndex();
     }
 
     public boolean isLoggedIn() {

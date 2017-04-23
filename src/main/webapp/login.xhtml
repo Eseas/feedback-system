@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
 >
 <f:view>
     <f:metadata>
@@ -26,13 +27,13 @@
 
         <div class="login-page">
             <div class="form">
-                <h:form id="login-form" class="login-form">
+                <o:form id="login-form" class="login-form" includeViewParams="true">
                     <p:inputText class="input" id="user-email" value="#{loginController.email}" placeholder="Email" required="true" />
                     <p:password class="input" id="user-password" value="#{loginController.password}" placeholder="Password" required="true"/>
                     <p:messages autoUpdate="true" display="text"/>
-                    <h:commandButton class="button" value="Login" action="#{loginController.doLogin()}" />
+                    <h:commandButton class="button" value="Login" action="#{loginController.doLogin()}"/>
                     <p class="message">Cannot sign in? <p:link class="remember" outcome="remember" value="Remember password"></p:link></p>
-                </h:form>
+                </o:form>
             </div>
         </div>
     </h:body>

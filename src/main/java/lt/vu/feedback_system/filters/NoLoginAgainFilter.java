@@ -1,7 +1,6 @@
 package lt.vu.feedback_system.filters;
 
 import lt.vu.feedback_system.businesslogic.users.Session;
-import lt.vu.feedback_system.utils.FacesUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
