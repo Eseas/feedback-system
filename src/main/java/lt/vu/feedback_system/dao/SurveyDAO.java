@@ -23,16 +23,11 @@ public class SurveyDAO {
     public List<Survey> getAllSurveys() {
         return em.createNamedQuery("Survey.findAll", Survey.class).getResultList();
     }
-    public Survey getSurveyByName(String title) {
-        return em.createNamedQuery("Survey.findByName", Survey.class)
-                .setParameter("title", title)
-                .getSingleResult();
-    }
 
     public Survey getSurveyById(Integer id) {
         return em.createNamedQuery("Survey.findById", Survey.class).setParameter("id", id).getSingleResult();
     }
-    public List<Survey> getSurveyByCreatorId(Integer id){
+    public List<Survey> getSurveysByCreatorId(Integer id){
         return em.createNamedQuery("Survey.findAllByCreatorId", Survey.class).setParameter("id", id).getResultList();
     }
 }

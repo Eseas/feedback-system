@@ -28,8 +28,5 @@ public class RadioButton {
     @JoinColumn(name = "question_id", referencedColumnName = "id")
     @ManyToOne
     private RadioQuestion question;
-//
-//    @OneToMany(mappedBy = "value") // bad mapping name here
-//    private List<CheckboxAnswer> optionAnswers = new ArrayList<>();
 }
 

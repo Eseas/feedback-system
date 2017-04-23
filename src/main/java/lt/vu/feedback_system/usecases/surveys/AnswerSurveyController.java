@@ -9,6 +9,7 @@ import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.AnsweredSurvey;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.utils.Sorter;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -40,7 +41,6 @@ public class AnswerSurveyController implements Serializable {
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
-//    private List<Answer> answers = new ArrayList<>();
     private List<Question> questions = new ArrayList<>();
 
 
@@ -88,20 +88,7 @@ public class AnswerSurveyController implements Serializable {
         answers.addAll(answeredSurvey.getRadioAnswers());
         answers.addAll(answeredSurvey.getCheckboxAnswers());
 
-        return sort(answers);
-    }
-
-    public List<Answer> sort(List<Answer> answers) {
-
-        Collections.sort(answers, new Comparator<Answer>() {
-            @Override
-            public int compare(Answer lhs, Answer rhs) {
-                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-
-                return lhs.getQuestion().getPosition() > rhs.getQuestion().getPosition() ? 1 : (lhs.getQuestion().getPosition() < rhs.getQuestion().getPosition() ) ? -1 : 0;
-            }
-        });
-        return answers;
+        return Sorter.sortAnswersAscending(answers);
     }
 
     @Transactional
@@ -112,7 +99,7 @@ public class AnswerSurveyController implements Serializable {
         for (SliderAnswer a: answeredSurvey.getSliderAnswers())
             answerDAO.create(a);
         for (RadioAnswer a: answeredSurvey.getRadioAnswers()) {
-            answerDAO.create(a);         // possible error
+            answerDAO.create(a);
         }
         for (CheckboxAnswer a: answeredSurvey.getCheckboxAnswers()) {
             answerDAO.create(a);

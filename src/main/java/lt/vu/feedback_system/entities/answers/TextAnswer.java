@@ -28,9 +28,6 @@ public class TextAnswer implements Answer {
     @Column(name = "id")
     private Integer id;
 
-    @Transient
-    private final String type = "text";
-
     @Column(name = "value")
     private String value;
 

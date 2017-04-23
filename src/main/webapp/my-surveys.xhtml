@@ -15,7 +15,7 @@
        <h1>Surveys</h1>
        <h:form>
           <p:fieldset legend="Surveys" toggleable="true">
-            <p:dataTable value="#{requestSurveyController.userSurveys}" var="survey">
+            <p:dataTable value="#{requestSurveysController.allUserSurveys}" var="survey">
                 <p:column headerText="Title">
                     <h:link value="#{survey.title}" outcome="survey">
                         <f:param name="id" value="#{survey.id}"/>

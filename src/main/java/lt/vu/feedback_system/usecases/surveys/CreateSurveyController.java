@@ -10,6 +10,7 @@ import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.Survey;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.utils.Sorter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -18,7 +19,6 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Named
@@ -57,13 +57,6 @@ public class CreateSurveyController implements Serializable {
 
     public void loadData() {
         survey = surveyDAO.getSurveyById(id);
-
-//        for (TextQuestion q: survey.getTextQuestions())
-//            questions.add(q);
-//        for (SliderQuestion q: survey.getSliderQuestions())
-//            questions.add(q);
-//        for (CheckboxQuestion q: survey.getCheckboxQuestions())
-//            questions.add(q);
     }
 
     public void moveUp(Question q) {
@@ -105,20 +98,8 @@ public class CreateSurveyController implements Serializable {
         questions.addAll(survey.getRadioQuestions());
         questions.addAll(survey.getCheckboxQuestions());
 
-        return sort(questions);
+        return Sorter.sortQuestionsAscending(questions);
     }
-
-    public List<Question> sort(List<Question> questions) {
-        Collections.sort(questions, (lhs, rhs) -> {
-            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-            return lhs.getPosition() > rhs.getPosition() ? 1 : (lhs.getPosition() < rhs.getPosition() ) ? -1 : 0;
-        });
-        return questions;
-    }
-
-    public List<Survey> getAllSurveys() {
-        return surveyDAO.getAllSurveys();
-    } // wrong usage
 
     /**
      * Text...
@@ -177,6 +158,16 @@ public class CreateSurveyController implements Serializable {
         survey.getCheckboxQuestions().add(q);
     }
 
+    public void addCheckbox(CheckboxQuestion checkboxQuestion) {
+        Checkbox checkbox = new Checkbox();
+        checkboxQuestion.getCheckboxes().add(checkbox);
+        checkbox.setQuestion(checkboxQuestion);
+    }
+
+    public void removeCheckbox(CheckboxQuestion checkboxQuestion, Checkbox checkbox) {
+        checkboxQuestion.getCheckboxes().remove(checkbox);
+    }
+
     /**
      * Radio...
      */
@@ -188,16 +179,6 @@ public class CreateSurveyController implements Serializable {
         q.setSurvey(survey);
 
         survey.getRadioQuestions().add(q);
-    }
-
-    public void addCheckbox(CheckboxQuestion checkboxQuestion) {
-        Checkbox checkbox = new Checkbox();
-        checkboxQuestion.getCheckboxes().add(checkbox);
-        checkbox.setQuestion(checkboxQuestion);
-    }
-
-    public void removeCheckbox(CheckboxQuestion checkboxQuestion, Checkbox checkbox) {
-        checkboxQuestion.getCheckboxes().remove(checkbox);
     }
 
     public void addRadioButton(RadioQuestion radioQuestion) {
@@ -233,7 +214,6 @@ public class CreateSurveyController implements Serializable {
 
     @Transactional
     public String update() {
-//        survey.setCreator(session.getUser());
         surveyDAO.update(survey);
         for (TextQuestion q: survey.getTextQuestions())
             questionDAO.update(q);
