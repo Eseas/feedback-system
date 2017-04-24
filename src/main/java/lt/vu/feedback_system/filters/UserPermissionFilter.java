@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * Filter checks if LoginController has loginIn and admin property set to true.
@@ -27,14 +28,18 @@ public class UserPermissionFilter implements Filter {
                 String redirectUrl = contextPath + "/login.html";
 
                 String uri = ((HttpServletRequest) request).getRequestURI();
+                String encodedUrl = new String();
                 if (!(uri.compareToIgnoreCase("/") == 0 || uri.length() == 0)) {
-                    redirectUrl += "?redirect="
-                            + ((HttpServletRequest) request).getRequestURI();
+                    redirectUrl += "?redirect=";
+                    encodedUrl += ((HttpServletRequest) request).getRequestURI();
                 }
 
                 if (params != null) {
-                    redirectUrl += "?" + params;
+                    encodedUrl += "?" + params;
                 }
+
+                encodedUrl = URLEncoder.encode(encodedUrl, "UTF-8");
+                redirectUrl += encodedUrl;
 
                 ((HttpServletResponse) response)
                         .sendRedirect(redirectUrl);
