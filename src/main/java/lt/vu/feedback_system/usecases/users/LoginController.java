@@ -65,12 +65,4 @@ public class LoginController {
         return session.isAdmin();
     }
 
-    private String getUserPassword() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        Password pw = (Password)context.getViewRoot().findComponent("login-form:user-password");
-        // dummy result for testing
-        return (String)pw.getValue();
-        // actual result
-        // return BCrypt.hashpw((String)pw.getValue(), BCrypt.gensalt());
-    }
 }

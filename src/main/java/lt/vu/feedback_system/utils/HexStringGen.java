@@ -2,7 +2,7 @@ package lt.vu.feedback_system.utils;
 
 import java.util.UUID;
 
-public class HexStringGen {
+public final class HexStringGen {
 
     private HexStringGen() {}
 
