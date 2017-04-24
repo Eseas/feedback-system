@@ -2,6 +2,14 @@
 
 CREATE SCHEMA feedback;
 
+CREATE TABLE feedback.reg_keys
+(
+  id SERIAL PRIMARY KEY,
+  code CHAR(32) NOT NULL UNIQUE,
+  used BOOLEAN NOT NULL DEFAULT FALSE,
+  expires TIMESTAMP NOT NULL
+);
+
 CREATE TABLE feedback.potential_users
 (
     id serial PRIMARY KEY,
