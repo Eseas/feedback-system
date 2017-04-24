@@ -4,14 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.businesslogic.users.Session;
-import org.mindrot.jbcrypt.BCrypt;
 import org.primefaces.component.password.Password;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 @Model
 @Slf4j
@@ -21,12 +19,14 @@ public class LoginController {
     private String email;
     @Getter @Setter
     private String password;
+    @Getter @Setter
+    private String redirectUrl;
 
     @Inject
     private Session session;
 
     @Inject
-    private NavigationController navigationController;
+    private NavigationBean navigationBean;
 
     public String doLogin() {
         session.login(email, password);
@@ -35,13 +35,17 @@ public class LoginController {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getSessionMap().put("session", session);
 
-            return navigationController.redirectToIndex();
+            if (redirectUrl != null && !redirectUrl.isEmpty()) {
+                return navigationBean.redirectTo(redirectUrl);
+            } else {
+                return navigationBean.redirectToIndex();
+            }
         } else {
             FacesMessage msg = new FacesMessage("Wrong email or password!", "No details.");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
-            return navigationController.toLogin();
+            return navigationBean.toLogin();
         }
     }
 
@@ -50,7 +54,7 @@ public class LoginController {
 
         session.logout();
 
-        return navigationController.toIndex();
+        return navigationBean.toIndex();
     }
 
     public boolean isLoggedIn() {

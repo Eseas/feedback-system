@@ -8,25 +8,26 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Filter checks if LoginController has loginIn property set to true.
- * If it is set then request is being redirected to the index.xhml page.
+ * Filter checks if user is survey's creator.
+ * If it isn't then request is being redirected to the index.xhml page.
  *
  */
-public class NoLoginAgainFilter implements Filter {
+public class SurveyCreatorPermissionFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         if (!response.isCommitted()) {
             Session session = (Session) ((HttpServletRequest) request).getSession().getAttribute("session");
 
-            if (session != null && session.isLoggedIn()) {
-                String contextPath = ((HttpServletRequest) request).getContextPath();
-                String redirectUrl = request.getParameter("redirect");
+            try {
+                Integer surveyId = Integer.parseInt(request.getParameter("id"));
 
-                if (redirectUrl != null && !redirectUrl.isEmpty()) {
-                    ((HttpServletResponse) response).sendRedirect(redirectUrl);
-                } else {
+                if (!session.isAdmin() && !session.isSurveyCreator(surveyId)) {
+                    String contextPath = ((HttpServletRequest) request).getContextPath();
                     ((HttpServletResponse) response).sendRedirect(contextPath + "/index.html");
                 }
+
+            } catch (NullPointerException ex) {
+            } catch (NumberFormatException ex) {
             }
         }
 

@@ -23,7 +23,17 @@ public class UserPermissionFilter implements Filter {
 
             if (session == null || !session.isLoggedIn()) {
                 String contextPath = ((HttpServletRequest) request).getContextPath();
-                ((HttpServletResponse) response).sendRedirect(contextPath + "/login.html");
+                String params = ((HttpServletRequest) request).getQueryString();
+                String redirectUrl = contextPath + "/login.html"
+                        + "?redirect="
+                        + ((HttpServletRequest) request).getRequestURI();
+
+                if (params != null) {
+                    redirectUrl += "&" + params;
+                }
+
+                ((HttpServletResponse) response)
+                        .sendRedirect(redirectUrl);
             }
         }
 

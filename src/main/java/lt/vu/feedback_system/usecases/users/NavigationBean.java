@@ -1,11 +1,16 @@
 package lt.vu.feedback_system.usecases.users;
 
+import lt.vu.feedback_system.utils.FacesUtil;
+
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
 @ApplicationScoped
-public class NavigationController {
+public class NavigationBean {
+
     /**
      * Redirect to login page.
      * @return Login page name.
@@ -36,5 +41,13 @@ public class NavigationController {
      */
     public String toIndex() {
         return "/index.xhtml";
+    }
+
+    /**
+     * Redirect to a page with faces redirect.
+     * @return Page to redirect with faces redirect.
+     */
+    public String redirectTo(String redirectUrl) {
+        return FacesUtil.redirectTo(redirectUrl);
     }
 }
