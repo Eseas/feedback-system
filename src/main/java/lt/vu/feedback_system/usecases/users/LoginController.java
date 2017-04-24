@@ -31,7 +31,6 @@ public class LoginController {
     public String doLogin() {
         session.login(email, password);
 
-        System.out.println("Redir: " + redirectUrl);
         if (session.isLoggedIn()) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getSessionMap().put("session", session);
