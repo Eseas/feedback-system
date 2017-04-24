@@ -3,7 +3,6 @@ package lt.vu.feedback_system.businesslogic.users;
 import lombok.Getter;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.dao.UserDAO;
-import lt.vu.feedback_system.entities.Survey;
 import lt.vu.feedback_system.entities.User;
 
 import javax.enterprise.context.SessionScoped;
@@ -15,8 +14,7 @@ public class Session implements Serializable {
 
     private static final long serialVersionUID = 5451465415614894L;
 
-    @Getter
-    private User user = new User();
+    private Integer id;
 
     @Inject
     private UserDAO userDAO;
@@ -26,35 +24,42 @@ public class Session implements Serializable {
 
     public void login(String username, String password) {
         try {
-            user = userDAO.getUserByEmailAndPassword(
-                    username, password);
+            id = userDAO.getUserByEmailAndPassword(
+                    username, password).getId();
         } catch (javax.persistence.NoResultException ex) {
         }
     }
 
     public void logout() {
-        user = new User();
+        id = null;
+    }
+
+    public User getUser() {
+        if (id != null) {
+            return userDAO.getUserById(id);
+        }
+        return null;
     }
 
     public boolean isLoggedIn() {
-        if (user.getId() != null) {
+        if (id != null) {
             return true;
         }
         return false;
     }
 
     public boolean isAdmin() {
-        if (user.getId() != null) {
-            return user.getAdmin();
+        if (id != null) {
+            return userDAO.getUserById(id).getAdmin();
         }
         return false;
     }
 
     public boolean isSurveyCreator(Integer surveyId) {
         try {
-            Survey survey = surveyDAO.getSurveyById(surveyId);
+            User surveyCreator = surveyDAO.getSurveyById(surveyId).getCreator();
 
-            if (user.getId().equals(survey.getCreator().getId())) {
+            if (id.equals(surveyCreator.getId())) {
                 return true;
             }
         } catch (javax.persistence.NoResultException ex) {
