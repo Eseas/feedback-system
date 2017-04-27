@@ -27,8 +27,8 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @RequestScoped
-@Named("completeReg")
-public class CompleteRegController {
+@Named("completeKeyController")
+public class CompleteKeyController {
 
     private RegKeyDAO regKeyDAO;
 
@@ -44,10 +44,10 @@ public class CompleteRegController {
     @Setter
     private String code;
 
-    protected CompleteRegController() {}
+    protected CompleteKeyController() {}
 
     @Inject
-    private CompleteRegController(RegKeyDAO regKeyDAO,
+    private CompleteKeyController(RegKeyDAO regKeyDAO,
                                   ChangePwKeyDAO changePwKeyDAO,
                                   PotentialUserDAO potentialUserDAO,
                                   UserDAO userDAO,

@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 <f:metadata>
-    <f:viewParam name="code" value="#{completeReg.code}" />
+    <f:viewParam name="code" value="#{completeKeyController.code}" />
 </f:metadata>
 <h:head>
     <meta charset="utf-8" />
@@ -22,12 +22,13 @@
     <p:panel>
         <h:form id="complete-change-pw-form">
             <p:password id="new-password" required="true"
+                        placeholder="password"
                         requiredMessage="Please enter your password"
                         validatorMessage="Password has to be between 6 to 20 characters in length">
                 <f:validateLength minimum="6" maximum="20"/>
             </p:password>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-            <h:commandButton value="Change password" actionListener="#{completeReg.changePw()}" ajax="false"/>
+            <h:commandButton value="Change password" actionListener="#{completeKeyController.changePw()}" ajax="false"/>
             <h:button value="To index" outcome="index"/>
         </h:form>
     </p:panel>

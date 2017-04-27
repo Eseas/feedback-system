@@ -30,8 +30,8 @@ import java.util.Collections;
 
 @Slf4j
 @RequestScoped
-@Named("startReg")
-public class StartRegController {
+@Named("startKeyController")
+public class StartKeyController {
 
     private RegKeyDAO regKeyDAO;
 
@@ -45,10 +45,10 @@ public class StartRegController {
 
     private Mailer mailer;
 
-    protected StartRegController() {}
+    protected StartKeyController() {}
 
     @Inject
-    public StartRegController(RegKeyDAO regKeyDAO,
+    public StartKeyController(RegKeyDAO regKeyDAO,
                               ChangePwKeyDAO changePwKeyDAO,
                               PotentialUserDAO potentialUserDAO,
                               UserDAO userDAO,
