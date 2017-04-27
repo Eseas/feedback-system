@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 @Table(schema = "feedback", name = "potential_users")
 @NamedQueries({
         @NamedQuery(name = "PotentialUser.findAll", query = "SELECT s FROM PotentialUser s"),
+        @NamedQuery(name = "PotentialUser.selectByEmail", query = "SELECT u FROM PotentialUser u WHERE u.email = :email")
 })
 @Getter
 @Setter

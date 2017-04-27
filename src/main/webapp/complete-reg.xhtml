@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<f:metadata>
+    <f:viewParam name="code" value="#{completeReg.code}" />
+</f:metadata>
+<h:head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+    <h:outputStylesheet name="css/stylesLogin.css" />
+    <title>Builder of Surveys</title>
+</h:head>
+<h:body>
+
+    <p:panel>
+        <h:form id="complete-reg-form">
+            <p:inputText id="first-name" required="true"
+                         requiredMessage="Please enter you first name"
+                         validatorMessage="First name has to be between 3 to 20 characters in length">
+                <f:validateLength minimum="3" maximum="20"/>
+            </p:inputText>
+            <p:inputText id="last-name" required="true"
+                         requiredMessage="Please enter you last name"
+                         validatorMessage="Last name has to be between 3 to 20 characters in length">
+                <f:validateLength minimum="3" maximum="20"/>
+            </p:inputText>
+            <p:password id="password" required="true"
+                        requiredMessage="Please enter your password"
+                        validatorMessage="Password has to be between 6 to 20 characters in length">
+                <f:validateLength minimum="6" maximum="20"/>
+            </p:password>
+            <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
+            <h:commandButton value="Register" actionListener="#{completeReg.register()}" ajax="false"/>
+            <h:button value="To index" outcome="index"/>
+        </h:form>
+    </p:panel>
+</h:body>
+</html>

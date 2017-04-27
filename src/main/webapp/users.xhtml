@@ -45,7 +45,6 @@
                 <p:dataTable value="#{requestUsersController.getAllPotentialUsers()}" var="potentialUser">
                     <p:column headerText="Email">
                         <h:outputText value="#{potentialUser.email}"/>
-                        <p:commandButton value="Send link" actionListener="#{requestUsersController.sendRegLink(potentialUser.email)}" ajax="false"/>
                     </p:column>
                 </p:dataTable>
                 <p:message for="potential-users"/>
