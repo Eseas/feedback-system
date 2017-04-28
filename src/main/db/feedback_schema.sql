@@ -2,31 +2,41 @@
 
 CREATE SCHEMA feedback;
 
-CREATE TABLE feedback.reg_keys
-(
-  id SERIAL PRIMARY KEY,
-  code CHAR(32) NOT NULL UNIQUE,
-  used BOOLEAN NOT NULL DEFAULT FALSE,
-  expires TIMESTAMP NOT NULL
-);
-
 CREATE TABLE feedback.potential_users
 (
     id serial PRIMARY KEY,
-    email VARCHAR(40)
+    email VARCHAR(40) UNIQUE NOT NULL
 );
 
 CREATE TABLE feedback.users
 (
     id serial PRIMARY KEY,
-    email VARCHAR(40),
-    first_name VARCHAR(20),
-    last_name VARCHAR(20),
-    password VARCHAR(20),
-    is_admin BOOLEAN,
-    is_blocked BOOLEAN,
+    email VARCHAR(40) UNIQUE NOT NULL,
+    first_name VARCHAR(20) NOT NULL,
+    last_name VARCHAR(20) NOT NULL ,
+    password VARCHAR(60) NOT NULL ,
+    is_admin BOOLEAN NOT NULL,
+    is_blocked BOOLEAN NOT NULL,
     opt_lock_version INTEGER
 );
+
+CREATE TABLE feedback.reg_keys
+(
+  id SERIAL PRIMARY KEY,
+  code CHAR(32) NOT NULL UNIQUE,
+  expires TIMESTAMP NOT NULL,
+  potential_user_id INT NOT NULL,
+  FOREIGN KEY (potential_user_id) REFERENCES feedback.potential_users
+);
+
+CREATE TABLE feedback.change_pw_keys
+(
+  id SERIAL PRIMARY KEY,
+  code CHAR(32) NOT NULL UNIQUE,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES feedback.users
+);
+
 
 CREATE TABLE feedback.surveys
 (

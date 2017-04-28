@@ -1,7 +1,6 @@
 package lt.vu.feedback_system.dao;
 
 import lt.vu.feedback_system.entities.User;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -15,12 +14,13 @@ public class UserDAO {
     public void create(User user) {
         em.persist(user);
     }
-    public void merge(User user) {
-        em.merge(user);
 
+    public void update(User user) {
+        em.merge(user);
     }
+
     public void delete(User user) {
-        em.persist(user);
+        em.remove(user);
     }
 
     public User getUserById(int id) {

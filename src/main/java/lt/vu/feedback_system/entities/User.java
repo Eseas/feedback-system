@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lt.vu.feedback_system.entities;
 
 import lombok.EqualsAndHashCode;
@@ -66,4 +61,16 @@ public class User implements Serializable {
     @Version
     @Column(name = "opt_lock_version")
     private Integer optLockVersion;
+
+    public User() {}
+
+    public User(String firstName, String lastName, String email, String password, boolean isAdmin, boolean isBlocked) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.admin = isAdmin;
+        this.blocked = isBlocked;
+    }
+
 }

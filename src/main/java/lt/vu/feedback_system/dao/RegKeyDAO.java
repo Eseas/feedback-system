@@ -4,7 +4,6 @@ import lt.vu.feedback_system.entities.RegKey;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.List;
 
 @ApplicationScoped
 public class RegKeyDAO {
@@ -14,13 +13,16 @@ public class RegKeyDAO {
 
     public void create(RegKey key) { em.persist(key); }
 
-    public RegKey getByCode(String code) {
-        return em.createNamedQuery("RegKey.findByCode", RegKey.class)
+    public RegKey selectByCode(String code) {
+        return em.createNamedQuery("RegKey.selectByCode", RegKey.class)
                 .setParameter("code", code).getSingleResult();
     }
 
-    public List<RegKey> getAll() {
-        return em.createNamedQuery("RegKey.findAll", RegKey.class).getResultList();
+    public int deleteByUserId(int userId) {
+        return em.createNamedQuery("RegKey.deleteByUserId")
+                .setParameter("user_id", userId).executeUpdate();
     }
+
+    public void delete(RegKey regKey) { em.remove(regKey); }
 
 }
