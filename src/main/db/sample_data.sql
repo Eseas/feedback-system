@@ -2,10 +2,10 @@
 INSERT INTO feedback.potential_users VALUES (DEFAULT, 'user.potential2@mailinator.com');
 INSERT INTO feedback.potential_users VALUES (DEFAULT, 'user.potential3@mailinator.com');
 
-INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin1@mailinator.com', 'User', 'Admin1', 'testpassword', true, false, 1);
-INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin2@mailinator.com', 'User', 'Admin2', 'testpassword', true, false, 1);
-INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular1@mailinator.com', 'User', 'Regular1', 'testpassword', false, false, 1);
-INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular2@mailinator.com', 'User', 'Regular2', 'testpassword', false, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin1@mailinator.com', 'User', 'Admin1', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin2@mailinator.com', 'User', 'Admin2', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', true, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular1@mailinator.com', 'User', 'Regular1', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular2@mailinator.com', 'User', 'Regular2', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
 
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask you to answer some questions');
