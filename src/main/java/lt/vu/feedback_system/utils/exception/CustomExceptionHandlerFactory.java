@@ -3,17 +3,16 @@ package lt.vu.feedback_system.utils.exception;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 
-public class CustomExceptionHandlerFactory {
+public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
 
-    private ExceptionHandlerFactory parent;
+    private ExceptionHandlerFactory exceptionHandlerFactory;
 
-    public CustomExceptionHandlerFactory(ExceptionHandlerFactory parent) {
-        this.parent = parent;
+    public CustomExceptionHandlerFactory(ExceptionHandlerFactory exceptionHandlerFactory) {
+        this.exceptionHandlerFactory = exceptionHandlerFactory;
     }
 
+    @Override
     public ExceptionHandler getExceptionHandler() {
-        return new CustomExceptionHandler (parent.getExceptionHandler());
-
+        return new CustomExceptionHandler(exceptionHandlerFactory.getExceptionHandler());
     }
-
 }

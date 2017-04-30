@@ -10,30 +10,13 @@
         <param-value>javax.ejb.EJBException,javax.persistence.RollbackException</param-value>
     </context-param>
 
-    <!-- <context-param>
-        <description>Use this to suppress Facelets error page</description>
-        <param-name>org.apache.myfaces.ERROR_HANDLING</param-name>
-        <param-value>false</param-value>
-    </context-param>
-
-    <error-page>
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/login.html?faces-redirect=true</location>
-    </error-page>
-
-    <error-page>
-        <exception-type>javax.el.ELException</exception-type>
-        <location>/error.html</location>
-    </error-page> -->
-
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/errorpages/404.html</location>
     </error-page>
-
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/errorpages/error.html</location>
+        <location>/WEB-INF/errorpages/general-error.html</location>
     </error-page>
 
     <filter>

@@ -1,10 +1,10 @@
 package lt.vu.feedback_system.utils.exception;
 
 import javax.faces.FacesException;
-import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.application.NavigationHandler;
+import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
@@ -13,49 +13,43 @@ import java.util.Map;
 
 public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
-    private final ExceptionHandler wrapped;
+    private ExceptionHandler exceptionHandler;
 
-    public CustomExceptionHandler(ExceptionHandler wrapped) {
-        this.wrapped = wrapped;
+    public CustomExceptionHandler(ExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
     }
 
     @Override
     public ExceptionHandler getWrapped() {
-        return this.wrapped;
-
+        return exceptionHandler;
     }
-    public void handle() throws FacesException {
-        final Iterator<ExceptionQueuedEvent> i = getUnhandledExceptionQueuedEvents().iterator();
 
-        while (i.hasNext()) {
-            /*ExceptionQueuedEvent event = i.next();
-            ExceptionQueuedEventContext context =
-                    (ExceptionQueuedEventContext) event.getSource();
-            // get the exception from context
-            Throwable t = context.getException();
-            final FacesContext fc = FacesContext.getCurrentInstance();
-            final ExternalContext externalContext = fc.getExternalContext();
-            final Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
-            final ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();
-            //here you do what ever you want with exception*/
+    @Override
+    public void handle() throws FacesException {
+        final Iterator<ExceptionQueuedEvent> queue = getUnhandledExceptionQueuedEvents().iterator();
+
+        while (queue.hasNext()){
+            ExceptionQueuedEvent item = queue.next();
+            ExceptionQueuedEventContext exceptionQueuedEventContext = (ExceptionQueuedEventContext)item.getSource();
+
             try {
-                //log error ?
-                //logger.error("Severe Exception Occured");
-                //log.log(Level.SEVERE, "Critical Exception!", t);
-                //redirect error page
-                /*requestMap.put("exceptionMessage", t.getMessage());
-                nav.performNavigation("/TestPRoject/error.xhtml");
-                fc.renderResponse();*/
-                // remove the comment below if you want to report the error in a jsf error message
-                //JsfUtil.addErrorMessage(t.getMessage());
-            }
-            finally {
-                //remove it from queue
-                i.remove();
+                Throwable throwable = exceptionQueuedEventContext.getException();
+
+                FacesContext context = FacesContext.getCurrentInstance();
+                Map<String, Object> requestMap = context.getExternalContext().getRequestMap();
+                NavigationHandler nav = context.getApplication().getNavigationHandler();
+
+                if (throwable instanceof ViewExpiredException) {
+                    requestMap.put("error-message", "Your session has expired. Please try again.");
+                } else {
+                    requestMap.put("error-message", throwable.getMessage());
+                }
+                //requestMap.put("error-stack", throwable.getStackTrace()); // Don't show sensitive information
+                nav.handleNavigation(context, null, "/WEB-INF/errorpages/handled-error");
+                context.renderResponse();
+            } finally {
+                queue.remove();
             }
         }
-        //parent hanle
-        getWrapped().handle();
     }
-
 }
