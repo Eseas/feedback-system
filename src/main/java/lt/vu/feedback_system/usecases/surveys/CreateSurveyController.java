@@ -2,7 +2,7 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.businesslogic.users.Session;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.CheckboxDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.RadioButtonDAO;
@@ -33,7 +33,7 @@ public class CreateSurveyController implements Serializable {
     private Boolean modify;
 
     @Inject
-    private Session session;
+    private UserContext userContext;
 
     @Inject
     private SurveyDAO surveyDAO;
@@ -193,7 +193,7 @@ public class CreateSurveyController implements Serializable {
 
     @Transactional
     public String create() {
-        survey.setCreator(session.getUser());
+        survey.setCreator(userContext.getUser());
         surveyDAO.create(survey);
         for (TextQuestion q: survey.getTextQuestions())
             questionDAO.create(q);

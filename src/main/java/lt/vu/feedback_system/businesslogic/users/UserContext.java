@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import java.io.Serializable;
 
 @SessionScoped
-public class Session implements Serializable {
+public class UserContext implements Serializable {
 
     private static final long serialVersionUID = 5451465415614894L;
 

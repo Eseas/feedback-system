@@ -5,11 +5,6 @@
         <param-value>Development</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>org.omnifaces.EXCEPTION_TYPES_TO_UNWRAP</param-name>
-        <param-value>javax.ejb.EJBException,javax.persistence.RollbackException</param-value>
-    </context-param>
-
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/errorpages/404.html</location>
