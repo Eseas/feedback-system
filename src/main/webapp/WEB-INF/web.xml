@@ -5,6 +5,37 @@
         <param-value>Development</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>org.omnifaces.EXCEPTION_TYPES_TO_UNWRAP</param-name>
+        <param-value>javax.ejb.EJBException,javax.persistence.RollbackException</param-value>
+    </context-param>
+
+    <!-- <context-param>
+        <description>Use this to suppress Facelets error page</description>
+        <param-name>org.apache.myfaces.ERROR_HANDLING</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/login.html?faces-redirect=true</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>javax.el.ELException</exception-type>
+        <location>/error.html</location>
+    </error-page> -->
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errorpages/404.html</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/errorpages/error.html</location>
+    </error-page>
+
     <filter>
         <filter-name>NoLoginAgainFilter</filter-name>
         <filter-class>lt.vu.feedback_system.filters.NoLoginAgainFilter</filter-class>
