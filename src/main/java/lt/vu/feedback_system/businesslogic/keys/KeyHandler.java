@@ -107,9 +107,7 @@ public class KeyHandler {
         final RegKey regKey = regKeyDAO.selectByCode(code);
         if (regKey.getExpires().compareTo(LocalDateTime.now()) == 1) {
             final PotentialUser potentialUser = regKey.getUser();
-            //TODO: use hashed version instead
-//            final User user = new User(firstName, lastName, potentialUser.getEmail(), pwHasher.hash(password), false, false);
-            final User user = new User(firstName, lastName, potentialUser.getEmail(), password, false, false);
+            final User user = new User(firstName, lastName, potentialUser.getEmail(), pwHasher.hash(password), false, false);
             regKeyDAO.deleteByUserId(potentialUser.getId());
             potentialUserDAO.delete(potentialUser);
             userDAO.create(user);
@@ -124,9 +122,7 @@ public class KeyHandler {
     public void completeChangePw(final String code, final String newPassword) {
         final ChangePwKey changePwKey = changePwKeyDAO.selectByCode(code);
         final User user = changePwKey.getUser();
-        //TODO: use hashed version instead
-//        user.setPassword(pwHasher.hash(newPassword));
-        user.setPassword(newPassword);
+        user.setPassword(pwHasher.hash(newPassword));
         changePwKeyDAO.deleteByUserId(user.getId());
         userDAO.update(user);
     }
