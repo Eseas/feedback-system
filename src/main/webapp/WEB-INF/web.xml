@@ -5,6 +5,15 @@
         <param-value>Development</param-value>
     </context-param>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errorpages/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/errorpages/general-error.html</location>
+    </error-page>
+
     <filter>
         <filter-name>NoLoginAgainFilter</filter-name>
         <filter-class>lt.vu.feedback_system.filters.NoLoginAgainFilter</filter-class>

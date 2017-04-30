@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+>
+
+<h:head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+    <h:outputStylesheet name="css/stylesLogin.css" />
+    <title>Builder of Surveys</title>
+</h:head>
+
+<h:body>
+    <div class="header">
+        <h1>B<em>o</em>S</h1>
+        <p>Builder of Surveys</p>
+    </div>
+
+    <div class="error-page">
+        <div class="form">
+            <h2>Error</h2>
+            <p>#{requestScope['javax.servlet.error.message']}</p>
+            <h:link outcome="/index">Return to main page</h:link>
+        </div>
+    </div>
+</h:body>
+</html>

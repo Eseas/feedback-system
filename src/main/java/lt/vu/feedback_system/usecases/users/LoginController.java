@@ -3,8 +3,7 @@ package lt.vu.feedback_system.usecases.users;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lt.vu.feedback_system.businesslogic.users.Session;
-import org.primefaces.component.password.Password;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
@@ -23,17 +22,17 @@ public class LoginController {
     private String redirectUrl;
 
     @Inject
-    private Session session;
+    private UserContext userContext;
 
     @Inject
     private NavigationBean navigationBean;
 
     public String doLogin() {
-        session.login(email, password);
+        userContext.login(email, password);
 
-        if (session.isLoggedIn()) {
+        if (userContext.isLoggedIn()) {
             FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().put("session", session);
+            context.getExternalContext().getSessionMap().put("userContext", userContext);
 
             if (redirectUrl != null && !redirectUrl.isEmpty()) {
                 return navigationBean.redirectTo(redirectUrl);
@@ -52,17 +51,8 @@ public class LoginController {
     public String doLogout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-        session.logout();
+        userContext.logout();
 
-        return navigationBean.toIndex();
+        return navigationBean.redirectToIndex();
     }
-
-    public boolean isLoggedIn() {
-        return session.isLoggedIn();
-    }
-
-    public boolean isAdmin() {
-        return session.isAdmin();
-    }
-
 }
