@@ -16,17 +16,17 @@
 <h:body class="main">
 
     <div class="top-bar">
-            <ol class="header">
-                <li id="logo"><h1>B<em>o</em>S</h1></li>
-                <li id="user">
+        <ol class="header">
+            <li id="logo"><h1>B<em>o</em>S</h1></li>
+            <li id="user">
                     <span class="glyphicon glyphicon-user">
                     </span>
-                    <p:link value="  #{userController.fullName}"/>
-                    <h:form>
-                        <h:commandLink value=" (Logout)" action="#{loginController.doLogout()}"/>
-                    </h:form>
-                </li>
-            </ol>
+                <p:link value="  #{userController.fullName}"/>
+                <h:form>
+                    <h:commandLink value=" (Logout)" action="#{loginController.doLogout()}"/>
+                </h:form>
+            </li>
+        </ol>
     </div>
 
     <div class="content">
@@ -50,20 +50,19 @@
 
         <c:when test="#{userManagementController.user.admin = False}">
         -->
-            <div class="admin_index">
-                <div class="definition_a">
-                    <h2>Builder of Surveys</h2>
-                    <p>Create, Share and Review</p>
-                </div>
-                <div class="buttons_a">
-                    <h:button id="create_a" outcome="create-survey" value="Create Survey"/>
-                    <h:button id="upload_a" outcome="upload" value="Upload Survey"/>
-                    <h:button id="users_a" outcome="users" value="User Management" rendered="#{userController.admin}"/>
-                    <h:button id="potential_users_a" outcome="potential-users" value="Potential User Management" rendered="#{userController.admin}"/>
-                    <h:button id="surveys_a" outcome="surveys" value="Survey Management"/>
-                    <h:button id="mysurveys_a" outcome="my-surveys" value="My Created Surveys"/>
-                </div>
+        <div class="admin_index">
+            <div class="definition_a">
+                <h2>Builder of Surveys</h2>
+                <p>Create, Share and Review</p>
             </div>
+            <div class="buttons_a">
+                <h:button id="create_a" outcome="create-survey" value="Create Survey"/>
+                <h:button id="upload_a" outcome="upload" value="Upload Survey"/>
+                <h:button id="users_a" outcome="users" value="User Management" rendered="#{userController.admin}"/>
+                <h:button id="surveys_a" outcome="surveys" value="Survey Management"/>
+                <h:button id="mysurveys_a" outcome="my-surveys" value="My Created Surveys"/>
+            </div>
+        </div>
         <!--</c:when>
 
         </c:choose>-->
