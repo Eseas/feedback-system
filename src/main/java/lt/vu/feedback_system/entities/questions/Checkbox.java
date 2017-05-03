@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -11,7 +12,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(schema = "feedback", name = "checkboxes")
 @NamedQueries({
-        @NamedQuery(name = "OptionValue.findAll", query = "SELECT c FROM Checkbox c")})
+        @NamedQuery(name = "Checkbox.findById", query = "SELECT c FROM Checkbox c WHERE c.id = :id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
@@ -33,5 +35,9 @@ public class Checkbox {
 //
 //    @OneToMany(mappedBy = "value") // bad mapping name here
 //    private List<CheckboxAnswer> optionAnswers = new ArrayList<>();
+
+//    @JoinColumn(name = "")
+//    @ManyToOne
+//    private CheckboxAnswer answer;
 }
 

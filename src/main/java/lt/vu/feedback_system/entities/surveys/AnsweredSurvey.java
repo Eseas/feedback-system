@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.feedback_system.entities;
+package lt.vu.feedback_system.entities.surveys;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
 import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,16 +42,16 @@ public class AnsweredSurvey implements Serializable {
     @ManyToOne
     @JoinColumn(name="survey_id")
     private Survey survey;
-
-    @OneToMany(mappedBy = "answeredSurvey")
-    private List<TextAnswer> textAnswers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "answeredSurvey")
-    private List<SliderAnswer> sliderAnswers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "answeredSurvey")
-    private List<RadioAnswer> radioAnswers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "answeredSurvey")
-    private List<CheckboxAnswer> checkboxAnswers = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "answeredSurvey")
+//    private List<TextAnswer> textAnswers = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "answeredSurvey")
+//    private List<SliderAnswer> sliderAnswers = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "answeredSurvey")
+//    private List<RadioAnswer> radioAnswers = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "answeredSurvey")
+//    private List<CheckboxAnswer> checkboxAnswers = new ArrayList<>();
 }

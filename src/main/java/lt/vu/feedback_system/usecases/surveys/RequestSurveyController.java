@@ -2,9 +2,14 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.surveys.QuestionLogic;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
+import lt.vu.feedback_system.dao.SectionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
 
 import javax.faces.view.ViewScoped;
@@ -22,7 +27,13 @@ public class RequestSurveyController implements Serializable {
     private Integer id;
 
     @Inject
+    private SurveyLogic surveyLogic;
+
+    @Inject
     private SurveyDAO surveyDAO;
+
+    @Inject
+    private SectionDAO sectionDAO;
 
     @Getter
     private Survey survey;
@@ -33,15 +44,16 @@ public class RequestSurveyController implements Serializable {
     private TextQuestion textQuestion = new TextQuestion();
 
     public void loadData() {
-        survey = surveyDAO.getSurveyById(id);
-        for (TextQuestion q: survey.getTextQuestions())
-            questions.add(q);
-        for (SliderQuestion q: survey.getSliderQuestions())
-            questions.add(q);
-        for (RadioQuestion q: survey.getRadioQuestions())
-            questions.add(q);
-        for (CheckboxQuestion q: survey.getCheckboxQuestions())
-            questions.add(q);
+
+        survey = surveyLogic.loadSurvey(id);
+//        for (TextQuestion q: survey.getTextQuestions())
+//            questions.add(q);
+//        for (SliderQuestion q: survey.getSliderQuestions())
+//            questions.add(q);
+//        for (RadioQuestion q: survey.getRadioQuestions())
+//            questions.add(q);
+//        for (CheckboxQuestion q: survey.getCheckboxQuestions())
+//            questions.add(q);
     }
 
 
@@ -49,4 +61,15 @@ public class RequestSurveyController implements Serializable {
         return Sorter.sortQuestionsAscending(questions);
     }
 
+//    This method HAS TO BE checked twice
+    public List<Question> getSectionQuestions(Section section) {
+        List<Question> sectionQuestions = new ArrayList<>();
+
+        for(Question question : questions) {
+            if (question.getSection().getId() == section.getId()) {
+                sectionQuestions.add(question);
+            }
+        }
+        return sectionQuestions;
+    }
 }

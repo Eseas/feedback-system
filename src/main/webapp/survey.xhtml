@@ -21,39 +21,45 @@
     <h:body>
         <h1>#{requestSurveyController.survey.title}</h1>
         <h:form>
-            <p:fieldset legend="Surveys" toggleable="true">
-                <ui:repeat value="#{requestSurveyController.questions}" var="question">
-                    <p:outputLabel value="#{question.position}. #{question.title}"/>
-                    <br/>
+            <p:tabView value="#{requestSurveyController.survey.sections}" var="section">
+                <p:tab title="#{section.title}">
+                    <p:fieldset legend="Surveys" toggleable="true">
+                        <ui:repeat value="#{section.questions}" var="question">
+                            <p:outputLabel value="#{question.position}. #{question.title}"/>
+                            <br/>
 
-                    <ui:fragment rendered="#{question.type == 'TextQuestion'}">
+                            <ui:fragment rendered="#{question.type == 'TextQuestion'}">
 
-                    </ui:fragment>
+                            </ui:fragment>
 
-                    <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                        <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
-                    </ui:fragment>
+                            <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
+                                <p:outputLabel value="#{question.lowerBound}..#{question.upperBound}"/>
+                            </ui:fragment>
 
-                    <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                        <ui:repeat value="#{question.radioButtons}" var="radioButton">
-                            <p:outputLabel value="-> #{radioButton.title}"/>
+                            <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                                <ui:repeat value="#{question.radioButtons}" var="radioButton">
+                                    <p:outputLabel value="-> #{radioButton.title}"/>
+                                    <br/>
+                                </ui:repeat>
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
+                                <ui:repeat value="#{question.checkboxes}" var="checkbox">
+                                    <p:outputLabel value="-> #{checkbox.title}"/>
+                                    <br/>
+                                </ui:repeat>
+                            </ui:fragment>
                             <br/>
                         </ui:repeat>
-                    </ui:fragment>
+                    </p:fieldset>
+                </p:tab>
 
-                    <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                        <ui:repeat value="#{question.checkboxes}" var="checkbox">
-                            <p:outputLabel value="-> #{checkbox.title}"/>
-                            <br/>
-                        </ui:repeat>
-                    </ui:fragment>
-                    <br/>
-                </ui:repeat>
-            </p:fieldset>
-            <h:button value="Modify" outcome="create-survey">
-                <f:param name="id" value="#{requestSurveyController.survey.id}"/>
-                <f:param name="modify" value="true"/>
-            </h:button>
+            </p:tabView>
+
+            <!--<h:button value="Modify" outcome="create-survey">-->
+                <!--<f:param name="id" value="#{requestSurveyController.survey.id}"/>-->
+                <!--<f:param name="modify" value="true"/>-->
+            <!--</h:button>-->
         </h:form>
     </h:body>
 </f:view>

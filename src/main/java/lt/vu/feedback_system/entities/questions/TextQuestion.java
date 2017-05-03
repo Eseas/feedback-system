@@ -4,7 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ import java.util.List;
 @Table(schema = "feedback", name = "text_questions")
 @NamedQueries({
         @NamedQuery(name = "TextQuestion.findAll", query = "SELECT c FROM TextQuestion c"),
-        @NamedQuery(name = "TextQuestion.findBySurveyId", query = "SELECT s FROM TextQuestion s WHERE s.survey = :survey")
+        @NamedQuery(name = "TextQuestion.findBySurveyId", query = "SELECT s FROM TextQuestion s WHERE s.survey = :survey"),
+        @NamedQuery(name = "TextQuestion.findBySectionId", query = "SELECT s FROM TextQuestion s WHERE s.section.id = :section_id")
 })
 @Getter
 @Setter
@@ -48,5 +50,9 @@ public class TextQuestion implements Question {
 
     @OneToMany(mappedBy = "question")
     private List<TextAnswer> textAnswers = new ArrayList<>();
+
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    @ManyToOne
+    private Section section;
 }
 

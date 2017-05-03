@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.AnsweredSurvey;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 
@@ -15,7 +15,9 @@ import java.util.List;
 @Table(schema = "feedback", name = "checkbox_answers")
 @NamedQueries({
         @NamedQuery(name = "CheckboxAnswer.findAllByQuestionId", query = "SELECT c FROM CheckboxAnswer c WHERE c.question.id = :id"),
-        @NamedQuery(name = "CheckboxAnswer.findAll", query = "SELECT c FROM CheckboxAnswer c")})
+        @NamedQuery(name = "CheckboxAnswer.findAll", query = "SELECT c FROM CheckboxAnswer c"),
+        @NamedQuery(name = "CheckboxAnswer.findBySectionId", query = "SELECT s FROM CheckboxAnswer s WHERE s.question.section.id = :section_id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
@@ -35,10 +37,20 @@ public class CheckboxAnswer implements Answer {
     @ManyToOne
     private AnsweredSurvey answeredSurvey;
 
-    @OneToMany(mappedBy = "checkboxAnswer")
+    @OneToMany(mappedBy = "checkboxAnswer", cascade = CascadeType.ALL)
     private List<SelectedCheckbox> selectedCheckboxes;
 
     @Transient
     private List<Checkbox> tempSelectedCheckboxes;
 
+    @Transient
+    private List<SelectedCheckbox> availableSelectedCheckboxes;
+
+    public void setSelectedCheckboxes(List<SelectedCheckbox> selectedCheckboxes) {
+        this.selectedCheckboxes = selectedCheckboxes;
+    }
+
+    public List<SelectedCheckbox> getSelectedCheckboxes() {
+        return selectedCheckboxes;
+    }
 }

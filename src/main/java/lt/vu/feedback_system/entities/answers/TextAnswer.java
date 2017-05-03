@@ -4,19 +4,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.AnsweredSurvey;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "text_answers")
 @NamedQueries({
         @NamedQuery(name = "TextAnswer.findAllByQuestionId", query = "SELECT c FROM TextAnswer c WHERE c.question.id = :id"),
-        @NamedQuery(name = "TextAnswer.findAll", query = "SELECT c FROM TextAnswer c")})
+        @NamedQuery(name = "TextAnswer.findAll", query = "SELECT c FROM TextAnswer c"),
+        @NamedQuery(name = "TextAnswer.findBySectionId", query = "SELECT s FROM TextAnswer s WHERE s.question.section.id = :section_id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})

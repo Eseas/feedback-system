@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 <f:view>
     <f:metadata>
@@ -21,102 +21,107 @@
 
     <h:body>
         <h1>Surveys</h1>
-        <h:form id="creation-form">
+        <h:form id="survey-general">
             <h2>Create a new survey</h2>
-            <table>
-                <tr>
-                    <td>
-                        <h:panelGrid columns="3">
-                            <p:outputLabel for="title" value="Title"/>
-                            <p:inputText id="title" value="#{createSurveyController.survey.title}"/>
-                            <p:message for="title"/>
+            <h:panelGrid columns="3">
 
-                            <p:outputLabel for="description" value="Description"/>
-                            <p:inputText id="description" value="#{createSurveyController.survey.description}"/>
-                            <p:message for="description"/>
+                <p:outputLabel for="title" value="Title"/>
+                <p:inputText id="title" value="#{createSurveyController.survey.title}"/>
+                <p:message for="title"/>
 
-                            <h:outputText value="Results"/>
-                            <p:selectOneButton value="#{createSurveyController.survey.confidential}">
-                                <f:selectItem itemLabel="Private" itemValue="true" />
-                                <f:selectItem itemLabel="Public" itemValue="false" />
+                <p:outputLabel for="description" value="Description"/>
+                <p:inputText id="description" value="#{createSurveyController.survey.description}"/>
+                <p:message for="description"/>
+
+                <h:outputText value="Results"/>
+                <p:selectOneButton value="#{createSurveyController.survey.confidential}">
+                    <f:selectItem itemLabel="Private" itemValue="true" />
+                    <f:selectItem itemLabel="Public" itemValue="false" />
+                </p:selectOneButton>
+
+            </h:panelGrid>
+
+            <p:tabView value="#{createSurveyController.survey.sections}" var="section" >
+                <p:tab id="section-tab" title="Section #{section.position} of #{createSurveyController.survey.sections.size()}">
+                    <p:outputLabel for="section_title" value="Section title"/>
+                    <p:inputText id="section_title" value="#{section.title}" />
+                    <p:message for="section_title"/>
+
+                    <p:outputLabel for="section_description" value="Description"/>
+                    <p:inputText id="section_description" value="#{section.description}"/>
+                    <p:message for="section_description"/>
+
+                    <p:fieldset legend="Questions" toggleable="true">
+                        <ui:repeat value="#{section.questions}" var="question">
+                            <p:outputLabel for="questionTitle" value="#{question.getPosition().toString()}"/>
+                            <h:inputText id="questionTitle" value="#{question.title}"/>
+                            <h:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(question)}"/>
+                            <h:commandButton value="up" actionListener="#{createSurveyController.moveUp(question)}"/>
+                            <h:commandButton value="down" actionListener="#{createSurveyController.moveDown(question)}"/>
+
+                            <p:selectOneButton value="#{question.required}">
+                                <f:selectItem itemLabel="Required" itemValue="true" />
+                                <f:selectItem itemLabel="Optional" itemValue="false" />
                             </p:selectOneButton>
+                            <br/>
 
-                        </h:panelGrid>
-                    </td>
-                </tr>
-            </table>
+                            <ui:fragment rendered="#{question.type == 'TextQuestion'}">
+
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
+                                <p:outputLabel for="lowerBound" value="Lower bound"/>
+                                <p:inputText id="lowerBound" value="#{question.lowerBound}"/>
+                                <p:message for="lowerBound"/>
+
+                                <p:outputLabel for="upperBound" value="Upper bound"/>
+                                <p:inputText id="upperBound" value="#{question.upperBound}"/>
+                                <p:message for="upperBound"/>
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                                <h:dataTable value="#{question.radioButtons}" var="radioButton">
+                                    <h:column>
+                                        <p:outputLabel for="radioButtonTitle" value="Radio Button"/>
+                                        <h:inputText id="radioButtonTitle" value="#{radioButton.title}" />
+                                        <h:commandButton value="remove" action="#{createSurveyController.removeRadioButton(question, radioButton)}"/>
+                                        <p:message for="radioButtonTitle"/>
+                                    </h:column>
+                                </h:dataTable>
+                                <h:commandButton value="add radio button" actionListener="#{createSurveyController.addRadioButton(question)}" />
+
+                            </ui:fragment>
+
+                            <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
+                                <h:dataTable value="#{question.checkboxes}" var="checkbox">
+                                    <h:column>
+                                        <p:outputLabel for="checkboxTitle" value="Checkbox"/>
+                                        <h:inputText id="checkboxTitle" value="#{checkbox.title}" />
+                                        <h:commandButton value="remove" action="#{createSurveyController.removeCheckbox(question, checkbox)}"/>
+                                        <p:message for="checkboxTitle"/>
+                                    </h:column>
+                                </h:dataTable>
+                                <h:commandButton value="add option value" actionListener="#{createSurveyController.addCheckbox(question)}" />
+
+                            </ui:fragment>
+
+                            <br/>
+                            <p:message for="questionTitle"/>
+                        </ui:repeat>
+                    </p:fieldset>
+
+                    <h:commandButton value="add text question" actionListener="#{createSurveyController.addTextQuestion(section)}" />
+                    <h:commandButton value="add slider question" actionListener="#{createSurveyController.addSliderQuestion(section)}" />
+                    <h:commandButton value="add radio question" actionListener="#{createSurveyController.addRadioQuestion(section)}" />
+                    <h:commandButton value="add checkbox question" actionListener="#{createSurveyController.addCheckboxQuestion(section)}" />
+
+                </p:tab>
 
 
-            <p:fieldset legend="Surveys" toggleable="true">
-                <!-- Could use loop var for position -->
-                <ui:repeat value="#{createSurveyController.questions}" var="question">
-                    <p:outputLabel for="questionTitle" value="#{question.getPosition().toString()}"/>
-                    <h:inputText id="questionTitle" value="#{question.title}"/>
-                    <h:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(question)}"/>
-                    <h:commandButton value="up" actionListener="#{createSurveyController.moveUp(question)}"/>
-                    <h:commandButton value="down" actionListener="#{createSurveyController.moveDown(question)}"/>
+            </p:tabView>
 
-                    <p:selectOneButton value="#{question.required}">
-                        <f:selectItem itemLabel="Required" itemValue="true" />
-                        <f:selectItem itemLabel="Optional" itemValue="false" />
-                    </p:selectOneButton>
-                    <br/>
+            <h:commandButton value="add section" actionListener="#{createSurveyController.addSection()}"/>
 
-                    <!-- TextQuestion -->
-                    <ui:fragment rendered="#{question.type == 'TextQuestion'}">
-
-                    </ui:fragment>
-
-
-                    <!-- SliderQuestion-->
-                    <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                        <p:outputLabel for="lowerBound" value="Lower bound"/>
-                        <p:inputText id="lowerBound" value="#{question.lowerBound}"/>
-                        <p:message for="lowerBound"/>
-
-                        <p:outputLabel for="upperBound" value="Upper bound"/>
-                        <p:inputText id="upperBound" value="#{question.upperBound}"/>
-                        <p:message for="upperBound"/>
-                    </ui:fragment>
-
-
-                    <!-- RadioQuestiontion -->
-                    <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                        <h:dataTable value="#{question.radioButtons}" var="radioButton">
-                            <h:column>
-                                <p:outputLabel for="radioButtonTitle" value="Radio Button"/>
-                                <h:inputText id="radioButtonTitle" value="#{radioButton.title}" />
-                                <h:commandButton value="remove" action="#{createSurveyController.removeRadioButton(question, radioButton)}"/>
-                                <p:message for="radioButtonTitle"/>
-                            </h:column>
-                        </h:dataTable>
-                        <h:commandButton value="add radio button" actionListener="#{createSurveyController.addRadioButton(question)}" />
-
-                    </ui:fragment>
-
-                    <!-- CheckboxQuestiontion -->
-                    <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                        <h:dataTable value="#{question.checkboxes}" var="checkbox">
-                            <h:column>
-                                <p:outputLabel for="checkboxTitle" value="Checkbox"/>
-                                <h:inputText id="checkboxTitle" value="#{checkbox.title}" />
-                                <h:commandButton value="remove" action="#{createSurveyController.removeCheckbox(question, checkbox)}"/>
-                                <p:message for="checkboxTitle"/>
-                            </h:column>
-                        </h:dataTable>
-                        <h:commandButton value="add option value" actionListener="#{createSurveyController.addCheckbox(question)}" />
-
-                    </ui:fragment>
-
-                    <br/>
-                    <p:message for="questionTitle"/>
-                </ui:repeat>
-            </p:fieldset>
-
-            <h:commandButton value="add text question" actionListener="#{createSurveyController.addTextQuestion()}" />
-            <h:commandButton value="add slider question" actionListener="#{createSurveyController.addSliderQuestion()}" />
-            <h:commandButton value="add radio question" actionListener="#{createSurveyController.addRadioQuestion()}" />
-            <h:commandButton value="add checkbox question" actionListener="#{createSurveyController.addCheckboxQuestion()}" />
             <!-- Ending creation -->
             <br/>
 
@@ -129,8 +134,6 @@
             </ui:fragment>
             <p:messages globalOnly="true"/>
         </h:form>
-
-
     </h:body>
 </f:view>
 

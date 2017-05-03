@@ -4,8 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -14,6 +14,11 @@ import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "radio_questions")
+@NamedQueries({
+        @NamedQuery(name = "RadioQuestion.findAll", query = "SELECT c FROM RadioQuestion c"),
+        @NamedQuery(name = "RadioQuestion.findBySurveyId", query = "SELECT s FROM RadioQuestion s WHERE s.survey = :survey"),
+        @NamedQuery(name = "RadioQuestion.findBySectionId", query = "SELECT s FROM RadioQuestion s WHERE s.section.id = :section_id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
@@ -38,12 +43,15 @@ public class RadioQuestion implements Question {
     @Column(name = "position")
     private Integer position;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<RadioButton> radioButtons = new ArrayList<>();
 
     @JoinColumn(name = "survey_id", referencedColumnName = "ID")
     @ManyToOne
     private Survey survey;
 
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    @ManyToOne
+    private Section section;
 }
 

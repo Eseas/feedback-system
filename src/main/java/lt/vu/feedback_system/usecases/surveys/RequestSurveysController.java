@@ -2,7 +2,7 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lt.vu.feedback_system.businesslogic.users.Session;
 import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.entities.User;
 
 import javax.annotation.PostConstruct;

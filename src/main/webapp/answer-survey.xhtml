@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-
+      xmlns:o="http://omnifaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 <f:view>
     <f:metadata>
@@ -20,44 +20,74 @@
 
     <h:body>
         <h1>#{answerSurveyController.answeredSurvey.survey.title}</h1>
-        <h:form>
-            <p:fieldset legend="Surveys" toggleable="true">
-                <ui:repeat value="#{answerSurveyController.answers}" var="answer">
-                    <p:outputLabel value="#{answer.question.position}. #{answer.question.title}"/>
-                    <br/>
 
-                    <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
-                        <h:inputText value="#{answer.value}"/>
-                    </ui:fragment>
+            <p:tabView id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
+                       var="section" activeIndex="#{answerSurveyController.activeTabIndex}"
+                        dynamic="true"
+            >
 
-                    <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
-                        <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
-                        <h:panelGrid columns="1" style="margin-bottom: 10px">
-                            <p:inputText id="txt1" value="#{answer.value}" />
-                            <p:slider  for="txt1" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}"/>
-                        </h:panelGrid>
-                    </ui:fragment>
+                    <p:tab title="#{section.title}" disabled="false" >
+                        <h:form id="answer-survey">
+                        <p:panel>
+                            <p:messages/>
+                            <ui:repeat value="#{section.answers}" var="answer">
+                                <p:outputLabel value="#{answer.question.position}. #{answer.question.title}"/>
+                                <br/>
 
-                    <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
-                        <p:selectOneRadio value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
-                            <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
-                        </p:selectOneRadio>
-                    </ui:fragment>
+                                <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
+                                    <h:inputText value="#{answer.value}" required="#{answer.question.required}" requiredMessage="Value is very needed in section #{answer.question.section.title}"/>
+                                </ui:fragment>
 
-                    <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
-                        <p:selectManyCheckbox value="#{answer.tempSelectedCheckboxes}" converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
-                            <f:selectItems value="#{answer.question.checkboxes}" var="checkbox" itemLabel="#{checkbox.title}" itemValue="#{checkbox}" />
-                        </p:selectManyCheckbox>
-                    </ui:fragment>
 
-                    <br/>
-                </ui:repeat>
-            </p:fieldset>
+                                <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
+                                    <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
 
-            <h:commandButton value="Submit" action="#{answerSurveyController.answer()}" />
+                                    <h:inputText id="slider-value" value="#{answer.value}" required="#{answer.question.required}" requiredMessage="Slider not selected in #{answer.question.section.title}"/>
+                                    <p:slider for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}" />
+
+                                </ui:fragment>
+
+                                <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
+                                    <p:selectOneRadio value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" required="#{answer.question.required}" requiredMessage="Radio Button not selected in #{answer.question.section.title}" layout="grid" columns="3">
+                                        <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
+                                    </p:selectOneRadio>
+                                </ui:fragment>
+
+                                <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
+                                    <!--This gets invokes when hitting PREVIOUS. SHOULD NOT BE-->
+                                    <f:event type="preRenderComponent" listener="#{answerSurveyController.setAvailableSelectedCheckboxes(answer)}"/>
+                                    <p:selectManyCheckbox value="#{answer.selectedCheckboxes}" converter="omnifaces.SelectItemsConverter" required="#{answer.question.required}" requiredMessage="Checboxes not selected in #{answer.question.section.title}">
+                                        <!--<f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}" var="selectedCheckbox" itemLabel="asd" itemValue="#{selectedCheckbox}" />-->
+                                        <f:selectItems value="#{answer.availableSelectedCheckboxes}" var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}" itemValue="#{availableSelectedCheckbox}" />
+                                    </p:selectManyCheckbox>
+                                </ui:fragment>
+
+                                <br/>
+                            </ui:repeat>
+                            <p:commandButton value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />
+                            <p:commandButton immediate="true" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" />
+
+                        </p:panel>
+
+                        </h:form>
+                    </p:tab>
+            </p:tabView>
+
+
+            <p:commandButton value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" />
+
+            <ui:fragment rendered="#{answerSurveyController.submitActive}">
+                <p:commandButton value="Submit" action="#{answerSurveyController.answer()}" />
+            </ui:fragment>
+
+            <ui:fragment rendered="#{not answerSurveyController.submitActive}">
+                <p:commandButton value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />
+            </ui:fragment>
+
+
 
             <p:messages globalOnly="true"/>
-        </h:form>
+        <!--</h:form>-->
     </h:body>
 </f:view>
 

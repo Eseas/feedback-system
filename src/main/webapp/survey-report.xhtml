@@ -21,44 +21,50 @@
         <h1>Surveys</h1>
 
         <h:form>
-            <p:fieldset legend="Survey reports" toggleable="true">
-                <ui:repeat value="#{surveyReportController.questions}" var="question">
-                    <h:outputText value="#{question.position}. #{question.title}" />
-                    <br/>
-
-                    <ui:fragment rendered="#{question.type == 'TextQuestion'}">
-                        <ui:repeat value="#{surveyReportController.getQuestionTextAnswers(question)}" var="textAnswer" >
-                            <h:outputText value="#{textAnswer.value}"/>
+            <p:tabView value="#{surveyReportController.survey.sections}" var="section">
+                <p:tab title="#{section.title}">
+                    <p:fieldset legend="Survey reports" toggleable="true">
+                        <ui:repeat value="#{section.questions}" var="question">
+                            <h:outputText value="#{question.position}. #{question.title}" />
                             <br/>
-                        </ui:repeat>
-                    </ui:fragment>
 
-                    <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                        <ui:repeat value="#{surveyReportController.getQuestionSliderAnswers(question)}" var="sliderAnswer" >
-                            <h:outputText value="#{sliderAnswer.value}"/>
-                            <br/>
-                        </ui:repeat>
-                    </ui:fragment>
+                            <ui:fragment rendered="#{question.type == 'TextQuestion'}">
+                                <ui:repeat value="#{surveyReportController.getQuestionTextAnswers(question)}" var="textAnswer" >
+                                    <h:outputText value="#{textAnswer.value}"/>
+                                    <br/>
+                                </ui:repeat>
+                            </ui:fragment>
 
-                    <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                        <ui:repeat value="#{surveyReportController.getQuestionRadioAnswers(question)}" var="radioAnswer" >
-                            <h:outputText value="#{radioAnswer.radioButton}"/>
-                            <br/>
-                        </ui:repeat>
-                    </ui:fragment>
+                            <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
+                                <ui:repeat value="#{surveyReportController.getQuestionSliderAnswers(question)}" var="sliderAnswer" >
+                                    <h:outputText value="#{sliderAnswer.value}"/>
+                                    <br/>
+                                </ui:repeat>
+                            </ui:fragment>
 
-                    <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                        <ui:repeat value="#{surveyReportController.getQuestionCheckboxAnswers(question)}" var="checkboxAnswer" >
-                            <ui:repeat value="#{checkboxAnswer.selectedCheckboxes}" var="selectedCheckbox">
-                                <h:outputText value="#{selectedCheckbox.checkbox.title}"/>
-                                <br/>
-                            </ui:repeat>
-                            <br/>
-                        </ui:repeat>
-                    </ui:fragment>
+                            <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                                <ui:repeat value="#{surveyReportController.getQuestionRadioAnswers(question)}" var="radioAnswer" >
+                                    <h:outputText value="#{radioAnswer.radioButton}"/>
+                                    <br/>
+                                </ui:repeat>
+                            </ui:fragment>
 
-                </ui:repeat>
-            </p:fieldset>
+                            <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
+                                <ui:repeat value="#{surveyReportController.getQuestionCheckboxAnswers(question)}" var="checkboxAnswer" >
+                                    <ui:repeat value="#{checkboxAnswer.selectedCheckboxes}" var="selectedCheckbox">
+                                        <h:outputText value="#{selectedCheckbox.checkbox.title}"/>
+                                        <br/>
+                                    </ui:repeat>
+                                    <br/>
+                                </ui:repeat>
+                            </ui:fragment>
+
+                        </ui:repeat>
+                    </p:fieldset>
+                </p:tab>
+
+            </p:tabView>
+
             <p:messages globalOnly="true"/>
         </h:form>
     </h:body>
