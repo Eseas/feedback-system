@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
-    <h:outputStylesheet name="css/stylesMain.css" />
+    <h:outputStylesheet name="css/stylesIndex.css" />
     <title>Builder of Surveys</title>
 </h:head>
 
@@ -30,28 +30,8 @@
     </div>
 
     <div class="content">
-
-        <!--
-        <c:choose>
-        <c:when test="#{userManagementController.user.admin = False}">
-            <div class="regular_index">
-                <div class="definition_r">
-                    <h2>Builder of Surveys</h2>
-                    <p>Create, Share and Review</p>
-                </div>
-                <div class="buttons_r">
-                    <h:button id="create_r" outcome="create-survey" value="Create Survey"/>
-                    <h:button id="upload_r" outcome="upload" value="Upload Survey"/>
-                    <h:button id="surveys_r" outcome="surveys" value="Survey Management"/>
-                    <h:button id="reports_r" outcome="reports" value="Survey Reports"/>
-                </div>
-            </div>
-        </c:when> CONDITIONING MOCKUP _ NEED TO GET USER ROLE
-
-        <c:when test="#{userManagementController.user.admin = False}">
-        -->
         <div class="admin_index">
-            <div class="definition_a">
+            <div class="definition">
                 <h2>Builder of Surveys</h2>
                 <p>Create, Share and Review</p>
             </div>
@@ -63,9 +43,6 @@
                 <h:button id="mysurveys_a" outcome="my-surveys" value="My Created Surveys"/>
             </div>
         </div>
-        <!--</c:when>
-
-        </c:choose>-->
     </div>
     <footer>
         <p>WhySoft, 2017</p>
