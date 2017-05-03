@@ -38,55 +38,16 @@ ol{
 #user a{
     color: #00426B;
 }
-.throwLeft{
-    float: left;
+.title{
+    padding-top: 50px;
+    margin: 0 auto;
 }
-.glyphicon{
-    margin-right: 10px;
-    top: 3px !important;
-}
-.page_title{
-    position: relative;
-    outline: 0;
-    font-family: 'Josefin Sans', sans-serif !important;
-}
-.page_title h2{
-    margin-top: 0;
-    width: 100%;
-    padding: 100px 0 30px;
-    text-align: center;
-    font-size: 2em;
-    color: #00426B;
-    font-family: 'Bitter', serif;
-}
-#j_id_e{
-    border: none;
-    padding: 0;
-}
-.ui-tabs.ui-tabs-top>.ui-tabs-nav {
-    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
-    font-family: "Roboto", sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-}
-.add_user, .remove_user{
-    float: left;
-}
-.potential_users{
-    float: right;
-    max-width: 200px;
-}
-
-
 footer{
     display: block;
     position: fixed;
     bottom: 0;
     text-align: center;
     width: 100%;
-    font-size: 9px;
 }
 body{
     background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
@@ -94,7 +55,6 @@ body{
     background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
     background: linear-gradient(to left, #EEF0F3, #FFFFFF);
     font-family: "Roboto", sans-serif !important;
-    font-weight: normal !important;
     -webkit-font-smoothing: antialiased;
 }
 html, body {
