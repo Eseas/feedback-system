@@ -17,16 +17,16 @@
 <h:body>
 
     <p:panel>
-        <h:form id="start-reg-form">
+        <h:form id="send-email-form">
             <p:inputText id="email" required="true" size="40"
                          placeholder="email"
                          requiredMessage="Please enter your email address"
                          validatorMessage="Invalid email format">
                 <f:validateRegex
-                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
             </p:inputText>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-            <p:commandButton value="Send link" actionListener="#{startKeyController.sendRegLink()}" ajax="false"/>
+            <p:commandButton value="Send link" actionListener="#{keyController.sendEmail(0)}" ajax="false"/>
             <h:button value="To index" outcome="index"/>
         </h:form>
     </p:panel>

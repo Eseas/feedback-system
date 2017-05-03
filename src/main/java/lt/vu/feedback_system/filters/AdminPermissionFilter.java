@@ -1,6 +1,6 @@
 package lt.vu.feedback_system.filters;
 
-import lt.vu.feedback_system.businesslogic.users.Session;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +19,9 @@ public class AdminPermissionFilter implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         if (!response.isCommitted()) {
-            Session session = (Session) ((HttpServletRequest) request).getSession().getAttribute("session");
+            UserContext userContext = (UserContext) ((HttpServletRequest) request).getSession().getAttribute("userContext");
 
-            if (session == null || !session.isAdmin()) {
+            if (userContext == null || !userContext.isAdmin()) {
                 String contextPath = ((HttpServletRequest) request).getContextPath();
                 ((HttpServletResponse) response).sendRedirect(contextPath + "/index.html");
             }

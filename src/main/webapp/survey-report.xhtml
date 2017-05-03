@@ -36,10 +36,18 @@
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                                <ui:repeat value="#{surveyReportController.getQuestionSliderAnswers(question)}" var="sliderAnswer" >
-                                    <h:outputText value="#{sliderAnswer.value}"/>
-                                    <br/>
+                                <br/>
+                                <h:outputText value="Average : "/>
+                                <h:outputText value="#{surveyReportController.getAverage(question)}"/>
+                                <br/>
+                                <h:outputText value="Median : "/>
+                                <ui:repeat value="#{surveyReportController.getMedian(question)}" var="median" >
+                                    <h:outputText value="#{median} "/>
                                 </ui:repeat>
+                                <br/>
+                                <h:outputText value="Mode : "/>
+                                <h:outputText value="#{surveyReportController.getMode(question)}"/>
+                                <br/>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'RadioQuestion'}">

@@ -2,6 +2,7 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.businesslogic.surveys.QuestionLogic;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.businesslogic.users.Session;
@@ -12,12 +13,12 @@ import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -32,7 +33,7 @@ public class CreateSurveyController implements Serializable {
     private Boolean modify;
 
     @Inject
-    private Session session;
+    private UserContext userContext;
 
     @Inject
     private SurveyDAO surveyDAO;
@@ -126,8 +127,9 @@ public class CreateSurveyController implements Serializable {
         radioQuestion.getRadioButtons().remove(radioButton);
     }
 
-//    @Transactional
+    @Transactional
     public String create() {
+        survey.setCreator(userContext.getUser());
         surveyLogic.create(survey);
 
 //        survey.setCreator(session.getUser());

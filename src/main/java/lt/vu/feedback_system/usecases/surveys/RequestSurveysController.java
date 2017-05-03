@@ -1,6 +1,6 @@
 package lt.vu.feedback_system.usecases.surveys;
 
-import lt.vu.feedback_system.businesslogic.users.Session;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.entities.User;
@@ -18,13 +18,13 @@ public class RequestSurveysController implements Serializable {
     @Inject
     private SurveyDAO surveyDAO;
     @Inject
-    private Session session;
+    private UserContext userContext;
 
     private User user;
 
     @PostConstruct
     public void loadUser() {
-        user = session.getUser();
+        user = userContext.getUser();
     }
 
     public List<Survey> getAllSurveys(){

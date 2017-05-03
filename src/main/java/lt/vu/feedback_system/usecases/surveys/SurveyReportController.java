@@ -90,5 +90,51 @@ public class SurveyReportController implements Serializable {
     public List<CheckboxAnswer> getQuestionCheckboxAnswers(Question q) {
         return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
     }
+    public double getAverage(Question q) {
+        int sum = 0;
+        int divider = 0;
+        List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
+        for ( SliderAnswer answer : answers) {
+            sum += answer.getValue();
+            divider++;
+        }
+        return sum/divider;
+    }
+    public List<Integer> getMedian(Question q) {
+        List<Integer> median= new ArrayList<Integer>();
+        List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
 
+        if ((answers.size() % 2) == 0) {
+            median.add(answers.get(answers.size() / 2 - 1).getValue());
+            median.add(answers.get(answers.size() / 2).getValue());
+        }
+        else{
+            median.add(answers.get(answers.size() / 2).getValue());
+        }
+        return median;
+    }
+    public int getMode(Question q){
+
+        List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
+            int mode = 0;
+            int count = 0;
+
+        for ( int i = 0; i< answers.size(); i++ ){
+                int x = answers.get(i).getValue();
+                int tempCount = 1;
+
+            for ( int e = 0; e < answers.size(); e++ ){
+                    int x2 = answers.get(e).getValue();
+
+                    if( x == x2) {
+                        tempCount++;
+                    }
+                    if( tempCount > count){
+                        count = tempCount;
+                        mode = x;
+                    }
+                }
+            }
+            return mode;
+    }
 }
