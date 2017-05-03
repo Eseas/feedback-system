@@ -1,0 +1,63 @@
+.top-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #FFF;
+    border-bottom: 0;
+    height: 60px;
+    z-index: 10;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2);
+}
+ol{
+    padding: 0;
+}
+.header #logo{
+    position: relative;
+    font-family: 'Josefin Sans', sans-serif !important;
+    margin-top: -10px;
+    margin-bottom: 0;
+    margin-left: 40px;
+    color: #00426B;
+}
+.header #logo, #user{
+    outline: 0;
+    padding: 0;
+    display: inline-block;
+}
+.header #user{
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
+    color: #00426B;
+    font-style: italic;
+}
+.header em {
+    letter-spacing: 0.09em;
+}
+#user a{
+    color: #00426B;
+}
+.title{
+    padding-top: 50px;
+    margin: 0 auto;
+}
+footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+body{
+    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
+    font-family: "Roboto", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
