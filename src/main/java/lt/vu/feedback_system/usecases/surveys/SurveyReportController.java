@@ -49,26 +49,11 @@ public class SurveyReportController implements Serializable {
 
     public void loadData() {
         survey = surveyDAO.getSurveyById(surveyId);
-//        answeredSurveys = answeredSurveyDAO.getAnsweredSurveysBySurveyId(surveyId);
 
         for (Section section : survey.getSections()) {
             surveyLogic.loadQuestionsToSection(section);
 
         }
-//        for (AnsweredSurvey answeredSurvey : survey.getAnsweredSurveys()) {
-//            for (Section section : answeredSurvey.getSurvey().getSections())
-//                questionLogic.loadAnswersToSection(section);
-//        }
-//        survey = surveyDAO.getSurveyById(surveyId);
-
-//        for (TextQuestion q: survey.getTextQuestions())
-//            questions.add(q);
-//        for (SliderQuestion q: survey.getSliderQuestions())
-//            questions.add(q);
-//        for (RadioQuestion q: survey.getRadioQuestions())
-//            questions.add(q);
-//        for (CheckboxQuestion q: survey.getCheckboxQuestions())
-//            questions.add(q);
     }
 
     public List<Question> getQuestions() {

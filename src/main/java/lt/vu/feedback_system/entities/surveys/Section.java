@@ -10,9 +10,6 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kazim on 2017-04-28.
- */
 @Entity
 @Table(schema = "feedback", name = "sections")
 @NamedQueries({
@@ -39,18 +36,6 @@ public class Section {
     @Size(min = 1, max = 200)
     @Column(name = "description")
     private String description;
-
-//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
-//    private List<TextQuestion> textQuestions = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
-//    private List<SliderQuestion> sliderQuestions = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
-//    private List<CheckboxQuestion> checkboxQuestions = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
-//    private List<RadioQuestion> radioQuestions = new ArrayList<>();
 
     @Transient
     private List<Question> questions = new ArrayList<>();

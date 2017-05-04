@@ -52,18 +52,6 @@ public class Survey implements Serializable {
     @Column(name = "is_confidential")
     private Boolean confidential;
 
-//    @OneToMany(mappedBy = "survey")
-//    private List<TextQuestion> textQuestions = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "survey")
-//    private List<SliderQuestion> sliderQuestions = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "survey")
-//    private List<CheckboxQuestion> checkboxQuestions = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "survey")
-//    private List<RadioQuestion> radioQuestions = new ArrayList<>();
-
     @OneToMany(mappedBy = "survey")
     private List<AnsweredSurvey> answeredSurveys = new ArrayList<>();
 

@@ -45,7 +45,7 @@ public class NavigationBean {
 
     /**
      * Redirect to a page with faces redirect.
-     * @return Section to redirect with faces redirect.
+     * @return Page to redirect with faces redirect.
      */
     public String redirectTo(String redirectUrl) {
         return FacesUtil.redirectTo(redirectUrl);
