@@ -17,9 +17,7 @@
         <p:fieldset legend="Surveys" toggleable="true">
             <p:dataTable value="#{requestSurveysController.allSurveys}" var="survey">
                 <p:column headerText="Title">
-                    <h:link value="#{survey.title}" outcome="survey">
-                        <f:param name="id" value="#{survey.id}"/>
-                    </h:link>
+                    <h:outputText value="#{survey.title}" />
                 </p:column>
                 <p:column headerText="Description">
                     <h:outputText value="#{survey.description}" />
@@ -32,8 +30,8 @@
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
-                <p:column headerText="Answer">
-                    <h:button value="Answer" outcome="answer-survey">
+                <p:column headerText="Preview">
+                    <h:button value="Preview" outcome="answer-survey">
                         <f:param name="id" value="#{survey.id}"/>
                     </h:button>
                 </p:column>

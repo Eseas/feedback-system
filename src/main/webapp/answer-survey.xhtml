@@ -10,7 +10,7 @@
 <f:view>
     <f:metadata>
         <f:viewParam name="id" value="#{answerSurveyController.id}"/>
-        <f:viewAction action="#{answerSurveyController.loadData}"/>
+        <o:viewAction action="#{answerSurveyController.loadData}"/>
     </f:metadata>
 
     <h:head>
@@ -30,7 +30,7 @@
                     <p:tab title="#{section.title}" disabled="true" >
                         <h:outputText value="#{section.description}"/>
 
-                        <h:form id="answer-survey">
+                        <h:form id="form">
                         <p:panel>
                             <ui:repeat value="#{section.answers}" var="answer">
                                 <p:outputLabel value="#{answer.question.position}. #{answer.question.title}"/>
@@ -38,7 +38,7 @@
                                 <br/>
 
                                 <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
-                                    <h:inputText id="text-value" value="#{answer.value}" required="#{answer.question.required}" requiredMessage="Value is very needed in section #{answer.question.section.title}"/>
+                                    <p:inputText id="text-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Value is very needed in section #{answer.question.section.title}"/>
                                     <p:message for="text-value"/>
                                 </ui:fragment>
 
@@ -46,20 +46,20 @@
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
 
-                                    <h:inputText id="slider-value" value="#{answer.value}" required="#{answer.question.required}" requiredMessage="Slider not selected in #{answer.question.section.title}"/>
+                                    <p:inputText id="slider-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Slider not selected in #{answer.question.section.title}"/>
                                     <p:slider for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}" />
                                     <p:message for="slider-value"/>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
-                                    <p:selectOneRadio id="select-one-radio" value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" required="#{answer.question.required}" requiredMessage="Radio Button not selected" layout="grid" columns="3">
+                                    <p:selectOneRadio id="select-one-radio" value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Radio Button not selected" layout="grid" columns="3">
                                         <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                                     </p:selectOneRadio>
                                     <p:message for="select-one-radio"/>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
-                                    <p:selectManyCheckbox id="select-many-checkbox" value="#{answer.selectedCheckboxes}" converter="omnifaces.SelectItemsConverter" required="#{answer.question.required}" requiredMessage="Checboxes not selected in #{answer.question.section.title}">
+                                    <p:selectManyCheckbox id="select-many-checkbox" value="#{answer.selectedCheckboxes}" converter="omnifaces.SelectItemsConverter" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Checboxes not selected in #{answer.question.section.title}">
                                         <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}" var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}" itemValue="#{availableSelectedCheckbox}" />
                                     </p:selectManyCheckbox>
                                     <p:message for="select-many-checkbox"/>
@@ -69,15 +69,14 @@
                             </ui:repeat>
 
                         </p:panel>
-                            <!--<p:commandButton value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />-->
-                            <!--<p:commandButton immediate="true" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" />-->
-
-                            <ui:fragment rendered="#{!answerSurveyController.firstSection}">
-                                <p:commandButton immediate="true" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" />
+                            <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
+                                <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
+                                    <f:param name="noValidation" value="true"/>
+                                </p:commandButton>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{answerSurveyController.lastSection}">
-                                <p:commandButton value="SUBMIT" action="#{answerSurveyController.answer()}" />
+                                <p:commandButton value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view"/>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{!answerSurveyController.lastSection}">

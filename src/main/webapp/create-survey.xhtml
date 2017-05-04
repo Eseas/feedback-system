@@ -9,9 +9,6 @@
 >
 <f:view>
     <f:metadata>
-        <f:viewParam name="id" value="#{createSurveyController.id}"/>
-        <f:viewParam name="modify" value="#{createSurveyController.modify}"/>
-        <o:viewAction action="#{createSurveyController.loadData}" rendered="#{param.modify ne null}"/>
     </f:metadata>
 
     <h:head>
@@ -41,7 +38,7 @@
 
             </h:panelGrid>
 
-            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section" activeIndex="#{createSurveyController.activeTabIndex}">
+            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section">
                 <p:tab id="section-tab" title="Section #{section.position} of #{createSurveyController.survey.sections.size()}">
                     <p:outputLabel for="section_title" value="Section title"/>
                     <p:inputText id="section_title" value="#{section.title}" />

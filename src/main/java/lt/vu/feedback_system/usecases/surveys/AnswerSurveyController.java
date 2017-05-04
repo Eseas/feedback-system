@@ -30,11 +30,6 @@ public class AnswerSurveyController implements Serializable {
 
     private Integer lastTabIndex;
 
-//    @Setter
-//    private Boolean submitActive;
-
-
-
     @Inject
     private SurveyDAO surveyDAO;
     @Inject
@@ -50,13 +45,8 @@ public class AnswerSurveyController implements Serializable {
 
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
-//
-//    private List<Question> questions = new ArrayList<>();
-//
-//
-//    @Getter
-//    private TextQuestion textQuestion = new TextQuestion();
-//
+
+
     public void loadData() {
 
         answeredSurvey.setSurvey(surveyLogic.loadSurvey(id));
@@ -66,37 +56,8 @@ public class AnswerSurveyController implements Serializable {
 
         activeTabIndex = 0;
         lastTabIndex = answeredSurvey.getSurvey().getSections().size() - 1; // zero base
-
-//        submitActive = false;
     }
 
-//
-//    public List<Section> getSections() {
-//        return answeredSurvey.getSurvey().getSections();
-//    }
-//
-//    public List<Answer> getAnswers() {
-//        List<Answer> answers = new ArrayList<>();
-//
-//        answers.addAll(answeredSurvey.getTextAnswers());
-//        answers.addAll(answeredSurvey.getSliderAnswers());
-//        answers.addAll(answeredSurvey.getRadioAnswers());
-//        answers.addAll(answeredSurvey.getCheckboxAnswers());
-//
-//        return Sorter.sortAnswersAscending(answers);
-//    }
-//
-//    public List<Answer> getSectionAnswers(Section section) {
-//        List<Answer> sectionAnswers = new ArrayList<>();
-//
-//        for(Answer answer : getAnswers()) {
-//            if (answer.getQuestion().getSection().getId() == section.getId()) {
-//                sectionAnswers.add(answer);
-//            }
-//        }
-//        return sectionAnswers;
-//    }
-//
     @Transactional
     public String answer() {
         answeredSurveyDAO.create(answeredSurvey);
@@ -104,23 +65,6 @@ public class AnswerSurveyController implements Serializable {
             for (Answer answer : section.getAnswers())
                 answerDAO.create(answer);
         }
-//        for (TextAnswer a: answeredSurvey.getTextAnswers())
-//            answerDAO.create(a);
-//        for (SliderAnswer a: answeredSurvey.getSliderAnswers())
-//            answerDAO.create(a);
-//        for (RadioAnswer a: answeredSurvey.getRadioAnswers()) {
-//            answerDAO.create(a);
-//        }
-//        for (CheckboxAnswer a: answeredSurvey.getCheckboxAnswers()) {
-//            answerDAO.create(a);
-//            for (Checkbox checkbox : a.getTempSelectedCheckboxes()) {
-//                SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
-//                selectedCheckbox.setCheckbox(checkbox);
-//                selectedCheckbox.setCheckboxAnswer(a);
-//                selectedCheckboxDAO.create(selectedCheckbox);
-//            }
-//
-//        }
         return "surveys?faces-redirect=true";
     }
 
@@ -149,7 +93,6 @@ public class AnswerSurveyController implements Serializable {
     }
 
     public void previousTab() {
-//        TO DO IF...
         activeTabIndex -= 1;
     }
 
