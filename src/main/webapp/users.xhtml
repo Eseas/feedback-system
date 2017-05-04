@@ -12,9 +12,7 @@
 
     <h:body>
         <h1>Users</h1>
-
         <h:form>
-
             <p:fieldset legend="Registered users" toggleable="true" style="width: 70%">
                 <p:dataTable value="#{requestUsersController.users}" var="user">
 
@@ -38,61 +36,6 @@
             <p:commandButton value="Save"
                              actionListener="#{requestUsersController.update()}"
                              ajax="false"/>
-        </h:form>
-
-        <h:form id="potential-users">
-            <p:fieldset legend="Potential users" toggleable="true" style="width: 40%">
-                <p:dataTable value="#{requestUsersController.getAllPotentialUsers()}" var="potentialUser">
-                    <p:column headerText="Email">
-                        <h:outputText value="#{potentialUser.email}"/>
-                    </p:column>
-                </p:dataTable>
-                <p:message for="potential-users"/>
-            </p:fieldset>
-        </h:form>
-
-        <h:form>
-
-            <h2>Add new potential user</h2>
-            <table>
-                <tr>
-                    <td>
-                        <h:panelGrid columns="3">
-                            <p:outputLabel for="email" value="Email"/>
-                            <p:inputText id="email" value="#{requestUsersController.potentialUser.email}"/>
-                            <p:message for="email"/>
-                        </h:panelGrid>
-                    </td>
-                </tr>
-            </table>
-            <p:commandButton value="Add"
-                             actionListener="#{requestUsersController.createPotentialUser()}"
-                             ajax="false"/>
-        </h:form>
-        <h:form>
-            <h2>Remove a potential user</h2>
-            <table>
-                <tr>
-                    <td>
-                        <h:panelGrid columns="3">
-                            <p:outputLabel for="emailToRemove" value="Email"/>
-                            <p:inputText id="emailToRemove" value="#{requestUsersController.potentialUserToRemove.email}"/>
-                            <p:message for="emailToRemove"/>
-                        </h:panelGrid>
-                    </td>
-                </tr>
-            </table>
-
-            <p:commandButton value="Remove"
-                             actionListener="#{requestUsersController.removePotentialUser()}"
-                             ajax="false"/>
-
-            <p:messages globalOnly="true"/>
-
-
-
-
-
         </h:form>
     </h:body>
 </html>
