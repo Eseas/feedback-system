@@ -2,16 +2,13 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.businesslogic.surveys.QuestionLogic;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
-import lt.vu.feedback_system.utils.Sorter;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,7 +30,8 @@ public class AnswerSurveyController implements Serializable {
 
     private Integer lastTabIndex;
 
-    private Boolean submitActive;
+//    @Setter
+//    private Boolean submitActive;
 
 
 
@@ -49,8 +47,6 @@ public class AnswerSurveyController implements Serializable {
     private AnswerDAO answerDAO;
     @Inject
     private SurveyLogic surveyLogic;
-    @Inject
-    private QuestionLogic questionLogic;
 
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
@@ -65,13 +61,13 @@ public class AnswerSurveyController implements Serializable {
 
         answeredSurvey.setSurvey(surveyLogic.loadSurvey(id));
         for (Section section : answeredSurvey.getSurvey().getSections()) {
-            questionLogic.createEmptyAnswersForSection(section);
+            surveyLogic.createEmptyAnswersForSection(section);
         }
 
         activeTabIndex = 0;
         lastTabIndex = answeredSurvey.getSurvey().getSections().size() - 1; // zero base
 
-        submitActive = false;
+//        submitActive = false;
     }
 
 //
@@ -128,47 +124,27 @@ public class AnswerSurveyController implements Serializable {
         return "surveys?faces-redirect=true";
     }
 
-    public List<SelectedCheckbox> castToSelectedCheckboxes(List<Checkbox> checkboxes) {
-        List<SelectedCheckbox> selectedCheckboxes = new ArrayList<>();
 
-        for (Checkbox checkbox : checkboxes) {
-            SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
-            selectedCheckbox.setCheckbox(checkbox);
+    public List<SelectedCheckbox> getAvailableSelectedCheckboxes(CheckboxAnswer checkboxAnswer) {
 
-            selectedCheckboxes.add(selectedCheckbox);
+        if (checkboxAnswer.getAvailableSelectedCheckboxes() == null) {
+            List<SelectedCheckbox> selectedCheckboxes = new ArrayList<>();
+
+            for (Checkbox checkbox : checkboxAnswer.getQuestion().getCheckboxes()) {
+                SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
+
+                selectedCheckbox.setCheckbox(checkbox);
+                selectedCheckbox.setCheckboxAnswer(checkboxAnswer);
+
+                selectedCheckboxes.add(selectedCheckbox);
+            }
+            checkboxAnswer.setAvailableSelectedCheckboxes(selectedCheckboxes);
         }
 
-        return selectedCheckboxes;
-    }
-
-    public SelectedCheckbox createSelectedCheckbox(CheckboxAnswer checkboxAnswer, Checkbox checkbox) {
-
-        SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
-        selectedCheckbox.setCheckbox(checkbox);
-
-        selectedCheckbox.setCheckboxAnswer(checkboxAnswer);
-
-        return selectedCheckbox;
-    }
-
-    public void setAvailableSelectedCheckboxes(CheckboxAnswer checkboxAnswer) {
-        List<SelectedCheckbox> selectedCheckboxes = new ArrayList<>();
-
-        for (Checkbox checkbox : checkboxAnswer.getQuestion().getCheckboxes()) {
-            SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
-
-            selectedCheckbox.setCheckbox(checkbox);
-            selectedCheckbox.setCheckboxAnswer(checkboxAnswer);
-
-            selectedCheckboxes.add(selectedCheckbox);
-        }
-        checkboxAnswer.setAvailableSelectedCheckboxes(selectedCheckboxes);
-
-//        return selectedCheckboxes;
+        return checkboxAnswer.getAvailableSelectedCheckboxes();
     }
 
     public void nextTab() {
-//        TO DO IF...
         activeTabIndex += 1;
     }
 
@@ -177,7 +153,17 @@ public class AnswerSurveyController implements Serializable {
         activeTabIndex -= 1;
     }
 
-    public Boolean getSubmitActive() {
-        return activeTabIndex == lastTabIndex ? true : false;
+    public boolean isLastSection() {
+        if (activeTabIndex == lastTabIndex) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFirstSection() {
+        if (activeTabIndex == 0) {
+            return true;
+        }
+        return false;
     }
 }

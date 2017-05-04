@@ -43,7 +43,7 @@ public class RadioQuestion implements Question {
     @Column(name = "position")
     private Integer position;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RadioButton> radioButtons = new ArrayList<>();
 
     @JoinColumn(name = "survey_id", referencedColumnName = "ID")
@@ -53,5 +53,13 @@ public class RadioQuestion implements Question {
     @JoinColumn(name = "section_id", referencedColumnName = "id")
     @ManyToOne
     private Section section;
+
+    public List<RadioButton> getRadioButtons() {
+        return radioButtons;
+    }
+
+    public Boolean getRequired() {
+        return required;
+    }
 }
 

@@ -10,36 +10,25 @@ INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular2@mailinator.com', 'Use
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask you to answer some questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 2, TRUE,'Social Security', 'This survey is anonymous');
-INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Wizard tester', 'Please answer a few questions');
-
 
 INSERT INTO feedback.sections VALUES (DEFAULT, 1, 1, 'First section', 'description 1');
 INSERT INTO feedback.sections VALUES (DEFAULT, 1, 2, 'Second section', 'description 2');
 INSERT INTO feedback.sections VALUES (DEFAULT, 1, 3, 'Third section', 'description 3');
 INSERT INTO feedback.sections VALUES (DEFAULT, 2, 1, 'First section', 'description 1');
 INSERT INTO feedback.sections VALUES (DEFAULT, 3, 1, 'First section', 'description 1');
-INSERT INTO feedback.sections VALUES (DEFAULT, 4, 1, 'Wiz1', 'description 1');
-INSERT INTO feedback.sections VALUES (DEFAULT, 4, 2, 'Wiz2', 'description 2');
-INSERT INTO feedback.sections VALUES (DEFAULT, 4, 3, 'Wiz3', 'description 2');
-
 
 
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, 1, TRUE, 1, 6, 'Rate office environment');
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, 4,3, FALSE, 1, 10, 'Do you like your chair?');
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 3, 5,2, TRUE, 1, 8, 'Do you need a new monitor?');
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 4, 6,2, TRUE, 1, 8, 'Do you need a new monitor?');
-INSERT INTO feedback.slider_questions VALUES (DEFAULT, 4, 8,2, TRUE, 1, 8, 'Do you need a new monitor?');
 
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 1, 2, 1, TRUE, 'Tell us about office environment');
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 2, 4, 2, FALSE, 'Do you like your chair?');
 INSERT INTO feedback.text_questions VALUES (DEFAULT, 3, 5, 1, TRUE, 'Do you need a new monitor?');
-INSERT INTO feedback.text_questions VALUES (DEFAULT, 4, 7, 1, TRUE, 'Do you need a new monitor?');
-INSERT INTO feedback.text_questions VALUES (DEFAULT, 4, 8, 1, TRUE, 'Do you need a new monitor?');
 
-INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 1, 1, 2, TRUE, 'Which option represent your situation?');
+INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 1, 3, 1, TRUE, 'Which option represent your situation?');
 INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 2, 4, 1,FALSE, 'Do you like your chair?');
 INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 3, 5, 3,TRUE, 'Do you need a new monitor?');
-INSERT INTO feedback.checkbox_questions VALUES (DEFAULT, 4, 6, 1,TRUE, 'Do you need a new monitor?');
 
 INSERT INTO feedback.checkboxes VALUES (DEFAULT, 1, 'Great');
 INSERT INTO feedback.checkboxes VALUES (DEFAULT, 1, 'Medium');
@@ -49,10 +38,9 @@ INSERT INTO feedback.checkboxes VALUES (DEFAULT, 2, 'No');
 INSERT INTO feedback.checkboxes VALUES (DEFAULT, 3, 'ASAP');
 INSERT INTO feedback.checkboxes VALUES (DEFAULT, 3, 'No.');
 
-INSERT INTO feedback.radio_questions VALUES (DEFAULT, 1, 1, 3, TRUE, 'Which option represent your situation?');
+INSERT INTO feedback.radio_questions VALUES (DEFAULT, 1, 2, 2, TRUE, 'Which option represent your situation?');
 INSERT INTO feedback.radio_questions VALUES (DEFAULT, 2, 4, 4,FALSE, 'Do you like your chair?');
 INSERT INTO feedback.radio_questions VALUES (DEFAULT, 3, 5, 4,TRUE, 'Do you need a new monitor?');
--- INSERT INTO feedback.radio_questions VALUES (DEFAULT, 4, 8, 3,TRUE, 'Do you need a new monitor?');
 
 INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Great');
 INSERT INTO feedback.radio_buttons VALUES (DEFAULT, 1, 'Medium');

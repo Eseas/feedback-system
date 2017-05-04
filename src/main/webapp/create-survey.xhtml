@@ -21,7 +21,7 @@
 
     <h:body>
         <h1>Surveys</h1>
-        <h:form id="survey-general">
+        <h:form id="survey-creation-form">
             <h2>Create a new survey</h2>
             <h:panelGrid columns="3">
 
@@ -41,7 +41,7 @@
 
             </h:panelGrid>
 
-            <p:tabView value="#{createSurveyController.survey.sections}" var="section" >
+            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section" activeIndex="#{createSurveyController.activeTabIndex}">
                 <p:tab id="section-tab" title="Section #{section.position} of #{createSurveyController.survey.sections.size()}">
                     <p:outputLabel for="section_title" value="Section title"/>
                     <p:inputText id="section_title" value="#{section.title}" />
@@ -52,12 +52,12 @@
                     <p:message for="section_description"/>
 
                     <p:fieldset legend="Questions" toggleable="true">
-                        <ui:repeat value="#{section.questions}" var="question">
+                        <ui:repeat value="#{createSurveyController.sortQuestionsAscending(section.questions)}" var="question">
                             <p:outputLabel for="questionTitle" value="#{question.getPosition().toString()}"/>
                             <h:inputText id="questionTitle" value="#{question.title}"/>
-                            <h:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(question)}"/>
-                            <h:commandButton value="up" actionListener="#{createSurveyController.moveUp(question)}"/>
-                            <h:commandButton value="down" actionListener="#{createSurveyController.moveDown(question)}"/>
+                            <h:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(section, question)}"/>
+                            <h:commandButton value="up" actionListener="#{createSurveyController.moveUp(section, question)}"/>
+                            <h:commandButton value="down" actionListener="#{createSurveyController.moveDown(section, question)}"/>
 
                             <p:selectOneButton value="#{question.required}">
                                 <f:selectItem itemLabel="Required" itemValue="true" />
@@ -110,17 +110,17 @@
                         </ui:repeat>
                     </p:fieldset>
 
-                    <h:commandButton value="add text question" actionListener="#{createSurveyController.addTextQuestion(section)}" />
-                    <h:commandButton value="add slider question" actionListener="#{createSurveyController.addSliderQuestion(section)}" />
-                    <h:commandButton value="add radio question" actionListener="#{createSurveyController.addRadioQuestion(section)}" />
-                    <h:commandButton value="add checkbox question" actionListener="#{createSurveyController.addCheckboxQuestion(section)}" />
+                    <p:commandButton value="add text question" actionListener="#{createSurveyController.addTextQuestion(section)}" update="survey-creation-form"/>
+                    <p:commandButton value="add slider question" actionListener="#{createSurveyController.addSliderQuestion(section)}" update="survey-creation-form" />
+                    <p:commandButton value="add radio question" actionListener="#{createSurveyController.addRadioQuestion(section)}" update="survey-creation-form" />
+                    <p:commandButton value="add checkbox question" actionListener="#{createSurveyController.addCheckboxQuestion(section)}" update="survey-creation-form" />
 
                 </p:tab>
 
 
             </p:tabView>
 
-            <h:commandButton value="add section" actionListener="#{createSurveyController.addSection()}"/>
+            <p:commandButton value="add section" actionListener="#{createSurveyController.addSection()}" update="tab-view"/>
 
             <!-- Ending creation -->
             <br/>

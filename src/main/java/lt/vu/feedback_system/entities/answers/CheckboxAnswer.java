@@ -41,16 +41,5 @@ public class CheckboxAnswer implements Answer {
     private List<SelectedCheckbox> selectedCheckboxes;
 
     @Transient
-    private List<Checkbox> tempSelectedCheckboxes;
-
-    @Transient
     private List<SelectedCheckbox> availableSelectedCheckboxes;
-
-    public void setSelectedCheckboxes(List<SelectedCheckbox> selectedCheckboxes) {
-        this.selectedCheckboxes = selectedCheckboxes;
-    }
-
-    public List<SelectedCheckbox> getSelectedCheckboxes() {
-        return selectedCheckboxes;
-    }
 }

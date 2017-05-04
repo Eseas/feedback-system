@@ -3,14 +3,13 @@ package lt.vu.feedback_system.usecases.surveys;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
-import lt.vu.feedback_system.businesslogic.surveys.QuestionLogic;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
-import lt.vu.feedback_system.businesslogic.users.Session;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.utils.Sorter;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -54,12 +52,11 @@ public class CreateSurveyController implements Serializable {
 
     @Inject
     private SurveyLogic surveyLogic;
-    @Inject
-    private QuestionLogic questionLogic;
 
     @PostConstruct
     private void init() {
         survey.setConfidential(true);
+
     }
 
     public void loadData() {
@@ -67,11 +64,11 @@ public class CreateSurveyController implements Serializable {
     }
 
     public void moveUp(Section section, Question question) {
-        questionLogic.moveUp(section, question);
+        surveyLogic.moveUp(section, question);
     }
 
     public void moveDown(Section section, Question question) {
-        questionLogic.moveDown(section, question);
+        surveyLogic.moveDown(section, question);
     }
 
     public void addSection() {
@@ -79,7 +76,7 @@ public class CreateSurveyController implements Serializable {
     }
 
     public void addTextQuestion(Section section) {
-        questionLogic.addQuestion(section, new TextQuestion());
+        surveyLogic.addQuestion(section, new TextQuestion());
     }
 
     public void removeQuestion(Section section, Question question) {
@@ -92,11 +89,11 @@ public class CreateSurveyController implements Serializable {
     }
 
     public void addSliderQuestion(Section section) {
-        questionLogic.addQuestion(section, new SliderQuestion());
+        surveyLogic.addQuestion(section, new SliderQuestion());
     }
 
     public void addCheckboxQuestion(Section section) {
-        questionLogic.addQuestion(section, new CheckboxQuestion());
+        surveyLogic.addQuestion(section, new CheckboxQuestion());
     }
 
     public void addCheckbox(CheckboxQuestion checkboxQuestion) {
@@ -109,11 +106,8 @@ public class CreateSurveyController implements Serializable {
         checkboxQuestion.getCheckboxes().remove(checkbox);
     }
 
-    /**
-     * Radio...
-     */
     public void addRadioQuestion(Section section) {
-        questionLogic.addQuestion(section, new RadioQuestion());
+        surveyLogic.addQuestion(section, new RadioQuestion());
 
     }
 
@@ -127,52 +121,15 @@ public class CreateSurveyController implements Serializable {
         radioQuestion.getRadioButtons().remove(radioButton);
     }
 
+    public List<Question> sortQuestionsAscending(List<Question> questions) {
+        return Sorter.sortQuestionsAscending(questions);
+    }
+
     @Transactional
     public String create() {
         survey.setCreator(userContext.getUser());
         surveyLogic.create(survey);
 
-//        survey.setCreator(session.getUser());
-//
-//        surveyDAO.create(survey);
-
-
-//        for (Section section : survey.getSections())
-//            sectionDAO.create(section);
-//        for (TextQuestion q: survey.getTextQuestions())
-//            questionDAO.create(q);
-//        for (SliderQuestion q: survey.getSliderQuestions())
-//            questionDAO.create(q);
-//        for (RadioQuestion q: survey.getRadioQuestions()) {
-//            questionDAO.create(q);
-//            for (RadioButton rb : q.getRadioButtons())
-//                radioButtonDAO.create(rb);
-//        }
-//        for (CheckboxQuestion q: survey.getCheckboxQuestions()) {
-//            questionDAO.create(q);
-//            for (Checkbox c : q.getCheckboxes())
-//                checkboxDAO.create(c);
-//        }
         return "surveys?faces-redirect=true";
     }
-
-//    @Transactional
-//    public String update() {
-////        surveyDAO.update(survey);
-////        for (TextQuestion q: survey.getTextQuestions())
-////            questionDAO.update(q);
-////        for (SliderQuestion q: survey.getSliderQuestions())
-////            questionDAO.update(q);
-////        for (RadioQuestion q: survey.getRadioQuestions()) {
-////            questionDAO.update(q);
-////            for (RadioButton rb : q.getRadioButtons())
-////                radioButtonDAO.update(rb);
-////        }
-////        for (CheckboxQuestion q: survey.getCheckboxQuestions()) {
-////            questionDAO.update(q);
-////            for (Checkbox c : q.getCheckboxes())
-////                checkboxDAO.update(c);
-////        }
-////        return "surveys?faces-redirect=true";
-//    }
 }

@@ -2,7 +2,7 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.businesslogic.surveys.QuestionLogic;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
@@ -40,7 +40,7 @@ public class SurveyReportController implements Serializable {
     private Survey survey;
 
     @Inject
-    private QuestionLogic questionLogic;
+    private SurveyLogic surveyLogic;
 
     @Getter
     private List<AnsweredSurvey> answeredSurveys;
@@ -52,7 +52,7 @@ public class SurveyReportController implements Serializable {
 //        answeredSurveys = answeredSurveyDAO.getAnsweredSurveysBySurveyId(surveyId);
 
         for (Section section : survey.getSections()) {
-            questionLogic.loadQuestionsToSection(section);
+            surveyLogic.loadQuestionsToSection(section);
 
         }
 //        for (AnsweredSurvey answeredSurvey : survey.getAnsweredSurveys()) {

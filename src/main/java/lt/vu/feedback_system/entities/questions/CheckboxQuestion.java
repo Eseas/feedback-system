@@ -44,7 +44,7 @@ public class CheckboxQuestion implements Question {
     @Column(name = "position")
     private Integer position;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Checkbox> checkboxes = new ArrayList<>();
 
 
