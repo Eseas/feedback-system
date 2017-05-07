@@ -124,6 +124,14 @@
     padding: 10px 0 !important;
     color: #c00;
 }
+footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 9px;
+}
 body{
     background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
     background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);

@@ -59,27 +59,6 @@ ol{
     color: #00426B;
     font-family: 'Bitter', serif;
 }
-#j_id_e{
-    border: none;
-    padding: 0;
-}
-.ui-tabs.ui-tabs-top>.ui-tabs-nav {
-    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
-    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
-    font-family: "Roboto", sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-}
-.add_user, .remove_user{
-    float: left;
-}
-.potential_users{
-    float: right;
-    max-width: 200px;
-}
-
-
 footer{
     display: block;
     position: fixed;

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
     <h:outputStylesheet name="css/stylesIndex.css" />
     <title>Builder of Surveys</title>
 </h:head>
@@ -17,12 +18,11 @@
 
     <div class="top-bar">
         <ol class="header">
-            <li id="logo"><h1>B<em>o</em>S</h1></li>
+            <li id="logo" ><h1>B<em>o</em>S</h1></li>
             <li id="user">
-                    <span class="glyphicon glyphicon-user">
-                    </span>
-                <p:link value="  #{userController.fullName}"/>
-                <h:form>
+                <span class="glyphicon glyphicon-user throwLeft"/>
+                <p:outputLabel class="throwLeft" value="#{userController.fullName}" style="font-weight: normal; margin-right: 5px"/>
+                <h:form class="throwLeft">
                     <h:commandLink value=" (Logout)" action="#{loginController.doLogout()}"/>
                 </h:form>
             </li>
@@ -30,17 +30,17 @@
     </div>
 
     <div class="content">
-        <div class="admin_index">
-            <div class="definition">
+        <div class="index">
+            <div class="page_title">
                 <h2>Builder of Surveys</h2>
                 <p>Create, Share and Review</p>
             </div>
-            <div class="buttons_a">
-                <h:button id="create_a" outcome="create-survey" value="Create Survey"/>
-                <h:button id="upload_a" outcome="upload" value="Upload Survey"/>
-                <h:button id="users_a" outcome="users" value="User Management" rendered="#{userController.admin}"/>
-                <h:button id="surveys_a" outcome="surveys" value="Survey Management"/>
-                <h:button id="mysurveys_a" outcome="my-surveys" value="My Created Surveys"/>
+            <div class="buttons">
+                <h:button id="create" outcome="create-survey" value="Create Survey"/>
+                <h:button id="upload" outcome="upload" value="Upload Survey"/>
+                <h:button id="users" outcome="users" value="User Management" rendered="#{userController.admin}"/>
+                <h:button id="surveys" outcome="surveys" value="Survey Management"/>
+                <h:button id="mysurveys" outcome="my-surveys" value="My Created Surveys"/>
             </div>
         </div>
     </div>
