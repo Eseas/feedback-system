@@ -10,6 +10,7 @@ import lt.vu.feedback_system.dao.UserDAO;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -46,8 +47,13 @@ public class RequestUsersController {
 
     @Transactional
     public void createPotentialUser() {
-        potentialUserDAO.create(potentialUser);
-        potentialUser = new PotentialUser();
+        try{
+            potentialUserDAO.selectByEmail(potentialUser.getEmail());
+        }
+        catch(NoResultException e){
+            potentialUserDAO.create(potentialUser);
+            potentialUser = new PotentialUser();
+        }
     }
 
     @Transactional
