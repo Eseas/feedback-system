@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(schema = "feedback", name = "potential_users")
+@Table(schema = "feedback", name = "potential_users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 @NamedQueries({
         @NamedQuery(name = "PotentialUser.findAll", query = "SELECT s FROM PotentialUser s"),
         @NamedQuery(name = "PotentialUser.selectByEmail", query = "SELECT u FROM PotentialUser u WHERE u.email = :email")
@@ -26,6 +26,6 @@ public class PotentialUser {
     private Integer id;
 
     @Size(min = 3, max = 40)
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 }

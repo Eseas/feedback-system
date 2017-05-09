@@ -1,10 +1,12 @@
 package lt.vu.feedback_system.usecases.users;
 
 import lombok.Getter;
+import lt.vu.feedback_system.businesslogic.users.UserLogic;
 import lt.vu.feedback_system.dao.UserDAO;
 import lt.vu.feedback_system.entities.User;
 import org.primefaces.context.RequestContext;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,13 +20,24 @@ import java.util.List;
 public class UserManagementController implements Serializable {
     @Getter
     private User user = new User();
+
+    @Getter
+    private List<User> users;
+
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private UserLogic userLogic;
 
     @Getter private User selectedUser;
     @Getter private User conflictingUser;
     @Getter private List<User> allUsers;
 
+    @PostConstruct
+    public void loadData() {
+        users = userDAO.getAllUsers();
+    }
 
     public void prepareForEditing(User user) {
         selectedUser = user;
@@ -38,9 +51,6 @@ public class UserManagementController implements Serializable {
             reloadAll();
         } catch (OptimisticLockException ole) {
             conflictingUser = userDAO.getUserById(selectedUser.getId());
-            // Pavyzdys, kaip inicializuoti LAZY ryšį, jei jo reikia HTML puslapyje:
-//            Hibernate.initialize(conflictingStudent.getCourseList());
-            // Pranešam PrimeFaces dialogui, kad užsidaryti dar negalima:
             RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
         }
     }

@@ -46,7 +46,7 @@
                                          update=":tab_view:form:list"/>
                     </f:facet>
 
-                    <p:dataTable id="data_table" value="#{requestUsersController.users}" var="user">
+                    <p:dataTable id="data_table" value="#{userManagementController.users}" var="user">
                         <p:column headerText="Email">
                             <h:outputText value="#{user.email}"/>
                         </p:column>
@@ -147,13 +147,13 @@
                         <div class="label_table">
                             <p>Potential users</p>
                         </div>
-                        <p:dataTable id="potential_user_table" class="potential_table" value="#{requestUsersController.getAllPotentialUsers()}" var="potentialUser">
+                        <p:dataTable id="potential_user_table" class="potential_table" value="#{potentialUserManagementController.getAllPotentialUsers()}" var="potentialUser">
                             <p:column headerText="Email">
                                 <h:outputText value="#{potentialUser.email}"/>
                             </p:column>
                             <p:column>
                                 <p:commandButton value="Remove" icon="fa fa-fw fa-remove"
-                                                 actionListener="#{requestUsersController.removePotentialUser(potentialUser)}"
+                                                 actionListener="#{potentialUserManagementController.removePotentialUser(potentialUser)}"
                                                  update="potential_user_table"
                                 />
                             </p:column>
@@ -163,12 +163,13 @@
                 </div>
                 <div class="left">
                     <h:form id="add_user_form" class="add_user">
+                        <p:messages showDetail="true" autoUpdate="true" closable="true"/>
                         <p:outputLabel for="email" value="Add potential user"/>
                         <p:inputText id="email"
-                                     value="#{requestUsersController.potentialUser.email}" placeholder="Email of a potential user"/>
+                                     value="#{potentialUserManagementController.potentialUser.email}" placeholder="Email of a potential user"/>
                         <p:message for="email"/>
                         <div class="button">
-                            <p:commandButton value="Add" actionListener="#{requestUsersController.createPotentialUser()}" update=":tab_view:potential:potential_user_table add_user_form"/>
+                            <p:commandButton value="Add" actionListener="#{potentialUserManagementController.createPotentialUser()}" update=":tab_view:potential:potential_user_table add_user_form"/>
                         </div>
                     </h:form>
                 </div>
