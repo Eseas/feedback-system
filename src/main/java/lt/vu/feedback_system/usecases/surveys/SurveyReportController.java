@@ -6,15 +6,14 @@ import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
-import lt.vu.feedback_system.entities.answers.RadioAnswer;
-import lt.vu.feedback_system.entities.answers.SliderAnswer;
-import lt.vu.feedback_system.entities.answers.TextAnswer;
+import lt.vu.feedback_system.entities.answers.*;
+import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
+import org.omnifaces.util.Components;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -71,6 +70,43 @@ public class SurveyReportController implements Serializable {
     public List<RadioAnswer> getQuestionRadioAnswers(Question q) {
         return answerDAO.getAllRadioAnswersByQuestionId(q.getId());
     }
+    public List<String> getUniqueQuestionRadioAnswers(Question q) {
+        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
+        List<String> result = new ArrayList<>();
+        Boolean temp= false;
+        for (RadioAnswer answer: answers) {
+            for (String a: result) {
+                if(answer.getRadioButton().getTitle().equals(a)){
+                    temp = true;
+                }
+            }
+            if (!temp){
+                result.add(answer.getRadioButton().getTitle());
+            }
+            temp = false;
+        }
+        return result;
+    }
+
+    public List<String> getUniqueQuestionCheckboxAnswers(Question q) {
+        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
+        List<String> result = new ArrayList<>();
+        Boolean temp= false;
+        for (CheckboxAnswer answer: answers) {
+            for(SelectedCheckbox answer2 : answer.getSelectedCheckboxes()){
+                for (String a: result) {
+                    if (answer2.getCheckbox().getTitle().equals(a)) {
+                        temp = true;
+                    }
+                }
+                if (!temp) {
+                    result.add(answer2.getCheckbox().getTitle());
+                }
+                temp = false;
+            }
+        }
+        return result;
+    }
 
     public List<CheckboxAnswer> getQuestionCheckboxAnswers(Question q) {
         return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
@@ -121,5 +157,30 @@ public class SurveyReportController implements Serializable {
                 }
             }
             return mode;
+    }
+
+    public int countRadioAnswers(String title, Question q){
+        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
+
+        int count = 0;
+        for (RadioAnswer answer: answers) {
+            if(answer.getRadioButton().getTitle().equals(title)){
+                count ++;
+            }
+        }
+        return count;
+    }
+    public int countCheckBoxAnswers(String title, Question q){
+        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
+
+        int count = 0;
+        for (CheckboxAnswer answer: answers) {
+            for(SelectedCheckbox answer2: answer.getSelectedCheckboxes()) {
+                if (answer2.getCheckbox().getTitle().equals(title)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
