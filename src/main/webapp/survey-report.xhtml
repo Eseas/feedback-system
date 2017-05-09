@@ -51,19 +51,18 @@
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                                <ui:repeat value="#{surveyReportController.getQuestionRadioAnswers(question)}" var="radioAnswer" >
-                                    <h:outputText value="#{radioAnswer.radioButton}"/>
+                                <ui:repeat value="#{surveyReportController.getUniqueQuestionRadioAnswers(question)}" var="title" >
+                                    <h:outputText value="#{title} "/>
+                                    <h:outputText value="#{surveyReportController.countRadioAnswers(title,question)}"/>
                                     <br/>
                                 </ui:repeat>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                                <ui:repeat value="#{surveyReportController.getQuestionCheckboxAnswers(question)}" var="checkboxAnswer" >
-                                    <ui:repeat value="#{checkboxAnswer.selectedCheckboxes}" var="selectedCheckbox">
-                                        <h:outputText value="#{selectedCheckbox.checkbox.title}"/>
+                                <ui:repeat value="#{surveyReportController.getUniqueQuestionCheckboxAnswers(question)}" var="title" >
+                                        <h:outputText value="#{title} "/>
+                                        <h:outputText value="#{surveyReportController.countCheckBoxAnswers(title,question)}"/>
                                         <br/>
-                                    </ui:repeat>
-                                    <br/>
                                 </ui:repeat>
                             </ui:fragment>
 
