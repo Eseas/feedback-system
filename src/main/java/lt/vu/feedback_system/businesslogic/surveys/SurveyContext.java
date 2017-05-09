@@ -32,4 +32,14 @@ public class SurveyContext implements Serializable {
 
         return false;
     }
+
+    public boolean isSurveyConfidential(Integer surveyId) {
+        try {
+            return surveyDAO.getSurveyById(surveyId).getConfidential();
+        } catch (javax.persistence.NoResultException ex) {
+        } catch (NullPointerException ex) {
+        }
+
+        return false;
+    }
 }
