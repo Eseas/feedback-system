@@ -69,6 +69,17 @@ public class RequestUsersController {
     }
 
     @Transactional
+    public void removePotentialUser(PotentialUser potentialUserToRemove) {
+        List<PotentialUser> potentialUsers = potentialUserDAO.getAllPotentialUsers();
+        for (PotentialUser potentialUser : potentialUsers) {
+            if (potentialUser.equals(potentialUserToRemove)) {
+                potentialUserDAO.delete(potentialUser);
+                break;
+            }
+        }
+    }
+
+    @Transactional
     public void update(){
         for (User user: users) {
             userDAO.update(user);
