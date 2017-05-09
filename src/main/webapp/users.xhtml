@@ -6,37 +6,113 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 >
     <h:head>
-        <h:outputStylesheet name="css/stylesLogin.css" />
-        <title>Request type usecase (DAO with JPA)</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
+        <h:outputStylesheet name="css/stylesUsers.css" />
+        <title>Builder of Surveys</title>
     </h:head>
 
-    <h:body>
-        <h1>Users</h1>
-        <h:form>
-            <p:fieldset legend="Registered users" toggleable="true" style="width: 70%">
-                <p:dataTable value="#{requestUsersController.users}" var="user">
+    <h:body class="users">
 
-                    <p:column headerText="Email">
-                        <h:outputText value="#{user.email}"/>
-                    </p:column>
-                    <p:column headerText="First name">
-                        <h:outputText value="#{user.firstName}"/>
-                    </p:column>
-                    <p:column headerText="Last name">
-                        <h:outputText value="#{user.lastName}"/>
-                    </p:column>
-                    <p:column headerText="Admin">
-                        <p:selectBooleanCheckbox value="#{user.admin}"/>
-                    </p:column>
-                    <p:column headerText="Blocked">
-                        <p:selectBooleanCheckbox value="#{user.blocked}"/>
-                    </p:column>
-                </p:dataTable>
-            </p:fieldset>
-            <p:commandButton value="Save"
-                             actionListener="#{requestUsersController.update()}"
-                             ajax="false"/>
-        </h:form>
+        <div class="top-bar">
+            <ol class="header">
+                <li id="logo"><h1>B<em>o</em>S</h1></li>
+                <li id="user">
+                    <span class="glyphicon glyphicon-user throwLeft"/>
+                    <p:outputLabel class="throwLeft" value="#{userController.fullName}" style="font-weight: normal; margin-right: 5px"/>
+                    <h:form class="throwLeft">
+                        <h:commandLink value=" (Logout)" action="#{loginController.doLogout()}"/>
+                    </h:form>
+                </li>
+            </ol>
+        </div>
+
+        <div class="page_title">
+            <h2>User Management</h2>
+        </div>
+
+        <p:tabView>
+            <p:tab id="tab_registered" title="Registered Users">
+                    <h:form class="reg_users">
+                        <div class="label_table">
+                            <p>Registered users</p>
+                        </div>
+                            <p:dataTable value="#{requestUsersController.users}" var="user">
+                                <p:column headerText="Email">
+                                    <h:outputText value="#{user.email}"/>
+                                </p:column>
+                                <p:column headerText="First name">
+                                    <h:outputText value="#{user.firstName}"/>
+                                </p:column>
+                                <p:column headerText="Last name">
+                                    <h:outputText value="#{user.lastName}"/>
+                                </p:column>
+                                <p:column headerText="Admin">
+                                    <p:selectBooleanCheckbox value="#{user.admin}"/>
+                                </p:column>
+                                <p:column headerText="Blocked">
+                                    <p:selectBooleanCheckbox value="#{user.blocked}"/>
+                                </p:column>
+                            </p:dataTable>
+                        <div class="button">
+                        <p:commandButton value="Save" actionListener="#{requestUsersController.update()}"
+                                         ajax="false"/>
+                        </div>
+                    </h:form>
+            </p:tab>
+
+            <p:tab id="tab_potential" title="Potential Users">
+                    <div class="potential-wrapper">
+                        <div class="right">
+                            <h:form class="potential_users" id="potential">
+                                <div class="label_table">
+                                    <p>Potential users</p>
+                                </div>
+                                <p:dataTable class="potential_table" value="#{requestUsersController.getAllPotentialUsers()}" var="potentialUser">
+                                    <p:column headerText="Email">
+                                        <h:outputText value="#{potentialUser.email}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <p:message for="potential"/>
+                            </h:form>
+                        </div>
+                        <div class="left">
+                        <h:form class="add_user">
+                            <div class="label_potential">
+                                <p>Add potential user</p>
+                            </div>
+                            <p:inputText id="email"
+                                         value="#{requestUsersController.potentialUser.email}" placeholder="Email of a potential user"/>
+                            <p:message for="email"/>
+                            <div class="button">
+                                <p:commandButton value="Add" actionListener="#{requestUsersController.createPotentialUser()}" ajax="false"/>
+                            </div>
+                        </h:form>
+                        </div>
+                        <div class="left">
+                        <h:form class="remove_user" style="width: 100%">
+                            <div class="label_potential">
+                                <p>Add potential user</p>
+                            </div>
+                            <p:inputText id="emailToRemove"
+                                         value="#{requestUsersController.potentialUserToRemove.email}" placeholder="Email of a user to remove"/>
+                            <p:message for="emailToRemove"/>
+                            <div class="button">
+                                <p:commandButton value="Remove" actionListener="#{requestUsersController.removePotentialUser()}" ajax="false"/>
+                                <p:messages globalOnly="true"/>
+                            </div>
+                        </h:form>
+                        </div>
+                    </div>
+            </p:tab>
+        </p:tabView>
+
+        <footer>
+            <p>WhySoft, 2017</p>
+        </footer>
     </h:body>
 </html>
 

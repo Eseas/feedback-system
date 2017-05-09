@@ -1,0 +1,177 @@
+.top-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #FFF;
+    border-bottom: 0;
+    height: 60px;
+    z-index: 10;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2);
+}
+ol{
+    padding: 0;
+}
+.header #logo{
+    position: relative;
+    font-family: 'Josefin Sans', sans-serif !important;
+    margin-top: -10px;
+    margin-bottom: 0;
+    margin-left: 40px;
+    color: #00426B;
+}
+.header #logo, #user{
+    outline: 0;
+    padding: 0;
+    display: inline-block;
+}
+.header #user{
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
+    color: #00426B;
+    font-style: italic;
+}
+.header em {
+    letter-spacing: 0.09em;
+}
+#user a{
+    color: #00426B;
+}
+.throwLeft{
+    float: left;
+}
+.glyphicon{
+    margin-right: 10px;
+    top: 3px !important;
+}
+.page_title{
+    position: relative;
+    outline: 0;
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+.page_title h2{
+    margin-top: 0;
+    width: 100%;
+    padding: 100px 0 30px;
+    text-align: center;
+    font-size: 2em;
+    color: #00426B;
+    font-family: 'Bitter', serif;
+}
+/*page top done*/
+
+
+#j_id_e{
+    border: none;
+    padding: 0;
+}
+.ui-tabs.ui-tabs-top>.ui-tabs-nav {
+    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
+    font-family: "Roboto", sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+.ui-widget{
+    font-family: "Roboto", sans-serif;
+}
+table{
+    width: 100%;
+    table-layout: auto !important;
+}
+
+.reg_users{
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+}
+.add_user, .remove_user{
+    float: left;
+    width: 100%;
+}
+.potential_users{
+    float: right;
+    margin: 20px;
+    padding-left: 30px;
+    width: 100%;
+}
+.label_potential p{
+    margin: 20px 20px 0;
+}
+.ui-widget-content .ui-inputfield{
+    margin: 10px 20px 0;
+    width: 90%;
+}
+.ui-button .ui-button-text, .ui-widget button {
+    font-family: "Roboto", sans-serif !important;
+    font-weight: normal;
+}
+#add, #remove{
+    width: 50px;
+}
+.button{
+    margin: 10px 20px 50px;
+    width: 90%;
+}
+/* Clearfix'as */
+
+.potential-wrapper::after {
+    content: '';
+    display: table;
+    clear:both;
+}
+
+.potential-wrapper::before {
+    content: '';
+    display: table;
+    clear:both;
+}
+
+/* Elementu padalijimas */
+
+.potential-wrapper .left {
+    float: left;
+    width: 50%;
+}
+
+.potential-wrapper .right {
+    float: right;
+    width: 50%;
+}
+
+@media (max-width: 991px) {
+    .potential-wrapper .left, .potential-wrapper .right {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        float: none;
+
+    }
+}
+
+/* page bottom done*/
+footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 9px;
+}
+body{
+    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
+    font-family: "Roboto", sans-serif !important;
+    font-weight: normal !important;
+    -webkit-font-smoothing: antialiased;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}

@@ -15,21 +15,27 @@
     <title>Builder of Surveys</title>
 </h:head>
 <h:body>
+    <div class="header">
+        <h1>B<em>o</em>S</h1>
+        <p>Builder of Surveys</p>
+    </div>
 
-    <p:panel>
-        <h:form id="send-email-form">
-            <p:inputText id="email" required="true" size="40"
-                         placeholder="email"
+    <div class="remember-page">
+        <h:form class="form" id="send-email-form">
+            <p:inputText class="input" id="email" required="true" size="40"
+                         placeholder="Enter your registration email"
                          requiredMessage="Please enter your email address"
                          validatorMessage="Invalid email format">
                 <f:validateRegex
                         pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
             </p:inputText>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-            <p:commandButton value="Send link" actionListener="#{keyController.sendEmail(1)}" ajax="false"/>
-            <h:button value="To index" outcome="index"/>
+            <p:commandButton class="button" value="Send link" actionListener="#{keyController.sendEmail(1)}" ajax="false"/>
+            <p:link class="message" value="Back to login page" outcome="login"/>
         </h:form>
-    </p:panel>
-
+    </div>
+    <footer>
+        <p>WhySoft, 2017</p>
+    </footer>
 </h:body>
 </html>
