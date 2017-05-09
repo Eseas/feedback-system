@@ -13,7 +13,7 @@ import java.io.IOException;
  * If it isn't then request is being redirected to the index.xhml page.
  *
  */
-public class SurveyCreatorPermissionFilter implements Filter {
+public class SurveyPrivatePermissionFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         if (!response.isCommitted()) {
