@@ -48,43 +48,64 @@ CREATE TABLE feedback.surveys
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
 
+CREATE TABLE feedback.sections
+(
+    id SERIAL PRIMARY KEY,
+    survey_id INTEGER,
+    position INTEGER,
+    title VARCHAR(50),
+    description VARCHAR(200),
+    FOREIGN KEY (survey_id) REFERENCES feedback.surveys(id)
+);
+
 CREATE TABLE feedback.slider_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    section_id INTEGER,
     position INTEGER,
     is_required BOOLEAN,
     lower_bound INTEGER,
     upper_bound INTEGER,
     title VARCHAR(200),
-    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
+    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
+    FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
+
 CREATE TABLE feedback.text_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    section_id INTEGER,
     position INTEGER,
     is_required BOOLEAN,
     title VARCHAR(200),
-    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
+    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
+    FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
+
 CREATE TABLE feedback.checkbox_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    section_id INTEGER,
     position INTEGER,
     is_required BOOLEAN,
     title VARCHAR(200),
-    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
+    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
+    FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
+
 CREATE TABLE feedback.radio_questions
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
+    section_id INTEGER,
     position INTEGER,
     is_required BOOLEAN,
     title VARCHAR(200),
-    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
+    FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
+    FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
 
 

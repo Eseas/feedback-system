@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.feedback_system.entities;
+package lt.vu.feedback_system.entities.surveys;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.entities.questions.RadioQuestion;
 import lt.vu.feedback_system.entities.questions.SliderQuestion;
@@ -52,22 +53,13 @@ public class Survey implements Serializable {
     private Boolean confidential;
 
     @OneToMany(mappedBy = "survey")
-    private List<TextQuestion> textQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
-    private List<SliderQuestion> sliderQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
-    private List<CheckboxQuestion> checkboxQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
-    private List<RadioQuestion> radioQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
     private List<AnsweredSurvey> answeredSurveys = new ArrayList<>();
 
     @ManyToOne(optional=false)
     @JoinColumn(
             name="creator_id", nullable=false, updatable=false)
     private User creator;
+
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    private List<Section> sections = new ArrayList<>();
 }

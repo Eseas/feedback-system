@@ -1,5 +1,8 @@
 package lt.vu.feedback_system.entities.questions;
 
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
+
 public interface Question {
     public Integer getId();
     public void setId(Integer id);
@@ -14,5 +17,11 @@ public interface Question {
 
     public Boolean getRequired();
     public void setRequired(Boolean value);
+
+    public Section getSection();
+    public void setSection(Section section);
+
+    public Survey getSurvey();
+    public void setSurvey(Survey survey);
 
 }

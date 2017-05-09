@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -16,7 +17,8 @@ import java.util.List;
 @Table(schema = "feedback", name = "slider_questions")
 @NamedQueries({
         @NamedQuery(name = "SliderQuestion.findAll", query = "SELECT c FROM SliderQuestion c"),
-        @NamedQuery(name = "SliderQuestion.findBySurveyId", query = "SELECT s FROM SliderQuestion s WHERE s.survey = :survey")
+        @NamedQuery(name = "SliderQuestion.findBySurveyId", query = "SELECT s FROM SliderQuestion s WHERE s.survey = :survey"),
+        @NamedQuery(name = "SliderQuestion.findBySectionId", query = "SELECT s FROM SliderQuestion s WHERE s.section.id = :section_id")
 })
 @Getter
 @Setter
@@ -54,5 +56,9 @@ public class SliderQuestion implements Question {
 
     @OneToMany(mappedBy = "question")
     private List<SliderAnswer> sliderAnswers = new ArrayList<>();
+
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    @ManyToOne
+    private Section section;
 }
 

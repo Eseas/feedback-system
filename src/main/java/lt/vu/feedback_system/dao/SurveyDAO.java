@@ -1,6 +1,8 @@
 package lt.vu.feedback_system.dao;
 
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.answers.Answer;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -30,4 +32,6 @@ public class SurveyDAO {
     public List<Survey> getSurveysByCreatorId(Integer id){
         return em.createNamedQuery("Survey.findAllByCreatorId", Survey.class).setParameter("id", id).getResultList();
     }
+
+
 }

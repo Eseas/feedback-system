@@ -2,10 +2,18 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.dao.*;
-import lt.vu.feedback_system.entities.*;
-import lt.vu.feedback_system.entities.answers.*;
-import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
+import lt.vu.feedback_system.dao.AnswerDAO;
+import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
+import lt.vu.feedback_system.dao.SurveyDAO;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.RadioAnswer;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
+import lt.vu.feedback_system.entities.answers.TextAnswer;
+import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
 
 import javax.faces.view.ViewScoped;
@@ -13,8 +21,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Named
@@ -33,19 +39,21 @@ public class SurveyReportController implements Serializable {
     @Getter
     private Survey survey;
 
+    @Inject
+    private SurveyLogic surveyLogic;
+
+    @Getter
+    private List<AnsweredSurvey> answeredSurveys;
+
     private List<Question> questions = new ArrayList<>();
 
     public void loadData() {
         survey = surveyDAO.getSurveyById(surveyId);
 
-        for (TextQuestion q: survey.getTextQuestions())
-            questions.add(q);
-        for (SliderQuestion q: survey.getSliderQuestions())
-            questions.add(q);
-        for (RadioQuestion q: survey.getRadioQuestions())
-            questions.add(q);
-        for (CheckboxQuestion q: survey.getCheckboxQuestions())
-            questions.add(q);
+        for (Section section : survey.getSections()) {
+            surveyLogic.loadQuestionsToSection(section);
+
+        }
     }
 
     public List<Question> getQuestions() {

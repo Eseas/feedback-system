@@ -3,11 +3,10 @@ package lt.vu.feedback_system.usecases.surveys;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
-import lt.vu.feedback_system.dao.CheckboxDAO;
-import lt.vu.feedback_system.dao.QuestionDAO;
-import lt.vu.feedback_system.dao.RadioButtonDAO;
-import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
+import lt.vu.feedback_system.dao.*;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.utils.Sorter;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -37,6 +35,8 @@ public class CreateSurveyController implements Serializable {
 
     @Inject
     private SurveyDAO surveyDAO;
+    @Inject
+    private SectionDAO sectionDAO;
 
     @Inject
     private QuestionDAO questionDAO;
@@ -50,112 +50,50 @@ public class CreateSurveyController implements Serializable {
 
     private Integer position = 1;
 
+    @Inject
+    private SurveyLogic surveyLogic;
+
     @PostConstruct
     private void init() {
         survey.setConfidential(true);
+
     }
 
     public void loadData() {
         survey = surveyDAO.getSurveyById(id);
     }
 
-    public void moveUp(Question q) {
-        List<Question> questions = getQuestions();
-
-        if (q.getPosition() == 1)
-            return;
-
-        for (Question tempQ : questions) {
-            if (tempQ.getPosition() + 1 == q.getPosition()) {
-                q.setPosition(q.getPosition() - 1);
-                tempQ.setPosition(tempQ.getPosition() + 1);
-                break;
-            }
-        }
+    public void moveUp(Section section, Question question) {
+        surveyLogic.moveUp(section, question);
     }
 
-    public void moveDown(Question q) {
-        List<Question> questions = getQuestions();
-
-        if (q.getPosition() == questions.size())
-            return;
-
-        for (Question tempQ : questions) {
-            if (tempQ.getPosition() != q.getPosition())
-                if (tempQ.getPosition() == (q.getPosition() + 1)) {
-                    q.setPosition(q.getPosition() + 1);
-                    tempQ.setPosition(tempQ.getPosition() - 1);
-                    break;
-                }
-        }
+    public void moveDown(Section section, Question question) {
+        surveyLogic.moveDown(section, question);
     }
 
-    public List<Question> getQuestions() {
-        List<Question> questions = new ArrayList<>();
-
-        questions.addAll(survey.getTextQuestions());
-        questions.addAll(survey.getSliderQuestions());
-        questions.addAll(survey.getRadioQuestions());
-        questions.addAll(survey.getCheckboxQuestions());
-
-        return Sorter.sortQuestionsAscending(questions);
+    public void addSection() {
+        surveyLogic.addSection(survey);
     }
 
-    /**
-     * Text...
-     */
-    public void addTextQuestion() {
-        TextQuestion q = new TextQuestion();
-        q.setRequired(false);
-
-        q.setPosition(position++);
-        q.setSurvey(survey);
-
-        survey.getTextQuestions().add(q);
+    public void addTextQuestion(Section section) {
+        surveyLogic.addQuestion(section, new TextQuestion());
     }
 
-    public void removeQuestion(Question q) {
-        for (Question tempQ : getQuestions()) {
-            if (tempQ.getPosition() > q.getPosition())
+    public void removeQuestion(Section section, Question question) {
+        for (Question tempQ : section.getQuestions()) {
+            if (tempQ.getPosition() > question.getPosition())
                 tempQ.setPosition(tempQ.getPosition() - 1);
         }
 
-        switch (q.getType()) {
-            case "TextQuestion":
-                survey.getTextQuestions().remove(q);
-            case "SliderQuestion":
-                survey.getSliderQuestions().remove(q);
-            case "CheckboxQuestion":
-                survey.getCheckboxQuestions().remove(q);
-            case "RadioQuestion":
-                survey.getRadioQuestions().remove(q);
-        }
+        section.getQuestions().remove(question);
     }
 
-    /**
-     * Slider...
-     */
-    public void addSliderQuestion() {
-        SliderQuestion q = new SliderQuestion();
-        q.setRequired(false);
-
-        q.setPosition(position++);
-        q.setSurvey(survey);
-
-        survey.getSliderQuestions().add(q);
+    public void addSliderQuestion(Section section) {
+        surveyLogic.addQuestion(section, new SliderQuestion());
     }
 
-    /**
-     * Checkbox...
-     */
-    public void addCheckboxQuestion() {
-        CheckboxQuestion q = new CheckboxQuestion();
-        q.setRequired(false);
-
-        q.setPosition(position++);
-        q.setSurvey(survey);
-
-        survey.getCheckboxQuestions().add(q);
+    public void addCheckboxQuestion(Section section) {
+        surveyLogic.addQuestion(section, new CheckboxQuestion());
     }
 
     public void addCheckbox(CheckboxQuestion checkboxQuestion) {
@@ -168,17 +106,9 @@ public class CreateSurveyController implements Serializable {
         checkboxQuestion.getCheckboxes().remove(checkbox);
     }
 
-    /**
-     * Radio...
-     */
-    public void addRadioQuestion() {
-        RadioQuestion q = new RadioQuestion();
-        q.setRequired(false);
+    public void addRadioQuestion(Section section) {
+        surveyLogic.addQuestion(section, new RadioQuestion());
 
-        q.setPosition(position++);
-        q.setSurvey(survey);
-
-        survey.getRadioQuestions().add(q);
     }
 
     public void addRadioButton(RadioQuestion radioQuestion) {
@@ -191,44 +121,15 @@ public class CreateSurveyController implements Serializable {
         radioQuestion.getRadioButtons().remove(radioButton);
     }
 
-    @Transactional
-    public String create() {
-        survey.setCreator(userContext.getUser());
-        surveyDAO.create(survey);
-        for (TextQuestion q: survey.getTextQuestions())
-            questionDAO.create(q);
-        for (SliderQuestion q: survey.getSliderQuestions())
-            questionDAO.create(q);
-        for (RadioQuestion q: survey.getRadioQuestions()) {
-            questionDAO.create(q);
-            for (RadioButton rb : q.getRadioButtons())
-                radioButtonDAO.create(rb);
-        }
-        for (CheckboxQuestion q: survey.getCheckboxQuestions()) {
-            questionDAO.create(q);
-            for (Checkbox c : q.getCheckboxes())
-                checkboxDAO.create(c);
-        }
-        return "surveys?faces-redirect=true";
+    public List<Question> sortQuestionsAscending(List<Question> questions) {
+        return Sorter.sortQuestionsAscending(questions);
     }
 
     @Transactional
-    public String update() {
-        surveyDAO.update(survey);
-        for (TextQuestion q: survey.getTextQuestions())
-            questionDAO.update(q);
-        for (SliderQuestion q: survey.getSliderQuestions())
-            questionDAO.update(q);
-        for (RadioQuestion q: survey.getRadioQuestions()) {
-            questionDAO.update(q);
-            for (RadioButton rb : q.getRadioButtons())
-                radioButtonDAO.update(rb);
-        }
-        for (CheckboxQuestion q: survey.getCheckboxQuestions()) {
-            questionDAO.update(q);
-            for (Checkbox c : q.getCheckboxes())
-                checkboxDAO.update(c);
-        }
+    public String create() {
+        survey.setCreator(userContext.getUser());
+        surveyLogic.create(survey);
+
         return "surveys?faces-redirect=true";
     }
 }

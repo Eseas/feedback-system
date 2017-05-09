@@ -4,19 +4,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.AnsweredSurvey;
-import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.questions.RadioButton;
 import lt.vu.feedback_system.entities.questions.RadioQuestion;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "radio_answers")
 @NamedQueries({
         @NamedQuery(name = "RadioAnswer.findAllByQuestionId", query = "SELECT c FROM RadioAnswer c WHERE c.question.id = :id"),
-        @NamedQuery(name = "RadioAnswer.findAll", query = "SELECT c FROM RadioAnswer c")})
+        @NamedQuery(name = "RadioAnswer.findAll", query = "SELECT c FROM RadioAnswer c"),
+        @NamedQuery(name = "RadioAnswer.findBySectionId", query = "SELECT s FROM RadioAnswer s WHERE s.question.section.id = :section_id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
@@ -36,8 +36,8 @@ public class RadioAnswer implements Answer {
     @ManyToOne
     private AnsweredSurvey answeredSurvey;
 
-    @OneToOne
     @JoinColumn(name = "radio_button_id", referencedColumnName = "id")
+    @OneToOne
     private RadioButton radioButton;
 
 }
