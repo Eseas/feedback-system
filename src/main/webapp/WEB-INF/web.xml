@@ -50,7 +50,7 @@
         <url-pattern>/users.html</url-pattern>
         <url-pattern>/survey.html</url-pattern>
         <url-pattern>/create-survey.html</url-pattern>
-        <url-pattern>/survey-reports.html</url-pattern>
+        <url-pattern>/survey-report.html</url-pattern>
         <url-pattern>/my-surveys.html</url-pattern>
     </filter-mapping>
     <filter-mapping>

@@ -33,9 +33,10 @@ public class SurveyConfidentialPermissionFilter implements Filter {
                             && (userContext == null || (!userContext.isAdmin()
                             && !surveyContext.isSurveyCreator(surveyId)))) {
                         String contextPath = ((HttpServletRequest) request).getContextPath();
-                        ((HttpServletResponse) response).sendRedirect(contextPath + "/index.html");
-                    }
 
+                        ((HttpServletResponse) response).sendRedirect(
+                                contextPath + "/index.html");
+                    }
                 } catch (NullPointerException ex) {
                 } catch (NumberFormatException ex) {
                 }
