@@ -15,12 +15,33 @@
     </f:metadata>
 
     <h:head>
-        <h:outputStylesheet name="css/stylesIndex.css" />
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
+        <h:outputStylesheet name="css/stylesCreate.css" />
         <title>Builder of Surveys </title>
     </h:head>
 
     <h:body>
-        <h1>Surveys</h1>
+
+        <div class="top-bar">
+            <ol class="header">
+                <li id="logo"><h1>B<em>o</em>S</h1></li>
+                <li id="user">
+                    <span class="glyphicon glyphicon-user throwLeft"/>
+                    <p:outputLabel class="throwLeft" value="#{userController.fullName}" style="font-weight: normal; margin-right: 5px"/>
+                    <h:form class="throwLeft">
+                        <h:commandLink value=" (Logout)" action="#{loginController.doLogout()}"/>
+                    </h:form>
+                </li>
+            </ol>
+        </div>
+
+        <div class="page_title">
+            <h2>Create Survey</h2>
+        </div>
         <h:form id="creation-form">
             <h2>Create a new survey</h2>
             <table>
