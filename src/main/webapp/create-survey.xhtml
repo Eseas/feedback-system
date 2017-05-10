@@ -42,7 +42,10 @@
 
             </h:panelGrid>
 
-            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section">
+
+            <p:messages/>
+            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section" activeIndex="#{createSurveyController.activeTabIndex}">
+
                 <p:tab id="section-tab" title="Section #{section.position} of #{createSurveyController.survey.sections.size()}">
                     <p:outputLabel for="section_title" value="Section title"/>
                     <p:inputText id="section_title" value="#{section.title}" />
@@ -121,7 +124,8 @@
 
             </p:tabView>
 
-            <p:commandButton value="add section" actionListener="#{createSurveyController.addSection()}" update="tab-view"/>
+
+            <p:commandButton value="add section" actionListener="#{createSurveyController.addSection()}" update="survey-creation-form"/>
 
             <!-- Ending creation -->
             <br/>
