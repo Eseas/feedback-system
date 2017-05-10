@@ -20,13 +20,13 @@ public class RequestSurveysController implements Serializable {
 
     @Getter
     @Setter
-    private Boolean adminMode;
+    private Boolean adminMode = false;
 
     @Inject
     private SurveyLogic surveyLogic;
 
     public List<Survey> getSurveys() {
-        if (adminMode)
+        if (userContext.isAdmin() && adminMode)
             return surveyLogic.getAllSurveys();
         else
             return surveyLogic.getUserSurveys(userContext.getUser());

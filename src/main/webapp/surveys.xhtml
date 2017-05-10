@@ -8,7 +8,7 @@
 
 <f:view>
     <f:metadata>
-        <f:viewParam name="admin-mode" value="#{requestSurveysController.adminMode}"/>
+        <f:viewParam name="admin" value="#{requestSurveysController.adminMode}"/>
     </f:metadata>
     <h:head>
         <meta charset="utf-8" />
@@ -24,13 +24,13 @@
 
         <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
-        <ui:fragment rendered="#{requestSurveysController.adminMode}">
+        <ui:fragment rendered="#{userController.admin and requestSurveysController.adminMode}">
             <div class="page_title">
                 <h2>Survey Management</h2>
             </div>
         </ui:fragment>
 
-        <ui:fragment rendered="#{not requestSurveysController.adminMode}">
+        <ui:fragment rendered="#{not requestSurveysController.adminMode or (not userController.admin and requestSurveysController.adminMode)}">
             <div class="page_title">
                 <h2>My created surveys</h2>
             </div>
@@ -47,19 +47,19 @@
                 <p:column headerText="Confidential">
                     <h:outputText value="#{survey.confidential}" />
                 </p:column>
-                <p:column headerText="Creator">
+                <p:column headerText="Creator" rendered="#{userController.admin and requestSurveysController.adminMode}">
                     <h:outputText value="#{survey.creator.getFirstName()} #{survey.creator.getLastName()}" />
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
                 <p:column headerText="Preview">
                     <h:button value="Preview" outcome="answer-survey">
-                        <f:param name="id" value="#{survey.id}"/>
+                        <f:param name="s" value="#{survey.link}"/>
                     </h:button>
                 </p:column>
                 <p:column headerText="Report">
                     <h:button value="View report" outcome="survey-report">
-                        <f:param name="id" value="#{survey.id}"/>
+                        <f:param name="s" value="#{survey.link}"/>
                     </h:button>
                 </p:column>
             </p:dataTable>
