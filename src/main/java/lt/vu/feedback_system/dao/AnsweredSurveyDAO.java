@@ -1,7 +1,6 @@
 package lt.vu.feedback_system.dao;
 
-import lt.vu.feedback_system.entities.AnsweredSurvey;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

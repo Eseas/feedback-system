@@ -1,11 +1,11 @@
 package lt.vu.feedback_system.dao;
 
 import lt.vu.feedback_system.entities.questions.Checkbox;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.List;
 
 @ApplicationScoped
 public class CheckboxDAO {
@@ -17,5 +17,8 @@ public class CheckboxDAO {
     }
     public void update(Checkbox checkbox) {
         em.merge(checkbox);
+    }
+    public Checkbox getCheckboxById(Integer id) {
+        return em.createNamedQuery("Checkbox.findById", Checkbox.class).setParameter("id", id).getSingleResult();
     }
 }

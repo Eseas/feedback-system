@@ -2,14 +2,12 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.dao.AnswerDAO;
-import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
-import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
-import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.AnsweredSurvey;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
+import lt.vu.feedback_system.dao.*;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
-import lt.vu.feedback_system.utils.Sorter;
+import lt.vu.feedback_system.entities.surveys.Section;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -17,8 +15,6 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Named
@@ -26,7 +22,13 @@ import java.util.List;
 public class AnswerSurveyController implements Serializable {
     @Getter
     @Setter
-    private Integer id;
+    private String link;
+
+    @Getter
+    @Setter
+    private Integer activeTabIndex;
+
+    private Integer lastTabIndex;
 
     @Inject
     private SurveyDAO surveyDAO;
@@ -34,83 +36,77 @@ public class AnswerSurveyController implements Serializable {
     private AnsweredSurveyDAO answeredSurveyDAO;
     @Inject
     private SelectedCheckboxDAO selectedCheckboxDAO;
-
+    @Inject
+    private SectionDAO sectionDAO;
     @Inject
     private AnswerDAO answerDAO;
+    @Inject
+    private SurveyLogic surveyLogic;
 
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
-    private List<Question> questions = new ArrayList<>();
-
-
-    @Getter
-    private TextQuestion textQuestion = new TextQuestion();
 
     public void loadData() {
-        answeredSurvey.setSurvey(surveyDAO.getSurveyById(id));
 
-        for (TextQuestion q : answeredSurvey.getSurvey().getTextQuestions()) {
-            TextAnswer a = new TextAnswer();
-            a.setQuestion(q);
-            a.setAnsweredSurvey(answeredSurvey);
-
-            answeredSurvey.getTextAnswers().add(a);
+        answeredSurvey.setSurvey(surveyLogic.loadSurvey(link));
+        for (Section section : answeredSurvey.getSurvey().getSections()) {
+            surveyLogic.createEmptyAnswersForSection(section);
         }
-        for (SliderQuestion q : answeredSurvey.getSurvey().getSliderQuestions()) {
-            SliderAnswer a = new SliderAnswer();
-            a.setQuestion(q);
-            a.setAnsweredSurvey(answeredSurvey);
 
-            answeredSurvey.getSliderAnswers().add(a);
-        }
-        for (RadioQuestion q : answeredSurvey.getSurvey().getRadioQuestions()) {
-            RadioAnswer a = new RadioAnswer();
-            a.setQuestion(q);
-            a.setAnsweredSurvey(answeredSurvey);
-
-            answeredSurvey.getRadioAnswers().add(a);
-        }
-        for (CheckboxQuestion q : answeredSurvey.getSurvey().getCheckboxQuestions()) {
-            CheckboxAnswer a = new CheckboxAnswer();
-            a.setQuestion(q);
-            a.setAnsweredSurvey(answeredSurvey);
-
-            answeredSurvey.getCheckboxAnswers().add(a);
-        }
-    }
-
-    public List<Answer> getAnswers() {
-        List<Answer> answers = new ArrayList<>();
-
-        answers.addAll(answeredSurvey.getTextAnswers());
-        answers.addAll(answeredSurvey.getSliderAnswers());
-        answers.addAll(answeredSurvey.getRadioAnswers());
-        answers.addAll(answeredSurvey.getCheckboxAnswers());
-
-        return Sorter.sortAnswersAscending(answers);
+        activeTabIndex = 0;
+        lastTabIndex = answeredSurvey.getSurvey().getSections().size() - 1; // zero base
     }
 
     @Transactional
     public String answer() {
         answeredSurveyDAO.create(answeredSurvey);
-        for (TextAnswer a: answeredSurvey.getTextAnswers())
-            answerDAO.create(a);
-        for (SliderAnswer a: answeredSurvey.getSliderAnswers())
-            answerDAO.create(a);
-        for (RadioAnswer a: answeredSurvey.getRadioAnswers()) {
-            answerDAO.create(a);
+        for(Section section : answeredSurvey.getSurvey().getSections()) {
+            for (Answer answer : section.getAnswers())
+                answerDAO.create(answer);
         }
-        for (CheckboxAnswer a: answeredSurvey.getCheckboxAnswers()) {
-            answerDAO.create(a);
-            for (Checkbox checkbox : a.getTempSelectedCheckboxes()) {
-                SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
-                selectedCheckbox.setCheckbox(checkbox);
-                selectedCheckbox.setCheckboxAnswer(a);
-                selectedCheckboxDAO.create(selectedCheckbox);
-            }
+        return "/WEB-INF/general/answered-survey";
+    }
 
+
+    public List<SelectedCheckbox> getAvailableSelectedCheckboxes(CheckboxAnswer checkboxAnswer) {
+
+        if (checkboxAnswer.getAvailableSelectedCheckboxes() == null) {
+            List<SelectedCheckbox> selectedCheckboxes = new ArrayList<>();
+
+            for (Checkbox checkbox : checkboxAnswer.getQuestion().getCheckboxes()) {
+                SelectedCheckbox selectedCheckbox = new SelectedCheckbox();
+
+                selectedCheckbox.setCheckbox(checkbox);
+                selectedCheckbox.setCheckboxAnswer(checkboxAnswer);
+
+                selectedCheckboxes.add(selectedCheckbox);
+            }
+            checkboxAnswer.setAvailableSelectedCheckboxes(selectedCheckboxes);
         }
-        return "surveys?faces-redirect=true";
+
+        return checkboxAnswer.getAvailableSelectedCheckboxes();
+    }
+
+    public void nextTab() {
+        activeTabIndex += 1;
+    }
+
+    public void previousTab() {
+        activeTabIndex -= 1;
+    }
+
+    public boolean isLastSection() {
+        if (activeTabIndex == lastTabIndex) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFirstSection() {
+        if (activeTabIndex == 0) {
+            return true;
+        }
+        return false;
     }
 }

@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -14,6 +15,11 @@ import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "checkbox_questions")
+@NamedQueries({
+        @NamedQuery(name = "CheckboxQuestion.findAll", query = "SELECT c FROM CheckboxQuestion c"),
+        @NamedQuery(name = "CheckboxQuestion.findBySurveyId", query = "SELECT s FROM CheckboxQuestion s WHERE s.survey = :survey"),
+        @NamedQuery(name = "CheckboxQuestion.findBySectionId", query = "SELECT s FROM CheckboxQuestion s WHERE s.section.id = :section_id")
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
@@ -38,14 +44,21 @@ public class CheckboxQuestion implements Question {
     @Column(name = "position")
     private Integer position;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Checkbox> checkboxes = new ArrayList<>();
+
 
     @JoinColumn(name = "survey_id", referencedColumnName = "ID")
     @ManyToOne
     private Survey survey;
 
     @OneToMany(mappedBy = "question")
-    private List<CheckboxAnswer> optionAnswers = new ArrayList<>();
+    private List<CheckboxAnswer> checkboxAnswers = new ArrayList<>();
+
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
+    @ManyToOne
+    private Section section;
+
+
 }
 

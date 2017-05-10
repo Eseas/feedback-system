@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lt.vu.feedback_system.entities;
+package lt.vu.feedback_system.entities.surveys;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.entities.questions.RadioQuestion;
 import lt.vu.feedback_system.entities.questions.SliderQuestion;
@@ -25,6 +26,7 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
+    @NamedQuery(name = "Survey.findByLink", query = "SELECT c FROM Survey c WHERE c.link = :link"),
     @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.title = :title"),
     @NamedQuery(name = "Survey.findAllByCreatorId", query = "SELECT c FROM Survey c WHERE c.creator.id = :id")
 })
@@ -40,6 +42,9 @@ public class Survey implements Serializable {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "link")
+    private String link;
+
     @Size(min = 1, max = 200)
     @Column(name = "title")
     private String title;
@@ -52,22 +57,13 @@ public class Survey implements Serializable {
     private Boolean confidential;
 
     @OneToMany(mappedBy = "survey")
-    private List<TextQuestion> textQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
-    private List<SliderQuestion> sliderQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
-    private List<CheckboxQuestion> checkboxQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
-    private List<RadioQuestion> radioQuestions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "survey")
     private List<AnsweredSurvey> answeredSurveys = new ArrayList<>();
 
     @ManyToOne(optional=false)
     @JoinColumn(
             name="creator_id", nullable=false, updatable=false)
     private User creator;
+
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    private List<Section> sections = new ArrayList<>();
 }

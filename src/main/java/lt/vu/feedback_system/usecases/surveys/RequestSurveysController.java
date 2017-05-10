@@ -1,11 +1,11 @@
 package lt.vu.feedback_system.usecases.surveys;
 
+import lombok.Getter;
+import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
-import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.Survey;
-import lt.vu.feedback_system.entities.User;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
-import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,22 +16,19 @@ import java.util.List;
 @ViewScoped
 public class RequestSurveysController implements Serializable {
     @Inject
-    private SurveyDAO surveyDAO;
-    @Inject
     private UserContext userContext;
 
-    private User user;
+    @Getter
+    @Setter
+    private Boolean adminMode = false;
 
-    @PostConstruct
-    public void loadUser() {
-        user = userContext.getUser();
-    }
+    @Inject
+    private SurveyLogic surveyLogic;
 
-    public List<Survey> getAllSurveys(){
-        return surveyDAO.getAllSurveys();
-    }
-
-    public List<Survey> getAllUserSurveys(){
-        return surveyDAO.getSurveysByCreatorId(user.getId());
+    public List<Survey> getSurveys() {
+        if (userContext.isAdmin() && adminMode)
+            return surveyLogic.getAllSurveys();
+        else
+            return surveyLogic.getUserSurveys(userContext.getUser());
     }
 }

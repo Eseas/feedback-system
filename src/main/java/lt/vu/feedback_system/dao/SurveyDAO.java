@@ -1,6 +1,8 @@
 package lt.vu.feedback_system.dao;
 
-import lt.vu.feedback_system.entities.Survey;
+import lt.vu.feedback_system.entities.answers.Answer;
+import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,7 +29,13 @@ public class SurveyDAO {
     public Survey getSurveyById(Integer id) {
         return em.createNamedQuery("Survey.findById", Survey.class).setParameter("id", id).getSingleResult();
     }
+
+    public Survey getSurveyByLink(String link) {
+        return em.createNamedQuery("Survey.findByLink", Survey.class).setParameter("link", link).getSingleResult();
+    }
+
     public List<Survey> getSurveysByCreatorId(Integer id){
         return em.createNamedQuery("Survey.findAllByCreatorId", Survey.class).setParameter("id", id).getResultList();
     }
+
 }
