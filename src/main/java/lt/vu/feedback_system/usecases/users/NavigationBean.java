@@ -3,8 +3,6 @@ package lt.vu.feedback_system.usecases.users;
 import lt.vu.feedback_system.utils.FacesUtil;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -53,6 +51,5 @@ public class NavigationBean {
 
     public String toMySurveys() {
         return redirectTo("/surveys.html?admin-mode=false");
-//        return "/surveys.html?admin-mode=false";
     }
 }

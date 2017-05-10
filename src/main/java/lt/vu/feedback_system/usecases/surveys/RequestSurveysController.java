@@ -27,10 +27,6 @@ public class RequestSurveysController implements Serializable {
     @Setter
     private Boolean adminMode;
 
-    @Getter
-    @Setter
-    private Integer userId;
-
     private User user;
 
 

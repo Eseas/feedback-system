@@ -22,18 +22,7 @@
 
     <h:body class="user">
 
-        <div class="top-bar">
-            <ol class="header">
-                <li id="logo"><h1>B<em>o</em>S</h1></li>
-                <li id="user">
-                    <span class="glyphicon glyphicon-user throwLeft"/>
-                    <p:outputLabel class="throwLeft" value="#{userController.fullName}" style="font-weight: normal; margin-right: 5px"/>
-                    <h:form class="throwLeft">
-                        <h:commandLink value=" (Logout)" action="#{loginController.doLogout()}"/>
-                    </h:form>
-                </li>
-            </ol>
-        </div>
+        <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
         <ui:fragment rendered="#{requestSurveysController.adminMode}">
             <div class="page_title">
@@ -75,9 +64,8 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-        <footer>
-            <p>WhySoft, 2017</p>
-        </footer>
+
+        <ui:include src="/WEB-INF/composites/footer.xhtml"/>
     </h:body>
 </f:view>
 </html>

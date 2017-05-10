@@ -5,7 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 <f:view>
     <f:metadata>
@@ -122,13 +121,8 @@
             <!-- Ending creation -->
             <br/>
 
-            <ui:fragment rendered="#{empty createSurveyController.modify}">
-                <h:commandButton value="save" action="#{createSurveyController.create()}" />
-            </ui:fragment>
+            <h:commandButton value="save" action="#{createSurveyController.create()}" />
 
-            <ui:fragment rendered="#{createSurveyController.modify == true}">
-                <h:commandButton value="save" action="#{createSurveyController.update()}" />
-            </ui:fragment>
             <p:messages globalOnly="true"/>
         </h:form>
     </h:body>
