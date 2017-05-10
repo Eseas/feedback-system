@@ -131,6 +131,18 @@ table{
     clear:both;
 }
 
+.clearfix::after {
+    content: '';
+    display: table;
+    clear:both;
+}
+
+.clearfix::before {
+    content: '';
+    display: table;
+    clear:both;
+}
+
 /* Elementu padalijimas */
 
 .potential-wrapper .left {
