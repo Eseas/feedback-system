@@ -27,7 +27,7 @@ import java.util.List;
 public class SurveyReportController implements Serializable {
     @Getter
     @Setter
-    private Integer surveyId;
+    private String link;
 
 
 
@@ -55,11 +55,10 @@ public class SurveyReportController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().put("surveyContext", surveyContext);
 
-        survey = surveyDAO.getSurveyById(surveyId);
+        survey = surveyDAO.getSurveyByLink(link);
 
         for (Section section : survey.getSections()) {
             surveyLogic.loadQuestionsToSection(section);
-
         }
     }
 

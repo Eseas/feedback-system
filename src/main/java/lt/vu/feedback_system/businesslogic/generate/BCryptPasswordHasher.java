@@ -1,9 +1,14 @@
-package lt.vu.feedback_system.utils.security;
+package lt.vu.feedback_system.businesslogic.generate;
 
+import lt.vu.feedback_system.utils.generate.PasswordHash;
+import lt.vu.feedback_system.utils.generate.PasswordHasher;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
 
+@Default
+@PasswordHash
 @ApplicationScoped
 public class BCryptPasswordHasher implements PasswordHasher {
 

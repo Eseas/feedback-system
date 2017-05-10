@@ -13,11 +13,14 @@ import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
+import lt.vu.feedback_system.utils.generate.Hash;
+import lt.vu.feedback_system.utils.generate.HashGenerator;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
 
 @ApplicationScoped
 public class SurveyLogic {
@@ -29,6 +32,19 @@ public class SurveyLogic {
     private QuestionDAO questionDAO;
     @Inject
     private UserContext userContext;
+    @Inject
+    @Hash
+    private HashGenerator hashGenerator;
+
+    public Survey loadSurvey(String link) {
+        Survey survey = surveyDAO.getSurveyByLink(link);
+
+        for (Section section : survey.getSections()) {
+            loadQuestionsToSection(section);
+        }
+
+        return survey;
+    }
 
     public List<Survey> getAllSurveys(){
         return surveyDAO.getAllSurveys();
@@ -36,15 +52,6 @@ public class SurveyLogic {
 
     public List<Survey> getUserSurveys(User user){
         return surveyDAO.getSurveysByCreatorId(user.getId());
-    }
-
-    public Survey loadSurvey(Integer id) {
-        Survey survey = surveyDAO.getSurveyById(id);
-
-        for (Section section : survey.getSections())
-            loadQuestionsToSection(section);
-
-        return survey;
     }
 
     public void addSection(Survey survey) {
@@ -61,10 +68,12 @@ public class SurveyLogic {
         return survey.getSections().size() + 1;
     }
 
-
     @Transactional
     public void create(Survey survey) {
+        Random rand = new Random();
+
         survey.setCreator(userContext.getUser());
+        survey.setLink(hashGenerator.hash(Integer.toString(rand.nextInt())));
 
         surveyDAO.create(survey);
 

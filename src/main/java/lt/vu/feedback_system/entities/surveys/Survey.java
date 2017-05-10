@@ -26,6 +26,7 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Survey.findAll", query = "SELECT c FROM Survey c"),
     @NamedQuery(name = "Survey.findById", query = "SELECT c FROM Survey c WHERE c.id = :id"),
+    @NamedQuery(name = "Survey.findByLink", query = "SELECT c FROM Survey c WHERE c.link = :link"),
     @NamedQuery(name = "Survey.findByName", query = "SELECT c FROM Survey c WHERE c.title = :title"),
     @NamedQuery(name = "Survey.findAllByCreatorId", query = "SELECT c FROM Survey c WHERE c.creator.id = :id")
 })
@@ -40,6 +41,9 @@ public class Survey implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "link")
+    private String link;
 
     @Size(min = 1, max = 200)
     @Column(name = "title")

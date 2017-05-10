@@ -41,6 +41,7 @@ CREATE TABLE feedback.change_pw_keys
 CREATE TABLE feedback.surveys
 (
     id serial PRIMARY KEY,
+    link VARCHAR(10) NOT NULL UNIQUE,
     creator_id INTEGER,
     is_confidential BOOLEAN,
     title VARCHAR(200),
