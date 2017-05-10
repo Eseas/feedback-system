@@ -6,6 +6,7 @@ INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin1@mailinator.com', 'User'
 INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin2@mailinator.com', 'User', 'Admin2', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', true, false, 1);
 INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular1@mailinator.com', 'User', 'Regular1', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
 INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular2@mailinator.com', 'User', 'Regular2', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
+INSERT INTO feedback.users VALUES (DEFAULT, 'kazimieras.senvaitis@gmail.com', 'User', 'Regular2', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
 
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 1, TRUE,'Salary', 'We kindly ask you to answer some questions');
@@ -16,7 +17,6 @@ INSERT INTO feedback.sections VALUES (DEFAULT, 1, 2, 'Second section', 'descript
 INSERT INTO feedback.sections VALUES (DEFAULT, 1, 3, 'Third section', 'description 3');
 INSERT INTO feedback.sections VALUES (DEFAULT, 2, 1, 'First section', 'description 1');
 INSERT INTO feedback.sections VALUES (DEFAULT, 3, 1, 'First section', 'description 1');
-
 
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, 1, TRUE, 1, 6, 'Rate office environment');
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, 4,3, FALSE, 1, 10, 'Do you like your chair?');
