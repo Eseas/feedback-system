@@ -29,12 +29,10 @@
                 <h:button id="create" outcome="create-survey" value="Create Survey"/>
                 <h:button id="upload" outcome="upload" value="Upload Survey"/>
                 <h:button id="users" outcome="users" value="User Management" rendered="#{userController.admin}"/>
-                <h:button id="surveys" outcome="surveys" value="Survey Management">
+                <h:button id="surveys" outcome="surveys" value="Survey Management" rendered="#{userController.admin}">
                     <f:param name="admin-mode" value="#{true}"/>
                 </h:button>
-                <h:button id="mysurveys" outcome="surveys" value="My Created Surveys">
-                    <f:param name="admin-mode" value="#{false}"/>
-                </h:button>
+                <h:button id="mysurveys" outcome="surveys" value="My Created Surveys"/>
             </div>
         </div>
     </div>

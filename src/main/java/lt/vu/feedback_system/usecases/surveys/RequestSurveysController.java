@@ -26,7 +26,7 @@ public class RequestSurveysController implements Serializable {
     private SurveyLogic surveyLogic;
 
     public List<Survey> getSurveys() {
-        if (adminMode)
+        if (userContext.isAdmin() && adminMode)
             return surveyLogic.getAllSurveys();
         else
             return surveyLogic.getUserSurveys(userContext.getUser());
