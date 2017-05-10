@@ -12,11 +12,14 @@ import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
+import lt.vu.feedback_system.utils.generate.Hash;
+import lt.vu.feedback_system.utils.generate.HashGenerator;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Random;
 
 @ApplicationScoped
 public class SurveyLogic {
@@ -28,6 +31,9 @@ public class SurveyLogic {
     private QuestionDAO questionDAO;
     @Inject
     private UserContext userContext;
+    @Inject
+    @Hash
+    private HashGenerator hashGenerator;
 
 
     public Survey loadSurvey(Integer id) {
@@ -56,7 +62,10 @@ public class SurveyLogic {
 
     @Transactional
     public void create(Survey survey) {
+        Random rand = new Random();
+
         survey.setCreator(userContext.getUser());
+        survey.setLink(hashGenerator.hash(Integer.toString(rand.nextInt())));
 
         surveyDAO.create(survey);
 

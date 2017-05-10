@@ -13,7 +13,7 @@ import lt.vu.feedback_system.mailing.MailContent;
 import lt.vu.feedback_system.mailing.Mailer;
 import lt.vu.feedback_system.utils.HexStringGen;
 import lt.vu.feedback_system.utils.ParserWithDefaults;
-import lt.vu.feedback_system.utils.security.PasswordHasher;
+import lt.vu.feedback_system.utils.generate.PasswordHasher;
 import org.apache.commons.mail.EmailException;
 
 import javax.enterprise.context.ApplicationScoped;
