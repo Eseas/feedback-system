@@ -4,6 +4,7 @@ import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
+import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
 import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
@@ -18,6 +19,7 @@ import lt.vu.feedback_system.utils.generate.HashGenerator;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Random;
 
 @ApplicationScoped
@@ -42,6 +44,14 @@ public class SurveyLogic {
         }
 
         return survey;
+    }
+
+    public List<Survey> getAllSurveys(){
+        return surveyDAO.getAllSurveys();
+    }
+
+    public List<Survey> getUserSurveys(User user){
+        return surveyDAO.getSurveysByCreatorId(user.getId());
     }
 
     public void addSection(Survey survey) {
