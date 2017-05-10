@@ -41,34 +41,30 @@
 
         <div class="page_title">
             <h2>Create Survey</h2>
+
+            <h:form id="definition_form" class="form clearfix">
+                <div class="throw-left clearfix">
+                    <p:inputText id="title" placeholder="Title" value="#{createSurveyController.survey.title}"/>
+                    <p:message for="title"/>
+
+                    <p:inputText id="description" placeholder="Description" value="#{createSurveyController.survey.description}"/>
+                    <p:message for="description"/>
+                </div>
+
+                <div class="throw-right clearfix">
+                    <p:selectOneButton value="#{createSurveyController.survey.confidential}">
+                        <f:selectItem itemLabel="Private" itemValue="true" />
+                        <f:selectItem itemLabel="Public" itemValue="false" />
+                    </p:selectOneButton>
+                </div>
+            </h:form>
         </div>
-        <h:form id="creation-form">
-            <h2>Create a new survey</h2>
-            <table>
-                <tr>
-                    <td>
-                        <h:panelGrid columns="3">
-                            <p:outputLabel for="title" value="Title"/>
-                            <p:inputText id="title" value="#{createSurveyController.survey.title}"/>
-                            <p:message for="title"/>
 
-                            <p:outputLabel for="description" value="Description"/>
-                            <p:inputText id="description" value="#{createSurveyController.survey.description}"/>
-                            <p:message for="description"/>
+        <p:tabView dynamic="true" cache="true">
+            <p:tab title="Page 1">
 
-                            <h:outputText value="Results"/>
-                            <p:selectOneButton value="#{createSurveyController.survey.confidential}">
-                                <f:selectItem itemLabel="Private" itemValue="true" />
-                                <f:selectItem itemLabel="Public" itemValue="false" />
-                            </p:selectOneButton>
-
-                        </h:panelGrid>
-                    </td>
-                </tr>
-            </table>
-
-
-            <p:fieldset legend="Surveys" toggleable="true">
+        <h:form id="creation_form">
+            <p:fieldset>
                 <!-- Could use loop var for position -->
                 <ui:repeat value="#{createSurveyController.questions}" var="question">
                     <p:outputLabel for="questionTitle" value="#{question.getPosition().toString()}"/>
@@ -150,8 +146,10 @@
             </ui:fragment>
             <p:messages globalOnly="true"/>
         </h:form>
-
-
+            </p:tab>
+            <p:tab title="Add new +">
+            </p:tab>
+        </p:tabView>
     </h:body>
 </f:view>
 
