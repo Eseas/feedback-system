@@ -2,13 +2,12 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.*;
+import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
-import lt.vu.feedback_system.entities.questions.*;
-import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.usecases.users.NavigationBean;
 import lt.vu.feedback_system.utils.Sorter;
 
@@ -29,7 +28,7 @@ public class CreateSurveyController implements Serializable {
 
     @Getter
     @Setter
-    private Boolean modify;
+    private Integer activeTabIndex;
 
     @Inject
     private UserContext userContext;
@@ -49,8 +48,6 @@ public class CreateSurveyController implements Serializable {
     @Getter
     private Survey survey = new Survey();
 
-    private Integer position = 1;
-
     @Inject
     private SurveyLogic surveyLogic;
 
@@ -60,6 +57,8 @@ public class CreateSurveyController implements Serializable {
     @PostConstruct
     private void init() {
         survey.setConfidential(true);
+        addSection();
+        activeTabIndex = 0;
 
     }
 
@@ -76,6 +75,7 @@ public class CreateSurveyController implements Serializable {
     }
 
     public void addSection() {
+        activeTabIndex = surveyLogic.getNewSectionPosition(survey) - 1;
         surveyLogic.addSection(survey);
     }
 
