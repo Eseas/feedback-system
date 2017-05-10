@@ -119,8 +119,8 @@ public class SurveyReportController implements Serializable {
         return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
     }
     public double getAverage(Question q) {
-        int sum = 0;
-        int divider = 0;
+        double sum = 0;
+        double divider = 0;
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
         for ( SliderAnswer answer : answers) {
             sum += answer.getValue();
@@ -189,5 +189,25 @@ public class SurveyReportController implements Serializable {
             }
         }
         return count;
+    }
+    public double getPercentCheckBoxAnswer(String title, Question q){
+        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
+        double answerCount = countCheckBoxAnswers(title,q);
+        int allCount= 0;
+        for (CheckboxAnswer answer: answers) {
+            for(SelectedCheckbox answer2: answer.getSelectedCheckboxes()) {
+                    allCount++;
+            }
+        }
+        return answerCount/allCount * 100;
+    }
+    public double getPercentRadioAnswer(String title, Question q){
+        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
+        double answerCount = countRadioAnswers(title,q);
+        int allCount= 0;
+        for (RadioAnswer answer: answers) {
+            allCount++;
+        }
+        return answerCount/allCount * 100;
     }
 }
