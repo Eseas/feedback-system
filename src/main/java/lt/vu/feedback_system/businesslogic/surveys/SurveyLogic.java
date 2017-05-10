@@ -4,6 +4,7 @@ import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
+import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
 import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
@@ -29,6 +30,13 @@ public class SurveyLogic {
     @Inject
     private UserContext userContext;
 
+    public List<Survey> getAllSurveys(){
+        return surveyDAO.getAllSurveys();
+    }
+
+    public List<Survey> getUserSurveys(User user){
+        return surveyDAO.getSurveysByCreatorId(user.getId());
+    }
 
     public Survey loadSurvey(Integer id) {
         Survey survey = surveyDAO.getSurveyById(id);

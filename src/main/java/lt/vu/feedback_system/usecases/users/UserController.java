@@ -27,4 +27,8 @@ public class UserController {
 
         return user.getFirstName() + " " + user.getLastName();
     }
+
+    public Integer getId() {
+        return userContext.getUser().getId();
+    }
 }

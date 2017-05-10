@@ -8,13 +8,11 @@ import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.answers.*;
-import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
-import org.omnifaces.util.Components;
 
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -30,6 +28,8 @@ public class SurveyReportController implements Serializable {
     @Getter
     @Setter
     private Integer surveyId;
+
+
 
     @Inject
     private SurveyDAO surveyDAO;
