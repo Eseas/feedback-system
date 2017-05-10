@@ -68,7 +68,6 @@ public class SurveyLogic {
         return survey.getSections().size() + 1;
     }
 
-
     @Transactional
     public void create(Survey survey) {
         Random rand = new Random();
