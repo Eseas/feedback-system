@@ -65,7 +65,7 @@ public class AnswerSurveyController implements Serializable {
             for (Answer answer : section.getAnswers())
                 answerDAO.create(answer);
         }
-        return "surveys?faces-redirect=true";
+        return "/WEB-INF/general/answered-survey";
     }
 
 
