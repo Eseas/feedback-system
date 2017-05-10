@@ -50,4 +50,9 @@ public class NavigationBean {
     public String redirectTo(String redirectUrl) {
         return FacesUtil.redirectTo(redirectUrl);
     }
+
+    public String toMySurveys() {
+        return redirectTo("/surveys.html?admin-mode=false");
+//        return "/surveys.html?admin-mode=false";
+    }
 }

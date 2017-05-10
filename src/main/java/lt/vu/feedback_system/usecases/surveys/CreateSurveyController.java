@@ -9,6 +9,7 @@ import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.usecases.users.NavigationBean;
 import lt.vu.feedback_system.utils.Sorter;
 
 import javax.annotation.PostConstruct;
@@ -52,6 +53,9 @@ public class CreateSurveyController implements Serializable {
 
     @Inject
     private SurveyLogic surveyLogic;
+
+    @Inject
+    private NavigationBean navigationBean;
 
     @PostConstruct
     private void init() {
@@ -130,6 +134,6 @@ public class CreateSurveyController implements Serializable {
         survey.setCreator(userContext.getUser());
         surveyLogic.create(survey);
 
-        return "surveys?faces-redirect=true";
+        return navigationBean.toMySurveys();
     }
 }
