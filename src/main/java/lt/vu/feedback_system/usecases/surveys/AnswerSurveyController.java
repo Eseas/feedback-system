@@ -22,7 +22,7 @@ import java.util.List;
 public class AnswerSurveyController implements Serializable {
     @Getter
     @Setter
-    private Integer id;
+    private String link;
 
     @Getter
     @Setter
@@ -49,7 +49,7 @@ public class AnswerSurveyController implements Serializable {
 
     public void loadData() {
 
-        answeredSurvey.setSurvey(surveyLogic.loadSurvey(id));
+        answeredSurvey.setSurvey(surveyLogic.loadSurvey(link));
         for (Section section : answeredSurvey.getSurvey().getSections()) {
             surveyLogic.createEmptyAnswersForSection(section);
         }

@@ -36,11 +36,12 @@ public class SurveyLogic {
     private HashGenerator hashGenerator;
 
 
-    public Survey loadSurvey(Integer id) {
-        Survey survey = surveyDAO.getSurveyById(id);
+    public Survey loadSurvey(String link) {
+        Survey survey = surveyDAO.getSurveyByLink(link);
 
-        for (Section section : survey.getSections())
+        for (Section section : survey.getSections()) {
             loadQuestionsToSection(section);
+        }
 
         return survey;
     }
