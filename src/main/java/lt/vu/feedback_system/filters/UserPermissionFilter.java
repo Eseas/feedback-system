@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.filters;
 
 import lt.vu.feedback_system.businesslogic.users.UserContext;
+import lt.vu.feedback_system.utils.FacesUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -24,22 +25,11 @@ public class UserPermissionFilter implements Filter {
 
             if (userContext == null || !userContext.isLoggedIn()) {
                 String contextPath = ((HttpServletRequest) request).getContextPath();
-                String params = ((HttpServletRequest) request).getQueryString();
-                String redirectUrl = contextPath + "/login.html";
-
-                String uri = ((HttpServletRequest) request).getRequestURI();
-                String encodedUrl = new String();
-                if (!(uri.compareToIgnoreCase("/") == 0 || uri.length() == 0)) {
-                    redirectUrl += "?redirect=";
-                    encodedUrl += ((HttpServletRequest) request).getRequestURI();
-                }
-
-                if (params != null) {
-                    encodedUrl += "?" + params;
-                }
-
-                encodedUrl = URLEncoder.encode(encodedUrl, "UTF-8");
-                redirectUrl += encodedUrl;
+                String redirectUrl = FacesUtil.encodeRedirect(
+                        contextPath + "/login.html",
+                        ((HttpServletRequest) request).getRequestURI(),
+                        ((HttpServletRequest) request).getQueryString()
+                );
 
                 ((HttpServletResponse) response)
                         .sendRedirect(redirectUrl);
