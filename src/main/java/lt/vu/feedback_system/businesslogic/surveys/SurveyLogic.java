@@ -73,7 +73,7 @@ public class SurveyLogic {
         Random rand = new Random();
 
         survey.setCreator(userContext.getUser());
-        survey.setLink(hashGenerator.hash(Integer.toString(rand.nextInt())));
+        survey.setLink(hashGenerator.hash(null));
 
         surveyDAO.create(survey);
 
