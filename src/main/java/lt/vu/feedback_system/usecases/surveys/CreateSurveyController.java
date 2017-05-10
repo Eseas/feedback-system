@@ -2,17 +2,14 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.*;
+import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
-import lt.vu.feedback_system.entities.questions.*;
-import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.usecases.users.NavigationBean;
 import lt.vu.feedback_system.utils.Sorter;
-import org.primefaces.component.tabview.TabView;
-import org.primefaces.event.TabChangeEvent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -33,14 +30,6 @@ public class CreateSurveyController implements Serializable {
     @Setter
     private Integer activeTabIndex;
 
-    @Getter
-    @Setter
-    private Integer lastTabIndex;
-
-    @Getter
-    @Setter
-    private Boolean modify;
-
     @Inject
     private UserContext userContext;
 
@@ -59,8 +48,6 @@ public class CreateSurveyController implements Serializable {
     @Getter
     private Survey survey = new Survey();
 
-    private Integer position = 1;
-
     @Inject
     private SurveyLogic surveyLogic;
 
@@ -72,7 +59,6 @@ public class CreateSurveyController implements Serializable {
         survey.setConfidential(true);
         addSection();
         activeTabIndex = 0;
-        lastTabIndex = 0;
 
     }
 
@@ -90,7 +76,6 @@ public class CreateSurveyController implements Serializable {
 
     public void addSection() {
         activeTabIndex = surveyLogic.getNewSectionPosition(survey) - 1;
-        lastTabIndex = surveyLogic.getNewSectionPosition(survey) - 1;
         surveyLogic.addSection(survey);
     }
 
