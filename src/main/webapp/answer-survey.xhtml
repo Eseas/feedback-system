@@ -76,7 +76,9 @@
                             </ui:fragment>
 
                             <ui:fragment rendered="#{answerSurveyController.lastSection}">
-                                <p:commandButton value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view"/>
+                                <p:commandButton value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view">
+                                    <f:param name="s" value="#{answerSurveyController.link}"/>
+                                </p:commandButton>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{!answerSurveyController.lastSection}">
