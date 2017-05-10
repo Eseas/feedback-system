@@ -35,7 +35,6 @@ public class SurveyLogic {
     @Hash
     private HashGenerator hashGenerator;
 
-
     public Survey loadSurvey(String link) {
         Survey survey = surveyDAO.getSurveyByLink(link);
 
