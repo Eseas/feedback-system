@@ -53,7 +53,8 @@
                             <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
                                 <ui:repeat value="#{surveyReportController.getUniqueQuestionRadioAnswers(question)}" var="title" >
                                     <h:outputText value="#{title} "/>
-                                    <h:outputText value="#{surveyReportController.countRadioAnswers(title,question)}"/>
+                                    <h:outputText value="#{surveyReportController.countRadioAnswers(title,question)} "/>
+                                    <h:outputText value="#{surveyReportController.getPercentRadioAnswer(title,question)} %"/>
                                     <br/>
                                 </ui:repeat>
                             </ui:fragment>
@@ -61,7 +62,8 @@
                             <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
                                 <ui:repeat value="#{surveyReportController.getUniqueQuestionCheckboxAnswers(question)}" var="title" >
                                         <h:outputText value="#{title} "/>
-                                        <h:outputText value="#{surveyReportController.countCheckBoxAnswers(title,question)}"/>
+                                        <h:outputText value="#{surveyReportController.countCheckBoxAnswers(title,question)} "/>
+                                        <h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(title,question)} %"/>
                                         <br/>
                                 </ui:repeat>
                             </ui:fragment>
