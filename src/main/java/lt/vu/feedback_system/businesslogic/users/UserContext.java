@@ -61,18 +61,4 @@ public class UserContext implements Serializable {
         }
         return false;
     }
-
-    public boolean isSurveyCreator(Integer surveyId) {
-        try {
-            User surveyCreator = surveyDAO.getSurveyById(surveyId).getCreator();
-
-            if (id.equals(surveyCreator.getId())) {
-                return true;
-            }
-        } catch (javax.persistence.NoResultException ex) {
-        } catch (NullPointerException ex) {
-        }
-
-        return false;
-    }
 }

@@ -2,6 +2,7 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
@@ -15,6 +16,7 @@ import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
 import org.omnifaces.util.Components;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,12 +43,18 @@ public class SurveyReportController implements Serializable {
     @Inject
     private SurveyLogic surveyLogic;
 
+    @Inject
+    private SurveyContext surveyContext;
+
     @Getter
     private List<AnsweredSurvey> answeredSurveys;
 
     private List<Question> questions = new ArrayList<>();
 
     public void loadData() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().put("surveyContext", surveyContext);
+
         survey = surveyDAO.getSurveyById(surveyId);
 
         for (Section section : survey.getSections()) {
