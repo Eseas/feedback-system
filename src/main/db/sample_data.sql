@@ -17,7 +17,6 @@ INSERT INTO feedback.sections VALUES (DEFAULT, 1, 3, 'Third section', 'descripti
 INSERT INTO feedback.sections VALUES (DEFAULT, 2, 1, 'First section', 'description 1');
 INSERT INTO feedback.sections VALUES (DEFAULT, 3, 1, 'First section', 'description 1');
 
-
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 1, 1, 1, TRUE, 1, 6, 'Rate office environment');
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 2, 4,3, FALSE, 1, 10, 'Do you like your chair?');
 INSERT INTO feedback.slider_questions VALUES (DEFAULT, 3, 5,2, TRUE, 1, 8, 'Do you need a new monitor?');

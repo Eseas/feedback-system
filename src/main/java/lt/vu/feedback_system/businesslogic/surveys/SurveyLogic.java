@@ -18,7 +18,6 @@ import lt.vu.feedback_system.utils.generate.HashGenerator;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Random;
 
 @ApplicationScoped
