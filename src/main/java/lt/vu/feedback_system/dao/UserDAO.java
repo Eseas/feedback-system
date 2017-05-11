@@ -8,6 +8,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class UserDAO {
+
     @Inject
     private EntityManager em;
 
@@ -23,15 +24,12 @@ public class UserDAO {
         em.remove(user);
     }
 
-    public User getUserById(int id) {
-        return em.find(User.class, id);
+    public boolean userExists(String email) {
+        return em.createNamedQuery("User.countByEmail", Long.class).setParameter("email", email).getSingleResult() > 0;
     }
 
-    public User getUserByEmailAndPassword(String email, String password) {
-        return em.createNamedQuery("User.findByEmailAndPassword", User.class)
-                .setParameter("email", email)
-                .setParameter("password", password)
-                .getSingleResult();
+    public User getUserById(int id) {
+        return em.find(User.class, id);
     }
 
     public User getUserByEmail(String email) {

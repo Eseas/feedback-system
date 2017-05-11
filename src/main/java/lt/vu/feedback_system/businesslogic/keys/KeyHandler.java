@@ -75,23 +75,27 @@ public class KeyHandler {
         final String link = formLink("complete-reg.html", code);
         final String expFormatted = expires.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         final String msg = String.format("Use this link %s to register. The link if valid until %s", link, expFormatted);
+        final String htmlMsg = String.format("<p>Use this <a href=\"%s\">link</a> to register. The link if valid until %s</p>", link, expFormatted);
         final String subject = String.format("Registration to %s", systemName);
-        mailer.sendEmail(new MailContent(Collections.singletonList(email), subject, msg));
+        mailer.sendEmail(new MailContent(Collections.singletonList(email), subject, msg, htmlMsg));
     }
 
     private void sendChangePwLink(final String email, final String code) throws EmailException {
         final String link = formLink("complete-change-pw.html", code);
         final String msg = String.format("Use this link %s to change password.", link);
+        final String htmlMsg = String.format("<p>Use this <a href=\"%s\">link</a> to change password</p>", link);
         final String subject = String.format("Change password in %s", systemName);
-        mailer.sendEmail(new MailContent(Collections.singletonList(email), subject, msg));
+        mailer.sendEmail(new MailContent(Collections.singletonList(email), subject, msg, htmlMsg));
     }
 
     @Transactional(rollbackOn = EmailException.class)
-    public void startReg(final String email) throws EmailException {
-        final PotentialUser user = potentialUserDAO.selectByEmail(email);
-        final RegKey key = new RegKey(HexStringGen.getHexString(), LocalDateTime.now().plusHours(expirationInHours), user);
-        regKeyDAO.create(key);
-        sendRegLink(user.getEmail(), key.getCode(), key.getExpires());
+    public void startReg(final String email) throws EmailException, UserRegisteredException {
+        if (!userDAO.userExists(email)) {
+            final PotentialUser user = potentialUserDAO.selectByEmail(email);
+            final RegKey key = new RegKey(HexStringGen.getHexString(), LocalDateTime.now().plusHours(expirationInHours), user);
+            regKeyDAO.create(key);
+            sendRegLink(user.getEmail(), key.getCode(), key.getExpires());
+        } else throw new UserRegisteredException(String.format("User with email '%s' is already registered", email));
     }
 
     @Transactional(rollbackOn = EmailException.class)
@@ -105,7 +109,7 @@ public class KeyHandler {
     @Transactional(dontRollbackOn = KeyExpiredException.class)
     public void completeReg(final String code, final String firstName, final String lastName, final String password) throws KeyExpiredException {
         final RegKey regKey = regKeyDAO.selectByCode(code);
-        if (regKey.getExpires().compareTo(LocalDateTime.now()) == 1) {
+        if (regKey.getExpires().compareTo(LocalDateTime.now()) > 0) {
             final PotentialUser potentialUser = regKey.getUser();
             final User user = new User(firstName, lastName, potentialUser.getEmail(), pwHasher.hash(password), false, false);
             regKeyDAO.deleteByUserId(potentialUser.getId());
