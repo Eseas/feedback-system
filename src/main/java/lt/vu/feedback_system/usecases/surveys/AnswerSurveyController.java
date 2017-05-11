@@ -69,9 +69,7 @@ public class AnswerSurveyController implements Serializable {
             for (Answer answer : section.getAnswers())
                 answerDAO.create(answer);
         }
-//        return "surveys?faces-redirect=true";
-//        return navigationBean.redirectTo("/WEB-INF/thanks-for-answer.html");
-        return "/WEB-INF/thanks-for-answer.html";
+        return navigationBean.toThanksForAnswer();
     }
 
 
