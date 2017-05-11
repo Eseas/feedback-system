@@ -2,19 +2,19 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.answers.*;
-import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
-import org.omnifaces.util.Components;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,7 +27,9 @@ import java.util.List;
 public class SurveyReportController implements Serializable {
     @Getter
     @Setter
-    private Integer surveyId;
+    private String link;
+
+
 
     @Inject
     private SurveyDAO surveyDAO;
@@ -41,17 +43,22 @@ public class SurveyReportController implements Serializable {
     @Inject
     private SurveyLogic surveyLogic;
 
+    @Inject
+    private SurveyContext surveyContext;
+
     @Getter
     private List<AnsweredSurvey> answeredSurveys;
 
     private List<Question> questions = new ArrayList<>();
 
     public void loadData() {
-        survey = surveyDAO.getSurveyById(surveyId);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().put("surveyContext", surveyContext);
+
+        survey = surveyDAO.getSurveyByLink(link);
 
         for (Section section : survey.getSections()) {
             surveyLogic.loadQuestionsToSection(section);
-
         }
     }
 
@@ -112,8 +119,8 @@ public class SurveyReportController implements Serializable {
         return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
     }
     public double getAverage(Question q) {
-        int sum = 0;
-        int divider = 0;
+        double sum = 0;
+        double divider = 0;
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
         for ( SliderAnswer answer : answers) {
             sum += answer.getValue();
@@ -182,5 +189,25 @@ public class SurveyReportController implements Serializable {
             }
         }
         return count;
+    }
+    public double getPercentCheckBoxAnswer(String title, Question q){
+        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
+        double answerCount = countCheckBoxAnswers(title,q);
+        int allCount= 0;
+        for (CheckboxAnswer answer: answers) {
+            for(SelectedCheckbox answer2: answer.getSelectedCheckboxes()) {
+                    allCount++;
+            }
+        }
+        return answerCount/allCount * 100;
+    }
+    public double getPercentRadioAnswer(String title, Question q){
+        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
+        double answerCount = countRadioAnswers(title,q);
+        int allCount= 0;
+        for (RadioAnswer answer: answers) {
+            allCount++;
+        }
+        return answerCount/allCount * 100;
     }
 }

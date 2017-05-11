@@ -1,10 +1,10 @@
 package lt.vu.feedback_system.businesslogic.users;
 
-import lombok.Getter;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.dao.UserDAO;
 import lt.vu.feedback_system.entities.User;
-import lt.vu.feedback_system.utils.security.PasswordHasher;
+import lt.vu.feedback_system.utils.generate.PasswordHash;
+import lt.vu.feedback_system.utils.generate.PasswordHasher;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -23,7 +23,9 @@ public class UserContext implements Serializable {
     @Inject
     private SurveyDAO surveyDAO;
 
-    @Inject PasswordHasher passwordHasher;
+    @Inject
+    @PasswordHash
+    PasswordHasher passwordHasher;
 
     public void login(String username, String password) {
         try {
@@ -59,20 +61,6 @@ public class UserContext implements Serializable {
         if (id != null) {
             return userDAO.getUserById(id).getAdmin();
         }
-        return false;
-    }
-
-    public boolean isSurveyCreator(Integer surveyId) {
-        try {
-            User surveyCreator = surveyDAO.getSurveyById(surveyId).getCreator();
-
-            if (id.equals(surveyCreator.getId())) {
-                return true;
-            }
-        } catch (javax.persistence.NoResultException ex) {
-        } catch (NullPointerException ex) {
-        }
-
         return false;
     }
 }

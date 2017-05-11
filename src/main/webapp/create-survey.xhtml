@@ -5,14 +5,18 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core"
 >
 <f:view>
     <f:metadata>
     </f:metadata>
 
     <h:head>
-        <h:outputStylesheet name="css/stylesIndex.css" />
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
+        <h:outputStylesheet name="css/stylesCreate.css" />
         <title>Builder of Surveys </title>
     </h:head>
 
@@ -38,7 +42,10 @@
 
             </h:panelGrid>
 
-            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section">
+
+            <p:messages/>
+            <p:tabView id="tab-view" value="#{createSurveyController.survey.sections}" var="section" activeIndex="#{createSurveyController.activeTabIndex}">
+
                 <p:tab id="section-tab" title="Section #{section.position} of #{createSurveyController.survey.sections.size()}">
                     <p:outputLabel for="section_title" value="Section title"/>
                     <p:inputText id="section_title" value="#{section.title}" />
@@ -117,18 +124,14 @@
 
             </p:tabView>
 
-            <p:commandButton value="add section" actionListener="#{createSurveyController.addSection()}" update="tab-view"/>
+
+            <p:commandButton value="add section" actionListener="#{createSurveyController.addSection()}" update="survey-creation-form"/>
 
             <!-- Ending creation -->
             <br/>
 
-            <ui:fragment rendered="#{empty createSurveyController.modify}">
-                <h:commandButton value="save" action="#{createSurveyController.create()}" />
-            </ui:fragment>
+            <h:commandButton value="save" action="#{createSurveyController.create()}" />
 
-            <ui:fragment rendered="#{createSurveyController.modify == true}">
-                <h:commandButton value="save" action="#{createSurveyController.update()}" />
-            </ui:fragment>
             <p:messages globalOnly="true"/>
         </h:form>
     </h:body>

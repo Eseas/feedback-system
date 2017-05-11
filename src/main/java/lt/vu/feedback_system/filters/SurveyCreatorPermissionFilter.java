@@ -1,5 +1,6 @@
 package lt.vu.feedback_system.filters;
 
+import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 
 import javax.servlet.*;
@@ -17,11 +18,12 @@ public class SurveyCreatorPermissionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         if (!response.isCommitted()) {
             UserContext userContext = (UserContext) ((HttpServletRequest) request).getSession().getAttribute("userContext");
+            SurveyContext surveyContext = (SurveyContext) ((HttpServletRequest) request).getSession().getAttribute("surveyContext");
 
             try {
                 Integer surveyId = Integer.parseInt(request.getParameter("id"));
 
-                if (!userContext.isAdmin() && !userContext.isSurveyCreator(surveyId)) {
+                if (!userContext.isAdmin() && !surveyContext.isSurveyCreator(surveyId)) {
                     String contextPath = ((HttpServletRequest) request).getContextPath();
                     ((HttpServletResponse) response).sendRedirect(contextPath + "/index.html");
                 }

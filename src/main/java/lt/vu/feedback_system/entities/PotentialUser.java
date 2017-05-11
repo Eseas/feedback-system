@@ -26,6 +26,6 @@ public class PotentialUser {
     private Integer id;
 
     @Size(min = 3, max = 40)
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 }

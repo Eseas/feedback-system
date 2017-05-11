@@ -12,7 +12,7 @@ import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.utils.email.ConfiguredEmailFactory;
 import lt.vu.feedback_system.utils.HexStringGen;
 import lt.vu.feedback_system.utils.ParserWithDefaults;
-import lt.vu.feedback_system.utils.security.PasswordHasher;
+import lt.vu.feedback_system.utils.generate.PasswordHasher;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 

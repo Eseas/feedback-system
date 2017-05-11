@@ -29,9 +29,13 @@ public class SurveyDAO {
     public Survey getSurveyById(Integer id) {
         return em.createNamedQuery("Survey.findById", Survey.class).setParameter("id", id).getSingleResult();
     }
+
+    public Survey getSurveyByLink(String link) {
+        return em.createNamedQuery("Survey.findByLink", Survey.class).setParameter("link", link).getSingleResult();
+    }
+
     public List<Survey> getSurveysByCreatorId(Integer id){
         return em.createNamedQuery("Survey.findAllByCreatorId", Survey.class).setParameter("id", id).getResultList();
     }
-
 
 }

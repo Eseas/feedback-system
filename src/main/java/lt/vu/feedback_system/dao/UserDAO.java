@@ -20,6 +20,11 @@ public class UserDAO {
         em.merge(user);
     }
 
+    public void updateAndFlush(User user) {
+        em.merge(user);
+        em.flush();
+    }
+
     public void delete(User user) {
         em.remove(user);
     }
