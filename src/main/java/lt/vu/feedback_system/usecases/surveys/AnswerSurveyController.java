@@ -8,6 +8,7 @@ import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
+import lt.vu.feedback_system.usecases.users.NavigationBean;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -43,6 +44,9 @@ public class AnswerSurveyController implements Serializable {
     @Inject
     private SurveyLogic surveyLogic;
 
+    @Inject
+    private NavigationBean navigationBean;
+
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
@@ -65,7 +69,7 @@ public class AnswerSurveyController implements Serializable {
             for (Answer answer : section.getAnswers())
                 answerDAO.create(answer);
         }
-        return "/WEB-INF/general/answered-survey";
+        return navigationBean.toThanksForAnswer();
     }
 
 

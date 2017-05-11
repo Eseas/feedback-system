@@ -52,4 +52,8 @@ public class NavigationBean {
     public String toMySurveys() {
         return redirectTo("/surveys.html?admin-mode=false");
     }
+
+    public String toThanksForAnswer() {
+        return "/WEB-INF/general/thanks-for-answer.html";
+    }
 }
