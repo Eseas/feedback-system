@@ -75,7 +75,6 @@ public class AnswerSurveyController implements Serializable {
     }
 
 
-
     public List<SelectedCheckbox> getAvailableSelectedCheckboxes(CheckboxAnswer checkboxAnswer) {
 
         if (checkboxAnswer.getAvailableSelectedCheckboxes() == null) {

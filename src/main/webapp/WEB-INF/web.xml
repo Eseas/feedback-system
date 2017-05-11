@@ -56,10 +56,8 @@
         <url-pattern>/index.html</url-pattern>
         <url-pattern>/surveys.html</url-pattern>
         <url-pattern>/users.html</url-pattern>
-        <url-pattern>/survey.html</url-pattern>
         <url-pattern>/create-survey.html</url-pattern>
         <url-pattern>/survey-report.html</url-pattern>
-        <url-pattern>/my-surveys.html</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminPermissionFilter</filter-name>
@@ -67,7 +65,6 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>SurveyCreatorPermissionFilter</filter-name>
-        <url-pattern>/survey.html</url-pattern>
         <url-pattern>/create-survey.html</url-pattern>
     </filter-mapping>
     <filter-mapping>
