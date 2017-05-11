@@ -59,9 +59,64 @@ ol{
     color: #00426B;
     font-family: 'Bitter', serif;
 }
+#j_id_a{
+    display: block !important;
+    clear: none;
+}
 /*page top*/
+.ui-message-error-icon{
+    display: none !important;
+}
+label{
+    display: none !important;
+    clear: both;
+}
+.message_error{
+    clear: both;
+    margin: 5px 0 0 !important;
+}
 
+.tab_form{
+    width: 90%;
+    margin: 0 auto;
+    min-width: 600px;
+    border: none;
+    border-radius: 0;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
+    margin-bottom: 30px;
+}
 
+/*buttons*/
+.ui-button, input[type=submit]{
+    display: inline-block !important;
+    position: relative;
+    font-weight: normal;
+    line-height: normal;
+    width: auto;
+    min-width: 60px;
+    padding: 5px !important;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 14px !important;
+    font-weight: 200;
+    border-radius: 3px;
+    border: 0;
+    outline: 0;
+    background: #3dae41;
+    color: #fff;
+    text-decoration: none!important;
+    cursor: pointer;
+    text-align: center;
+    zoom: 1;
+    overflow: visible;
+    font-style: normal;
+    text-shadow: none;
+    -webkit-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
 
 
 /* page bottom done*/
@@ -87,36 +142,43 @@ html, body {
     height: 100%;
 }
 
-
-.page_title .form.clearfix {
+/*clearfixai*/
+#survey-creation-form .form.clearfix {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
 }
-
-.page_title .form.clearfix .throw-left {
+#survey-creation-form .form.clearfix .throw-left {
     float: left;
 }
-
-.page_title .form.clearfix .throw-left input {
+#survey-creation-form .form.clearfix .throw-left input {
     background: transparent;
     border: 0;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #00426B;
     box-shadow:none;
     margin-left: 10px;
-    width: 300px;
-    top: 30px;
+    top: 28px;
     position: relative;
+    font-family: 'Bitter', serif;
+    color: #00426B;
 }
-
-.page_title .form.clearfix .throw-left input:first-child {
-    font-size: 36px;
+#survey-creation-form .form.clearfix .throw-left{
+    clear: both;
+    width: 60%;
+}
+#survey-creation-form .form.clearfix .throw-left input:first-of-type{
+    font-size: 28px;
     top: 0;
+    clear: both;
 }
-
-.page_title .form.clearfix .throw-left input, .page_title .form.clearfix .throw-left .ui-message {
+#survey-creation-form .form.clearfix .throw-left input:nth-of-type(2){
+    clear: both;
+    width: 40%;
+}
+#survey-creation-form .form.clearfix .throw-left input, #survey-creation-form .form.clearfix .throw-left .ui-message {
     float: left;
 }
-
-.page_title .form.clearfix .throw-right {
+#survey-creation-form .form.clearfix .throw-right {
     float: right;
+    padding-top: 20px;
+    margin-right: 30px;
 }
