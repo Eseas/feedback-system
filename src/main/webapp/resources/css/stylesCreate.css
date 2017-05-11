@@ -87,25 +87,37 @@ label{
     box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
     margin-bottom: 30px;
 }
+/*top buttons*/
+.ui-state-active{
+    min-width: 76px;
+    font-weight: normal;
+    color: #000 !important;
+}
+.ui-state-default{
+    background: #fff !important;
+    min-width: 76px;
+    font-weight: normal;
+    color: #000 ;
+}
+/*form buttons*/
 
-/*buttons*/
-.ui-button, input[type=submit]{
+
+/*bottom buttons*/
+input[type=submit]{
     display: inline-block !important;
     position: relative;
     font-weight: normal;
     line-height: normal;
     width: auto;
-    min-width: 60px;
+    min-width: 76px;
+    height: 30px;
     padding: 5px !important;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-size: 14px !important;
     font-weight: 200;
     border-radius: 3px;
-    border: 0;
     outline: 0;
-    background: #3dae41;
-    color: #fff;
     text-decoration: none!important;
     cursor: pointer;
     text-align: center;
@@ -117,7 +129,41 @@ label{
     transition: all 0.15s ease;
     cursor: pointer;
 }
-
+.cancel_save{
+    float: right;
+    margin-right: 40px;
+}
+.save{
+    margin-left: 20px;
+    background: #3dae41;
+    border: 0;
+    color: #fff;
+}
+.cancel{
+    background: #fff;
+    border: 1px solid;
+    border-color: #808080;
+    color: #808080;
+}
+/*form fields*/
+#survey-creation-form .tab_form .page_description input {
+    background: transparent !important;
+    border: 0;
+    border-bottom: 2px solid #00426B;
+    box-shadow:none;
+    margin: 10px 10px 20px;
+    top: 28px;
+    position: relative;
+    font-family: 'Bitter', serif;
+    color: #00426B;
+    position: static;
+}
+.tab_form input:first-of-type{
+    font-size: 18px;
+}
+.tab_form hr{
+    border-top: 1px solid #b0b0b0;
+}
 
 /* page bottom done*/
 footer{
@@ -137,6 +183,10 @@ body{
     font-weight: normal !important;
     -webkit-font-smoothing: antialiased;
 }
+.ui-widget{
+    font-family: "Roboto", sans-serif;
+    font-size: 1em;
+}
 html, body {
     width: 100%;
     height: 100%;
@@ -151,7 +201,7 @@ html, body {
     float: left;
 }
 #survey-creation-form .form.clearfix .throw-left input {
-    background: transparent;
+    background: transparent !important;
     border: 0;
     border-bottom: 2px solid #00426B;
     box-shadow:none;
