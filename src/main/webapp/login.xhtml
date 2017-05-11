@@ -32,8 +32,8 @@
                     <p:password class="input" id="user-password" value="#{loginController.password}" placeholder="Password" required="true"/>
                     <p:messages autoUpdate="true" display="text"/>
                     <h:commandButton class="button" value="Login" action="#{loginController.doLogin()}"/>
-                    <!--TODO: ištrinti remember žinutę ir puslapį, atnaujint css klasių pavadinimus-->
-                    <p class="message">Cannot sign in? <p:link class="remember" outcome="start-change-pw" value="Change password"></p:link></p>
+                    <p class="message">Cannot sign in? <p:link class="remember" outcome="start-change-pw" value="Change password"/></p>
+                    <p class="message">New user? <p:link class="remember" outcome="start-reg" value="Register"/></p>
                 </o:form>
             </div>
         </div>

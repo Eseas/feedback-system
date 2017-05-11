@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.businesslogic.keys.KeyExpiredException;
 import lt.vu.feedback_system.businesslogic.keys.KeyHandler;
+import lt.vu.feedback_system.businesslogic.keys.UserRegisteredException;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.password.Password;
 import javax.enterprise.inject.Model;
@@ -50,12 +51,19 @@ public class KeyController {
                     String.format("Link sent to '%s'. Check your email and proceed with instructions.", email));
             log.info(String.format("Link sent to '%s'", email));
         } catch (Throwable e) {
-            if (e.getCause() instanceof NoResultException) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NoResultException) {
                 msg = new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
                         "Error",
                         String.format("Email '%s' is not registered, please contact system administrator.", email));
                 log.info(String.format("Failed to send link to '%s'. Email is not registered.", email));
+            } else if (cause instanceof UserRegisteredException) {
+                msg = new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        "Error",
+                        String.format("User with email '%s' is already registered.", email));
+                log.info(String.format("User with email '%s' is already registered.", email));
             } else {
                 msg = new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
@@ -83,14 +91,15 @@ public class KeyController {
                     "Success",
                     "New user successfully created visit Index to login.");
             log.info(String.format("User '%s %s' created", firstName, lastName));
-        } catch (KeyExpiredException e) {
-            msg = new FacesMessage(
-                    FacesMessage.SEVERITY_ERROR,
-                    "Error",
-                    "Registration code has expired. " +
-                            "Visit registration page and send another registration link. ");
         } catch (Throwable e) {
-            if (e.getCause() instanceof NoResultException) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof KeyExpiredException) {
+                msg = new FacesMessage(
+                        FacesMessage.SEVERITY_ERROR,
+                        "Error",
+                        "Registration code has expired. " +
+                                "Visit registration page and send another registration link. ");
+            } else if (cause instanceof NoResultException) {
                 msg = new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
                         "Error",
