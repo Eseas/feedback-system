@@ -35,10 +35,11 @@
                 <p:message for="description"/>
 
                 <h:outputText value="Results"/>
-                <p:selectOneButton value="#{createSurveyController.survey.confidential}">
+                <p:selectOneRadio value="#{createSurveyController.survey.confidential}">
                     <f:selectItem itemLabel="Private" itemValue="true" />
                     <f:selectItem itemLabel="Public" itemValue="false" />
-                </p:selectOneButton>
+                </p:selectOneRadio>
+
 
             </h:panelGrid>
 
@@ -59,14 +60,12 @@
                         <ui:repeat value="#{createSurveyController.sortQuestionsAscending(section.questions)}" var="question">
                             <p:outputLabel for="questionTitle" value="#{question.getPosition().toString()}"/>
                             <h:inputText id="questionTitle" value="#{question.title}"/>
-                            <h:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(section, question)}"/>
-                            <h:commandButton value="up" actionListener="#{createSurveyController.moveUp(section, question)}"/>
-                            <h:commandButton value="down" actionListener="#{createSurveyController.moveDown(section, question)}"/>
+                            <p:commandButton value="remove" actionListener="#{createSurveyController.removeQuestion(section, question)}" update="survey-creation-form"/>
+                            <p:commandButton value="up" actionListener="#{createSurveyController.moveUp(section, question)}" update="survey-creation-form"/>
+                            <p:commandButton value="down" actionListener="#{createSurveyController.moveDown(section, question)}" update="survey-creation-form"/>
 
-                            <p:selectOneButton value="#{question.required}">
-                                <f:selectItem itemLabel="Required" itemValue="true" />
-                                <f:selectItem itemLabel="Optional" itemValue="false" />
-                            </p:selectOneButton>
+                            <p:outputLabel for="required_switch" value="Required"/>
+                            <p:inputSwitch id="required_switch" value="#{question.required}"/>
                             <br/>
 
                             <ui:fragment rendered="#{question.type == 'TextQuestion'}">
@@ -88,11 +87,11 @@
                                     <h:column>
                                         <p:outputLabel for="radioButtonTitle" value="Radio Button"/>
                                         <h:inputText id="radioButtonTitle" value="#{radioButton.title}" />
-                                        <h:commandButton value="remove" action="#{createSurveyController.removeRadioButton(question, radioButton)}"/>
+                                        <p:commandButton value="remove" actionListener="#{createSurveyController.removeRadioButton(question, radioButton)}" update="survey-creation-form"/>
                                         <p:message for="radioButtonTitle"/>
                                     </h:column>
                                 </h:dataTable>
-                                <h:commandButton value="add radio button" actionListener="#{createSurveyController.addRadioButton(question)}" />
+                                <p:commandButton value="add radio button" actionListener="#{createSurveyController.addRadioButton(question)}" update="survey-creation-form" />
 
                             </ui:fragment>
 
@@ -101,11 +100,11 @@
                                     <h:column>
                                         <p:outputLabel for="checkboxTitle" value="Checkbox"/>
                                         <h:inputText id="checkboxTitle" value="#{checkbox.title}" />
-                                        <h:commandButton value="remove" action="#{createSurveyController.removeCheckbox(question, checkbox)}"/>
+                                        <p:commandButton value="remove" action="#{createSurveyController.removeCheckbox(question, checkbox)}" update="survey-creation-form"/>
                                         <p:message for="checkboxTitle"/>
                                     </h:column>
                                 </h:dataTable>
-                                <h:commandButton value="add option value" actionListener="#{createSurveyController.addCheckbox(question)}" />
+                                <p:commandButton value="add option value" actionListener="#{createSurveyController.addCheckbox(question)}" update="survey-creation-form"/>
 
                             </ui:fragment>
 
@@ -127,10 +126,9 @@
 
             <p:commandButton value="add section" actionListener="#{createSurveyController.addSection()}" update="survey-creation-form"/>
 
-            <!-- Ending creation -->
             <br/>
 
-            <h:commandButton value="save" action="#{createSurveyController.create()}" />
+            <p:commandButton value="save" action="#{createSurveyController.create()}" update="survey-creation-form"/>
 
             <p:messages globalOnly="true"/>
         </h:form>
