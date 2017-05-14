@@ -33,12 +33,12 @@
                 <div class="throw-left clearfix">
                     <p:outputLabel for="title" value="Survey name" style="display: none !important; clear: both;"/>
                     <p:inputText id="title" maxlength="40"  value="#{createSurveyController.survey.title}"
-                                placeholder="Survey Name" style="width: 100%;"/>
+                                placeholder="Survey Name" style="width: 100%;" required="#{param.validation}"/>
                     <p:message class="message_error" for="title"/>
 
                     <p:outputLabel for="description" value="Survey description" style="display: none !important; clear: both;"/>
                     <p:inputText id="description" maxlength="100" value="#{createSurveyController.survey.description}"
-                                 placeholder="Add description..." style="margin-bottom: 30px;"/>
+                                 placeholder="Add description..." style="margin-bottom: 30px;" required="#{param.validation}"/>
                     <p:message class="message_error" for="description" />
                 </div>
 
@@ -55,11 +55,11 @@
                 <p:tab id="section-tab" title="Page #{section.position}">
                     <div class="page_description">
                         <p:outputLabel for="section_title" value="Section title" style="display: none !important; clear: both;"/>
-                        <p:inputText maxlength="40" id="section_title" value="#{section.title}" placeholder="Page Name"/>
+                        <p:inputText maxlength="40" id="section_title" value="#{section.title}" placeholder="Page Name" required="#{param.validation}"/>
                         <p:message class="message_error" for="section_title" style="width: 100%;"/>
 
                         <p:outputLabel for="section_description" value="Description" style="display: none !important; clear: both;"/>
-                        <p:inputText maxlength="40" id="section_description" value="#{section.description}" placeholder="Page description..."/>
+                        <p:inputText maxlength="40" id="section_description" value="#{section.description}" placeholder="Page description..." required="#{param.validation}"/>
                         <p:message class="message_error" for="section_description"/>
                     </div>
                     <hr/>
@@ -67,7 +67,7 @@
                         <ui:repeat value="#{createSurveyController.sortQuestionsAscending(section.questions)}" var="question">
                                 <div class="question-title">
                                     <p:outputLabel id="question_label" for="questionTitle" value="#{question.getPosition().toString()}"/>
-                                    <p:inputText maxlength="40" id="questionTitle" value="#{question.title}" placeholder="Question title"/>
+                                    <p:inputText maxlength="40" id="questionTitle" value="#{question.title}" placeholder="Question title" required="#{param.validation}"/>
                                 </div>
                                     <div class="required-switch clearfix">
                                         <p:outputLabel for="required_switch" value="Required"/>
@@ -84,11 +84,11 @@
                             <div class="clearfix">
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
                                 <p:outputLabel for="lowerBound" value="Lower bound"/>
-                                <p:inputText id="lowerBound" value="#{question.lowerBound}"/>
+                                <p:inputText id="lowerBound" value="#{question.lowerBound}" required="#{param.validation}"/>
                                 <p:message for="lowerBound"/>
 
                                 <p:outputLabel for="upperBound" value="Upper bound"/>
-                                <p:inputText id="upperBound" value="#{question.upperBound}"/>
+                                <p:inputText id="upperBound" value="#{question.upperBound}" required="#{param.validation}"/>
                                 <p:message for="upperBound"/>
                             </ui:fragment>
                             </div>
@@ -98,7 +98,7 @@
                                 <h:dataTable value="#{question.radioButtons}" var="radioButton">
                                     <h:column>
                                         <p:outputLabel for="radioButtonTitle" value="Radio Button"/>
-                                        <h:inputText id="radioButtonTitle" value="#{radioButton.title}" />
+                                        <h:inputText id="radioButtonTitle" value="#{radioButton.title}" required="#{param.validation}" />
                                         <p:commandButton value="remove" actionListener="#{createSurveyController.removeRadioButton(question, radioButton)}" update="survey-creation-form"/>
                                         <p:message for="radioButtonTitle"/>
                                     </h:column>
@@ -113,7 +113,7 @@
                                 <h:dataTable value="#{question.checkboxes}" var="checkbox">
                                     <h:column>
                                         <p:outputLabel for="checkboxTitle" value="Checkbox"/>
-                                        <h:inputText id="checkboxTitle" value="#{checkbox.title}" />
+                                        <h:inputText id="checkboxTitle" value="#{checkbox.title}" required="#{param.validation}" />
                                         <p:commandButton value="remove" action="#{createSurveyController.removeCheckbox(question, checkbox)}" update="survey-creation-form"/>
                                         <p:message for="checkboxTitle"/>
                                     </h:column>
@@ -145,13 +145,13 @@
                         <p:commandButton value="Add Page" actionListener="#{createSurveyController.addSection()}" update="survey-creation-form"/>
                     </div>
                 </p:tab>
-
-
             </p:tabView>
 
             <div class="cancel_save clearfix">
                 <h:commandButton class="cancel" value="Cancel" action="index" />
-                <p:commandButton class="save" value="Save" action="#{createSurveyController.create()}" update="survey-creation-form" />
+                <p:commandButton class="save" value="Save" action="#{createSurveyController.create()}" update="survey-creation-form">
+                    <f:param name="validation" value="true"/>
+                </p:commandButton>
             </div>
 
             <p:messages globalOnly="true"/>
