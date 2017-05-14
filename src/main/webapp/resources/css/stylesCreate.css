@@ -126,6 +126,7 @@ input[type=submit]{
 .cancel_save{
     float: right;
     margin-right: 50px;
+    margin-bottom: 50px;
 }
 .save{
     margin-left: 20px;
