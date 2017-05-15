@@ -34,7 +34,7 @@ public class SliderQuestion implements Question {
     @Transient
     private final String type = "SliderQuestion";
 
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     @Column(name = "title")
     private String title;
 

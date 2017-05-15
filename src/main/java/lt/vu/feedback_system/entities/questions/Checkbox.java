@@ -25,7 +25,7 @@ public class Checkbox {
     @Column(name = "id")
     private Integer id;
 
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     @Column(name = "title")
     private String title;
 

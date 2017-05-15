@@ -35,15 +35,15 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Size(min = 3, max = 40)
+    @Size(max = 40)
     @Column(name = "email")
     private String email;
 
-    @Size(min = 3, max = 20)
+    @Size(max = 20)
     @Column(name = "first_name")
     private String firstName;
 
-    @Size(min = 3, max = 20)
+    @Size(max = 20)
     @Column(name = "last_name")
     private String lastName;
 
