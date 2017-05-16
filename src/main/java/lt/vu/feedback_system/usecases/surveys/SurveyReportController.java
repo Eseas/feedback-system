@@ -21,6 +21,9 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -128,42 +131,38 @@ public class SurveyReportController implements Serializable {
         }
         return sum/divider;
     }
-    public List<Integer> getMedian(Question q) {
-        List<Integer> median= new ArrayList<Integer>();
-        List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
+    public double getMedian(Question q) {
 
+
+        double median;
+        List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
+        answers = Sorter.sortAnswersByValue(answers);
         if ((answers.size() % 2) == 0) {
-            median.add(answers.get(answers.size() / 2 - 1).getValue());
-            median.add(answers.get(answers.size() / 2).getValue());
+            median = answers.get(answers.size() / 2 - 1).getValue() + answers.get(answers.size() / 2).getValue();
+            median= median / 2;
         }
         else{
-            median.add(answers.get(answers.size() / 2).getValue());
+            median = answers.get(answers.size() / 2).getValue();
         }
         return median;
-    }
-    public int getMode(Question q){
-
+    }public List<Integer> getMode(Question q) {
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
-            int mode = 0;
-            int count = 0;
+        List<Integer> numbers = new ArrayList<>();
+        for ( SliderAnswer answer : answers) {
+            numbers.add(answer.getValue());
+        }
 
-        for ( int i = 0; i< answers.size(); i++ ){
-                int x = answers.get(i).getValue();
-                int tempCount = 1;
+        final Map<Integer, Long> countFrequencies = numbers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
-            for ( int e = 0; e < answers.size(); e++ ){
-                    int x2 = answers.get(e).getValue();
+        final long maxFrequency = countFrequencies.values().stream()
+                .mapToLong(count -> count)
+                .max().orElse(-1);
 
-                    if( x == x2) {
-                        tempCount++;
-                    }
-                    if( tempCount > count){
-                        count = tempCount;
-                        mode = x;
-                    }
-                }
-            }
-            return mode;
+        return countFrequencies.entrySet().stream()
+                .filter(tuple -> tuple.getValue() == maxFrequency)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     public int countRadioAnswers(String title, Question q){
