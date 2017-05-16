@@ -41,12 +41,12 @@
                                 <h:outputText value="#{surveyReportController.getAverage(question)}"/>
                                 <br/>
                                 <h:outputText value="Median : "/>
-                                <ui:repeat value="#{surveyReportController.getMedian(question)}" var="median" >
-                                    <h:outputText value="#{median} "/>
-                                </ui:repeat>
+                                <h:outputText value="#{surveyReportController.getMedian(question)}"/>
                                 <br/>
                                 <h:outputText value="Mode : "/>
-                                <h:outputText value="#{surveyReportController.getMode(question)}"/>
+                                <ui:repeat value="#{surveyReportController.getMode(question)}" var="mode" >
+                                    <h:outputText value="#{mode} "/>
+                                </ui:repeat>
                                 <br/>
                             </ui:fragment>
 

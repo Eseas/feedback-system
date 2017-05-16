@@ -1,6 +1,8 @@
 package lt.vu.feedback_system.utils;
 
+import javafx.scene.control.Slider;
 import lt.vu.feedback_system.entities.answers.Answer;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.questions.Question;
 
 import javax.enterprise.context.RequestScoped;
@@ -31,6 +33,17 @@ public class Sorter {
             }
         });
         return questions;
+    }
+    public static List<SliderAnswer> sortAnswersByValue(List<SliderAnswer> answers){
+        Collections.sort(answers, new Comparator<SliderAnswer>() {
+            @Override
+            public int compare(SliderAnswer lhs, SliderAnswer rhs) {
+                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+
+                return lhs.getValue() > rhs.getValue() ? 1 : (lhs.getValue() < rhs.getValue() ) ? -1 : 0;
+            }
+        });
+        return answers;
     }
 
 }
