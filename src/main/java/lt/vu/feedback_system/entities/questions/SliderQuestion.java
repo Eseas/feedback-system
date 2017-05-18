@@ -23,7 +23,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
-@ToString(of = {"id", "position",  "title"})
+@ToString(of = {"id", "title", "position", "required", "section", "survey", "lowerBound", "upperBound"})
 public class SliderQuestion implements Question {
     private static final long serialVersionUID = 1L;
     @Id

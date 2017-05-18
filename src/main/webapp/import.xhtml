@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+>
+<h:head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+    <h:outputStylesheet name="css/stylesLogin.css" />
+    <title>Builder of Surveys</title>
+</h:head>
+<h:body>
+
+    <h:form enctype="multipart/form-data">
+        <p:inputText value="#{importController.survey.title}"/><br/>
+        <p:inputTextarea value="#{importController.survey.description}"/><br/>
+        <p:inputSwitch value="#{importController.survey.confidential}"/><br/>
+        <p:fileUpload value="#{importController.file}" mode="simple"/><br/>
+        <p:commandButton value="Import survey" actionListener="#{importController.upload()}" ajax="false"/><br/>
+        <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
+    </h:form>
+
+</h:body>
+</html>
