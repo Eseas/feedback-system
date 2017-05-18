@@ -37,7 +37,7 @@
         </ui:fragment>
 
         <h:form>
-            <p:dataTable value="#{requestSurveysController.surveys}" var="survey">
+            <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}" var="survey">
                 <p:column headerText="Title">
                     <h:outputText value="#{survey.title}" />
                 </p:column>
