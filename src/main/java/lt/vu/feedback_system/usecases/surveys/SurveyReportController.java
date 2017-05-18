@@ -133,7 +133,6 @@ public class SurveyReportController implements Serializable {
     }
     public double getMedian(Question q) {
 
-
         double median;
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
         answers = Sorter.sortAnswersByValue(answers);
@@ -145,7 +144,8 @@ public class SurveyReportController implements Serializable {
             median = answers.get(answers.size() / 2).getValue();
         }
         return median;
-    }public List<Integer> getMode(Question q) {
+    }
+    public List<Integer> getMode(Question q) {
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
         List<Integer> numbers = new ArrayList<>();
         for ( SliderAnswer answer : answers) {
@@ -189,6 +189,14 @@ public class SurveyReportController implements Serializable {
         }
         return count;
     }
+    // round a double to 2 decimal places
+    private double round(double value){
+        value = value*100;
+        value = Math.round(value);
+        value = value /100;
+        return value;
+    }
+
     public double getPercentCheckBoxAnswer(String title, Question q){
         List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
         double answerCount = countCheckBoxAnswers(title,q);
@@ -198,8 +206,9 @@ public class SurveyReportController implements Serializable {
                     allCount++;
             }
         }
-        return answerCount/allCount * 100;
+        return round(answerCount/allCount * 100);
     }
+
     public double getPercentRadioAnswer(String title, Question q){
         List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
         double answerCount = countRadioAnswers(title,q);
@@ -207,6 +216,6 @@ public class SurveyReportController implements Serializable {
         for (RadioAnswer answer: answers) {
             allCount++;
         }
-        return answerCount/allCount * 100;
+        return round(answerCount/allCount * 100);
     }
 }

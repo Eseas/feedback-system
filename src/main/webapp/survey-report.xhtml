@@ -70,12 +70,24 @@
 
                         </ui:repeat>
                     </p:fieldset>
+                    <ui:repeat value="#{section.questions}" var="question">
+                        <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
+                            <p:chart type="bar" model="#{surveyChartController.createBarModel(question)}" style="width:500px;height:300px" />
+                        </ui:fragment>
+                        <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
+                            <p:chart type="pie" model="#{surveyChartController.createPieModel(question)}" style="width:400px;height:300px" />
+                        </ui:fragment>
+                    </ui:repeat>
+
                 </p:tab>
+
+
 
             </p:tabView>
 
             <p:messages globalOnly="true"/>
         </h:form>
+
     </h:body>
 </f:view>
 
