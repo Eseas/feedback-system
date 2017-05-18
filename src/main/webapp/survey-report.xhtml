@@ -33,6 +33,7 @@
                                     <h:outputText value="#{textAnswer.value}"/>
                                     <br/>
                                 </ui:repeat>
+
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
@@ -70,7 +71,12 @@
 
                         </ui:repeat>
                     </p:fieldset>
+
                     <ui:repeat value="#{section.questions}" var="question">
+                        <ui:fragment rendered="#{question.type == 'TextQuestion'}">
+                            <f:event type="preRenderComponent" listener="#{surveyChartController.createTagCloud(question)}"/>
+                            <p:tagCloud model="#{surveyChartController.cloudModel}"/>
+                        </ui:fragment>
                         <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
                             <p:chart type="bar" model="#{surveyChartController.createBarModel(question)}" style="width:500px;height:300px" />
                         </ui:fragment>
