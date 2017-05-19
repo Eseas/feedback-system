@@ -3,10 +3,11 @@ package lt.vu.feedback_system.usecases.spreadsheets;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lt.vu.feedback_system.businesslogic.spreadsheets.ExcelImporter;
-import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetImportException;
+import lt.vu.feedback_system.businesslogic.spreadsheets.excel.ExcelImporter;
+import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetException;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.entities.surveys.Survey;
+import lt.vu.feedback_system.utils.HexStringGen;
 import org.primefaces.model.UploadedFile;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
@@ -38,10 +39,11 @@ public class ImportController {
         this.importer = importer;
         this.survey = new Survey();
         this.survey.setCreator(userContext.getUser());
+        this.survey.setLink(HexStringGen.getHexString(10));
         System.out.println("user is: " + userContext.getUser());
     }
 
-    public void upload() throws SpreadsheetImportException, IOException {
+    public void upload() throws SpreadsheetException, IOException {
         System.out.println(survey);
         importer.importSurvey(survey, file);
         printInfo();
