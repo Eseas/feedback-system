@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+
 @Named
 @ViewScoped
 public class SurveyReportController implements Serializable {
@@ -79,6 +80,43 @@ public class SurveyReportController implements Serializable {
 
     public List<RadioAnswer> getQuestionRadioAnswers(Question q) {
         return answerDAO.getAllRadioAnswersByQuestionId(q.getId());
+    }
+    public int countTextAnswers(String title, Question q){
+        List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(q.getId());
+
+        int count = 0;
+        String[] splitString = {};
+        for (TextAnswer answer: answers) {
+            splitString = answer.getValue().split("\\s");
+            for (String string : splitString) {
+                if (string.equals(title)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public List<String> getUniqueQuestionTextAnswers(Question q) {
+        List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(q.getId());
+        List<String> result = new ArrayList<>();
+        Boolean temp= false;
+        int i;
+        String[] splitString = {};
+        for (TextAnswer answer: answers) {
+            splitString = answer.getValue().split("\\s");
+           for(String string : splitString){
+                for (String a : result) {
+                    if (string.equals(a)) {
+                        temp = true;
+                    }
+                }
+                if (!temp) {
+                    result.add(string);
+                }
+                temp = false;
+            }
+        }
+        return result;
     }
     public List<String> getUniqueQuestionRadioAnswers(Question q) {
         List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());

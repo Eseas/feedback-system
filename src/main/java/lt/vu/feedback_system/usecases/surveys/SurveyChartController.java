@@ -1,17 +1,30 @@
 package lt.vu.feedback_system.usecases.surveys;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+
+import lombok.Getter;
 import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.utils.Sorter;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
+import org.primefaces.model.tagcloud.DefaultTagCloudItem;
+import org.primefaces.model.tagcloud.DefaultTagCloudModel;
+import org.primefaces.model.tagcloud.TagCloudItem;
+import org.primefaces.model.tagcloud.TagCloudModel;
+
 @Named
 @ManagedBean
 public class SurveyChartController implements Serializable {
@@ -20,7 +33,8 @@ public class SurveyChartController implements Serializable {
 
     private PieChartModel pieModel;
     private BarChartModel barModel;
-
+    @Getter
+    public TagCloudModel cloudModel;
 
     public PieChartModel createPieModel(Question question) {
         List<String> answers = reportController.getUniqueQuestionCheckboxAnswers(question);
@@ -67,4 +81,29 @@ private BarChartModel initBarModel(Question question) {
         yAxis.setMax(maxAxis);
         return barModel;
     }
+
+    public void createTagCloud(Question question) {
+
+        List<String> answers = reportController.getUniqueQuestionTextAnswers(question);
+        Map map = new HashMap();
+        for(String answer:answers){
+           map.put(answer,reportController.countTextAnswers(answer,question));
+        }
+        Set<Map.Entry<String, Integer>> set = map.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
+
+        //su situo list buna isrikiuota bet tada negraziai atrodo labai zemelapis
+        //List<Map.Entry<String, Integer>> list = Sorter.sortMapByValue(map);
+        cloudModel = new DefaultTagCloudModel();
+        for (Map.Entry<String, Integer> entry : list) {
+            cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(),entry.getValue()));
+            System.out.println(entry.getValue());
+
+        }
+
+    }
+    public TagCloudModel getModel() {
+        return cloudModel;
+    }
+
 }
