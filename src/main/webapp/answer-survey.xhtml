@@ -14,18 +14,27 @@
     </f:metadata>
 
     <h:head>
-        <h:outputStylesheet name="css/stylesIndex.css" />
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
+        <h:outputStylesheet name="css/stylesAnswer.css" />
         <title>Builder of Surveys</title>
     </h:head>
 
     <h:body>
-        <h1>#{answerSurveyController.answeredSurvey.survey.title}</h1>
-        <h:outputText value="#{answerSurveyController.answeredSurvey.survey.description}"/>
+        <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
-            <p:tabView id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
+        <div class="page_title">
+            <h2>#{answerSurveyController.answeredSurvey.survey.title}</h2>
+        </div>
+
+        <h:outputText class="answ-page-desc" value="#{answerSurveyController.answeredSurvey.survey.description}"/>
+
+            <p:tabView class="tab_form" id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
                        var="section" activeIndex="#{answerSurveyController.activeTabIndex}"
-                        dynamic="true"
-            >
+                        dynamic="true">
 
                     <p:tab title="#{section.title}" disabled="true" >
                         <h:outputText value="#{section.description}"/>
@@ -91,6 +100,7 @@
             </p:tabView>
 
             <p:messages globalOnly="true"/>
+        <ui:include src="/WEB-INF/composites/footer.xhtml"/>
     </h:body>
 </f:view>
 
