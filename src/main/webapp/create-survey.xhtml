@@ -16,6 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
         <h:outputStylesheet name="css/stylesCreate.css"/>
         <title>Builder of Surveys </title>
+        <h:outputScript library="js" name="tabViewValidationHelper.js" />
     </h:head>
 
     <h:body>
@@ -48,11 +49,10 @@
                     </h:panelGrid>
                 </div>
             </div>
-
-            <h:outputText rendered="#{facesContext.validationFailed}" value="At least one page contains an error!" style="color: white; background: red" />
-
+            
             <p:tabView class="tab_form" id="tab-view" value="#{createSurveyController.survey.sections}" var="section"
-                       activeIndex="#{createSurveyController.activeTabIndex}" >
+                       activeIndex="#{createSurveyController.activeTabIndex}"
+                        effect="fade">
                 <p:tab id="section-tab" title="#{section.title}">
                     <div class="page_description">
                         <p:outputLabel for="section_title" value="Section title"
@@ -200,7 +200,7 @@
             <div class="cancel_save clearfix">
                 <p:commandButton class="cancel" value="Cancel" action="index"/>
                 <p:commandButton class="save" value="Save" action="#{createSurveyController.create()}"
-                                 update="survey-creation-form">
+                                 update="survey-creation-form" oncomplete="showFirstInvalidTab()">
                     <f:param name="validate" value="true"/>
                 </p:commandButton>
             </div>
