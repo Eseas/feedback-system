@@ -60,10 +60,15 @@ public class SurveyLogic {
         Section section = new Section();
 
         section.setPosition(position);
-        section.setTitle(title + " " + position);
+        section.setTitle(title);
 
         section.setSurvey(survey);
         survey.getSections().add(section);
+    }
+
+    public void removeSection(Survey survey, Section section) {
+        if (survey.getSections().size() > 1)
+            survey.getSections().remove(section);
     }
 
     public Integer getNewSectionPosition(Survey survey) {

@@ -53,13 +53,14 @@
 
             <p:tabView class="tab_form" id="tab-view" value="#{createSurveyController.survey.sections}" var="section"
                        activeIndex="#{createSurveyController.activeTabIndex}" >
-
-                <p:tab id="section-tab" title="Page #{section.position}">
+                <p:tab id="section-tab" title="#{section.title}">
                     <div class="page_description">
                         <p:outputLabel for="section_title" value="Section title"
                                        style="display: none !important; clear: both;"/>
                         <p:inputText id="section_title" maxlength="40" value="#{section.title}"
-                                     placeholder="Page Name" required="#{param.validate}" />
+                                     placeholder="Page Name" required="#{param.validate}">
+                            <p:ajax event="blur" update="tab-view"/>
+                        </p:inputText>
                         <p:message class="message_error" for="section_title" style="width: 100%;"/>
 
                         <p:outputLabel for="section_description" value="Description"
@@ -188,6 +189,10 @@
                     <div class="add-page clearfix">
                         <p:commandButton value="Add Page" actionListener="#{createSurveyController.addSection()}"
                                          update="survey-creation-form"/>
+                    </div>
+                    <div class="remove-page clearfix">
+                        <p:commandButton value="Remove Page" actionListener="#{createSurveyController.removeSection(section)}"
+                                         update="survey-creation-form" disabled="#{createSurveyController.survey.sections.size() le 1 }"/>
                     </div>
                 </p:tab>
             </p:tabView>

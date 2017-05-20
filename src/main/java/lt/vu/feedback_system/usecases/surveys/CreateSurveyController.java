@@ -88,6 +88,10 @@ public class CreateSurveyController implements Serializable {
         surveyLogic.addSection(survey, props.getProperty("survey.defaultPageTitle"));
     }
 
+    public void removeSection(Section section) {
+        surveyLogic.removeSection(survey, section);
+    }
+
     public void addTextQuestion(Section section) {
         surveyLogic.addQuestion(section, new TextQuestion());
     }
