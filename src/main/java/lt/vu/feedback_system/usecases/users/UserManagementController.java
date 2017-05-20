@@ -21,9 +21,6 @@ public class UserManagementController implements Serializable {
     @Getter
     private User user = new User();
 
-    @Getter
-    private List<User> users;
-
     @Inject
     private UserDAO userDAO;
 
@@ -32,7 +29,7 @@ public class UserManagementController implements Serializable {
 
     @Getter private User selectedUser;
     @Getter private User conflictingUser;
-    @Getter private List<User> allUsers;
+    @Getter private List<User> users;
 
     @PostConstruct
     public void loadData() {
@@ -62,6 +59,6 @@ public class UserManagementController implements Serializable {
     }
 
     public void reloadAll() {
-        allUsers = userDAO.getAllUsers();
+        users = userDAO.getAllUsers();
     }
 }
