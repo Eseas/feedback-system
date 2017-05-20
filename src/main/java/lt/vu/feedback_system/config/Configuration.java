@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.omnifaces.cdi.Startup;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import java.util.Properties;
 @Slf4j
 @Startup
 @ApplicationScoped
+@Named("config")
 public class Configuration {
 
     @Getter

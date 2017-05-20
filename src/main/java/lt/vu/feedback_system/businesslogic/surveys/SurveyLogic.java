@@ -59,7 +59,6 @@ public class SurveyLogic {
 
         Section section = new Section();
 
-
         section.setPosition(position);
         section.setTitle(title + " " + position);
 
