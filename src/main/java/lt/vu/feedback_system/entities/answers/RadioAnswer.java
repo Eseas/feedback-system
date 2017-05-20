@@ -20,7 +20,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString(of = {"id", "question"})
+@ToString(of = {"id", "question", "radioButton"})
 public class RadioAnswer implements Answer {
     private static final long serialVersionUID = 1L;
     @Id

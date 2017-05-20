@@ -2,11 +2,10 @@ package lt.vu.feedback_system.businesslogic.spreadsheets.excel;
 
 import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetException;
 import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetImporter;
-import lt.vu.feedback_system.dao.AnswerDAO;
-import lt.vu.feedback_system.dao.QuestionDAO;
-import lt.vu.feedback_system.dao.SectionDAO;
-import lt.vu.feedback_system.dao.SurveyDAO;
+import lt.vu.feedback_system.dao.*;
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.abstractions.Result;
@@ -16,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.model.UploadedFile;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -39,50 +39,59 @@ public class ExcelImporter implements SpreadsheetImporter {
 
     private QuestionDAO questionDAO;
 
+    private AnsweredSurveyDAO answeredSurveyDAO;
+
     private AnswerDAO answerDAO;
 
     protected ExcelImporter() {}
 
     @Inject
-    public ExcelImporter(SurveyDAO surveyDAO, SectionDAO sectionDAO, QuestionDAO questionDAO, AnswerDAO answerDAO) {
+    public ExcelImporter(SurveyDAO surveyDAO, SectionDAO sectionDAO, QuestionDAO questionDAO, AnsweredSurveyDAO answeredSurveyDAO, AnswerDAO answerDAO) {
         this.surveyDAO = surveyDAO;
         this.sectionDAO = sectionDAO;
         this.questionDAO = questionDAO;
+        this.answeredSurveyDAO = answeredSurveyDAO;
         this.answerDAO = answerDAO;
     }
 
-    // TODO: only throw SpreadsheetException (handle IOException internally)
-    // TODO: test more
     // TODO: write to db
+    @Transactional
     public void importSurvey(final Survey survey, UploadedFile file) throws SpreadsheetException, IOException {
         final Result<Workbook> workbookResult = getWorkbook(file);
         final Result<Sheet> surveySheetResult = getSheet(workbookResult, "Survey");
         final Result<Sheet> answerSheetResult = getSheet(workbookResult, "Answer");
+        final Result<Map<Integer, Question>> parsedQuestions = ExcelSurveySheetParser.parseQuestions(surveySheetResult);
+        final Result<Map<Integer, List<Answer>>> parsedAnswers = ExcelAnswerSheetParser.parseAnswers(answerSheetResult, parsedQuestions);
 
+        if (parsedAnswers.isSuccess()) createEntities(survey, parsedQuestions.get(), parsedAnswers.get());
+        else throw new SpreadsheetException(parsedAnswers.getFailureMsg());
+    }
+
+    private void createEntities(final Survey survey, final Map<Integer, Question> questions, final Map<Integer, List<Answer>> answers) {
         final Section defaultSection = new Section();
-        final List<Section> sections = survey.getSections();
-        defaultSection.setPosition(sections.size() + 1);
+        defaultSection.setPosition(1);
         defaultSection.setTitle("First section");
         defaultSection.setDescription("");
         defaultSection.setSurvey(survey);
-        sections.add(defaultSection);
 
-        System.out.println(surveySheetResult);
-        System.out.println(answerSheetResult);
-        Result<Map<Integer, ? extends Question>> parsedQuestions = ExcelSurveySheetParser.parseQuestions(surveySheetResult);
-        parsedQuestions.map(questions -> {
-            questions.values().forEach(q -> {
-                q.setSection(defaultSection);
-                q.setSurvey(survey);
-                defaultSection.getQuestions().add(q);
-            });
-            return questions;
+        questions.values().forEach(q -> {
+            q.setSection(defaultSection);
+            q.setSurvey(survey);
         });
-        if (parsedQuestions.isSuccess()) {
-            Map<Integer, ? extends Question> questions = parsedQuestions.get();
-            System.out.println(questions);
-            questions.forEach((k, v) -> System.out.println("Key: " + k + ", value: " + v));
-        } else System.out.println(parsedQuestions.getFailureMsg());
+
+        final List<AnsweredSurvey> answeredSurveys = new ArrayList<>(answers.keySet().size());
+        answers.forEach((k, v) -> {
+            final AnsweredSurvey answeredSurvey = new AnsweredSurvey();
+            answeredSurvey.setSurvey(survey);
+            answeredSurveys.add(answeredSurvey);
+            v.forEach(answer -> answer.setAnsweredSurvey(answeredSurvey));
+        });
+
+        surveyDAO.create(survey);
+        sectionDAO.create(defaultSection);
+        questions.values().forEach(questionDAO::create);
+        answeredSurveys.forEach(answeredSurveyDAO::create);
+        answers.values().forEach(a -> a.forEach(answerDAO::create));
     }
 
     private Result<Workbook> getWorkbook(final UploadedFile file) throws IOException {

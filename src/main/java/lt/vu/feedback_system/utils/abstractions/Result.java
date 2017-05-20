@@ -53,7 +53,6 @@ public class Result<T> {
 
     @Override
     public String toString() {
-        return isSuccess() ? String.format("Value: %s", value) : String.format("Error message: %s", failureMsg);
+        return isSuccess() ? String.format("Success(%s)", value) : String.format("Failure(%s)", failureMsg);
     }
-
 }

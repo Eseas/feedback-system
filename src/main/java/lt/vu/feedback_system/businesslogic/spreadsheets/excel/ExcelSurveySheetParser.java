@@ -9,8 +9,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-
-import javax.enterprise.context.RequestScoped;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,23 +24,22 @@ final class ExcelSurveySheetParser {
      * @return map of question's position and question pairs. Map is then used by answer parsing. Also, map is used to
      * validate that there are no questions with same numbers.
      */
-    static Result<Map<Integer, ? extends Question>> parseQuestions(final Result<Sheet> surveySheetResult) {
-        final Result<Map<Integer, ? extends Question>> parsedQuestions;
+    static Result<Map<Integer, Question>> parseQuestions(final Result<Sheet> surveySheetResult) {
+        final Result<Map<Integer, Question>> parsedQuestions;
         if (surveySheetResult.isSuccess()) {
             final Sheet surveySheet = surveySheetResult.get();
             final List<Row> rows = ExcelSheetParserHelper.filterOutEmptyRows(Lists.newArrayList(surveySheet.rowIterator()));
             if (rows.size() >= 2) {
                 if (surveyFirstRowIsValid(surveySheet)) {
-                    List<Result<? extends Question>> parsed = rows.subList(1, rows.size()).stream()
+                    List<Result<Question>> parsed = rows.subList(1, rows.size()).stream()
                             .map(ExcelSurveySheetParser::parseQuestion).collect(Collectors.toList());
-                    Optional<Result<? extends Question>> firstFailure = parsed.stream().filter(Result::isFailure).findFirst();
+                    Optional<Result<Question>> firstFailure = parsed.stream().filter(Result::isFailure).findFirst();
                     if (!firstFailure.isPresent()) {
-                        Map<Integer, ? extends Question> positionQuestionMap = parsed.stream()
+                        final Map<Integer, Question> positionQuestionMap = parsed.stream()
                                 .collect(Collectors.toMap(r -> r.get().getPosition(), Result::get, (v1, v2) -> v1));
                         if (parsed.size() == positionQuestionMap.size()) parsedQuestions = Result.Success(positionQuestionMap);
                         else parsedQuestions = Result.Failure("There are duplicate question numbers");
-                    }
-                    else parsedQuestions = Result.Failure(firstFailure.get().getFailureMsg());
+                    } else parsedQuestions = Result.Failure(firstFailure.get().getFailureMsg());
                 } else parsedQuestions = Result.Failure(String.format(
                     "First four cells of the first row in the Survey sheet must be filled with the following values: %s, %s, %s and %s",
                     ParsingHelperValues.SurveyFirstRow.FirstColValue,
@@ -55,26 +52,26 @@ final class ExcelSurveySheetParser {
         return parsedQuestions;
     }
 
-    private static Result<? extends Question> parseQuestion(final Row row) {
-        final Result<? extends Question> parsedQuestion;
+    private static Result<Question> parseQuestion(final Row row) {
+        final Result<Question> parsedQuestion;
         if (ExcelSheetParserHelper.rowIsFilled(row, 3)) {
             final List<Cell> cells = Lists.newArrayList(row.cellIterator());
-            int qNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)), -1);
-            if (qNumber > 0) {
-                final String qTitle = formatter.formatCellValue(cells.get(1));
-                final String qType = formatter.formatCellValue(cells.get(2));
-                final Result<List<String>> optionsResult = parseOptionList(cells, 4);
-                switch (qType.toUpperCase()) {
-                    case ParsingHelperValues.QuestionTypes.Text:
+            int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)), -1);
+            if (questionNumber > 0) {
+                final String questionTitle = formatter.formatCellValue(cells.get(1));
+                final String questionType = formatter.formatCellValue(cells.get(2));
+                final Result<List<String>> optionsResult = parseOptionList(cells);
+                switch (questionType.toUpperCase()) {
+                    case ParsingHelperValues.SpreadsheetQuestionTypes.Text:
                         final TextQuestion textQuestion = (TextQuestion) setCommonFields(
-                                new TextQuestion(), qTitle, false, qNumber);
+                                new TextQuestion(), questionTitle, questionNumber);
                         parsedQuestion = Result.Success(textQuestion);
                         break;
-                    case ParsingHelperValues.QuestionTypes.Radio:
+                    case ParsingHelperValues.SpreadsheetQuestionTypes.Radio:
                         if (optionsResult.isSuccess()) {
                             final RadioQuestion radioQuestion = (RadioQuestion) setCommonFields(
-                                    new RadioQuestion(), qTitle, false, qNumber);
-                            List<RadioButton> radioButtons = optionsResult.get().stream().map(o -> {
+                                    new RadioQuestion(), questionTitle, questionNumber);
+                            final List<RadioButton> radioButtons = optionsResult.get().stream().map(o -> {
                                 final RadioButton radioButton = new RadioButton();
                                 radioButton.setTitle(o);
                                 radioButton.setQuestion(radioQuestion);
@@ -84,11 +81,11 @@ final class ExcelSurveySheetParser {
                             parsedQuestion = Result.Success(radioQuestion);
                         } else parsedQuestion = Result.Failure(optionsResult.getFailureMsg());
                         break;
-                    case ParsingHelperValues.QuestionTypes.Checkbox:
+                    case ParsingHelperValues.SpreadsheetQuestionTypes.Checkbox:
                         if (optionsResult.isSuccess()) {
                             final CheckboxQuestion checkboxQuestion = (CheckboxQuestion) setCommonFields(
-                                    new CheckboxQuestion(), qTitle, false, qNumber);
-                            List<Checkbox> checkboxes = optionsResult.get().stream().map(o -> {
+                                    new CheckboxQuestion(), questionTitle, questionNumber);
+                            final List<Checkbox> checkboxes = optionsResult.get().stream().map(o -> {
                                 final Checkbox checkbox = new Checkbox();
                                 checkbox.setTitle(o);
                                 checkbox.setQuestion(checkboxQuestion);
@@ -98,10 +95,10 @@ final class ExcelSurveySheetParser {
                             parsedQuestion = Result.Success(checkboxQuestion);
                         } else parsedQuestion = Result.Failure(optionsResult.getFailureMsg());
                         break;
-                    case ParsingHelperValues.QuestionTypes.Slider:
+                    case ParsingHelperValues.SpreadsheetQuestionTypes.Slider:
                         if (optionsResult.isSuccess()) {
                             final SliderQuestion sliderQuestion = (SliderQuestion) setCommonFields(
-                                    new SliderQuestion(), qTitle, false, qNumber);
+                                    new SliderQuestion(), questionTitle, questionNumber);
                             final List<Integer> options = optionsResult.get().stream().map(o ->
                                     ParserWithDefaults.parseInt(o, Integer.MIN_VALUE)).collect(Collectors.toList());
                             if (options.size() == 2) {
@@ -114,21 +111,22 @@ final class ExcelSurveySheetParser {
                                         parsedQuestion = Result.Success(sliderQuestion);
                                     } else parsedQuestion = Result.Failure("lower bound has to be smaller than upper bound");
                                 } else parsedQuestion = Result.Failure("upper and lower bound have to be integral values");
-                            } else parsedQuestion = Result.Failure(String.format("Question of type '%s' must have two values: upper and lower bound", qType));
+                            } else parsedQuestion = Result.Failure(String.format("Question of type '%s' must have two values: upper and lower bound", questionType));
 
                         } else parsedQuestion = Result.Failure(optionsResult.getFailureMsg());
                         break;
                     default:
-                        parsedQuestion = Result.Failure(String.format("Question type '%s' is not valid", qType));
+                        parsedQuestion = Result.Failure(String.format("Question type '%s' is not valid", questionType));
                 }
             } else parsedQuestion = Result.Failure("Question numbers has to be integral values greater than 0");
         } else parsedQuestion = Result.Failure("One or more rows are missing values");
         return parsedQuestion;
     }
 
-    private static Result<List<String>> parseOptionList(List<Cell> cells, int optionsStartAt) {
+    private static Result<List<String>> parseOptionList(List<Cell> cells) {
         final Result<List<String>> optionsResult;
         final String failureMsg = String.format("%s cannot be empty", ParsingHelperValues.SurveyFirstRow.FourthColValue);
+        final int optionsStartAt = 4;
         if (cells.size() >= optionsStartAt) {
             final List<Cell> fullCells = cells.stream().skip(optionsStartAt - 1).filter(ExcelSheetParserHelper::cellIsFull).collect(Collectors.toList());
             if (fullCells.size() > 0) optionsResult = Result.Success(fullCells.stream().map(formatter::formatCellValue).collect(Collectors.toList()));
@@ -137,9 +135,9 @@ final class ExcelSurveySheetParser {
         return optionsResult;
     }
 
-    private static Question setCommonFields(Question q, String title, boolean required, int position) {
+    private static Question setCommonFields(Question q, String title, int position) {
         q.setTitle(title);
-        q.setRequired(required);
+        q.setRequired(false);
         q.setPosition(position);
         return q;
     }

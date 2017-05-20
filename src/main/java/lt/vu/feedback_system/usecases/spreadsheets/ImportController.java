@@ -43,9 +43,16 @@ public class ImportController {
         System.out.println("user is: " + userContext.getUser());
     }
 
+    // TODO: check if survey fields are filled also if user is logged in
     public void upload() throws SpreadsheetException, IOException {
         System.out.println(survey);
-        importer.importSurvey(survey, file);
+        try {
+            importer.importSurvey(survey, file);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getCause());
+            System.out.println(e.getCause().getMessage());
+        }
         printInfo();
     }
 
