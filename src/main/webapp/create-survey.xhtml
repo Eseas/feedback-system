@@ -5,6 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
 >
 <f:view>
     <h:head>
@@ -48,15 +49,17 @@
                 </div>
             </div>
 
+            <h:outputText rendered="#{facesContext.validationFailed}" value="At least one page contains an error!" style="color: white; background: red" />
+
             <p:tabView class="tab_form" id="tab-view" value="#{createSurveyController.survey.sections}" var="section"
-                       activeIndex="#{createSurveyController.activeTabIndex}">
+                       activeIndex="#{createSurveyController.activeTabIndex}" >
 
                 <p:tab id="section-tab" title="Page #{section.position}">
                     <div class="page_description">
                         <p:outputLabel for="section_title" value="Section title"
                                        style="display: none !important; clear: both;"/>
                         <p:inputText maxlength="40" id="section_title" value="#{section.title}"
-                                     placeholder="Page Name" required="#{param.validate}"/>
+                                     placeholder="Page Name" required="#{param.validate}" />
                         <p:message class="message_error" for="section_title" style="width: 100%;"/>
 
                         <p:outputLabel for="section_description" value="Description"
@@ -198,6 +201,7 @@
             </div>
 
         </h:form>
+        <o:highlight/>
         <ui:include src="/WEB-INF/composites/footer.xhtml"/>
     </h:body>
 </f:view>
