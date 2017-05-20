@@ -33,7 +33,7 @@
                 <div class="title throw-left clearfix">
                     <p:outputLabel for="title" value="Survey name" style="display: none !important; clear: both;"/>
                     <p:inputText id="title" maxlength="40" value="#{createSurveyController.survey.title}"
-                                 placeholder="Survey Name" style="width: 100%;"/>
+                                 placeholder="Survey Name" style="width: 100%;" required="#{param.validate}"/>
                     <p:message class="message_error" for="title"/>
 
                     <p:outputLabel for="description" value="Survey description"
@@ -59,7 +59,7 @@
                         <p:outputLabel for="section_title" value="Section title"
                                        style="display: none !important; clear: both;"/>
                         <p:inputText maxlength="40" id="section_title" value="#{section.title}"
-                                     placeholder="Page Name"/>
+                                     placeholder="Page Name" required="#{param.validate}"/>
                         <p:message class="message_error" for="section_title" style="width: 100%;"/>
 
                         <p:outputLabel for="section_description" value="Description"
@@ -79,7 +79,7 @@
                             <p:outputLabel id="question_label" for="questionTitle"
                                            value="#{question.getPosition().toString()}"/>
                             <p:inputText maxlength="40" id="questionTitle" value="#{question.title}"
-                                         placeholder="Question title"/>
+                                         placeholder="Question title" required="#{param.validate}"/>
                             <p:message for="questionTitle"/>
                         </div>
                         <br/>
@@ -95,14 +95,14 @@
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
                                 <p:outputLabel maxLenght="3" for="lowerBound" value="Lower bound"
                                                style="display: none !important; clear: both;"/>
-                                <p:inputText id="lowerBound" value="#{question.lowerBound}" placeholder="Lower bound"/>
+                                <p:inputText id="lowerBound" value="#{question.lowerBound}" placeholder="Lower bound" required="#{param.validate}"/>
                                 <p:message for="lowerBound"/>
 
                                 <p:slider class="form-slider" for="lowerBound" disabled="true"/>
 
                                 <p:outputLabel maxLenght="3"  for="upperBound" value="Upper bound"
                                                style="display: none !important; clear: both;"/>
-                                <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound"/>
+                                <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound" required="#{param.validate}"/>
                                 <p:message for="upperBound"/>
                             </ui:fragment>
 
@@ -115,7 +115,7 @@
                                         <img src="resources/grey-circle.png" alt="Radio button" height="15" width="15"/>
                                         <p:outputLabel for="radioButtonTitle" value="Radio Button"
                                                        style="display: none !important; clear: both;"/>
-                                        <h:inputText id="radioButtonTitle" value="#{radioButton.title}"/>
+                                        <h:inputText id="radioButtonTitle" value="#{radioButton.title}" required="#{param.validate}"/>
                                         <p:commandButton value="remove"
                                                          actionListener="#{createSurveyController.removeRadioButton(question, radioButton)}"
                                                          update="survey-creation-form"
@@ -138,7 +138,7 @@
                                         <img src="resources/black-square.png" alt="Square button" height="15" width="15"/>
                                         <p:outputLabel for="checkboxTitle" value="Checkbox"
                                                        style="display: none !important; clear: both;"/>
-                                        <h:inputText id="checkboxTitle" value="#{checkbox.title}"/>
+                                        <h:inputText id="checkboxTitle" value="#{checkbox.title}" required="#{param.validate}"/>
                                         <p:commandButton value="remove"
                                                          action="#{createSurveyController.removeCheckbox(question, checkbox)}"
                                                          update="survey-creation-form"
@@ -195,7 +195,9 @@
             <div class="cancel_save clearfix">
                 <p:commandButton class="cancel" value="Cancel" action="index"/>
                 <p:commandButton class="save" value="Save" action="#{createSurveyController.create()}"
-                                 update="survey-creation-form"/>
+                                 update="survey-creation-form">
+                    <f:param name="validate" value="true"/>
+                </p:commandButton>
             </div>
 
         </h:form>
