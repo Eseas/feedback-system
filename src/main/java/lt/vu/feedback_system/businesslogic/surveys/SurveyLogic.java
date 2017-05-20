@@ -54,11 +54,14 @@ public class SurveyLogic {
         return surveyDAO.getSurveysByCreatorId(user.getId());
     }
 
-    public void addSection(Survey survey) {
+    public void addSection(Survey survey, String title) {
         Integer position = getNewSectionPosition(survey);
 
         Section section = new Section();
+
+
         section.setPosition(position);
+        section.setTitle(title + " " + position);
 
         section.setSurvey(survey);
         survey.getSections().add(section);

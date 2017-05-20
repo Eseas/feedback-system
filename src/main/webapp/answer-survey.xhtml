@@ -49,7 +49,8 @@
 
                                 <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
                                     <p:inputText id="text-value" value="#{answer.value}" disabled="#{answerSurveyController.preview}"
-                                                 required="#{empty param.noValidation and answer.question.required}" requiredMessage="Value is very needed in section #{answer.question.section.title}"/>
+                                                 required="#{empty param.noValidation and answer.question.required}"
+                                                 requiredMessage="This is a required question"/>
                                     <p:message for="text-value"/>
                                 </ui:fragment>
 
@@ -57,8 +58,8 @@
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
                                     <p:inputText id="slider-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}"
-                                                 requiredMessage="Slider not selected in #{answer.question.section.title}"
-                                                 disabled="#{answerSurveyController.preview}"/>
+                                                 requiredMessage="This is a required question"
+                                                 disabled="#{answerSurveyController.preview}" />
                                     <p:slider for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}"
                                               disabled="#{answerSurveyController.preview}"/>
                                     <p:message for="slider-value"/>
@@ -67,7 +68,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
                                     <p:selectOneRadio id="select-one-radio" value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter"
                                                       required="#{empty param.noValidation and answer.question.required}"
-                                                      requiredMessage="Radio Button not selected" layout="grid" columns="3"
+                                                      requiredMessage="This is a required question" layout="grid" columns="3"
                                                       disabled="#{answerSurveyController.preview}">
                                         <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                                     </p:selectOneRadio>
@@ -77,7 +78,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
                                     <p:selectManyCheckbox id="select-many-checkbox" value="#{answer.selectedCheckboxes}" converter="omnifaces.SelectItemsConverter"
                                                           required="#{empty param.noValidation and answer.question.required}"
-                                                          requiredMessage="Checboxes not selected in #{answer.question.section.title}"
+                                                          requiredMessage="This is a required question"
                                                           disabled="#{answerSurveyController.preview}">
                                         <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}" var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}" itemValue="#{availableSelectedCheckbox}" />
                                     </p:selectManyCheckbox>
