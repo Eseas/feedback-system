@@ -27,11 +27,14 @@ public class UserContext implements Serializable {
     @PasswordHash
     PasswordHasher passwordHasher;
 
-    public void login(String username, String password) {
+    public void login(String username, String password) throws IllegalAccessException {
         try {
             User user = userDAO.getUserByEmail(
                     username);
 
+            if (user.getBlocked()) {
+                throw new IllegalAccessException();
+            }
             if (passwordHasher.check(password, user.getPassword())) {
                 id = user.getId();
             }

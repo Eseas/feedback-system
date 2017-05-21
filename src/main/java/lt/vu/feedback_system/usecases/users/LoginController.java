@@ -29,19 +29,28 @@ public class LoginController {
     private NavigationBean navigationBean;
 
     public String doLogin() {
-        userContext.login(email, password);
+        try {
+            userContext.login(email, password);
 
-        if (userContext.isLoggedIn()) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().put("userContext", userContext);
 
-            if (redirectUrl != null && !redirectUrl.isEmpty()) {
-                return navigationBean.redirectTo(redirectUrl);
+            if (userContext.isLoggedIn()) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getSessionMap().put("userContext", userContext);
+
+                if (redirectUrl != null && !redirectUrl.isEmpty()) {
+                    return navigationBean.redirectTo(redirectUrl);
+                } else {
+                    return navigationBean.redirectToIndex();
+                }
             } else {
-                return navigationBean.redirectToIndex();
+                FacesMessage msg = new FacesMessage("Wrong email or password!");
+                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+
+                return navigationBean.toLogin();
             }
-        } else {
-            FacesMessage msg = new FacesMessage("Wrong email or password!", "No details.");
+        } catch (IllegalAccessException ex) {
+            FacesMessage msg = new FacesMessage("This user is blocked! Please contact administrator.");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
