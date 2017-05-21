@@ -55,7 +55,7 @@
                 </p:fieldset>
 
                 <p:dialog header="Edit User" widgetVar="userDialog" modal="true" closable="true" resizable="false"
-                          closeOnEscape="true" showEffect="explode" hideEffect="bounce">
+                          closeOnEscape="true" showEffect="drop" hideEffect="drop">
                     <p:ajax event="close" update=":tab_view:form"/>
                     <p:outputPanel id="userDetail">
                         <p:panelGrid  columns="3" rendered="#{not empty userManagementController.selectedUser}"

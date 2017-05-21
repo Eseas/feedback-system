@@ -37,8 +37,8 @@
 
         <div class="answerSurvey-tabs">
             <p:tabView class="tab_form" id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
-                       var="section" activeIndex="#{answerSurveyController.activeTabIndex}"
-                        dynamic="true" style="border: none !important;">
+                       var="section" activeIndex="#{answerSurveyController.activeTabIndex}"  effect="slide"
+                       dynamic="true" style="border: none !important;">
 
                     <p:tab title="#{section.title}" disabled="true" >
                         <div class="section-title">

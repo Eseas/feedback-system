@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -19,18 +20,23 @@
 </h:head>
 <h:body>
 
-    <p:panel>
-        <h:form id="complete-change-pw-form">
-            <p:password id="new-password" required="true"
+    <div class="header">
+        <h1>B<em>o</em>S</h1>
+        <p>Builder of Surveys</p>
+    </div>
+
+    <div class="register-page">
+        <h:form class="form" id="complete-change-pw-form">
+            <p:password class="input" id="new-password" required="true"
                         placeholder="password"
                         requiredMessage="Please enter your password"
                         validatorMessage="Password has to be between 6 to 20 characters in length">
                 <f:validateLength minimum="6" maximum="20"/>
             </p:password>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-            <h:commandButton value="Change password" actionListener="#{keyController.completeChangePw()}" ajax="false"/>
-            <h:button value="To index" outcome="index"/>
+            <h:commandButton class="button" value="Change password" actionListener="#{keyController.completeChangePw()}" ajax="false"/>
+            <p:link class="message" value="Back to login page"  outcome="login"/>
         </h:form>
-    </p:panel>
+    </div>
 </h:body>
 </html>
