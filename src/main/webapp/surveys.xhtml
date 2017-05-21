@@ -58,6 +58,11 @@
                         <f:param name="p" value="true"/>
                     </h:button>
                 </p:column>
+                <p:column headerText="Answer">
+                    <h:button value="Answer" outcome="answer-survey">
+                        <f:param name="s" value="#{survey.link}"/>
+                    </h:button>
+                </p:column>
                 <p:column headerText="Report">
                     <h:button value="View report" outcome="survey-report">
                         <f:param name="s" value="#{survey.link}"/>
