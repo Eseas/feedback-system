@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 
@@ -53,6 +55,9 @@ public class RadioQuestion implements Question {
     @JoinColumn(name = "section_id", referencedColumnName = "id")
     @ManyToOne
     private Section section;
+
+    @OneToMany(mappedBy = "question")
+    private List<RadioAnswer> radioAnswers = new ArrayList<>();
 
     public List<RadioButton> getRadioButtons() {
         return radioButtons;

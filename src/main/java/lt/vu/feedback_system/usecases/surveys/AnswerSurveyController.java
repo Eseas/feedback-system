@@ -27,6 +27,10 @@ public class AnswerSurveyController implements Serializable {
 
     @Getter
     @Setter
+    private boolean preview;
+
+    @Getter
+    @Setter
     private Integer activeTabIndex;
 
     private Integer lastTabIndex;
@@ -49,7 +53,6 @@ public class AnswerSurveyController implements Serializable {
 
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
-
 
     public void loadData() {
 

@@ -164,6 +164,52 @@ table{
 
     }
 }
+/*tabview*/
+.management-tabs, .registered-fieldset{
+    border: none;
+}
+.management-tabs li {
+    border-color: #3dae41 !important;
+    border-radius: 0;
+    background: #e0e0e0;
+    box-shadow: none;
+    text-shadow: none;
+}
+.ui-widget-header .ui-state-default {
+    background: #e0e0e0;
+}
+.registered-table, .potential-table{
+    font-size: 14px !important;
+}
+.registered-table button, .potential-table button{
+    border: none !important;
+    background: transparent !important;
+    font-size: 14px !important;
+    text-decoration: underline !important;
+}
+.ui-button-text-icon-left .ui-icon.fa {
+    display: none;
+}
+label{
+    font-weight: normal !important;
+}
+.add_user{
+    margin-top: 20px;
+}
+.add_user button{
+    margin-right: 0;
+    margin-bottom: 40px;
+    float: right;
+    background: #fff !important;
+    border-color: #3dae41 !important;
+    border-radius: 0;
+    color: #00426B !important;
+    padding: 1px !important;
+}
+.ui-datatable table{
+    table-layout: auto !important;
+    font-family: 'Roboto' ,sans-serif;
+}
 
 /* page bottom done*/
 footer{
@@ -173,6 +219,7 @@ footer{
     text-align: center;
     width: 100%;
     font-size: 9px;
+    z-index: -999;
 }
 body{
     background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);

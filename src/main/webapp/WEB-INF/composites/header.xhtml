@@ -2,7 +2,13 @@
                 xmlns:p="http://primefaces.org/ui">
     <div class="top-bar">
         <ol class="header">
-            <li id="logo" ><h1>B<em>o</em>S</h1></li>
+            <li id="logo" >
+                <h:form>
+                    <h:commandLink action="index">
+                        <h:graphicImage value="resources/logo.PNG" style="margin-top: 20px;"/>
+                    </h:commandLink>
+                </h:form>
+            </li>
             <li id="user">
                 <span class="glyphicon glyphicon-user throwLeft"/>
                 <p:outputLabel class="throwLeft" value="#{userController.fullName}" style="font-weight: normal; margin-right: 5px"/>

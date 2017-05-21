@@ -37,7 +37,7 @@
         </ui:fragment>
 
         <h:form>
-            <p:dataTable value="#{requestSurveysController.surveys}" var="survey">
+            <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}" var="survey">
                 <p:column headerText="Title">
                     <h:outputText value="#{survey.title}" />
                 </p:column>
@@ -55,6 +55,7 @@
                 <p:column headerText="Preview">
                     <h:button value="Preview" outcome="answer-survey">
                         <f:param name="s" value="#{survey.link}"/>
+                        <f:param name="p" value="true"/>
                     </h:button>
                 </p:column>
                 <p:column headerText="Report">

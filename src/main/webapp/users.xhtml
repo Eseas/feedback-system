@@ -23,77 +23,68 @@
         <h2>User Management</h2>
     </div>
 
-    <p:tabView id="tab_view">
+    <p:tabView class="management-tabs" id="tab_view" cache="false" effect="slide">
         <p:tab id="tab_registered" title="Registered Users">
             <h:form id="form" class="reg_users">
 
-                <p:fieldset id="list">
-                    <f:facet name="legend">
-                        All registered users
-                        <p:commandButton value="Refresh" icon="ui-icon-arrowrefresh-1-e"
-                                         actionListener="#{userManagementController.reloadAll}"
-                                         update=":tab_view:form:list"/>
-                    </f:facet>
-
-                    <p:dataTable id="data_table" value="#{userManagementController.users}" var="user">
-                        <p:column headerText="Email">
+                <p:fieldset class="registered-fieldset" id="list">
+                    <p:dataTable class="registered-table" id="data_table" value="#{userManagementController.users}" var="user">
+                        <p:column class="email" headerText="Email">
                             <h:outputText value="#{user.email}"/>
                         </p:column>
-                        <p:column headerText="First name">
+                        <p:column class="first-name" headerText="First name">
                             <h:outputText value="#{user.firstName}"/>
                         </p:column>
-                        <p:column headerText="Last name">
+                        <p:column class="last-name" headerText="Last name">
                             <h:outputText value="#{user.lastName}"/>
                         </p:column>
-                        <p:column headerText="Admin">
+                        <p:column class="admin" headerText="Admin">
                             <p:selectBooleanCheckbox disabled="true" value="#{user.admin}"/>
                         </p:column>
-                        <p:column headerText="Blocked">
+                        <p:column class="blocked" headerText="Blocked">
                             <p:selectBooleanCheckbox disabled="true" value="#{user.blocked}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton value="Edit" icon="fa fa-fw fa-edit"
+                            <p:commandButton class="edit" value="Edit" icon="fa fa-fw fa-edit"
                                              actionListener="#{userManagementController.prepareForEditing(user)}"
-                                             update=":tab_view:form:studentDetail"
-                                             oncomplete="PF('studentDialog').show()"
+                                             update=":tab_view:form:userDetail"
+                                             oncomplete="PF('userDialog').show()"
                             />
                         </p:column>
                     </p:dataTable>
                 </p:fieldset>
 
-                <p:dialog header="Edit Student" widgetVar="studentDialog" modal="true" closable="true" resizable="false" closeOnEscape="true">
-                    <p:outputPanel id="studentDetail">
+                <p:dialog header="Edit User" widgetVar="userDialog" modal="true" closable="true" resizable="false"
+                          closeOnEscape="true" showEffect="explode" hideEffect="bounce">
+                    <p:ajax event="close" update=":tab_view:form"/>
+                    <p:outputPanel id="userDetail">
                         <p:panelGrid  columns="3" rendered="#{not empty userManagementController.selectedUser}"
                                       columnClasses="label,value" styleClass="ui-noborder">
-                            <p:outputLabel for="edit_firstName" value="First name:" style="color: #1a1a1a"/>
-                            <p:inputText id="edit_firstName" disabled="true" value="#{userManagementController.selectedUser.firstName}"/>
-                            <p:message for="edit_firstName"/>
+                            <p:outputLabel for="edit_firstName" value="First name:"  style="color: #1a1a1a" />
+                            <h:outputText id="edit_firstName" value="#{userManagementController.selectedUser.firstName}"/>
+                            <br/>
 
-                            <p:outputLabel for="edit_lastName" value="Last name:" style="color: #1a1a1a"/>
-                            <p:inputText id="edit_lastName" disabled="true" value="#{userManagementController.selectedUser.lastName}"/>
-                            <p:message for="edit_lastName"/>
+                            <p:outputLabel for="edit_lastName" value="Last name:"  style="color: #1a1a1a" />
+                            <h:outputText id="edit_lastName" value="#{userManagementController.selectedUser.lastName}"/>
+                            <br/>
 
-                            <p:outputLabel for="edit_email" value="Email:" style="color: #1a1a1a"/>
-                            <p:inputText id="edit_email" disabled="true" value="#{userManagementController.selectedUser.email}"/>
-                            <p:message for="edit_email"/>
+                            <p:outputLabel for="edit_email" value="Email:" style="color: #1a1a1a" />
+                            <h:outputText id="edit_email" value="#{userManagementController.selectedUser.email}"/>
+                            <br/>
 
-                            <p:outputLabel for="select_admin" value="Admin:" style="color: #1a1a1a"/>
+                            <p:outputLabel for="select_admin" value="Admin:" style="color: #1a1a1a" />
                             <p:selectBooleanCheckbox id="select_admin" value="#{userManagementController.selectedUser.admin}"/>
                             <br/>
 
-                            <p:outputLabel for="select_blocked" value="Blocked:" style="color: #1a1a1a"/>
+                            <p:outputLabel for="select_blocked" value="Blocked:" style="color: #1a1a1a" />
                             <p:selectBooleanCheckbox id="select_blocked" value="#{userManagementController.selectedUser.blocked}"/>
-                            <br/>
-
-                            <p:outputLabel for="opt_lock_version" value="Opt. version:" style="color: #1a1a1a"/>
-                            <h:outputText id="opt_lock_version" value="#{userManagementController.selectedUser.optLockVersion}" style="font-weight: bold"/>
                             <br/>
                         </p:panelGrid>
                         <p:commandButton value="Update" actionListener="#{userManagementController.updateSelectedUser}"
                                          rendered="#{empty userManagementController.conflictingUser}"
                                          icon="ui-icon-check" style="margin-top: 1em"
-                                         update=":tab_view:form:studentDetail :tab_view:form:list"
-                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('studentDialog').hide()" />
+                                         update=":tab_view:form:userDetail :tab_view:form:list"
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('userDialog').hide()" />
 
                         <p:panelGrid  columns="2" rendered="#{not empty userManagementController.conflictingUser}"
                                       columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
@@ -114,15 +105,13 @@
                             <p:outputLabel for="show_blocked" value="Blocked:" style="color: #1a1a1a"/>
                             <p:selectBooleanCheckbox id="show_blocked" disabled="true" value="#{userManagementController.conflictingUser.blocked}"/>
 
-                            <h:outputText value="Opt. version:" />
-                            <h:outputText value="#{userManagementController.conflictingUser.optLockVersion}" style="font-weight: bold"/>
                         </p:panelGrid>
 
                         <p:commandButton value="Overwrite" actionListener="#{userManagementController.overwriteUser}"
                                          rendered="#{not empty userManagementController.conflictingUser}"
                                          icon="ui-icon-notice" style="margin-top: 1em"
-                                         update=":tab_view:form:studentDetail :tab_view:form:list"
-                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('studentDialog').hide()" />
+                                         update=":tab_view:form:userDetail :tab_view:form:list"
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('userDialog').hide()" />
 
                     </p:outputPanel>
                 </p:dialog>
@@ -136,7 +125,7 @@
                         <div class="label_table">
                             <p>Potential users</p>
                         </div>
-                        <p:dataTable id="potential_user_table" class="potential_table" value="#{potentialUserManagementController.getAllPotentialUsers()}" var="potentialUser">
+                        <p:dataTable class="potential-table" id="potential_user_table" value="#{potentialUserManagementController.getAllPotentialUsers()}" var="potentialUser">
                             <p:column headerText="Email">
                                 <h:outputText value="#{potentialUser.email}"/>
                             </p:column>
@@ -153,9 +142,11 @@
                 <div class="left">
                     <h:form id="add_user_form" class="add_user">
                         <p:messages showDetail="true" autoUpdate="true" closable="true"/>
-                        <p:outputLabel for="email" value="Add potential user"/>
+                        <p:outputLabel for="email" value="Add potential user"
+                                       style="margin-left: 20px;"/>
                         <p:inputText id="email"
-                                     value="#{potentialUserManagementController.potentialUser.email}" placeholder="Email of a potential user"/>
+                                     value="#{potentialUserManagementController.potentialUser.email}" placeholder="Email of a potential user"
+                                     style="border-radius: 0; box-shadow: none;"/>
                         <p:message for="email"/>
                         <div class="button">
                             <p:commandButton value="Add" actionListener="#{potentialUserManagementController.createPotentialUser()}" update=":tab_view:potential:potential_user_table add_user_form"/>

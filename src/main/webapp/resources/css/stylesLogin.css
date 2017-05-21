@@ -1,4 +1,4 @@
-.login-page, .remember-page{
+.login-page, .remember-page, .register-page{
     width: 360px;
     padding: 70px 0 0;
     margin: auto;
@@ -113,16 +113,28 @@
     color: #EF3B3A;
 }
 .ui-messages-error-icon{
-    visibility: hidden;
+    display: none !important;
+}
+.ui-messages-info-icon{
+    display: none !important;
 }
 .ui-messages-error, .ui-messages-error-summary{
     margin-left: 0 !important;
-    font-weight: 300 !important;
+    font-weight: normal !important;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
     text-align: left;
     padding: 10px 0 !important;
     color: #c00;
+}
+.ui-messages-info{
+    margin-left: 0 !important;
+    font-weight: normal !important;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    text-align: left;
+    padding: 10px 0 !important;
+    color: #114B5F;
 }
 footer{
     display: block;

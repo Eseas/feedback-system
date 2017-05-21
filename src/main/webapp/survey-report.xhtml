@@ -29,10 +29,13 @@
                             <br/>
 
                             <ui:fragment rendered="#{question.type == 'TextQuestion'}">
-                                <ui:repeat value="#{surveyReportController.getQuestionTextAnswers(question)}" var="textAnswer" >
+                                <ui:repeat value="#{question.textAnswers}" var="textAnswer" >
                                     <h:outputText value="#{textAnswer.value}"/>
                                     <br/>
                                 </ui:repeat>
+
+                                <p:tagCloud model="#{surveyChartController.createTagCloud(question)}"/>
+
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
@@ -41,41 +44,55 @@
                                 <h:outputText value="#{surveyReportController.getAverage(question)}"/>
                                 <br/>
                                 <h:outputText value="Median : "/>
-                                <ui:repeat value="#{surveyReportController.getMedian(question)}" var="median" >
-                                    <h:outputText value="#{median} "/>
-                                </ui:repeat>
+                                <h:outputText value="#{surveyReportController.getMedian(question)}"/>
                                 <br/>
                                 <h:outputText value="Mode : "/>
-                                <h:outputText value="#{surveyReportController.getMode(question)}"/>
+                                <ui:repeat value="#{surveyReportController.getMode(question)}" var="mode" >
+                                    <h:outputText value="#{mode} "/>
+                                </ui:repeat>
                                 <br/>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                                <ui:repeat value="#{surveyReportController.getUniqueQuestionRadioAnswers(question)}" var="title" >
-                                    <h:outputText value="#{title} "/>
-                                    <h:outputText value="#{surveyReportController.countRadioAnswers(title,question)} "/>
-                                    <h:outputText value="#{surveyReportController.getPercentRadioAnswer(title,question)} %"/>
+                                <ui:repeat value="#{question.radioButtons}" var="radioButton" >
+                                    <h:outputText value="#{radioButton.title} "/>
+                                    <h:outputText value="#{surveyReportController.countRadioButtonAnswers(radioButton)} "/>
+                                    <h:outputText value="#{surveyReportController.getPercentRadioAnswer(radioButton)} %"/>
                                     <br/>
                                 </ui:repeat>
+
+                                <p:chart type="pie" model="#{surveyChartController.createPieModel(question)}" style="width:400px;height:300px" />
+
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                                <ui:repeat value="#{surveyReportController.getUniqueQuestionCheckboxAnswers(question)}" var="title" >
-                                        <h:outputText value="#{title} "/>
-                                        <h:outputText value="#{surveyReportController.countCheckBoxAnswers(title,question)} "/>
-                                        <h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(title,question)} %"/>
-                                        <br/>
+                                <ui:repeat value="#{question.checkboxes}" var="checkbox" >
+                                <h:outputText value="#{checkbox.title} "/>
+                                <h:outputText value="#{surveyReportController.countCheckBoxAnswers(checkbox)} "/>
+                                <h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(checkbox)} %"/>
+                                <br/>
                                 </ui:repeat>
+
+                                <!--<ui:repeat value="#{surveyReportController.getUniqueQuestionCheckboxAnswers(question)}" var="title" >-->
+                                    <!--<h:outputText value="#{title} "/>-->
+                                    <!--<h:outputText value="#{surveyReportController.countCheckBoxAnswers(title,question)} "/>-->
+                                    <!--<h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(title,question)} %"/>-->
+                                    <!--<br/>-->
+                                <!--</ui:repeat>-->
+
+                                <!--<p:chart type="pie" model="#{surveyChartController.createPieModel(question)}" style="width:400px;height:300px" />-->
+                                <p:chart type="bar" model="#{surveyChartController.createBarModel(question)}" style="width:500px;height:300px" />
+
                             </ui:fragment>
 
                         </ui:repeat>
                     </p:fieldset>
                 </p:tab>
-
             </p:tabView>
 
             <p:messages globalOnly="true"/>
         </h:form>
+
     </h:body>
 </f:view>
 
