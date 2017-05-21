@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
 

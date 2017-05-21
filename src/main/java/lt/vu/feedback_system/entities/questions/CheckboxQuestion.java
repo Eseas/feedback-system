@@ -23,7 +23,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"title"})
-@ToString(of = {"id", "title", "position", "required", "section", "survey", "checkboxes"})
+@ToString(of = {"id", "title", "position", "required"})
 public class CheckboxQuestion implements Question {
     private static final long serialVersionUID = 1L;
     @Id

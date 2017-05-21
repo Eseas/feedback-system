@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString(of = {"id", "question", "selectedCheckboxes"})
+@ToString(of = {"id", "question"})
 public class CheckboxAnswer implements Answer {
     private static final long serialVersionUID = 1L;
     @Id
