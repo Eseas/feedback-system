@@ -30,6 +30,4 @@ public class SelectedCheckbox {
     @OneToOne
     private Checkbox checkbox;
 
-
-
 }
