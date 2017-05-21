@@ -14,10 +14,6 @@ public class UserController {
     @Inject
     private UserContext userContext;
 
-    public boolean isLoggedIn() {
-        return userContext.isLoggedIn();
-    }
-
     public boolean isAdmin() {
         return userContext.isAdmin();
     }

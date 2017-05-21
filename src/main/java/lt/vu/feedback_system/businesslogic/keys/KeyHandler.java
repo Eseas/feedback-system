@@ -1,5 +1,6 @@
 package lt.vu.feedback_system.businesslogic.keys;
 
+import lt.vu.feedback_system.businesslogic.interceptors.Logged;
 import lt.vu.feedback_system.config.Configuration;
 import lt.vu.feedback_system.dao.ChangePwKeyDAO;
 import lt.vu.feedback_system.dao.PotentialUserDAO;
@@ -91,6 +92,7 @@ public class KeyHandler {
         email.send();
     }
 
+    @Logged
     @Transactional(rollbackOn = EmailException.class)
     public void startReg(final String email) throws EmailException, UserRegisteredException {
         if (!userDAO.userExists(email)) {
@@ -101,6 +103,7 @@ public class KeyHandler {
         } else throw new UserRegisteredException(String.format("User with email '%s' is already registered", email));
     }
 
+    @Logged
     @Transactional(rollbackOn = EmailException.class)
     public void startChangePw(final String email) throws EmailException {
         final User user = userDAO.getUserByEmail(email);
@@ -109,6 +112,7 @@ public class KeyHandler {
         sendChangePwLink(user.getEmail(), key.getCode());
     }
 
+    @Logged
     @Transactional(dontRollbackOn = KeyExpiredException.class)
     public void completeReg(final String code, final String firstName, final String lastName, final String password) throws KeyExpiredException {
         final RegKey regKey = regKeyDAO.selectByCode(code);
@@ -125,6 +129,7 @@ public class KeyHandler {
         }
     }
 
+    @Logged
     @Transactional
     public void completeChangePw(final String code, final String newPassword) {
         final ChangePwKey changePwKey = changePwKeyDAO.selectByCode(code);

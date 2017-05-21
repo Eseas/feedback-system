@@ -182,3 +182,10 @@ CREATE TABLE feedback.selected_checkboxes
     FOREIGN KEY (answer_id) REFERENCES feedback.checkbox_answers (id),
     FOREIGN KEY (checkbox_id) REFERENCES feedback.checkboxes (id)
 );
+
+CREATE TABLE feedback.logs
+(
+    id serial PRIMARY KEY,
+    time TIMESTAMP NOT NULL,
+    text VARCHAR(200) NOT NULL
+);
