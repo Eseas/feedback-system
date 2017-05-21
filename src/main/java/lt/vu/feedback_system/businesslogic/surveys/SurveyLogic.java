@@ -1,5 +1,6 @@
 package lt.vu.feedback_system.businesslogic.surveys;
 
+import lt.vu.feedback_system.businesslogic.interceptors.Logged;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
@@ -54,20 +55,28 @@ public class SurveyLogic {
         return surveyDAO.getSurveysByCreatorId(user.getId());
     }
 
-    public void addSection(Survey survey) {
+    public void addSection(Survey survey, String title) {
         Integer position = getNewSectionPosition(survey);
 
         Section section = new Section();
+
         section.setPosition(position);
+        section.setTitle(title);
 
         section.setSurvey(survey);
         survey.getSections().add(section);
+    }
+
+    public void removeSection(Survey survey, Section section) {
+        if (survey.getSections().size() > 1)
+            survey.getSections().remove(section);
     }
 
     public Integer getNewSectionPosition(Survey survey) {
         return survey.getSections().size() + 1;
     }
 
+    @Logged
     @Transactional
     public void create(Survey survey) {
         Random rand = new Random();

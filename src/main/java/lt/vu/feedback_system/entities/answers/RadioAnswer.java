@@ -15,7 +15,8 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "RadioAnswer.findAllByQuestionId", query = "SELECT c FROM RadioAnswer c WHERE c.question.id = :id"),
         @NamedQuery(name = "RadioAnswer.findAll", query = "SELECT c FROM RadioAnswer c"),
-        @NamedQuery(name = "RadioAnswer.findBySectionId", query = "SELECT s FROM RadioAnswer s WHERE s.question.section.id = :section_id")
+        @NamedQuery(name = "RadioAnswer.findBySectionId", query = "SELECT s FROM RadioAnswer s WHERE s.question.section.id = :section_id"),
+        @NamedQuery(name = "RadioAnswer.findByRadioButtonId", query = "SELECT s FROM RadioAnswer s WHERE s.radioButton.id = :id")
 })
 @Getter
 @Setter

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
+import lt.vu.feedback_system.config.Configuration;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
@@ -18,10 +19,17 @@ import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Properties;
 
 @Named
 @ViewScoped
 public class CreateSurveyController implements Serializable {
+
+    private Properties props;
+
+    @Inject
+    private Configuration config;
+
     @Getter
     @Setter
     private Integer id;
@@ -56,6 +64,7 @@ public class CreateSurveyController implements Serializable {
 
     @PostConstruct
     private void init() {
+        this.props = config.getProps();
         survey.setConfidential(true);
         addSection();
         activeTabIndex = 0;
@@ -76,7 +85,11 @@ public class CreateSurveyController implements Serializable {
 
     public void addSection() {
         activeTabIndex = surveyLogic.getNewSectionPosition(survey) - 1;
-        surveyLogic.addSection(survey);
+        surveyLogic.addSection(survey, props.getProperty("survey.defaultPageTitle"));
+    }
+
+    public void removeSection(Section section) {
+        surveyLogic.removeSection(survey, section);
     }
 
     public void addTextQuestion(Section section) {

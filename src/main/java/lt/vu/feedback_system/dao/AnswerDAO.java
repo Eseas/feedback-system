@@ -1,16 +1,12 @@
 package lt.vu.feedback_system.dao;
 
 import lt.vu.feedback_system.entities.answers.*;
-import lt.vu.feedback_system.entities.questions.Question;
-import lt.vu.feedback_system.entities.questions.TextQuestion;
+import lt.vu.feedback_system.entities.questions.RadioButton;
 import lt.vu.feedback_system.entities.surveys.Section;
-import lt.vu.feedback_system.entities.surveys.Survey;
-import lt.vu.feedback_system.utils.Sorter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -65,6 +61,10 @@ public class AnswerDAO {
 
     public List<RadioAnswer> getRadioAnswers(Section section) {
         return em.createNamedQuery("RadioAnswer.findBySectionId", RadioAnswer.class).setParameter("section_id", section.getId()).getResultList();
+    }
+
+    public List<RadioAnswer> getRadioAnswersByRadioButton(RadioButton radioButton) {
+        return em.createNamedQuery("RadioAnswer.findByRadioButtonId", RadioAnswer.class).setParameter("id", radioButton.getId()).getResultList();
     }
 
     public List<CheckboxAnswer> getCheckboxAnswers(Section section) {

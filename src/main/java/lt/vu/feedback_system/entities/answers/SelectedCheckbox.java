@@ -9,7 +9,9 @@ import javax.persistence.*;
 @Entity
 @Table(schema = "feedback", name = "selected_checkboxes")
 @NamedQueries({
-        @NamedQuery(name = "SelectedCheckbox.findById", query = "SELECT c FROM SelectedCheckbox c WHERE c.id = :id")
+        @NamedQuery(name = "SelectedCheckbox.findById", query = "SELECT c FROM SelectedCheckbox c WHERE c.id = :id"),
+        @NamedQuery(name = "SelectedCheckbox.findByQuestionId", query = "SELECT c FROM SelectedCheckbox c WHERE c.checkbox.question.id = :id"),
+        @NamedQuery(name = "SelectedCheckbox.findByCheckboxId", query = "SELECT c FROM SelectedCheckbox c WHERE c.checkbox.id = :id")
 })
 @Getter
 @Setter
@@ -27,7 +29,5 @@ public class SelectedCheckbox {
     @JoinColumn(name = "checkbox_id", referencedColumnName = "id")
     @OneToOne
     private Checkbox checkbox;
-
-
 
 }
