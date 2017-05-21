@@ -20,7 +20,7 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
-        <h:outputStylesheet name="css/stylesAnswer.css" />
+        <h:outputStylesheet name="css/stylesAnswerSurvey.css" />
         <title>Builder of Surveys</title>
     </h:head>
 
@@ -31,86 +31,115 @@
             <h2>#{answerSurveyController.answeredSurvey.survey.title}</h2>
         </div>
 
-        <h:outputText class="answ-page-desc" value="#{answerSurveyController.answeredSurvey.survey.description}"/>
+        <div class="answ-survey-desc" >
+            <h:outputText value="#{answerSurveyController.answeredSurvey.survey.description}"/>
+        </div>
 
+        <div class="answerSurvey-tabs">
             <p:tabView class="tab_form" id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
                        var="section" activeIndex="#{answerSurveyController.activeTabIndex}"
-                        dynamic="true">
+                        dynamic="true" style="border: none !important;">
 
                     <p:tab title="#{section.title}" disabled="true" >
-                        <h:outputText value="#{section.description}"/>
+                        <div class="section-title">
+                            <h:outputText value="#{section.title}"/>
+                        </div>
+                        <div class="section-description">
+                            <h:outputText value="#{section.description}"/>
+                        </div>
+                        <hr/>
 
-                        <h:form id="form">
+                        <h:form class="questions-section" id="form">
                         <p:panel>
                             <ui:repeat value="#{section.answers}" var="answer">
-                                <p:outputLabel value="#{answer.question.position}. #{answer.question.title}"/>
-                                <p:outputLabel rendered="#{answer.question.required}" value="*"/>
+                                <div  class="question-number" >
+                                    <p:outputLabel value="#{answer.question.position}"/>
+                                </div>
+                                <div class="question-title">
+                                    <p:outputLabel value="#{answer.question.title}"/>
+                                    <p:outputLabel rendered="#{answer.question.required}" value="*"/>
+                                </div>
                                 <br/>
 
                                 <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
-                                    <p:inputText id="text-value" value="#{answer.value}" disabled="#{answerSurveyController.preview}"
-                                                 required="#{empty param.noValidation and answer.question.required}"
-                                                 requiredMessage="This is a required question"/>
+                                    <p:inputTextarea id="text-value" value="#{answer.value}"
+                                                     required="#{empty param.noValidation and answer.question.required}"
+                                                     requiredMessage="Value is very needed in section #{answer.question.section.title}"
+                                                     rows="5" cols="30" maxlength="300" autoResize="false"/>
                                     <p:message for="text-value"/>
+
+                                    <hr/>
                                 </ui:fragment>
 
 
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
-                                    <p:outputLabel value="#{answer.question.lowerBound}..#{answer.question.upperBound}"/>
-                                    <p:inputText id="slider-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}"
-                                                 requiredMessage="This is a required question"
-                                                 disabled="#{answerSurveyController.preview}" />
-                                    <p:slider for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}"
-                                              disabled="#{answerSurveyController.preview}"/>
-                                    <p:message for="slider-value"/>
+                                    <div class="slider-bound">
+                                    <p:outputLabel value="Enter value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
+                                        <p:inputText id="slider-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Slider not selected in #{answer.question.section.title}"/>
+                                        <p:slider class="form-slider" for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}" />
+                                        <p:message for="slider-value"/></div>
+
+                                    <hr/>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
-                                    <p:selectOneRadio id="select-one-radio" value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter"
+                                    <p:selectOneRadio class="radio-question" id="select-one-radio" value="#{answer.radioButton}"
+                                                      converter="omnifaces.SelectItemsConverter"
                                                       required="#{empty param.noValidation and answer.question.required}"
-                                                      requiredMessage="This is a required question" layout="grid" columns="3"
-                                                      disabled="#{answerSurveyController.preview}">
+                                                      requiredMessage="Radio Button not selected"
+                                                      layout="responsive" columns="1" >
                                         <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                                     </p:selectOneRadio>
                                     <p:message for="select-one-radio"/>
+
+                                    <hr/>
                                 </ui:fragment>
 
                                 <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
-                                    <p:selectManyCheckbox id="select-many-checkbox" value="#{answer.selectedCheckboxes}" converter="omnifaces.SelectItemsConverter"
+                                    <p:selectManyCheckbox class="slider-question" id="select-many-checkbox" value="#{answer.selectedCheckboxes}"
+                                                          converter="omnifaces.SelectItemsConverter"
                                                           required="#{empty param.noValidation and answer.question.required}"
-                                                          requiredMessage="This is a required question"
-                                                          disabled="#{answerSurveyController.preview}">
-                                        <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}" var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}" itemValue="#{availableSelectedCheckbox}" />
+                                                          requiredMessage="No checkbox selected in #{answer.question.section.title}"
+                                                          layout="responsive" columns="1">
+                                        <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}"
+                                                       var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}"
+                                                       itemValue="#{availableSelectedCheckbox}"/>
                                     </p:selectManyCheckbox>
                                     <p:message for="select-many-checkbox"/>
-                                </ui:fragment>
 
-                                <br/>
+                                    <hr/>
+                                </ui:fragment>
                             </ui:repeat>
 
-                        </p:panel>
-                            <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
-                                <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
-                                    <f:param name="noValidation" value="true"/>
-                                </p:commandButton>
+                            <ui:fragment rendered="#{!answerSurveyController.lastSection}">
+                                <div class="next-button clearfix">
+                                    <p:commandButton class="next-button" value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />
+                                </div>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{answerSurveyController.lastSection}">
-                                <p:commandButton value="SUBMIT" action="#{answerSurveyController.answer()}"
-                                                 update="tab-view"
-                                                 disabled="#{answerSurveyController.preview}">
-                                    <f:param name="s" value="#{answerSurveyController.link}"/>
-                                </p:commandButton>
+                                <div class="submit-button clearfix">
+                                    <p:commandButton class="submit-button \" value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view">
+                                        <f:param name="s" value="#{answerSurveyController.link}"/>
+                                    </p:commandButton>
+                                </div>
                             </ui:fragment>
 
-                            <ui:fragment rendered="#{!answerSurveyController.lastSection}">
-                                <p:commandButton value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />
+                            <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
+                                <div class="previous-button clearfix">
+                                    <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
+                                        <f:param name="noValidation" value="true"/>
+                                    </p:commandButton>
+                                </div>
                             </ui:fragment>
+
+                        </p:panel>
                         </h:form>
                     </p:tab>
 
 
             </p:tabView>
+        </div>
 
             <p:messages globalOnly="true"/>
         <ui:include src="/WEB-INF/composites/footer.xhtml"/>
@@ -118,4 +147,3 @@
 </f:view>
 
 </html>
-

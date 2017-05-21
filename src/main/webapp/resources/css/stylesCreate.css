@@ -84,6 +84,11 @@ ol{
     box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
     margin-bottom: 30px;
 }
+.ui-tabs .ui-tabs-nav li a {
+    cursor: pointer;
+    font-family: 'Bitter', serif;
+    font-size: 16px;
+}
 
 /*top buttons*/
 .ui-state-active{
