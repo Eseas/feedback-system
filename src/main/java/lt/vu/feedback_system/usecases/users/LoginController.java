@@ -32,7 +32,6 @@ public class LoginController {
         try {
             userContext.login(email, password);
 
-
             if (userContext.isLoggedIn()) {
                 FacesContext context = FacesContext.getCurrentInstance();
                 context.getExternalContext().getSessionMap().put("userContext", userContext);

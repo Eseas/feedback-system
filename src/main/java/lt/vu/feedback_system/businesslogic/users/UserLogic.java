@@ -1,5 +1,6 @@
 package lt.vu.feedback_system.businesslogic.users;
 
+import lt.vu.feedback_system.businesslogic.interceptors.Logged;
 import lt.vu.feedback_system.dao.PotentialUserDAO;
 import lt.vu.feedback_system.entities.PotentialUser;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -14,11 +15,13 @@ public class UserLogic {
     @Inject
     private PotentialUserDAO potentialUserDAO;
 
+    @Logged
     @Transactional
     public void createPotentialUser(PotentialUser potentialUser) {
         potentialUserDAO.create(potentialUser);
     }
 
+    @Logged
     @Transactional
     public void removePotentialUser(PotentialUser potentialUser) {
         potentialUserDAO.delete(potentialUser);

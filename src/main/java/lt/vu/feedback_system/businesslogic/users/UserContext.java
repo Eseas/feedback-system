@@ -25,7 +25,7 @@ public class UserContext implements Serializable {
 
     @Inject
     @PasswordHash
-    PasswordHasher passwordHasher;
+    private PasswordHasher passwordHasher;
 
     public void login(String username, String password) throws IllegalAccessException {
         try {

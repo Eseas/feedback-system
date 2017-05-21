@@ -1,5 +1,6 @@
 package lt.vu.feedback_system.businesslogic.surveys;
 
+import lt.vu.feedback_system.businesslogic.interceptors.Logged;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
@@ -75,6 +76,7 @@ public class SurveyLogic {
         return survey.getSections().size() + 1;
     }
 
+    @Logged
     @Transactional
     public void create(Survey survey) {
         Random rand = new Random();
