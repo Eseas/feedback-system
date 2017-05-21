@@ -1,7 +1,6 @@
 package lt.vu.feedback_system.businesslogic.spreadsheets.excel;
 
 import com.google.common.collect.Lists;
-import lombok.Getter;
 import lt.vu.feedback_system.businesslogic.spreadsheets.ParsingHelperValues;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
@@ -12,7 +11,12 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 final public class ExcelAnswerSheetParser {
@@ -21,12 +25,12 @@ final public class ExcelAnswerSheetParser {
 
     private ExcelAnswerSheetParser() {}
 
-    static Result<Map<Integer, List<Answer>>> parseAnswers(final Result<Sheet> answerSheetResult, final Result<Map<Integer, Question>> questionsResult) {
+    static Result<Map<Integer, List<Answer>>> parseAnswers(final Result<Sheet> answerSheetResult, final Result<List<Question>> questionsResult) {
         final Result<Map<Integer, List<Answer>>> parsedAnswers;
         if (answerSheetResult.isSuccess()) {
             if (questionsResult.isSuccess()) {
                 final Sheet answerSheet = answerSheetResult.get();
-                final List<Row> rows = ExcelSheetParserHelper.filterOutEmptyRows(Lists.newArrayList(answerSheet.rowIterator()));
+                final List<Row> rows = ExcelSheetParserHelper.getUsableRows(Lists.newArrayList(answerSheet.rowIterator()));
                 if (rows.size() >= 2) {
                     if (answerFirstRowIsValid(answerSheet)) {
                         List<Result<Tuple<Integer, Answer>>> parsed = rows.subList(1, rows.size()).stream()
@@ -43,28 +47,27 @@ final public class ExcelAnswerSheetParser {
                             parsedAnswers = Result.Success(surveyIdAnswers);
                         } else parsedAnswers = Result.Failure(firstFailure.get().getFailureMsg());
                     } else parsedAnswers = Result.Failure(String.format(
-                            "First three cells of the first row in the Answer sheet must be filled with the following values: %s, %s and %s",
+                            "Answer sheet: First three cells of the first row must be filled with the following values: %s, %s and %s",
                             ParsingHelperValues.AnswerFirstRow.FirstColValue,
                             ParsingHelperValues.AnswerFirstRow.SecondColValue,
                             ParsingHelperValues.AnswerFirstRow.ThirdColValue
                     ));
-                } else parsedAnswers = Result.Failure("Spreadsheet has no answers");
+                } else parsedAnswers = Result.Failure("Answer sheet: spreadsheet has no answers");
             } else parsedAnswers = Result.Failure(questionsResult.getFailureMsg());
         } else parsedAnswers = Result.Failure(answerSheetResult.getFailureMsg());
         return parsedAnswers;
     }
 
-    private static Result<Tuple<Integer, Answer>> parseAnswer(final Row row, final Map<Integer, Question> questions) {
+    private static Result<Tuple<Integer, Answer>> parseAnswer(final Row row, final List<Question> questions) {
         final Result<Tuple<Integer, Answer>> parsedAnswer;
         if (ExcelSheetParserHelper.rowIsFilled(row, 3)) {
             final List<Cell> cells = Lists.newArrayList(row.cellIterator());
             final int surveyId = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)));
             final int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(1)));
             if (surveyId > 0 && questionNumber > 0) {
-                final Question notSafe = questions.getOrDefault(questionNumber, null);
-                final Result<Question> questionResult = notSafe != null ? Result.Success(notSafe) : Result.Failure(String.format("Question with number %d is not found", questionNumber));
-                if (questionResult.isSuccess()) {
-                    final Question question = questionResult.get();
+                final Optional<Question> notSafe = questions.stream().filter(q -> q.getPosition() == questionNumber).findFirst();
+                if (notSafe.isPresent()) {
+                    final Question question = notSafe.get();
                     final List<String> answerValues = answerValues(cells);
                     final String questionType = question.getType();
                     final String excelQuestionType = ParsingHelperValues.typesMap.getOrDefault(questionType, "UNMATCHED_TYPE");
@@ -75,7 +78,7 @@ final public class ExcelAnswerSheetParser {
                                 textAnswer.setQuestion((TextQuestion) question);
                                 textAnswer.setValue(answerValues.get(0));
                                 parsedAnswer = Result.Success(new Tuple<>(surveyId, textAnswer));
-                            } else parsedAnswer = Result.Failure(String.format("Question of type %s can only have one answer", excelQuestionType));
+                            } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s can only have one answer", excelQuestionType));
                             break;
                         case ParsingHelperValues.EntityQuestionTypes.Radio:
                             if (answerValues.size() == 1) {
@@ -88,9 +91,9 @@ final public class ExcelAnswerSheetParser {
                                         radioAnswer.setQuestion(radioQuestion);
                                         radioAnswer.setRadioButton(radioButtons.get(optionId - 1));
                                         parsedAnswer = Result.Success(new Tuple<>(surveyId, radioAnswer));
-                                    } else parsedAnswer = Result.Failure(String.format("Question of type %s answer with option id %d does not exist", excelQuestionType, optionId));
-                                } else parsedAnswer = Result.Failure(String.format("Question of type %s answer must be an integral value greater than zero", excelQuestionType));
-                            } else parsedAnswer = Result.Failure(String.format("Question of type %s can only have one answer", excelQuestionType));
+                                    } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer with option id %d does not exist", excelQuestionType, optionId));
+                                } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer must be an integral value greater than zero", excelQuestionType));
+                            } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s can only have one answer", excelQuestionType));
                             break;
                         case ParsingHelperValues.EntityQuestionTypes.Checkbox:
                             final List<Integer> optionIds = answerValues.stream().map(ParserWithDefaults::parseInt).collect(Collectors.toList());
@@ -109,8 +112,8 @@ final public class ExcelAnswerSheetParser {
                                     checkboxAnswer.setSelectedCheckboxes(selectedCheckboxes);
                                     checkboxAnswer.setQuestion(checkboxQuestion);
                                     parsedAnswer = Result.Success(new Tuple<>(surveyId, checkboxAnswer));
-                                } else parsedAnswer = Result.Failure(String.format("Question of type %s answer with option id %d does not exist", excelQuestionType, maxOptionId));
-                            } else parsedAnswer = Result.Failure(String.format("Question of type %s must have a list of integral values greater than zero as answers", excelQuestionType));
+                                } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer with option id %d does not exist", excelQuestionType, maxOptionId));
+                            } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s must have a list of integral values greater than zero as answers", excelQuestionType));
                             break;
                         case ParsingHelperValues.EntityQuestionTypes.Slider:
                             if (answerValues.size() == 1) {
@@ -122,16 +125,16 @@ final public class ExcelAnswerSheetParser {
                                         sliderAnswer.setQuestion(sliderQuestion);
                                         sliderAnswer.setValue(sliderValue);
                                         parsedAnswer = Result.Success(new Tuple<>(surveyId, sliderAnswer));
-                                    } else parsedAnswer = Result.Failure(String.format("Question of type %s answer value is out of bounds", excelQuestionType));
-                                } else  parsedAnswer = Result.Failure(String.format("Question of type %s answer must be an integral value", excelQuestionType));
-                            } else parsedAnswer = Result.Failure(String.format("Question of type %s can only have one answer value", excelQuestionType));
+                                    } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer value is out of bounds", excelQuestionType));
+                                } else  parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer must be an integral value", excelQuestionType));
+                            } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s can only have one answer value", excelQuestionType));
                             break;
                         default:
-                            parsedAnswer = Result.Failure(String.format("Failed to detect answer with question type '%s'", questionType));
+                            parsedAnswer = Result.Failure(String.format("Answer sheet: failed to detect answer with question type '%s'", questionType));
                     }
-                } else parsedAnswer = Result.Failure(questionResult.getFailureMsg());
-            } else parsedAnswer = Result.Failure("Answer ids and question numbers has to be integral values greater than 0");
-        } else parsedAnswer = Result.Failure("One or more rows are missing values");
+                } else parsedAnswer = Result.Failure(String.format("Answer sheet: question with number %d is not found", questionNumber));
+            } else parsedAnswer = Result.Failure("Answer sheet: answer ids and question numbers has to be integral values greater than 0");
+        } else parsedAnswer = Result.Failure("Answer sheet: one or more rows are missing values");
         return parsedAnswer;
     }
 
@@ -153,20 +156,6 @@ final public class ExcelAnswerSheetParser {
                     && cellValues.indexOf(ParsingHelperValues.AnswerFirstRow.ThirdColValue) == 2;
         } else isValid = false;
         return isValid;
-    }
-
-}
-
-@Getter
-final class AnswerWrapper {
-
-    private final int surveyIndex;
-
-    private final Answer answer;
-
-    AnswerWrapper(final int surveyId, final Answer answer) {
-        this.surveyIndex = surveyId;
-        this.answer = answer;
     }
 
 }

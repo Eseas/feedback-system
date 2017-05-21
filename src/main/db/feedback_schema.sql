@@ -42,9 +42,9 @@ CREATE TABLE feedback.surveys
 (
     id serial PRIMARY KEY,
     link VARCHAR(10) NOT NULL UNIQUE,
-    creator_id INTEGER,
-    is_confidential BOOLEAN,
-    title VARCHAR(200),
+    creator_id INTEGER NOT NULL,
+    is_confidential BOOLEAN NOT NULL,
+    title VARCHAR(200) NOT NULL,
     description VARCHAR(200),
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE feedback.sections
 (
     id SERIAL PRIMARY KEY,
     survey_id INTEGER,
-    position INTEGER,
+    position INTEGER NOT NULL,
     title VARCHAR(50),
     description VARCHAR(200),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys(id)
@@ -64,11 +64,11 @@ CREATE TABLE feedback.slider_questions
     id serial PRIMARY KEY,
     survey_id INTEGER,
     section_id INTEGER,
-    position INTEGER,
-    is_required BOOLEAN,
-    lower_bound INTEGER,
-    upper_bound INTEGER,
-    title VARCHAR(200),
+    position INTEGER NOT NULL,
+    is_required BOOLEAN NOT NULL,
+    lower_bound INTEGER NOT NULL,
+    upper_bound INTEGER NOT NULL,
+    title VARCHAR(200) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -78,9 +78,9 @@ CREATE TABLE feedback.text_questions
     id serial PRIMARY KEY,
     survey_id INTEGER,
     section_id INTEGER,
-    position INTEGER,
-    is_required BOOLEAN,
-    title VARCHAR(200),
+    position INTEGER NOT NULL,
+    is_required BOOLEAN NOT NULL,
+    title VARCHAR(200) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -90,9 +90,9 @@ CREATE TABLE feedback.checkbox_questions
     id serial PRIMARY KEY,
     survey_id INTEGER,
     section_id INTEGER,
-    position INTEGER,
-    is_required BOOLEAN,
-    title VARCHAR(200),
+    position INTEGER NOT NULL,
+    is_required BOOLEAN NOT NULL,
+    title VARCHAR(200) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -102,9 +102,9 @@ CREATE TABLE feedback.radio_questions
     id serial PRIMARY KEY,
     survey_id INTEGER,
     section_id INTEGER,
-    position INTEGER,
-    is_required BOOLEAN,
-    title VARCHAR(200),
+    position INTEGER NOT NULL,
+    is_required BOOLEAN NOT NULL,
+    title VARCHAR(200) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -115,7 +115,7 @@ CREATE TABLE feedback.checkboxes
 (
     id serial PRIMARY KEY,
     question_id INTEGER,
-    title VARCHAR(200),
+    title VARCHAR(200) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.checkbox_questions (id)
 );
 
@@ -123,7 +123,7 @@ CREATE TABLE feedback.radio_buttons
 (
     id serial PRIMARY KEY,
     question_id INTEGER,
-    title VARCHAR(200),
+    title VARCHAR(200) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.radio_questions (id)
 );
 
@@ -131,7 +131,7 @@ CREATE TABLE feedback.answered_surveys
 (
     id serial PRIMARY KEY,
     survey_id INTEGER,
-    log_time TIMESTAMP,
+    log_time TIMESTAMP NOT NULL DEFAULT now(),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -140,7 +140,7 @@ CREATE TABLE feedback.slider_answers
     id serial PRIMARY KEY,
     question_id INTEGER,
     answered_survey_id INTEGER,
-    value INTEGER,
+    value INTEGER NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.slider_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
@@ -150,7 +150,7 @@ CREATE TABLE feedback.text_answers
     id serial PRIMARY KEY,
     question_id INTEGER,
     answered_survey_id INTEGER,
-    value VARCHAR(200),
+    value VARCHAR(200) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.text_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
@@ -160,7 +160,7 @@ CREATE TABLE feedback.radio_answers
     id serial PRIMARY KEY,
     question_id INTEGER,
     answered_survey_id INTEGER,
-    radio_button_id INTEGER,
+    radio_button_id INTEGER NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.radio_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );

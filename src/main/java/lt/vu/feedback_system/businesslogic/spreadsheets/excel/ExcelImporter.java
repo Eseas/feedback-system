@@ -54,27 +54,26 @@ public class ExcelImporter implements SpreadsheetImporter {
         this.answerDAO = answerDAO;
     }
 
-    // TODO: write to db
     @Transactional
     public void importSurvey(final Survey survey, UploadedFile file) throws SpreadsheetException, IOException {
         final Result<Workbook> workbookResult = getWorkbook(file);
         final Result<Sheet> surveySheetResult = getSheet(workbookResult, "Survey");
         final Result<Sheet> answerSheetResult = getSheet(workbookResult, "Answer");
-        final Result<Map<Integer, Question>> parsedQuestions = ExcelSurveySheetParser.parseQuestions(surveySheetResult);
+        final Result<List<Question>> parsedQuestions = ExcelSurveySheetParser.parseQuestions(surveySheetResult);
         final Result<Map<Integer, List<Answer>>> parsedAnswers = ExcelAnswerSheetParser.parseAnswers(answerSheetResult, parsedQuestions);
 
         if (parsedAnswers.isSuccess()) createEntities(survey, parsedQuestions.get(), parsedAnswers.get());
         else throw new SpreadsheetException(parsedAnswers.getFailureMsg());
     }
 
-    private void createEntities(final Survey survey, final Map<Integer, Question> questions, final Map<Integer, List<Answer>> answers) {
+    private void createEntities(final Survey survey, final List<Question> questions, final Map<Integer, List<Answer>> answers) {
         final Section defaultSection = new Section();
         defaultSection.setPosition(1);
         defaultSection.setTitle("First section");
         defaultSection.setDescription("");
         defaultSection.setSurvey(survey);
 
-        questions.values().forEach(q -> {
+        questions.forEach(q -> {
             q.setSection(defaultSection);
             q.setSurvey(survey);
         });
@@ -83,13 +82,13 @@ public class ExcelImporter implements SpreadsheetImporter {
         answers.forEach((k, v) -> {
             final AnsweredSurvey answeredSurvey = new AnsweredSurvey();
             answeredSurvey.setSurvey(survey);
-            answeredSurveys.add(answeredSurvey);
             v.forEach(answer -> answer.setAnsweredSurvey(answeredSurvey));
+            answeredSurveys.add(answeredSurvey);
         });
 
         surveyDAO.create(survey);
         sectionDAO.create(defaultSection);
-        questions.values().forEach(questionDAO::create);
+        questions.forEach(questionDAO::create);
         answeredSurveys.forEach(answeredSurveyDAO::create);
         answers.values().forEach(a -> a.forEach(answerDAO::create));
     }

@@ -62,6 +62,7 @@
         <url-pattern>/users.html</url-pattern>
         <url-pattern>/create-survey.html</url-pattern>
         <url-pattern>/survey-report.html</url-pattern>
+        <url-pattern>/upload.html</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminPermissionFilter</filter-name>

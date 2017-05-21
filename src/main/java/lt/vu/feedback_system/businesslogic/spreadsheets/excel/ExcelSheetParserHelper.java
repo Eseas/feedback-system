@@ -1,11 +1,13 @@
 package lt.vu.feedback_system.businesslogic.spreadsheets.excel;
 
 import com.google.common.collect.Streams;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Cell;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 final class ExcelSheetParserHelper {
@@ -14,17 +16,23 @@ final class ExcelSheetParserHelper {
 
     private ExcelSheetParserHelper() {}
 
-    static List<Row> filterOutEmptyRows(final List<Row> rows) {
-        return rows.stream().filter(r -> !rowIsEmpty(r)).collect(Collectors.toList());
-    }
-
-    /**
-     * Row is empty if all its cells are empty
-     * @param row row to check if it's empty
-     * @return
-     */
-    static boolean rowIsEmpty(final Row row) {
-        return Streams.stream(row.cellIterator()).allMatch(ExcelSheetParserHelper::cellIsEmpty);
+    static List<Row> getUsableRows(final List<Row> rows) {
+        final List<Row> usableRows = new ArrayList<>();
+        final Iterator<Row> iterator = rows.iterator();
+        int prevRowNumber = 0;
+        boolean continueLoop = true;
+        while (iterator.hasNext() && continueLoop) {
+            Row row = iterator.next();
+            if (row.getRowNum() - prevRowNumber > 1
+                || row.getCell(0) == null
+                || row.getCell(0).getCellTypeEnum().equals(CellType.BLANK)) {
+                continueLoop = false;
+            } else {
+                prevRowNumber = row.getRowNum();
+                usableRows.add(row);
+            }
+        }
+        return usableRows;
     }
 
     /**
@@ -48,7 +56,7 @@ final class ExcelSheetParserHelper {
      */
     static boolean rowIsFilled(Row row, int minCellsFilled) {
         return row.getPhysicalNumberOfCells() >= minCellsFilled
-            && Streams.stream(row.cellIterator()).limit(minCellsFilled).allMatch(ExcelSheetParserHelper::cellIsFull);
+                && Streams.stream(row.cellIterator()).limit(minCellsFilled).allMatch(ExcelSheetParserHelper::cellIsFull);
     }
 
 }

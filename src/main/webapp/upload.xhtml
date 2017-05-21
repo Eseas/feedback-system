@@ -17,11 +17,14 @@
 <h:body>
 
     <h:form enctype="multipart/form-data">
-        <p:inputText value="#{importController.survey.title}"/><br/>
-        <p:inputTextarea value="#{importController.survey.description}"/><br/>
-        <p:inputSwitch value="#{importController.survey.confidential}"/><br/>
+        <o:outputLabel for="survey-title" value="Survey title"/><br/>
+        <p:inputText id="survey-title" value="#{importController.survey.title}" required="true" requiredMessage="Survey title is required"/><br/>
+        <o:outputLabel for="survey-description" value="Survey description"/><br/>
+        <p:inputTextarea id="survey-description" value="#{importController.survey.description}"/><br/>
+        <o:outputLabel for="private-switch" value="Private survey"/><br/>
+        <p:inputSwitch id="private-switch" value="#{importController.survey.confidential}"/><br/>
         <p:fileUpload value="#{importController.file}" mode="simple"/><br/>
-        <p:commandButton value="Import survey" actionListener="#{importController.upload()}" ajax="false"/><br/>
+        <p:commandButton value="Upload" actionListener="#{importController.upload()}" ajax="false"/><br/>
         <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
     </h:form>
 
