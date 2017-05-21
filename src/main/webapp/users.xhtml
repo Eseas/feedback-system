@@ -23,7 +23,7 @@
         <h2>User Management</h2>
     </div>
 
-    <p:tabView class="management-tabs" id="tab_view" cache="false">
+    <p:tabView class="management-tabs" id="tab_view" cache="false" effect="slide">
         <p:tab id="tab_registered" title="Registered Users">
             <h:form id="form" class="reg_users">
 
@@ -54,7 +54,8 @@
                     </p:dataTable>
                 </p:fieldset>
 
-                <p:dialog header="Edit User" widgetVar="userDialog" modal="true" closable="true" resizable="false" closeOnEscape="true">
+                <p:dialog header="Edit User" widgetVar="userDialog" modal="true" closable="true" resizable="false"
+                          closeOnEscape="true" showEffect="explode" hideEffect="bounce">
                     <p:ajax event="close" update=":tab_view:form"/>
                     <p:outputPanel id="userDetail">
                         <p:panelGrid  columns="3" rendered="#{not empty userManagementController.selectedUser}"
