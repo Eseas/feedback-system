@@ -1,7 +1,6 @@
 package lt.vu.feedback_system.dao;
 
 import lt.vu.feedback_system.entities.questions.Checkbox;
-import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

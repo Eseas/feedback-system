@@ -6,9 +6,12 @@ import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
+import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.answers.*;
+import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.entities.questions.RadioButton;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
@@ -33,12 +36,14 @@ public class SurveyReportController implements Serializable {
     @Setter
     private String link;
 
-
-
     @Inject
     private SurveyDAO surveyDAO;
     @Inject
     private AnsweredSurveyDAO answeredSurveyDAO;
+
+    @Inject
+    private SelectedCheckboxDAO selectedCheckboxDAO;
+
     @Inject
     private AnswerDAO answerDAO;
     @Getter
@@ -70,17 +75,6 @@ public class SurveyReportController implements Serializable {
         return Sorter.sortQuestionsAscending(questions);
     }
 
-    public List<TextAnswer> getQuestionTextAnswers(Question q) {
-        return answerDAO.getAllTextAnswersByQuestionId(q.getId());
-    }
-
-    public List<SliderAnswer> getQuestionSliderAnswers(Question q) {
-        return answerDAO.getAllSliderAnswersByQuestionId(q.getId());
-    }
-
-    public List<RadioAnswer> getQuestionRadioAnswers(Question q) {
-        return answerDAO.getAllRadioAnswersByQuestionId(q.getId());
-    }
     public int countTextAnswers(String title, Question q){
         List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(q.getId());
 
@@ -96,6 +90,7 @@ public class SurveyReportController implements Serializable {
         }
         return count;
     }
+
     public List<String> getUniqueQuestionTextAnswers(Question q) {
         List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(q.getId());
         List<String> result = new ArrayList<>();
@@ -118,47 +113,11 @@ public class SurveyReportController implements Serializable {
         }
         return result;
     }
-    public List<String> getUniqueQuestionRadioAnswers(Question q) {
-        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
-        List<String> result = new ArrayList<>();
-        Boolean temp= false;
-        for (RadioAnswer answer: answers) {
-            for (String a: result) {
-                if(answer.getRadioButton().getTitle().equals(a)){
-                    temp = true;
-                }
-            }
-            if (!temp){
-                result.add(answer.getRadioButton().getTitle());
-            }
-            temp = false;
-        }
-        return result;
-    }
-
-    public List<String> getUniqueQuestionCheckboxAnswers(Question q) {
-        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
-        List<String> result = new ArrayList<>();
-        Boolean temp= false;
-        for (CheckboxAnswer answer: answers) {
-            for(SelectedCheckbox answer2 : answer.getSelectedCheckboxes()){
-                for (String a: result) {
-                    if (answer2.getCheckbox().getTitle().equals(a)) {
-                        temp = true;
-                    }
-                }
-                if (!temp) {
-                    result.add(answer2.getCheckbox().getTitle());
-                }
-                temp = false;
-            }
-        }
-        return result;
-    }
 
     public List<CheckboxAnswer> getQuestionCheckboxAnswers(Question q) {
         return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
     }
+
     public double getAverage(Question q) {
         double sum = 0;
         double divider = 0;
@@ -167,7 +126,7 @@ public class SurveyReportController implements Serializable {
             sum += answer.getValue();
             divider++;
         }
-        return sum/divider;
+        return round(sum/divider);
     }
     public double getMedian(Question q) {
 
@@ -203,30 +162,14 @@ public class SurveyReportController implements Serializable {
                 .collect(Collectors.toList());
     }
 
-    public int countRadioAnswers(String title, Question q){
-        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
-
-        int count = 0;
-        for (RadioAnswer answer: answers) {
-            if(answer.getRadioButton().getTitle().equals(title)){
-                count ++;
-            }
-        }
-        return count;
+    public int countRadioButtonAnswers(RadioButton radioButton){
+        return answerDAO.getRadioAnswersByRadioButton(radioButton).size();
     }
-    public int countCheckBoxAnswers(String title, Question q){
-        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
 
-        int count = 0;
-        for (CheckboxAnswer answer: answers) {
-            for(SelectedCheckbox answer2: answer.getSelectedCheckboxes()) {
-                if (answer2.getCheckbox().getTitle().equals(title)) {
-                    count++;
-                }
-            }
-        }
-        return count;
+    public int countCheckBoxAnswers(Checkbox checkbox){
+        return selectedCheckboxDAO.getSelectedCheckboxesByCheckbox(checkbox).size();
     }
+
     // round a double to 2 decimal places
     private double round(double value){
         value = value*100;
@@ -235,25 +178,23 @@ public class SurveyReportController implements Serializable {
         return value;
     }
 
-    public double getPercentCheckBoxAnswer(String title, Question q){
-        List<CheckboxAnswer> answers = answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
-        double answerCount = countCheckBoxAnswers(title,q);
-        int allCount= 0;
-        for (CheckboxAnswer answer: answers) {
-            for(SelectedCheckbox answer2: answer.getSelectedCheckboxes()) {
-                    allCount++;
-            }
-        }
-        return round(answerCount/allCount * 100);
+    public double getPercentCheckBoxAnswer(Checkbox checkbox){
+        Integer allAnswerCount = selectedCheckboxDAO.getSelectedCheckboxesByQuestion(checkbox.getQuestion()).size();
+        Integer checkboxAnswerCount = selectedCheckboxDAO.getSelectedCheckboxesByCheckbox(checkbox).size();
+
+        if (allAnswerCount == 0)
+            return 0;
+        else
+            return round((double)checkboxAnswerCount/allAnswerCount * 100);
     }
 
-    public double getPercentRadioAnswer(String title, Question q){
-        List<RadioAnswer> answers = answerDAO.getAllRadioAnswersByQuestionId(q.getId());
-        double answerCount = countRadioAnswers(title,q);
-        int allCount= 0;
-        for (RadioAnswer answer: answers) {
-            allCount++;
-        }
-        return round(answerCount/allCount * 100);
+    public double getPercentRadioAnswer(RadioButton radioButton){
+        Integer allAnswerCount = answerDAO.getAllRadioAnswersByQuestionId(radioButton.getQuestion().getId()).size();
+        Integer radioButtonAnswerCount = answerDAO.getRadioAnswersByRadioButton(radioButton).size();
+
+        if (allAnswerCount == 0)
+            return 0;
+        else
+            return round((double)radioButtonAnswerCount/allAnswerCount * 100);
     }
 }
