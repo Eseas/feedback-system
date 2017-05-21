@@ -40,7 +40,10 @@
                         dynamic="true" style="border: none !important;">
 
                     <p:tab title="#{section.title}" disabled="true" >
-                        <div class="page-desc">
+                        <div class="section-title">
+                            <h:outputText value="#{section.title}"/>
+                        </div>
+                        <div class="section-description">
                             <h:outputText value="#{section.description}"/>
                         </div>
                         <hr/>
@@ -79,7 +82,11 @@
                                 </ui:fragment>
 
                                 <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
-                                    <p:selectOneRadio class="radio-question" id="select-one-radio" value="#{answer.radioButton}" converter="omnifaces.SelectItemsConverter" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Radio Button not selected" layout="grid" columns="3">
+                                    <p:selectOneRadio class="radio-question" id="select-one-radio" value="#{answer.radioButton}"
+                                                      converter="omnifaces.SelectItemsConverter"
+                                                      required="#{empty param.noValidation and answer.question.required}"
+                                                      requiredMessage="Radio Button not selected"
+                                                      layout="responsive" columns="1" >
                                         <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                                     </p:selectOneRadio>
                                     <p:message for="select-one-radio"/>
@@ -88,33 +95,44 @@
                                 </ui:fragment>
 
                                 <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
-                                    <p:selectManyCheckbox class="slider-question" id="select-many-checkbox" value="#{answer.selectedCheckboxes}" converter="omnifaces.SelectItemsConverter" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Checboxes not selected in #{answer.question.section.title}">
-                                        <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}" var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}" itemValue="#{availableSelectedCheckbox}" />
+                                    <p:selectManyCheckbox class="slider-question" id="select-many-checkbox" value="#{answer.selectedCheckboxes}"
+                                                          converter="omnifaces.SelectItemsConverter"
+                                                          required="#{empty param.noValidation and answer.question.required}"
+                                                          requiredMessage="No checkbox selected in #{answer.question.section.title}"
+                                                          layout="responsive" columns="1">
+                                        <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}"
+                                                       var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}"
+                                                       itemValue="#{availableSelectedCheckbox}"/>
                                     </p:selectManyCheckbox>
                                     <p:message for="select-many-checkbox"/>
 
                                     <hr/>
                                 </ui:fragment>
-
-                                <br/>
                             </ui:repeat>
 
-                        </p:panel>
-                            <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
-                                <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
-                                    <f:param name="noValidation" value="true"/>
-                                </p:commandButton>
+                            <ui:fragment rendered="#{!answerSurveyController.lastSection}">
+                                <div class="next-button clearfix">
+                                    <p:commandButton class="next-button" value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />
+                                </div>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{answerSurveyController.lastSection}">
-                                <p:commandButton value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view">
-                                    <f:param name="s" value="#{answerSurveyController.link}"/>
-                                </p:commandButton>
+                                <div class="submit-button clearfix">
+                                    <p:commandButton class="submit-button \" value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view">
+                                        <f:param name="s" value="#{answerSurveyController.link}"/>
+                                    </p:commandButton>
+                                </div>
                             </ui:fragment>
 
-                            <ui:fragment rendered="#{!answerSurveyController.lastSection}">
-                                <p:commandButton value="NEXT" action="#{answerSurveyController.nextTab}" update="tab-view" />
+                            <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
+                                <div class="previous-button clearfix">
+                                    <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
+                                        <f:param name="noValidation" value="true"/>
+                                    </p:commandButton>
+                                </div>
                             </ui:fragment>
+
+                        </p:panel>
                         </h:form>
                     </p:tab>
 

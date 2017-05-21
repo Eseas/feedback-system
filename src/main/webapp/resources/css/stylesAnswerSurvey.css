@@ -97,12 +97,19 @@ ol{
 }
 
 /*inside elements*/
-.page-desc {
+.section-title{
+    font-family: 'Bitter', serif !important;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: #00426B;
+    margin: 10px auto;
+    display: block;
+}
+.section-description {
     margin: 10px 0 20px;
-    text-align: center;
     font-style: italic;
     font-family: 'Bitter', serif;
-    font-size: 16px;
+    font-size: 14px;
 }
 .ui-tabs .ui-tabs-nav li a {
     cursor: pointer;
@@ -147,7 +154,52 @@ ol{
     max-width: 500px;
     margin: 0 auto 40px;
 }
-
+.ui-grid-row label {
+    font-size: 14px;
+    font-weight: normal !important;
+}
+.ui-chkbox {
+    margin: 0 10px 10px 50px;
+}
+.ui-radiobutton {
+    margin: 0 10px 10px 50px !important;
+}
+.submit-button button{
+    float: right;
+    margin-right: 40px;
+    display: block;
+    background: #3dae41 !important;
+    border: 1px #3dae41 !important;
+    border-radius: 3px;
+    padding: 2px !important;
+    color: #fff !important;
+    text-shadow: none !important;
+    box-shadow: none;
+}
+.previous-button button{
+    margin-left: 40px;
+    top: -30.5px;
+    display: block;
+    background: #fff;
+    border: 1px solid #808080;
+    color: #808080;
+    border-radius: 3px;
+    padding: 2px !important;
+    text-shadow: none !important;
+    box-shadow: none;
+}
+.next-button button{
+    float: right;
+    margin-right: 40px;
+    display: block;
+    background: #fff;
+    border: 1px solid #808080;
+    color: #808080;
+    border-radius: 3px;
+    padding: 2px !important;
+    text-shadow: none !important;
+    box-shadow: none;
+}
 
 
 /*page bottom*/
