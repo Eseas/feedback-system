@@ -5,7 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui"
 >
 <f:view>
     <f:metadata>
@@ -26,6 +25,12 @@
 
     <h:body>
         <ui:include src="/WEB-INF/composites/header.xhtml"/>
+
+        <ui:fragment rendered="#{answerSurveyController.preview}">
+            <div class="page_title">
+                <h2>PREVIEW MODE</h2>
+            </div>
+        </ui:fragment>
 
         <div class="page_title">
             <h2>#{answerSurveyController.answeredSurvey.survey.title}</h2>
@@ -63,8 +68,9 @@
 
                                 <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
                                     <p:inputTextarea id="text-value" value="#{answer.value}"
+                                                     disabled="#{answerSurveyController.preview}"
                                                      required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="Value is very needed in section #{answer.question.section.title}"
+                                                     requiredMessage="This question is required"
                                                      rows="5" cols="30" maxlength="300" autoResize="false"/>
                                     <p:message for="text-value"/>
 
@@ -75,8 +81,14 @@
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
                                     <p:outputLabel value="Enter value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
-                                        <p:inputText id="slider-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Slider not selected in #{answer.question.section.title}"/>
-                                        <p:slider class="form-slider" for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}" />
+                                        <p:inputText id="slider-value" value="#{answer.value}"
+                                                     disabled="#{answerSurveyController.preview}"
+                                                     required="#{empty param.noValidation and answer.question.required}"
+                                                     requiredMessage="Slider not selected in #{answer.question.section.title}"/>
+                                        <p:slider class="form-slider" for="slider-value"
+                                                  disabled="#{answerSurveyController.preview}"
+                                                  minValue="#{answer.question.lowerBound}"
+                                                  maxValue="#{answer.question.upperBound}"/>
                                         <p:message for="slider-value"/></div>
 
                                     <hr/>
@@ -85,6 +97,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
                                     <p:selectOneRadio class="radio-question" id="select-one-radio" value="#{answer.radioButton}"
                                                       converter="omnifaces.SelectItemsConverter"
+                                                      disabled="#{answerSurveyController.preview}"
                                                       required="#{empty param.noValidation and answer.question.required}"
                                                       requiredMessage="Radio Button not selected"
                                                       layout="responsive" columns="1" >
@@ -98,6 +111,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
                                     <p:selectManyCheckbox class="slider-question" id="select-many-checkbox" value="#{answer.selectedCheckboxes}"
                                                           converter="omnifaces.SelectItemsConverter"
+                                                          disabled="#{answerSurveyController.preview}"
                                                           required="#{empty param.noValidation and answer.question.required}"
                                                           requiredMessage="No checkbox selected in #{answer.question.section.title}"
                                                           layout="responsive" columns="1">
@@ -119,7 +133,10 @@
 
                             <ui:fragment rendered="#{answerSurveyController.lastSection}">
                                 <div class="submit-button clearfix">
-                                    <p:commandButton class="submit-button \" value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view">
+                                    <p:commandButton class="submit-button \" value="SUBMIT"
+                                                     action="#{answerSurveyController.answer()}"
+                                                     disabled="#{answerSurveyController.preview}"
+                                                     update="tab-view">
                                         <f:param name="s" value="#{answerSurveyController.link}"/>
                                     </p:commandButton>
                                 </div>
@@ -127,7 +144,9 @@
 
                             <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
                                 <div class="previous-button clearfix">
-                                    <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
+                                    <p:commandButton id="previous" value="PREVIOUS"
+                                                     action="#{answerSurveyController.previousTab}"
+                                                     update="tab-view">
                                         <f:param name="noValidation" value="true"/>
                                     </p:commandButton>
                                 </div>
