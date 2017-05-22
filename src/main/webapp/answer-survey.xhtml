@@ -77,7 +77,6 @@
                                     <hr/>
                                 </ui:fragment>
 
-
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
                                     <p:outputLabel value="Enter value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
@@ -90,7 +89,6 @@
                                                   minValue="#{answer.question.lowerBound}"
                                                   maxValue="#{answer.question.upperBound}"/>
                                         <p:message for="slider-value"/></div>
-
                                     <hr/>
                                 </ui:fragment>
 
