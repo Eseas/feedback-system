@@ -77,20 +77,18 @@
                                     <hr/>
                                 </ui:fragment>
 
-
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
                                     <p:outputLabel value="Enter value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
                                         <p:inputText id="slider-value" value="#{answer.value}"
                                                      disabled="#{answerSurveyController.preview}"
                                                      required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="This is a required question"
+                                                     requiredMessage="This is a required question"/>
                                         <p:slider class="form-slider" for="slider-value"
                                                   disabled="#{answerSurveyController.preview}"
                                                   minValue="#{answer.question.lowerBound}"
                                                   maxValue="#{answer.question.upperBound}"/>
                                         <p:message for="slider-value"/></div>
-
                                     <hr/>
                                 </ui:fragment>
 
