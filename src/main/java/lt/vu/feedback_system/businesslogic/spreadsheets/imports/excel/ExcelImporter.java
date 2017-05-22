@@ -1,7 +1,8 @@
-package lt.vu.feedback_system.businesslogic.spreadsheets.excel;
+package lt.vu.feedback_system.businesslogic.spreadsheets.imports.excel;
 
+import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
 import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetException;
-import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetImporter;
+import lt.vu.feedback_system.businesslogic.spreadsheets.imports.SpreadsheetImporter;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.questions.*;
@@ -22,11 +23,6 @@ import java.util.*;
 
 @ApplicationScoped
 public class ExcelImporter implements SpreadsheetImporter {
-
-    // https://www.sitepoint.com/web-foundations/mime-types-summary-list/
-    private final String xlsType = "application/vnd.ms-excel";
-
-    private final String xlsxType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     // 10 MB
     private final long maxSize = 10000000;
@@ -105,10 +101,10 @@ public class ExcelImporter implements SpreadsheetImporter {
         } else {
             try (InputStream is = file.getInputstream()) {
                 switch (type) {
-                    case xlsType:
+                    case HelperValues.ContentTypes.Xls:
                         result = Result.Success(new HSSFWorkbook(is));
                         break;
-                    case xlsxType:
+                    case HelperValues.ContentTypes.Xlsx:
                         result = Result.Success(new XSSFWorkbook(is));
                         break;
                     default:

@@ -1,4 +1,4 @@
-package lt.vu.feedback_system.businesslogic.spreadsheets.excel;
+package lt.vu.feedback_system.businesslogic.spreadsheets.imports.excel;
 
 import com.google.common.collect.Streams;
 import org.apache.poi.ss.usermodel.CellType;

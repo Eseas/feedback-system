@@ -3,7 +3,7 @@ package lt.vu.feedback_system.usecases.spreadsheets;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetImporter;
+import lt.vu.feedback_system.businesslogic.spreadsheets.imports.SpreadsheetImporter;
 import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetException;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.entities.User;

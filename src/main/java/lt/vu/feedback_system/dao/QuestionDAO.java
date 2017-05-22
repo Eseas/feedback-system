@@ -64,4 +64,5 @@ public class QuestionDAO {
     public List<CheckboxQuestion> getCheckboxQuestions(Section section) {
         return em.createNamedQuery("CheckboxQuestion.findBySectionId", CheckboxQuestion.class).setParameter("section_id", section.getId()).getResultList();
     }
+
 }
