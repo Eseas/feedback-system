@@ -3,6 +3,7 @@ package lt.vu.feedback_system.usecases.surveys;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.utils.Sorter;
 import org.primefaces.model.chart.*;
 import org.primefaces.model.tagcloud.DefaultTagCloudItem;
 import org.primefaces.model.tagcloud.DefaultTagCloudModel;
@@ -19,7 +20,6 @@ import java.util.*;
 public class SurveyChartController implements Serializable {
     @Inject
     SurveyReportController reportController;
-
     @Inject
     private AnswerDAO answerDAO;
 
@@ -75,14 +75,13 @@ public class SurveyChartController implements Serializable {
         for(String answer:answers){
             map.put(answer,reportController.countTextAnswers(answer,question));
         }
-        Set<Map.Entry<String, Integer>> set = map.entrySet();
-        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
-
-        //su situo list buna isrikiuota bet tada negraziai atrodo labai zemelapis
-        //List<Map.Entry<String, Integer>> list = Sorter.sortMapByValue(map);
+        List<Map.Entry<String, Integer>> list = Sorter.sortMapByValue(map);
         TagCloudModel cloudModel = new DefaultTagCloudModel();
+        int index= 5;
         for (Map.Entry<String, Integer> entry : list) {
-            cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(),entry.getValue()));
+            if(index < 1){break;}
+            cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(),index));
+            index--;
         }
         return cloudModel;
     }
