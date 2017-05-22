@@ -84,7 +84,7 @@
                                         <p:inputText id="slider-value" value="#{answer.value}"
                                                      disabled="#{answerSurveyController.preview}"
                                                      required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="This is a required question"
+                                                     requiredMessage="This is a required question"/>
                                         <p:slider class="form-slider" for="slider-value"
                                                   disabled="#{answerSurveyController.preview}"
                                                   minValue="#{answer.question.lowerBound}"
