@@ -1,6 +1,5 @@
 package lt.vu.feedback_system.businesslogic.spreadsheets.exports.excel;
 
-import com.google.common.collect.Lists;
 import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
@@ -8,15 +7,13 @@ import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Survey;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Named("exporter")
 @ApplicationScoped
@@ -49,20 +48,16 @@ public class ExcelExporter {
         this.questionDAO = questionDAO;
     }
 
-//    final List<AnsweredSurvey> answeredSurveys = survey.getAnsweredSurveys();
-//    Map<Integer, List<Answer>> answers = answers.stream()
-//            .collect(Collectors.groupingBy(a -> answeredSurveys.indexOf(a.getAnsweredSurvey()) + 1, Collectors.toList()));
-
     public File exportSurvey(Survey survey) throws IOException {
         final File workbookFile = File.createTempFile("tmp-survey", ".xlsx");
         final Workbook workbook = new XSSFWorkbook();
         final Sheet surveySheet = workbook.createSheet("Survey");
         final Sheet answerSheet = workbook.createSheet("Answer");
         final List<Question> questions = getQuestions(survey);
-        final List<Answer> answers = getAnswers(survey);
+        final Map<Integer, List<Answer>> groupedAnswers = groupAnswersByAnsweredSurveyId(getAnswers(survey), survey);
 
         ExcelSurveySheetFiller.fillSurveySheet(surveySheet, questions);
-        ExcelAnswerSheetFiller.fillAnswerSheet(answerSheet, answers);
+        ExcelAnswerSheetFiller.fillAnswerSheet(answerSheet, groupedAnswers, questions);
 
         workbook.write(new FileOutputStream(workbookFile));
 
@@ -97,6 +92,11 @@ public class ExcelExporter {
             answers.addAll(answerDAO.getSliderAnswers(s));
         });
         return answers;
+    }
+
+    private Map<Integer, List<Answer>> groupAnswersByAnsweredSurveyId(final List<Answer> answers, final Survey survey) {
+        final List<AnsweredSurvey> answeredSurveys = survey.getAnsweredSurveys();
+        return answers.stream().collect(Collectors.groupingBy(a -> answeredSurveys.indexOf(a.getAnsweredSurvey()), Collectors.toList()));
     }
 
 }

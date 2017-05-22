@@ -109,8 +109,6 @@ CREATE TABLE feedback.radio_questions
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
 
-
-
 CREATE TABLE feedback.checkboxes
 (
     id serial PRIMARY KEY,

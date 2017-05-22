@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.utils.CollectionUtils;
 import lt.vu.feedback_system.utils.ParserWithDefaults;
 import lt.vu.feedback_system.utils.abstractions.Result;
 import lt.vu.feedback_system.utils.abstractions.Tuple;
@@ -35,7 +36,7 @@ final public class ExcelAnswerSheetParser {
                     if (answerFirstRowIsValid(answerSheet)) {
                         List<Result<Tuple<Integer, Answer>>> parsed = rows.subList(1, rows.size()).stream()
                                 .map(r -> ExcelAnswerSheetParser.parseAnswer(r, questionsResult.get())).collect(Collectors.toList());
-                        Optional<Result<Tuple<Integer, Answer>>> firstFailure = parsed.stream().filter(Result::isFailure).findFirst();
+                        Optional<Result<Tuple<Integer, Answer>>> firstFailure = CollectionUtils.findFirst(parsed.stream(), Result::isFailure);
                         if (!firstFailure.isPresent()) {
                             final Map<Integer, List<Answer>> surveyIdAnswers = new HashMap<>();
                             parsed.forEach(e -> {
@@ -48,6 +49,7 @@ final public class ExcelAnswerSheetParser {
                         } else parsedAnswers = Result.Failure(firstFailure.get().getFailureMsg());
                     } else parsedAnswers = Result.Failure(String.format(
                             "Answer sheet: First three cells of the first row must be filled with the following values: %s, %s and %s",
+                            HelperValues.AnswerFirstRow.FirstColValue,
                             HelperValues.AnswerFirstRow.FirstColValue,
                             HelperValues.AnswerFirstRow.SecondColValue,
                             HelperValues.AnswerFirstRow.ThirdColValue
@@ -65,7 +67,7 @@ final public class ExcelAnswerSheetParser {
             final int surveyId = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)));
             final int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(1)));
             if (surveyId > 0 && questionNumber > 0) {
-                final Optional<Question> notSafe = questions.stream().filter(q -> q.getPosition() == questionNumber).findFirst();
+                final Optional<Question> notSafe = CollectionUtils.findFirst(questions.stream(), q -> q.getPosition() == questionNumber);
                 if (notSafe.isPresent()) {
                     final Question question = notSafe.get();
                     final List<String> answerValues = answerValues(cells);

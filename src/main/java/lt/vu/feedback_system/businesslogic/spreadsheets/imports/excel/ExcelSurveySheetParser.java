@@ -3,6 +3,7 @@ package lt.vu.feedback_system.businesslogic.spreadsheets.imports.excel;
 import com.google.common.collect.Lists;
 import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.utils.CollectionUtils;
 import lt.vu.feedback_system.utils.ParserWithDefaults;
 import lt.vu.feedback_system.utils.abstractions.Result;
 import org.apache.poi.ss.usermodel.Cell;
@@ -29,7 +30,7 @@ final class ExcelSurveySheetParser {
                 if (surveyFirstRowIsValid(surveySheet)) {
                     List<Result<Question>> parsed = rows.subList(1, rows.size()).stream()
                             .map(ExcelSurveySheetParser::parseQuestion).collect(Collectors.toList());
-                    Optional<Result<Question>> firstFailure = parsed.stream().filter(Result::isFailure).findFirst();
+                    Optional<Result<Question>> firstFailure = CollectionUtils.findFirst(parsed.stream(), Result::isFailure);
                     if (!firstFailure.isPresent()) {
                         final List<Question> successfullyParsed = parsed.stream().map(Result::get).collect(Collectors.toList());
                         final Map<Integer, Question> positionQuestionMap = successfullyParsed.stream()

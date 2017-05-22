@@ -1,7 +1,9 @@
 package lt.vu.feedback_system.entities.answers;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lt.vu.feedback_system.entities.questions.Checkbox;
 
 import javax.persistence.*;
@@ -15,6 +17,8 @@ import javax.persistence.*;
 })
 @Getter
 @Setter
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 public class SelectedCheckbox {
     private static final long serialVersionUID = 1L;
     @Id
