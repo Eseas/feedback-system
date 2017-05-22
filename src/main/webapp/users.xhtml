@@ -23,7 +23,7 @@
         <h2>User Management</h2>
     </div>
 
-    <p:tabView class="management-tabs" id="tab_view" cache="false" effect="slide">
+    <p:tabView class="management-tabs" id="tab_view" cache="false" effect="slide" style="min-height: 400px;">
         <p:tab id="tab_registered" title="Registered Users">
             <h:form id="form" class="reg_users">
 
@@ -44,12 +44,11 @@
                         <p:column class="blocked" headerText="Blocked">
                             <p:selectBooleanCheckbox disabled="true" value="#{user.blocked}"/>
                         </p:column>
-                        <p:column>
+                        <p:column class="edit-col">
                             <p:commandButton class="edit" value="Edit" icon="fa fa-fw fa-edit"
                                              actionListener="#{userManagementController.prepareForEditing(user)}"
                                              update=":tab_view:form:userDetail"
-                                             oncomplete="PF('userDialog').show()"
-                            />
+                                             oncomplete="PF('userDialog').show()" style="text-align: center;"/>
                         </p:column>
                     </p:dataTable>
                 </p:fieldset>
@@ -129,7 +128,7 @@
                             <p:column headerText="Email">
                                 <h:outputText value="#{potentialUser.email}"/>
                             </p:column>
-                            <p:column>
+                            <p:column class="remove">
                                 <p:commandButton value="Remove" icon="fa fa-fw fa-remove"
                                                  actionListener="#{potentialUserManagementController.removePotentialUser(potentialUser)}"
                                                  update="potential_user_table"

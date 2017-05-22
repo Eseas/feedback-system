@@ -44,7 +44,7 @@
                 <p:column headerText="Description">
                     <h:outputText value="#{survey.description}" />
                 </p:column>
-                <p:column headerText="Confidential">
+                <p:column class="confidential" headerText="Confidential">
                     <h:outputText value="#{survey.confidential}" />
                 </p:column>
                 <p:column headerText="Creator" rendered="#{userController.admin and requestSurveysController.adminMode}">
@@ -52,18 +52,18 @@
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
-                <p:column headerText="Preview">
+                <p:column class="preview" headerText="Preview">
                     <h:button value="Preview" outcome="answer-survey">
                         <f:param name="s" value="#{survey.link}"/>
                         <f:param name="p" value="true"/>
                     </h:button>
                 </p:column>
-                <p:column headerText="Answer">
+                <p:column class="answer" headerText="Answer">
                     <h:button value="Answer" outcome="answer-survey">
                         <f:param name="s" value="#{survey.link}"/>
                     </h:button>
                 </p:column>
-                <p:column headerText="Report">
+                <p:column class="report" headerText="Report">
                     <h:button value="View report" outcome="survey-report">
                         <f:param name="s" value="#{survey.link}"/>
                     </h:button>

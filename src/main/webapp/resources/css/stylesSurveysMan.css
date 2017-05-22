@@ -63,6 +63,38 @@ ol{
     table-layout: auto !important;
     font-family: 'Roboto' ,sans-serif;
 }
+.confidential {
+    text-align: center;
+    text-transform: capitalize;
+}
+.preview {
+     text-align: center;
+}
+.answer {
+    text-align: center;
+}
+.report {
+    text-align: center;
+}
+th {
+    font-weight: normal !important;
+    line-height: 2.5em;
+    font-size: 14px;
+    background: #00426B !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+}
+tr {
+    font-weight: normal !important;
+    border-right-color: transparent !important;
+    border-left-color: transparent !important;
+    line-height: 2em;
+    font-size: 14px;
+    background: transparent !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
 /**/
 .page_title h2{
     margin-top: 0;
