@@ -70,7 +70,7 @@
                                     <p:inputTextarea id="text-value" value="#{answer.value}"
                                                      disabled="#{answerSurveyController.preview}"
                                                      required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="This question is required"
+                                                     requiredMessage="This is a required question"
                                                      rows="5" cols="30" maxlength="300" autoResize="false"/>
                                     <p:message for="text-value"/>
 
@@ -84,7 +84,7 @@
                                         <p:inputText id="slider-value" value="#{answer.value}"
                                                      disabled="#{answerSurveyController.preview}"
                                                      required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="Slider not selected in #{answer.question.section.title}"/>
+                                                     requiredMessage="This is a required question"
                                         <p:slider class="form-slider" for="slider-value"
                                                   disabled="#{answerSurveyController.preview}"
                                                   minValue="#{answer.question.lowerBound}"
@@ -99,7 +99,7 @@
                                                       converter="omnifaces.SelectItemsConverter"
                                                       disabled="#{answerSurveyController.preview}"
                                                       required="#{empty param.noValidation and answer.question.required}"
-                                                      requiredMessage="Radio Button not selected"
+                                                      requiredMessage="This is a required question"
                                                       layout="responsive" columns="1" >
                                         <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                                     </p:selectOneRadio>
@@ -113,7 +113,7 @@
                                                           converter="omnifaces.SelectItemsConverter"
                                                           disabled="#{answerSurveyController.preview}"
                                                           required="#{empty param.noValidation and answer.question.required}"
-                                                          requiredMessage="No checkbox selected in #{answer.question.section.title}"
+                                                          requiredMessage="This is a required question"
                                                           layout="responsive" columns="1">
                                         <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}"
                                                        var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}"
@@ -155,8 +155,6 @@
                         </p:panel>
                         </h:form>
                     </p:tab>
-
-
             </p:tabView>
         </div>
 
