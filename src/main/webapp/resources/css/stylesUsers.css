@@ -176,7 +176,7 @@ table{
     text-shadow: none;
 }
 .ui-widget-header .ui-state-default {
-    background: #e0e0e0;
+    background: #EFF0F3;
 }
 .registered-table, .potential-table{
     font-size: 14px !important;
@@ -211,6 +211,41 @@ label{
     font-family: 'Roboto' ,sans-serif;
 }
 
+/*registered table*/
+.ui-button-text-icon-left .ui-button-text{
+    padding: 0 !important;
+}
+.admin{
+    text-align: center;
+}
+.blocked {
+    text-align: center;
+}
+.edit-col {
+    text-align: center;
+}
+.remove {
+    text-align: center;
+}
+th {
+    font-weight: normal !important;
+    line-height: 2.5em;
+    font-size: 14px;
+    background: #00426B !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+}
+tr {
+    font-weight: normal !important;
+    border-right-color: transparent !important;
+    border-left-color: transparent !important;
+    line-height: 2em;
+    font-size: 14px;
+    background: transparent !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
 /* page bottom done*/
 footer{
     display: block;

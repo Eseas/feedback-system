@@ -53,7 +53,7 @@ ol{
 .page_title h2{
     margin-top: 0;
     width: 100%;
-    padding: 100px 0 10px;
+    padding: 30px 0 10px;
     text-align: center;
     font-size: 2em;
     color: #00426B;
@@ -63,18 +63,17 @@ ol{
     display: block !important;
     clear: none;
 }
-/*page top*/
-
-/*outside elements*/
-.answ-survey-desc{
-    font-family: 'Josefin Sans', sans-serif !important;
-    font-size: 20px;
-    font-style: italic;
-    width: 400px;
-    display: block;
-    margin: auto;
-    margin-bottom: 20px;
+.go-back {
+    margin-top: 70px;
+    border: none;
+    background: transparent;
+    color: #00426B;
 }
+i {
+    margin:0 0 0 40px !important;
+    color: #00426B;
+}
+/*page top*/
 .tab_form{
     width: 90%;
     margin: 0 auto;
@@ -85,41 +84,28 @@ ol{
     font-style: normal;
     box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
     margin-bottom: 50px;
+    min-height: 400px;
 }
-.ui-state-active{
-    font-weight: normal;
-    color: #000 !important;
-    background: #fff !important;
-}
-.ui-state-default{
-    background: #fff !important;
-    font-weight: normal;
-    color: #000 ;
-}
-input[type=submit]{
-    display: inline-block !important;
-    position: relative;
-    line-height: normal;
-    width: auto;
-    min-width: 76px;
-    height: 30px;
-    padding: 5px !important;
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-size: 14px !important;
-    font-weight: 200;
-    border-radius: 3px;
-    outline: 0;
-    text-decoration: none!important;
-    cursor: pointer;
-    text-align: center;
-    zoom: 1;
-    overflow: visible;
+.tab_form li{
+    border-color: #3dae41 !important;
+    border-radius: 0;
+    background: #e0e0e0;
+    box-shadow: none;
     text-shadow: none;
-    -webkit-transition: all 0.15s ease;
-    transition: all 0.15s ease;
 }
-
+/*inside report*/
+.question-title {
+    font-size: 18px !important;
+    font-weight: normal;
+    margin: 10px 0 20px 40px;
+    display: block;
+}
+.question-number {
+    font-size: 20px !important;
+    font-family: 'Bitter', sans-serif;
+    font-weight: bold;
+    margin: 10px;
+}
 
 /*page bottom*/
 footer{
