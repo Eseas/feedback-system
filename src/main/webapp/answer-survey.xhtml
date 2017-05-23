@@ -5,7 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui"
 >
 <f:view>
     <f:metadata>
@@ -38,18 +37,18 @@
         <div class="answerSurvey-tabs">
             <p:tabView class="tab_form" id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
                        var="section" activeIndex="#{answerSurveyController.activeTabIndex}"
-                        dynamic="true" style="border: none !important;">
+                       dynamic="true" style="border: none !important;">
 
-                    <p:tab title="#{section.title}" disabled="true" >
-                        <div class="section-title">
-                            <h:outputText value="#{section.title}"/>
-                        </div>
-                        <div class="section-description">
-                            <h:outputText value="#{section.description}"/>
-                        </div>
-                        <hr/>
+                <p:tab title="#{section.title}" disabled="true">
+                    <div class="section-title">
+                        <h:outputText value="#{section.title}"/>
+                    </div>
+                    <div class="section-description">
+                        <h:outputText value="#{section.description}"/>
+                    </div>
+                    <hr/>
 
-                        <h:form class="questions-section" id="form">
+                    <h:form class="questions-section" id="form">
                         <p:panel>
                             <ui:repeat value="#{section.answers}" var="answer">
                                 <div  class="question-number" >
@@ -64,7 +63,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
                                     <p:inputTextarea id="text-value" value="#{answer.value}"
                                                      required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="Value is very needed in section #{answer.question.section.title}"
+                                                     requiredMessage="This is a required question"
                                                      rows="5" cols="30" maxlength="300" autoResize="false"/>
                                     <p:message for="text-value"/>
 
@@ -74,11 +73,19 @@
 
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
-                                    <p:outputLabel value="Enter value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
-                                        <p:inputText id="slider-value" value="#{answer.value}" required="#{empty param.noValidation and answer.question.required}" requiredMessage="Slider not selected in #{answer.question.section.title}"/>
-                                        <p:slider class="form-slider" for="slider-value" minValue="#{answer.question.lowerBound}" maxValue="#{answer.question.upperBound}" />
-                                        <p:message for="slider-value"/></div>
+                                        <p:outputLabel
+                                                value="Pick value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
 
+                                        <h:outputText id="output-not-selected" value="Value is not selected"/>
+                                        <h:inputHidden id="slider-value" value="#{answer.value}"
+                                                       required="#{empty param.noValidation and answer.question.required}"
+                                                       requiredMessage="This is a required question"/>
+                                        <p:slider for="slider-value" display="output-not-selected"
+                                                  displayTemplate="Selected value: {value}"
+                                                  minValue="#{answer.question.lowerBound}"
+                                                  maxValue="#{answer.question.upperBound}"/>
+                                        <p:message for="slider-value"/>
+                                    </div>
                                     <hr/>
                                 </ui:fragment>
 
@@ -86,7 +93,7 @@
                                     <p:selectOneRadio class="radio-question" id="select-one-radio" value="#{answer.radioButton}"
                                                       converter="omnifaces.SelectItemsConverter"
                                                       required="#{empty param.noValidation and answer.question.required}"
-                                                      requiredMessage="Radio Button not selected"
+                                                      requiredMessage="This is a required question"
                                                       layout="responsive" columns="1" >
                                         <f:selectItems value="#{answer.question.radioButtons}" var="radioButton" itemLabel="#{radioButton.title}" itemValue="#{radioButton}"/>
                                     </p:selectOneRadio>
@@ -99,7 +106,7 @@
                                     <p:selectManyCheckbox class="slider-question" id="select-many-checkbox" value="#{answer.selectedCheckboxes}"
                                                           converter="omnifaces.SelectItemsConverter"
                                                           required="#{empty param.noValidation and answer.question.required}"
-                                                          requiredMessage="No checkbox selected in #{answer.question.section.title}"
+                                                          requiredMessage="This is a required question"
                                                           layout="responsive" columns="1">
                                         <f:selectItems value="#{answerSurveyController.getAvailableSelectedCheckboxes(answer)}"
                                                        var="availableSelectedCheckbox" itemLabel="#{availableSelectedCheckbox.checkbox.title}"
@@ -134,14 +141,14 @@
                             </ui:fragment>
 
                         </p:panel>
-                        </h:form>
-                    </p:tab>
+                    </h:form>
+                </p:tab>
 
 
             </p:tabView>
         </div>
 
-            <p:messages globalOnly="true"/>
+        <p:messages globalOnly="true"/>
         <ui:include src="/WEB-INF/composites/footer.xhtml"/>
     </h:body>
 </f:view>

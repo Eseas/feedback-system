@@ -4,10 +4,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.questions.TextQuestion;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(schema = "feedback", name = "text_answers")
@@ -28,6 +29,7 @@ public class TextAnswer implements Answer {
     private Integer id;
 
     @Column(name = "value")
+    @Size(max = 300)
     private String value;
 
     @JoinColumn(name = "question_id", referencedColumnName = "id")
