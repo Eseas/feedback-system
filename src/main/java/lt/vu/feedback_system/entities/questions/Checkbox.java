@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"title"})
+@EqualsAndHashCode(of = {"id", "title"})
 @ToString(of = {"id", "title"})
 public class Checkbox {
     private static final long serialVersionUID = 1L;

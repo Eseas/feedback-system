@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Table(schema = "feedback", name = "radio_buttons")
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"title"})
+@EqualsAndHashCode(of = {"id", "title"})
 @ToString(of = {"id", "title"})
 public class RadioButton {
     private static final long serialVersionUID = 1L;
