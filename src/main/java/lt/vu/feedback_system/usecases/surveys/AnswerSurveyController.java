@@ -6,7 +6,10 @@ import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.answers.SelectedCheckbox;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
+import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
@@ -69,12 +72,46 @@ public class AnswerSurveyController implements Serializable {
 
     @Transactional
     public String answer() {
-        answeredSurveyDAO.create(answeredSurvey);
         for(Section section : answeredSurvey.getSurvey().getSections()) {
-            for (Answer answer : section.getAnswers())
-                answerDAO.create(answer);
+            List<Answer> setAnswers = filterOutUnsetAnswers(section.getAnswers());
+            if (setAnswers.size() > 0) {
+                answeredSurveyDAO.create(answeredSurvey);
+                for (Answer answer : setAnswers)
+                    answerDAO.create(answer);
+            }
         }
         return navigationBean.toThanksForAnswer();
+    }
+
+    private List<Answer> filterOutUnsetAnswers(List<Answer> answers) {
+        List<Answer> goodAnswers = new ArrayList<>();
+        for (Answer answer : answers) {
+            switch (answer.getQuestion().getType()) {
+                case "TextQuestion":
+                    if (!((TextAnswer) answer).getValue().isEmpty()) {
+                        goodAnswers.add(answer);
+                    }
+                    break;
+                case "RadioQuestion":
+                    if (((RadioAnswer) answer).getRadioButton() != null) {
+                        goodAnswers.add(answer);
+                    }
+                    break;
+                case "CheckboxQuestion":
+                    if (((CheckboxAnswer) answer).getSelectedCheckboxes().size() > 0) {
+                        goodAnswers.add(answer);
+                    }
+                    break;
+                case "SliderQuestion":
+                    if (((SliderAnswer) answer).getValue() != null) {
+                        goodAnswers.add(answer);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return goodAnswers;
     }
 
 
