@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "feedback", name = "answered_surveys")

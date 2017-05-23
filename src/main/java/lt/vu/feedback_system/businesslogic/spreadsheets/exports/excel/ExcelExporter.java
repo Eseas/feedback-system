@@ -1,8 +1,8 @@
 package lt.vu.feedback_system.businesslogic.spreadsheets.exports.excel;
 
 import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
+import lt.vu.feedback_system.businesslogic.spreadsheets.exports.SpreadsheetExporter;
 import lt.vu.feedback_system.dao.AnswerDAO;
-import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.answers.Answer;
@@ -26,13 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Named("exporter")
 @ApplicationScoped
-public class ExcelExporter {
-
-    private SurveyDAO surveyDAO;
-
-    private AnsweredSurveyDAO answeredSurveyDAO;
+public class ExcelExporter implements SpreadsheetExporter {
 
     private AnswerDAO answerDAO;
 
@@ -41,14 +36,13 @@ public class ExcelExporter {
     protected ExcelExporter() {}
 
     @Inject
-    public ExcelExporter(SurveyDAO surveyDAO, AnsweredSurveyDAO answeredSurveyDAO, AnswerDAO answerDAO, QuestionDAO questionDAO) {
-        this.surveyDAO = surveyDAO;
-        this.answeredSurveyDAO = answeredSurveyDAO;
+    public ExcelExporter(AnswerDAO answerDAO, QuestionDAO questionDAO) {
         this.answerDAO = answerDAO;
         this.questionDAO = questionDAO;
     }
 
-    public File exportSurvey(Survey survey) throws IOException {
+    public StreamedContent exportSurvey(final Survey survey) throws IOException {
+        final String fileName = String.format("%s.xlsx", survey.getTitle());
         final File workbookFile = File.createTempFile("tmp-survey", ".xlsx");
         final Workbook workbook = new XSSFWorkbook();
         final Sheet surveySheet = workbook.createSheet("Survey");
@@ -61,15 +55,7 @@ public class ExcelExporter {
 
         workbook.write(new FileOutputStream(workbookFile));
 
-        return workbookFile;
-    }
-
-    public StreamedContent getFile() throws IOException {
-        final Survey survey = surveyDAO.getSurveyByLink("c4ca4238a0");
-        final String fileName = String.format("%s.xlsx", survey.getTitle());
-        final File surveyFile = exportSurvey(survey);
-
-        return new DefaultStreamedContent(new FileInputStream(surveyFile), HelperValues.ContentTypes.Xlsx, fileName);
+        return new DefaultStreamedContent(new FileInputStream(workbookFile), HelperValues.ContentTypes.Xlsx, fileName);
     }
 
     private List<Question> getQuestions(final Survey survey) {

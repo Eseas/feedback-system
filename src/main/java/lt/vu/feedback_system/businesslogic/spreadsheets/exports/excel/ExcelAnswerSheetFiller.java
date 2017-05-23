@@ -42,31 +42,30 @@ final class ExcelAnswerSheetFiller {
     }
 
     private static void fillTextAnswerRow(final Row row, final int surveyId, final TextAnswer answer, final int questionNumber, final TextQuestion question) {
-        System.out.println(String.format("%s %s %s %s", surveyId, answer.getClass().getSimpleName(), questionNumber, question.getClass().getSimpleName()));
-        final int optionsStartAt = fillAnswerRow(row, surveyId, answer, questionNumber, question);
+        final int optionsStartAt = fillAnswerRow(row, surveyId, questionNumber);
         row.createCell(optionsStartAt).setCellValue(answer.getValue());
     }
 
     private static void fillRadioAnswerRow(final Row row, final int surveyId, final RadioAnswer answer, final int questionNumber, final RadioQuestion question) {
-        final int optionsStartAt = fillAnswerRow(row, surveyId, answer, questionNumber, question);
+        final int optionsStartAt = fillAnswerRow(row, surveyId, questionNumber);
         final List<Integer> answerIds = Lists.newArrayList(question.getRadioButtons().indexOf(answer.getRadioButton()) + 1);
         fillRemainingColumns(row, optionsStartAt, answerIds);
     }
 
     private static void fillCheckboxAnswerRow(final Row row, final int surveyId, final CheckboxAnswer answer, final int questionNumber, final CheckboxQuestion question) {
-        final int optionsStartAt = fillAnswerRow(row, surveyId, answer, questionNumber, question);
+        final int optionsStartAt = fillAnswerRow(row, surveyId, questionNumber);
         final List<Checkbox> checkboxes = question.getCheckboxes();
         final List<Integer> answerIds = answer.getSelectedCheckboxes().stream().map(s -> checkboxes.indexOf(s.getCheckbox()) + 1).collect(Collectors.toList());
         fillRemainingColumns(row, optionsStartAt, answerIds);
     }
 
     private static void fillSliderAnswerRow(final Row row, final int surveyId, final SliderAnswer answer, final int questionNumber, final SliderQuestion question) {
-        final int optionsStartAt = fillAnswerRow(row, surveyId, answer, questionNumber, question);
+        final int optionsStartAt = fillAnswerRow(row, surveyId, questionNumber);
         final List<Integer> answerIds = Lists.newArrayList(answer.getValue());
         fillRemainingColumns(row, optionsStartAt, answerIds);
     }
 
-    private static int fillAnswerRow(final Row row, final int surveyId, final Answer answer, final int questionNumber, final Question question) {
+    private static int fillAnswerRow(final Row row, final int surveyId, final int questionNumber) {
         row.createCell(0).setCellValue(surveyId);
         row.createCell(1).setCellValue(questionNumber);
         return 2;
