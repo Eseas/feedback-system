@@ -11,6 +11,7 @@ import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
@@ -113,27 +114,31 @@ public class SurveyLogic {
         section.getAnswers().addAll(answerDAO.getCheckboxAnswers(section));
     }
 
-    public void createEmptyAnswersForSection(Section section) {
+    public void createEmptyAnswersForSection(AnsweredSurvey answeredSurvey, Section section) {
         for(Question question : section.getQuestions()) {
             switch (question.getType()) {
                 case "TextQuestion":
                     TextAnswer textAnswer = new TextAnswer();
                     textAnswer.setQuestion((TextQuestion) question);
+                    textAnswer.setAnsweredSurvey(answeredSurvey);
                     section.getAnswers().add(textAnswer);
                     break;
                 case "SliderQuestion":
                     SliderAnswer sliderAnswer = new SliderAnswer();
                     sliderAnswer.setQuestion((SliderQuestion) question);
+                    sliderAnswer.setAnsweredSurvey(answeredSurvey);
                     section.getAnswers().add(sliderAnswer);
                     break;
                 case "RadioQuestion":
                     RadioAnswer radioAnswer = new RadioAnswer();
                     radioAnswer.setQuestion((RadioQuestion) question);
+                    radioAnswer.setAnsweredSurvey(answeredSurvey);
                     section.getAnswers().add(radioAnswer);
                     break;
                 case "CheckboxQuestion":
                     CheckboxAnswer checkboxAnswer = new CheckboxAnswer();
                     checkboxAnswer.setQuestion((CheckboxQuestion) question);
+                    checkboxAnswer.setAnsweredSurvey(answeredSurvey);
                     section.getAnswers().add(checkboxAnswer);
                     break;
             }
