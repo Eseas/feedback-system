@@ -39,7 +39,7 @@
 
         <h:form>
             <p:tabView class="tab_form" value="#{surveyReportController.survey.sections}"
-                       var="section" effect="slide" dynamic="true" style="border: none !important;">
+                       var="section" effect="slide" style="border: none !important;">
                 <p:tab title="#{section.title}">
                         <ui:repeat value="#{section.questions}" var="question">
                             <h:outputText class="question-number"  value="#{question.position}" />
@@ -72,7 +72,7 @@
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                                <ui:repeat value="#{question.radioButton}" var="radioButton" >
+                                <ui:repeat value="#{question.radioButtons}" var="radioButton">
                                     <h:outputText value="#{radioButton.title} "/>
                                     <h:outputText value="#{surveyReportController.countRadioButtonAnswers(radioButton)} "/>
                                     <h:outputText value="#{surveyReportController.getPercentRadioAnswer(radioButton)} %"/>
