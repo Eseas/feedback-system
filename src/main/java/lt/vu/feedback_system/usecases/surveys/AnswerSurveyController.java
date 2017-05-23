@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.*;
+import lt.vu.feedback_system.entities.answers.Answer;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.SelectedCheckbox;
+import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
-import lt.vu.feedback_system.entities.answers.*;
-import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.usecases.users.NavigationBean;
 
@@ -58,7 +60,7 @@ public class AnswerSurveyController implements Serializable {
 
         answeredSurvey.setSurvey(surveyLogic.loadSurvey(link));
         for (Section section : answeredSurvey.getSurvey().getSections()) {
-            surveyLogic.createEmptyAnswersForSection(section);
+            surveyLogic.createEmptyAnswersForSection(answeredSurvey, section);
         }
 
         activeTabIndex = 0;

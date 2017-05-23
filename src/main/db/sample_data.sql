@@ -68,12 +68,6 @@ INSERT INTO feedback.text_answers VALUES (DEFAULT, 3, 3, 'ASAP');
 INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 2);
 INSERT INTO feedback.radio_answers VALUES (DEFAULT, 2, 2, 5);
 INSERT INTO feedback.radio_answers VALUES (DEFAULT, 3, 3, 6);
-INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 3);
-INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 1);
-INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 1);
-INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 3);
-INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 2);
-INSERT INTO feedback.radio_answers VALUES (DEFAULT, 1, 1, 2);
 
 INSERT INTO feedback.checkbox_answers VALUES (DEFAULT, 1, 1);
 INSERT INTO feedback.checkbox_answers VALUES (DEFAULT, 2, 2);
