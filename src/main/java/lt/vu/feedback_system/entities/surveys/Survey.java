@@ -32,7 +32,7 @@ import java.util.List;
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = "title")
+@EqualsAndHashCode(of = {"id", "title"})
 @ToString(of = {"id", "title"})
 public class Survey implements Serializable {
 

@@ -66,6 +66,13 @@ ol{
 /*page top*/
 
 /*outside elements*/
+.tab_form li{
+    border-color: #3dae41 !important;
+    border-radius: 0;
+    background: #e0e0e0;
+    box-shadow: none;
+    text-shadow: none;
+}
 .answ-survey-desc{
     font-family: 'Josefin Sans', sans-serif !important;
     font-size: 20px;
@@ -181,7 +188,8 @@ ol{
     top: -30.5px;
     display: block;
     background: #fff;
-    border: 1px solid #808080;
+    border-color: #3dae41 !important;
+    border: 1px solid ;
     color: #808080;
     border-radius: 3px;
     padding: 2px !important;
@@ -193,7 +201,8 @@ ol{
     margin-right: 40px;
     display: block;
     background: #fff;
-    border: 1px solid #808080;
+    border-color: #3dae41 !important;
+    border: 1px solid ;
     color: #808080;
     border-radius: 3px;
     padding: 2px !important;
@@ -231,4 +240,10 @@ body{
 html, body {
     width: 100%;
     height: 100%;
+}
+.ui-icon-bullet {
+     background-position: -81.5px -145px;
+ }
+.ui-icon-check {
+    background-position: -65px -146px;
 }

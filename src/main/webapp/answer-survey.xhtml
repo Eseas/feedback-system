@@ -26,6 +26,12 @@
     <h:body>
         <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
+        <ui:fragment rendered="#{answerSurveyController.preview}">
+            <div class="page_title">
+                <h2>PREVIEW MODE</h2>
+            </div>
+        </ui:fragment>
+
         <div class="page_title">
             <h2>#{answerSurveyController.answeredSurvey.survey.title}</h2>
         </div>
@@ -36,7 +42,7 @@
 
         <div class="answerSurvey-tabs">
             <p:tabView class="tab_form" id="tab-view" value="#{answerSurveyController.answeredSurvey.survey.sections}"
-                       var="section" activeIndex="#{answerSurveyController.activeTabIndex}"
+                       var="section" activeIndex="#{answerSurveyController.activeTabIndex}"  effect="slide"
                        dynamic="true" style="border: none !important;">
 
                 <p:tab title="#{section.title}" disabled="true">
@@ -62,6 +68,7 @@
 
                                 <ui:fragment rendered="#{answer.question.type == 'TextQuestion'}">
                                     <p:inputTextarea id="text-value" value="#{answer.value}"
+                                                     disabled="#{answerSurveyController.preview}"
                                                      required="#{empty param.noValidation and answer.question.required}"
                                                      requiredMessage="This is a required question"
                                                      rows="5" cols="30" maxlength="300" autoResize="false"/>
@@ -69,7 +76,6 @@
 
                                     <hr/>
                                 </ui:fragment>
-
 
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
@@ -92,6 +98,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'RadioQuestion'}">
                                     <p:selectOneRadio class="radio-question" id="select-one-radio" value="#{answer.radioButton}"
                                                       converter="omnifaces.SelectItemsConverter"
+                                                      disabled="#{answerSurveyController.preview}"
                                                       required="#{empty param.noValidation and answer.question.required}"
                                                       requiredMessage="This is a required question"
                                                       layout="responsive" columns="1" >
@@ -105,6 +112,7 @@
                                 <ui:fragment rendered="#{answer.question.type == 'CheckboxQuestion'}">
                                     <p:selectManyCheckbox class="slider-question" id="select-many-checkbox" value="#{answer.selectedCheckboxes}"
                                                           converter="omnifaces.SelectItemsConverter"
+                                                          disabled="#{answerSurveyController.preview}"
                                                           required="#{empty param.noValidation and answer.question.required}"
                                                           requiredMessage="This is a required question"
                                                           layout="responsive" columns="1">
@@ -126,7 +134,10 @@
 
                             <ui:fragment rendered="#{answerSurveyController.lastSection}">
                                 <div class="submit-button clearfix">
-                                    <p:commandButton class="submit-button \" value="SUBMIT" action="#{answerSurveyController.answer()}" update="tab-view">
+                                    <p:commandButton class="submit-button \" value="SUBMIT"
+                                                     action="#{answerSurveyController.answer()}"
+                                                     disabled="#{answerSurveyController.preview}"
+                                                     update="tab-view">
                                         <f:param name="s" value="#{answerSurveyController.link}"/>
                                     </p:commandButton>
                                 </div>
@@ -134,7 +145,9 @@
 
                             <ui:fragment id="fragment" rendered="#{!answerSurveyController.firstSection}">
                                 <div class="previous-button clearfix">
-                                    <p:commandButton id="previous" value="PREVIOUS" action="#{answerSurveyController.previousTab}" update="tab-view" >
+                                    <p:commandButton id="previous" value="PREVIOUS"
+                                                     action="#{answerSurveyController.previousTab}"
+                                                     update="tab-view">
                                         <f:param name="noValidation" value="true"/>
                                     </p:commandButton>
                                 </div>
