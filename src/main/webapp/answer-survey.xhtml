@@ -23,16 +23,24 @@
         <title>Builder of Surveys</title>
     </h:head>
 
+    <script>
+        function goBack() {
+            window.history.back()
+        }
+    </script>
+
     <h:body>
         <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
-        <ui:fragment rendered="#{answerSurveyController.preview}">
-            <div class="page_title">
-                <h2>PREVIEW MODE</h2>
-            </div>
-        </ui:fragment>
 
         <div class="page_title">
+
+            <ui:fragment rendered="#{answerSurveyController.preview}">
+                <div class="preview_title">
+                    <h2>~Survey Preview~</h2>
+                </div>
+            </ui:fragment>
+
             <h2>#{answerSurveyController.answeredSurvey.survey.title}</h2>
         </div>
 
@@ -79,9 +87,9 @@
 
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
-                                    <p:outputLabel value="Enter value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
+                                    <p:outputLabel value="Choose value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
                                         <p:inputText id="slider-value" value="#{answer.value}"
-                                                     disabled="#{answerSurveyController.preview}"
+                                                     disabled="true"
                                                      required="#{empty param.noValidation and answer.question.required}"
                                                      requiredMessage="This is a required question"/>
                                         <p:slider class="form-slider" for="slider-value"

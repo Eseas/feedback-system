@@ -5,7 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:o="http://omnifaces.org/ui"
 >
 <f:view>
     <h:head>
@@ -30,7 +29,7 @@
 
             <div class="form clearfix">
                 <div class="title throw-left clearfix">
-                    <p:outputLabel for="title" value="Survey name" style="display: none !important; clear: both;"/>
+                    <p:outputLabel for="title" value="Survey title" style="display: none !important; clear: both;"/>
                     <p:inputText id="title" maxlength="40" value="#{createSurveyController.survey.title}"
                                  placeholder="Survey Name" style="width: 100%;" required="#{param.validate}"/>
                     <p:message class="message_error" for="title"/>
@@ -186,13 +185,11 @@
                                          actionListener="#{createSurveyController.addSliderQuestion(section)}"
                                          update="survey-creation-form"/>
                     </div>
-                    <div class="add-page clearfix">
-                        <p:commandButton value="Add Page" actionListener="#{createSurveyController.addSection()}"
-                                         update="survey-creation-form"/>
-                    </div>
-                    <div class="remove-page clearfix">
-                        <p:commandButton value="Remove Page" actionListener="#{createSurveyController.removeSection(section)}"
+                    <div class="clearfix">
+                        <p:commandButton class="remove-page" value="Remove Page" actionListener="#{createSurveyController.removeSection(section)}"
                                          update="survey-creation-form" disabled="#{createSurveyController.survey.sections.size() le 1 }"/>
+                        <p:commandButton class="add-page" value="Add Page" actionListener="#{createSurveyController.addSection()}"
+                                         update="survey-creation-form" style="text-shadow: none;"/>
                     </div>
                 </p:tab>
             </p:tabView>
@@ -200,7 +197,8 @@
             <div class="cancel_save clearfix">
                 <p:commandButton class="cancel" value="Cancel" action="index"/>
                 <p:commandButton class="save" value="Save" action="#{createSurveyController.create()}"
-                                 update="survey-creation-form" oncomplete="showFirstInvalidTab()">
+                                 update="survey-creation-form" oncomplete="showFirstInvalidTab()"
+                                 style="text-shadow: none;">
                     <f:param name="validate" value="true"/>
                 </p:commandButton>
             </div>
