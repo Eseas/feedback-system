@@ -10,7 +10,11 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -40,10 +44,10 @@ final class ExcelSurveySheetParser {
                     } else parsedQuestions = Result.Failure(firstFailure.get().getFailureMsg());
                 } else parsedQuestions = Result.Failure(String.format(
                     "Survey sheet: First four cells of the first row must be filled with the following values: %s, %s, %s and %s",
-                    HelperValues.SurveyFirstRow.FirstColValue,
-                    HelperValues.SurveyFirstRow.SecondColValue,
-                    HelperValues.SurveyFirstRow.ThirdColValue,
-                    HelperValues.SurveyFirstRow.FourthColValue
+                        HelperValues.SurveyFirstRow.FirstColValue,
+                        HelperValues.SurveyFirstRow.SecondColValue,
+                        HelperValues.SurveyFirstRow.ThirdColValue,
+                        HelperValues.SurveyFirstRow.FourthColValue
                 ));
             } else parsedQuestions = Result.Failure("Survey sheet: spreadsheet has no questions");
         } else parsedQuestions = Result.Failure(surveySheetResult.getFailureMsg());

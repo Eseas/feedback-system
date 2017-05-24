@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.File;
@@ -31,7 +32,8 @@ public class ExcelExporter implements SpreadsheetExporter {
 
     private QuestionDAO questionDAO;
 
-    protected ExcelExporter() {}
+    protected ExcelExporter() {
+    }
 
     @Inject
     public ExcelExporter(AnswerDAO answerDAO, QuestionDAO questionDAO) {

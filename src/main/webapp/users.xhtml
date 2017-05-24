@@ -53,10 +53,10 @@
                     </p:dataTable>
                 </p:fieldset>
 
-                <p:dialog header="Edit User" widgetVar="userDialog" modal="true" closable="true" resizable="false"
+                <p:dialog class="edit-user" header="Edit User" widgetVar="userDialog" modal="true" closable="true" resizable="false"
                           closeOnEscape="true" showEffect="drop" hideEffect="drop">
                     <p:ajax event="close" update=":tab_view:form"/>
-                    <p:outputPanel id="userDetail">
+                    <p:outputPanel class="user-detail" id="userDetail">
                         <p:panelGrid  columns="3" rendered="#{not empty userManagementController.selectedUser}"
                                       columnClasses="label,value" styleClass="ui-noborder">
                             <p:outputLabel for="edit_firstName" value="First name:"  style="color: #1a1a1a" />
@@ -72,16 +72,15 @@
                             <br/>
 
                             <p:outputLabel for="select_admin" value="Admin:" style="color: #1a1a1a" />
-                            <p:selectBooleanCheckbox id="select_admin" value="#{userManagementController.selectedUser.admin}"/>
+                            <p:selectBooleanCheckbox class="edit-checkbx" id="select_admin" value="#{userManagementController.selectedUser.admin}"/>
                             <br/>
 
                             <p:outputLabel for="select_blocked" value="Blocked:" style="color: #1a1a1a" />
-                            <p:selectBooleanCheckbox id="select_blocked" value="#{userManagementController.selectedUser.blocked}"/>
+                            <p:selectBooleanCheckbox class="edit-checkbx" id="select_blocked" value="#{userManagementController.selectedUser.blocked}"/>
                             <br/>
                         </p:panelGrid>
-                        <p:commandButton value="Update" actionListener="#{userManagementController.updateSelectedUser}"
+                        <p:commandButton class="update-button" value="Update" actionListener="#{userManagementController.updateSelectedUser}"
                                          rendered="#{empty userManagementController.conflictingUser}"
-                                         icon="ui-icon-check" style="margin-top: 1em"
                                          update=":tab_view:form:userDetail :tab_view:form:list"
                                          oncomplete="if (args &amp;&amp; !args.validationFailed) PF('userDialog').hide()" />
 
@@ -106,7 +105,7 @@
 
                         </p:panelGrid>
 
-                        <p:commandButton value="Overwrite" actionListener="#{userManagementController.overwriteUser}"
+                        <p:commandButton class="overwrite-button" value="Overwrite" actionListener="#{userManagementController.overwriteUser}"
                                          rendered="#{not empty userManagementController.conflictingUser}"
                                          icon="ui-icon-notice" style="margin-top: 1em"
                                          update=":tab_view:form:userDetail :tab_view:form:list"

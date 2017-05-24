@@ -3,7 +3,10 @@ package lt.vu.feedback_system.utils;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.questions.Question;
-import java.util.*;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Sorter {
     public static List<Answer> sortAnswersAscending(List<Answer> answers) {
