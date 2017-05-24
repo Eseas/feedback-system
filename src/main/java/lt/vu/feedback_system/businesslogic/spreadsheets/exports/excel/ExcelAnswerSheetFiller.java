@@ -7,6 +7,7 @@ import lt.vu.feedback_system.entities.questions.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,16 +24,16 @@ final class ExcelAnswerSheetFiller {
                 final Question q = a.getQuestion();
                 switch (q.getType()) {
                     case HelperValues.EntityQuestionTypes.Text:
-                        fillTextAnswerRow(row, i + 1, (TextAnswer) a,questions.indexOf(q) + 1,  (TextQuestion) q);
+                        fillTextAnswerRow(row, i + 1, (TextAnswer) a, questions.indexOf(q) + 1, (TextQuestion) q);
                         break;
                     case HelperValues.EntityQuestionTypes.Radio:
-                        fillRadioAnswerRow(row, i + 1, (RadioAnswer) a,questions.indexOf(q) + 1,  (RadioQuestion) q);
+                        fillRadioAnswerRow(row, i + 1, (RadioAnswer) a, questions.indexOf(q) + 1, (RadioQuestion) q);
                         break;
                     case HelperValues.EntityQuestionTypes.Checkbox:
-                        fillCheckboxAnswerRow(row, i + 1, (CheckboxAnswer) a,questions.indexOf(q) + 1,  (CheckboxQuestion) q);
+                        fillCheckboxAnswerRow(row, i + 1, (CheckboxAnswer) a, questions.indexOf(q) + 1, (CheckboxQuestion) q);
                         break;
                     case HelperValues.EntityQuestionTypes.Slider:
-                        fillSliderAnswerRow(row, i + 1, (SliderAnswer) a,questions.indexOf(q) + 1,  (SliderQuestion) q);
+                        fillSliderAnswerRow(row, i + 1, (SliderAnswer) a, questions.indexOf(q) + 1, (SliderQuestion) q);
                         break;
                     default:
                         break;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.answers.Answer;
-import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.entities.questions.Question;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

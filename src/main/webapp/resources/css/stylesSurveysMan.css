@@ -52,7 +52,9 @@ ol{
 }
 /**/
 .survey-table {
-    margin: 20px 40px;
+    margin: 20px auto;
+    max-width: 1250px;
+    width: 80%;
 }
 .survey-table input {
     border: none;
