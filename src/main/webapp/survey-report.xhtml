@@ -21,17 +21,14 @@
         <title>Builder of Surveys</title>
     </h:head>
 
-    <script>
-        function goBack() {
-            window.history.back()
-        }
-    </script>
 
     <h:body class="report">
         <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
         <i class="glyphicon glyphicon-menu-left"/>
-        <button class="go-back" onclick="goBack()">Back to Surveys</button>
+        <!--<button class="go-back" onclick="goBack()">Back to Surveys</button>-->
+
+        <h:button class="go-back" id="surveys" outcome="surveys" value="Back to Surveys"/>
 
         <div class="page_title">
             <h2>#{surveyReportController.survey.title}</h2>
@@ -48,7 +45,7 @@
 
                             <ui:fragment rendered="#{question.type == 'TextQuestion'}">
                                 <ui:repeat value="#{question.textAnswers}" var="textAnswer" >
-                                    <h:outputText value="#{textAnswer.value}"/>
+                                    <h:outputText class="text-quest-answ"  value="#{textAnswer.value}"/>
                                     <br/>
                                 </ui:repeat>
 
@@ -57,38 +54,41 @@
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                                <br/>
-                                <h:outputText value="Average : "/>
-                                <h:outputText value="#{surveyReportController.getAverage(question)}"/>
-                                <br/>
-                                <h:outputText value="Median : "/>
-                                <h:outputText value="#{surveyReportController.getMedian(question)}"/>
-                                <br/>
-                                <h:outputText value="Mode : "/>
-                                <ui:repeat value="#{surveyReportController.getMode(question)}" var="mode" >
-                                    <h:outputText value="#{mode} "/>
-                                </ui:repeat>
-                                <br/>
+                                <div class="slider-quest-answ">
+                                    <h:outputText value="Average : "/>
+                                    <h:outputText value="#{surveyReportController.getAverage(question)}"/>
+                                    <br/>
+                                    <h:outputText value="Median : "/>
+                                    <h:outputText value="#{surveyReportController.getMedian(question)}"/>
+                                    <br/>
+                                    <h:outputText value="Mode : "/>
+                                    <ui:repeat value="#{surveyReportController.getMode(question)}" var="mode" >
+                                        <h:outputText value="#{mode} "/>
+                                    </ui:repeat>
+                                </div>
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
                                 <ui:repeat value="#{question.radioButtons}" var="radioButton">
-                                    <h:outputText value="#{radioButton.title} "/>
-                                    <h:outputText value="#{surveyReportController.countRadioButtonAnswers(radioButton)} "/>
-                                    <h:outputText value="#{surveyReportController.getPercentRadioAnswer(radioButton)} %"/>
-                                    <br/>
+                                    <div class="radio-quest-answ">
+                                        <h:outputText value="#{radioButton.title}" style="margin-right: 20px"/>
+                                        <h:outputText value="#{surveyReportController.countRadioButtonAnswers(radioButton)}"  style="margin-right: 20px"/>
+                                        <h:outputText value="#{surveyReportController.getPercentRadioAnswer(radioButton)} %" />
+                                    </div>
                                 </ui:repeat>
 
-                                <p:chart type="pie" model="#{surveyChartController.createPieModel(question)}" style="width:400px;height:300px" />
+                                <p:chart class="pie-chart" type="pie" model="#{surveyChartController.createPieModel(question)}"
+                                         style="width:400px;height:300px" />
 
                             </ui:fragment>
 
                             <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
                                 <ui:repeat value="#{question.checkboxes}" var="checkbox" >
-                                <h:outputText value="#{checkbox.title} "/>
-                                <h:outputText value="#{surveyReportController.countCheckBoxAnswers(checkbox)} "/>
-                                <h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(checkbox)} %"/>
-                                <br/>
+                                    <div class="check-quest-answ">
+                                        <h:outputText value="#{checkbox.title} "/>
+                                        <h:outputText value="#{surveyReportController.countCheckBoxAnswers(checkbox)} "/>
+                                        <h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(checkbox)} %"/>
+                                    </div>
                                 </ui:repeat>
 
                                 <!--<ui:repeat value="#{surveyReportController.getUniqueQuestionCheckboxAnswers(question)}" var="title" >-->
@@ -99,7 +99,7 @@
                                 <!--</ui:repeat>-->
 
                                 <!--<p:chart type="pie" model="#{surveyChartController.createPieModel(question)}" style="width:400px;height:300px" />-->
-                                <p:chart type="bar" model="#{surveyChartController.createBarModel(question)}" style="width:500px;height:300px" />
+                                <p:chart class="bar-chart" type="bar" model="#{surveyChartController.createBarModel(question)}" style="width:500px;height:300px" />
 
                             </ui:fragment>
 
