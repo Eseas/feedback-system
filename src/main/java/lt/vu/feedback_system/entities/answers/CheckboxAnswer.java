@@ -8,7 +8,6 @@ import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +16,6 @@ import java.util.List;
         @NamedQuery(name = "CheckboxAnswer.findAllByQuestionId", query = "SELECT c FROM CheckboxAnswer c WHERE c.question.id = :id"),
         @NamedQuery(name = "CheckboxAnswer.findAll", query = "SELECT c FROM CheckboxAnswer c"),
         @NamedQuery(name = "CheckboxAnswer.findBySectionId", query = "SELECT s FROM CheckboxAnswer s WHERE s.question.section.id = :section_id")
-
 })
 @Getter
 @Setter
@@ -39,12 +37,8 @@ public class CheckboxAnswer implements Answer {
     private AnsweredSurvey answeredSurvey;
 
     @OneToMany(mappedBy = "checkboxAnswer", cascade = CascadeType.ALL)
-    private List<SelectedCheckbox> selectedCheckboxes = new ArrayList<>();
+    private List<SelectedCheckbox> selectedCheckboxes;
 
     @Transient
     private List<SelectedCheckbox> availableSelectedCheckboxes;
-
-    public void setSelectedCheckboxes(List<SelectedCheckbox> selectedCheckboxes) {
-        this.selectedCheckboxes = selectedCheckboxes;
-    }
 }
