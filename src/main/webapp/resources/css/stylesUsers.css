@@ -248,24 +248,30 @@ tr {
     text-shadow: none !important;
     box-shadow: none !important;
 }
+
 /*edit user*/
-.ui-dialog{
+.ui-dialog {
     max-width: 360px;
     min-height: 300px;
 }
-.ui-dialog .ui-dialog-titlebar{
+
+.ui-dialog .ui-dialog-titlebar {
     background: transparent;
 }
+
 .ui-dialog .ui-dialog-title {
     margin: 7px 0;
 }
+
 .ui-icon-check {
     background-position: -65px -146px;
 }
-.ui-panelgrid .ui-panelgrid-cell{
+
+.ui-panelgrid .ui-panelgrid-cell {
     padding: 0 5px 10px 5px;
 }
-.update-button{
+
+.update-button {
     margin-top: 30px;
     margin-bottom: 10px;
     float: right;
@@ -275,16 +281,18 @@ tr {
     color: #00426B !important;
     padding: 1px !important;
 }
-.user-detail label{
+
+.user-detail label {
     font-size: 14px !important;
 }
+
 .ui-chkbox .ui-chkbox-box {
     width: 16px;
     height: 16px;
     display: inline-block;
     box-shadow: none !important;
     background: transparent;
-    border-radius: 0  !important;
+    border-radius: 0 !important;
     border-color: #909090;
     vertical-align: middle;
 }

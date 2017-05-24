@@ -39,7 +39,7 @@ public class ImportController {
     public ImportController(SpreadsheetImporter importer, UserContext userContext) {
         this.context = FacesContext.getCurrentInstance();
         this.importer = importer;
-        this.survey = new Survey();
+        this.survey = new Survey(true);
         this.creator = userContext.getUser();
     }
 

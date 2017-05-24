@@ -56,7 +56,8 @@ ol{
     color: #00426B;
     font-family: 'Bitter', serif;
 }
-.preview_title h2{
+
+.preview_title h2 {
     font-size: 22px;
     opacity: 0.5;
     color: #000;
@@ -69,7 +70,7 @@ ol{
 /*page top*/
 
 /*outside elements*/
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
     opacity: 1 !important;
 }
 .tab_form li{
@@ -216,10 +217,12 @@ ol{
     text-shadow: none !important;
     box-shadow: none;
 }
-.ui-message-error-icon{
+
+.ui-message-error-icon {
     display: none !important;
 }
-.message_error{
+
+.message_error {
     clear: both;
     margin: 5px 0 0 !important;
 }

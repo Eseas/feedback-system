@@ -62,4 +62,11 @@ public class Survey implements Serializable {
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
     private List<Section> sections = new ArrayList<>();
+
+    public Survey() {
+    }
+
+    public Survey(Boolean confidential) {
+        this.confidential = confidential;
+    }
 }

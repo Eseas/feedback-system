@@ -148,7 +148,7 @@ CREATE TABLE feedback.text_answers
   id                 SERIAL PRIMARY KEY,
   question_id        INTEGER      NOT NULL,
   answered_survey_id INTEGER      NOT NULL,
-  value              VARCHAR(200) NOT NULL,
+  value              VARCHAR(300) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.text_questions (id),
     FOREIGN KEY (answered_survey_id) REFERENCES feedback.answered_surveys (id)
 );
