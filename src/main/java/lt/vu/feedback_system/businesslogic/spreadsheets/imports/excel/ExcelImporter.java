@@ -15,9 +15,11 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -65,6 +67,13 @@ public class ExcelImporter implements SpreadsheetImporter {
 
         if (parsedAnswers.isSuccess()) createEntities(survey, parsedQuestions.get(), parsedAnswers.get());
         else throw new SpreadsheetException(parsedAnswers.getFailureMsg());
+    }
+
+    public StreamedContent getImportExample() {
+        final String fileName = "import_example.xlsx";
+        final String filePath = String.format("resources/others/%s", fileName);
+        final InputStream inputStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(filePath);
+        return new DefaultStreamedContent(inputStream, HelperValues.ContentTypes.Xlsx, fileName);
     }
 
     private void createEntities(final Survey survey, final List<Question> questions, final Map<Integer, List<Answer>> answers) {

@@ -44,7 +44,7 @@
                 <p:column headerText="Description">
                     <h:outputText value="#{survey.description}" />
                 </p:column>
-                <p:column class="confidential" headerText="Confidential">
+                <p:column class="confidential" headerText="Private results">
                     <h:outputText value="#{survey.confidential}" />
                 </p:column>
                 <p:column headerText="Creator" rendered="#{userController.admin and requestSurveysController.adminMode}">
@@ -52,26 +52,23 @@
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
-                <p:column class="preview" headerText="Preview">
-                    <h:button value="Preview" outcome="answer-survey">
+                <p:column class="preview" headerText="Options" style="min-width: 180px;">
+                    <p:button title="Preview" outcome="answer-survey" icon="fa fa-search">
                         <f:param name="s" value="#{survey.link}"/>
                         <f:param name="p" value="true"/>
-                    </h:button>
-                </p:column>
-                <p:column class="answer" headerText="Answer">
-                    <h:button value="Answer" outcome="answer-survey">
+                    </p:button>
+
+                    <p:button title="Answer" outcome="answer-survey" icon="fa fa-pencil">
                         <f:param name="s" value="#{survey.link}"/>
-                    </h:button>
-                </p:column>
-                <p:column class="report" headerText="Report">
-                    <h:button value="View report" outcome="survey-report">
+                    </p:button>
+
+                    <p:button title="View report" outcome="survey-report" icon="fa fa-pie-chart">
                         <f:param name="s" value="#{survey.link}"/>
-                    </h:button>
-                </p:column>
-                <p:column headerText="Download">
-                    <h:commandButton value="Download" ajax="false">
+                    </p:button>
+
+                    <p:commandButton title="Download" ajax="false" icon="fa fa-download">
                         <p:fileDownload value="#{exportController.getSpreadsheet(survey)}"/>
-                    </h:commandButton>
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
@@ -80,4 +77,3 @@
     </h:body>
 </f:view>
 </html>
-

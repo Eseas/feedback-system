@@ -97,6 +97,12 @@ tr {
     text-shadow: none !important;
     box-shadow: none !important;
 }
+button {
+    border: none !important;
+    background: transparent !important;
+    height: 35px;
+    width: 35px !important;
+}
 /**/
 .page_title h2{
     margin-top: 0;

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
     <h:outputStylesheet name="css/stylesLogin.css" />
     <title>Builder of Surveys</title>
 </h:head>
@@ -21,10 +22,10 @@
 
     <div class="answered-survey-page">
         <div class="form">
-            <h2>Thank you for your answers!</h2>
-            <h:link outcome="/survey-report?s=#{param['s']}">View survey report</h:link>
+            <h2 style="font-family: 'Bitter', serif; margin-bottom: 30px">Thank you for your answers!</h2>
+            <h:link outcome="/survey-report?s=#{param['s']}" style="margin-bottom: 20px !important">View survey report</h:link>
             <br/>
-            <h:link outcome="/index">Return to main page</h:link>
+            <h:link outcome="/index" style="margin-bottom: 20px !important">Return to main page</h:link>
         </div>
     </div>
 </h:body>
