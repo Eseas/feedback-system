@@ -62,6 +62,6 @@ public class CheckboxQuestion implements Question {
     private Section section;
 
     @Transient
-    public Future<BarChartModel> model = null;
+    public Future<BarChartModel> model;
 }
 

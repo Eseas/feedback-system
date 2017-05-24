@@ -58,6 +58,6 @@ public class TextQuestion implements Question {
     private Section section;
 
     @Transient
-    public Future<TagCloudModel> model = null;
+    public Future<TagCloudModel> model;
 }
 

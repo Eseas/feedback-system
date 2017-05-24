@@ -69,6 +69,6 @@ public class RadioQuestion implements Question {
     }
 
     @Transient
-    public Future<PieChartModel> model = null;
+    public Future<PieChartModel> model;
 }
 
