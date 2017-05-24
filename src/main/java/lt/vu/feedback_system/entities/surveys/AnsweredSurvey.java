@@ -4,7 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,8 +16,8 @@ import java.io.Serializable;
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = "survey")
-@ToString(of = {"id", "survey"})
+@EqualsAndHashCode(of = "id")
+@ToString(of = {"id"})
 public class AnsweredSurvey implements Serializable {
 
     private static final long serialVersionUID = 1L;

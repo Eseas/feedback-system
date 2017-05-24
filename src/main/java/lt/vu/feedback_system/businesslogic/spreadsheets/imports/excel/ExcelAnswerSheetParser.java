@@ -1,9 +1,10 @@
-package lt.vu.feedback_system.businesslogic.spreadsheets.excel;
+package lt.vu.feedback_system.businesslogic.spreadsheets.imports.excel;
 
 import com.google.common.collect.Lists;
-import lt.vu.feedback_system.businesslogic.spreadsheets.ParsingHelperValues;
+import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
 import lt.vu.feedback_system.entities.answers.*;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.utils.CollectionUtils;
 import lt.vu.feedback_system.utils.ParserWithDefaults;
 import lt.vu.feedback_system.utils.abstractions.Result;
 import lt.vu.feedback_system.utils.abstractions.Tuple;
@@ -35,7 +36,7 @@ final public class ExcelAnswerSheetParser {
                     if (answerFirstRowIsValid(answerSheet)) {
                         List<Result<Tuple<Integer, Answer>>> parsed = rows.subList(1, rows.size()).stream()
                                 .map(r -> ExcelAnswerSheetParser.parseAnswer(r, questionsResult.get())).collect(Collectors.toList());
-                        Optional<Result<Tuple<Integer, Answer>>> firstFailure = parsed.stream().filter(Result::isFailure).findFirst();
+                        Optional<Result<Tuple<Integer, Answer>>> firstFailure = CollectionUtils.findFirst(parsed.stream(), Result::isFailure);
                         if (!firstFailure.isPresent()) {
                             final Map<Integer, List<Answer>> surveyIdAnswers = new HashMap<>();
                             parsed.forEach(e -> {
@@ -48,9 +49,10 @@ final public class ExcelAnswerSheetParser {
                         } else parsedAnswers = Result.Failure(firstFailure.get().getFailureMsg());
                     } else parsedAnswers = Result.Failure(String.format(
                             "Answer sheet: First three cells of the first row must be filled with the following values: %s, %s and %s",
-                            ParsingHelperValues.AnswerFirstRow.FirstColValue,
-                            ParsingHelperValues.AnswerFirstRow.SecondColValue,
-                            ParsingHelperValues.AnswerFirstRow.ThirdColValue
+                            HelperValues.AnswerFirstRow.FirstColValue,
+                            HelperValues.AnswerFirstRow.FirstColValue,
+                            HelperValues.AnswerFirstRow.SecondColValue,
+                            HelperValues.AnswerFirstRow.ThirdColValue
                     ));
                 } else parsedAnswers = Result.Failure("Answer sheet: spreadsheet has no answers");
             } else parsedAnswers = Result.Failure(questionsResult.getFailureMsg());
@@ -65,14 +67,14 @@ final public class ExcelAnswerSheetParser {
             final int surveyId = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)));
             final int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(1)));
             if (surveyId > 0 && questionNumber > 0) {
-                final Optional<Question> notSafe = questions.stream().filter(q -> q.getPosition() == questionNumber).findFirst();
+                final Optional<Question> notSafe = CollectionUtils.findFirst(questions.stream(), q -> q.getPosition() == questionNumber);
                 if (notSafe.isPresent()) {
                     final Question question = notSafe.get();
                     final List<String> answerValues = answerValues(cells);
                     final String questionType = question.getType();
-                    final String excelQuestionType = ParsingHelperValues.typesMap.getOrDefault(questionType, "UNMATCHED_TYPE");
+                    final String excelQuestionType = HelperValues.typesMap.getOrDefault(questionType, "UNMATCHED_TYPE");
                     switch (questionType) {
-                        case ParsingHelperValues.EntityQuestionTypes.Text:
+                        case HelperValues.EntityQuestionTypes.Text:
                             if (answerValues.size() == 1) {
                                 final TextAnswer textAnswer = new TextAnswer();
                                 textAnswer.setQuestion((TextQuestion) question);
@@ -80,7 +82,7 @@ final public class ExcelAnswerSheetParser {
                                 parsedAnswer = Result.Success(new Tuple<>(surveyId, textAnswer));
                             } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s can only have one answer", excelQuestionType));
                             break;
-                        case ParsingHelperValues.EntityQuestionTypes.Radio:
+                        case HelperValues.EntityQuestionTypes.Radio:
                             if (answerValues.size() == 1) {
                                 final int optionId = ParserWithDefaults.parseInt(answerValues.get(0));
                                 if (optionId > 0) {
@@ -95,7 +97,7 @@ final public class ExcelAnswerSheetParser {
                                 } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer must be an integral value greater than zero", excelQuestionType));
                             } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s can only have one answer", excelQuestionType));
                             break;
-                        case ParsingHelperValues.EntityQuestionTypes.Checkbox:
+                        case HelperValues.EntityQuestionTypes.Checkbox:
                             final List<Integer> optionIds = answerValues.stream().map(ParserWithDefaults::parseInt).collect(Collectors.toList());
                             if (optionIds.stream().allMatch(i -> i > 0)) {
                                 final CheckboxAnswer checkboxAnswer = new CheckboxAnswer();
@@ -115,7 +117,7 @@ final public class ExcelAnswerSheetParser {
                                 } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s answer with option id %d does not exist", excelQuestionType, maxOptionId));
                             } else parsedAnswer = Result.Failure(String.format("Answer sheet: question of type %s must have a list of integral values greater than zero as answers", excelQuestionType));
                             break;
-                        case ParsingHelperValues.EntityQuestionTypes.Slider:
+                        case HelperValues.EntityQuestionTypes.Slider:
                             if (answerValues.size() == 1) {
                                 final int sliderValue = ParserWithDefaults.parseInt(answerValues.get(0), Integer.MIN_VALUE);
                                 if (sliderValue != Integer.MIN_VALUE) {
@@ -151,9 +153,9 @@ final public class ExcelAnswerSheetParser {
             Row firstRow = answerSheet.getRow(firstRowNum);
             List<Cell> cells = firstRow != null ? Lists.newArrayList(firstRow) : new ArrayList<>();
             List<String> cellValues = cells.stream().map(formatter::formatCellValue).collect(Collectors.toList());
-            isValid = cellValues.indexOf(ParsingHelperValues.AnswerFirstRow.FirstColValue) == 0
-                    && cellValues.indexOf(ParsingHelperValues.AnswerFirstRow.SecondColValue) == 1
-                    && cellValues.indexOf(ParsingHelperValues.AnswerFirstRow.ThirdColValue) == 2;
+            isValid = cellValues.indexOf(HelperValues.AnswerFirstRow.FirstColValue) == 0
+                    && cellValues.indexOf(HelperValues.AnswerFirstRow.SecondColValue) == 1
+                    && cellValues.indexOf(HelperValues.AnswerFirstRow.ThirdColValue) == 2;
         } else isValid = false;
         return isValid;
     }

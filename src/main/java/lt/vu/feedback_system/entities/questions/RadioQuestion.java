@@ -23,7 +23,7 @@ import java.util.List;
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"title"})
+@EqualsAndHashCode(of = {"id", "title"})
 @ToString(of = {"id", "title", "position", "required"})
 public class RadioQuestion implements Question {
     private static final long serialVersionUID = 1L;

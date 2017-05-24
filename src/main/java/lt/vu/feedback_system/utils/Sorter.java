@@ -1,11 +1,8 @@
 package lt.vu.feedback_system.utils;
 
-import javafx.scene.control.Slider;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.questions.Question;
-
-import javax.enterprise.context.RequestScoped;
 import java.util.*;
 
 public class Sorter {
@@ -42,17 +39,5 @@ public class Sorter {
             }
         });
         return answers;
-    }
-    public static List<Map.Entry<String, Integer>> sortMapByValue(Map map){
-        Set<Map.Entry<String, Integer>> set = map.entrySet();
-        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(
-                set);
-        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> o1,
-                               Map.Entry<String, Integer> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-        return list;
     }
 }

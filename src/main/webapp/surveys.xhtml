@@ -68,6 +68,11 @@
                         <f:param name="s" value="#{survey.link}"/>
                     </h:button>
                 </p:column>
+                <p:column headerText="Download">
+                    <h:commandButton value="Download" ajax="false">
+                        <p:fileDownload value="#{exportController.getSpreadsheet(survey)}" />
+                    </h:commandButton>
+                </p:column>
             </p:dataTable>
         </h:form>
 

@@ -53,16 +53,16 @@
                        var="section" activeIndex="#{answerSurveyController.activeTabIndex}"  effect="slide"
                        dynamic="true" style="border: none !important;">
 
-                    <p:tab title="#{section.title}" disabled="true" >
-                        <div class="section-title">
-                            <h:outputText value="#{section.title}"/>
-                        </div>
-                        <div class="section-description">
-                            <h:outputText value="#{section.description}"/>
-                        </div>
-                        <hr/>
+                <p:tab title="#{section.title}" disabled="true">
+                    <div class="section-title">
+                        <h:outputText value="#{section.title}"/>
+                    </div>
+                    <div class="section-description">
+                        <h:outputText value="#{section.description}"/>
+                    </div>
+                    <hr/>
 
-                        <h:form class="questions-section" id="form">
+                    <h:form class="questions-section" id="form">
                         <p:panel>
                             <ui:repeat value="#{section.answers}" var="answer">
                                 <div  class="question-number" >
@@ -87,16 +87,19 @@
 
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
-                                    <p:outputLabel value="Choose value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
-                                        <p:inputText id="slider-value" value="#{answer.value}"
-                                                     disabled="true"
-                                                     required="#{empty param.noValidation and answer.question.required}"
-                                                     requiredMessage="This is a required question"/>
-                                        <p:slider class="form-slider" for="slider-value"
-                                                  disabled="#{answerSurveyController.preview}"
+                                        <p:outputLabel
+                                                value="Pick value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
+
+                                        <h:outputText id="output-not-selected" value="Value is not selected"/>
+                                        <h:inputHidden id="slider-value" value="#{answer.value}"
+                                                       required="#{empty param.noValidation and answer.question.required}"
+                                                       requiredMessage="This is a required question"/>
+                                        <p:slider for="slider-value" display="output-not-selected"
+                                                  displayTemplate="Selected value: {value}"
                                                   minValue="#{answer.question.lowerBound}"
                                                   maxValue="#{answer.question.upperBound}"/>
-                                        <p:message for="slider-value"/></div>
+                                        <p:message for="slider-value"/>
+                                    </div>
                                     <hr/>
                                 </ui:fragment>
 
@@ -159,12 +162,12 @@
                             </ui:fragment>
 
                         </p:panel>
-                        </h:form>
-                    </p:tab>
+                    </h:form>
+                </p:tab>
             </p:tabView>
         </div>
 
-            <p:messages globalOnly="true"/>
+        <p:messages globalOnly="true"/>
         <ui:include src="/WEB-INF/composites/footer.xhtml"/>
     </h:body>
 </f:view>

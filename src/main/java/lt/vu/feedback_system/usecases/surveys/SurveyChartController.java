@@ -75,13 +75,21 @@ public class SurveyChartController implements Serializable {
         for(String answer:answers){
             map.put(answer,reportController.countTextAnswers(answer,question));
         }
-        List<Map.Entry<String, Integer>> list = Sorter.sortMapByValue(map);
+        Set<Map.Entry<String, Integer>> set = map.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
         TagCloudModel cloudModel = new DefaultTagCloudModel();
-        int index= 5;
         for (Map.Entry<String, Integer> entry : list) {
-            if(index < 1){break;}
-            cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(),index));
-            index--;
+            if (entry.getValue() < 10) {
+                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 1));
+            } else if (entry.getValue() < 20) {
+                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 2));
+            } else if (entry.getValue() < 30) {
+                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 3));
+            } else if (entry.getValue() < 40) {
+                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 4));
+            } else {
+                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 5));
+            }
         }
         return cloudModel;
     }
