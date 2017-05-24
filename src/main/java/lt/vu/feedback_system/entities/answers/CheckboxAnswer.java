@@ -4,9 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
-import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
         @NamedQuery(name = "CheckboxAnswer.findAllByQuestionId", query = "SELECT c FROM CheckboxAnswer c WHERE c.question.id = :id"),
         @NamedQuery(name = "CheckboxAnswer.findAll", query = "SELECT c FROM CheckboxAnswer c"),
         @NamedQuery(name = "CheckboxAnswer.findBySectionId", query = "SELECT s FROM CheckboxAnswer s WHERE s.question.section.id = :section_id")
-
 })
 @Getter
 @Setter
