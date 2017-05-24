@@ -91,29 +91,6 @@ public class SurveyReportController implements Serializable {
         return count;
     }
 
-    public List<String> getUniqueQuestionTextAnswers(Question q) {
-        List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(q.getId());
-        List<String> result = new ArrayList<>();
-        Boolean temp= false;
-        int i;
-        String[] splitString = {};
-        for (TextAnswer answer: answers) {
-            splitString = answer.getValue().split("\\s");
-           for(String string : splitString){
-                for (String a : result) {
-                    if (string.equals(a)) {
-                        temp = true;
-                    }
-                }
-                if (!temp) {
-                    result.add(string);
-                }
-                temp = false;
-            }
-        }
-        return result;
-    }
-
     public List<CheckboxAnswer> getQuestionCheckboxAnswers(Question q) {
         return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
     }

@@ -2,6 +2,8 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
+import lt.vu.feedback_system.entities.answers.Answer;
+import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.questions.*;
 import org.primefaces.model.chart.*;
 import org.primefaces.model.tagcloud.DefaultTagCloudItem;
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Named
 @ManagedBean
@@ -68,26 +71,38 @@ public class SurveyChartController implements Serializable {
     }
 
     public TagCloudModel createTagCloud(Question question) {
-
-        List<String> answers = reportController.getUniqueQuestionTextAnswers(question);
-        Map map = new HashMap();
-        for(String answer:answers){
-            map.put(answer,reportController.countTextAnswers(answer,question));
+        List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(question.getId());
+        List<String> result = new ArrayList<>();
+        for (Answer answer : answers) {
+            List<String> splittedValue = new ArrayList<String>(Arrays.asList(((TextAnswer)answer).getValue().split(" ")));
+            result.addAll(splittedValue);
         }
-        Set<Map.Entry<String, Integer>> set = map.entrySet();
-        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(set);
+
+        Map<String, Long> counts = result.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+
+        Map.Entry<String, Long> maxEntry = null;
+        for (Map.Entry<String, Long> entry : counts.entrySet())
+        {
+            if(entry.getKey().length()>=4) {
+                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                    maxEntry = entry;
+                }
+            }
+        }
         TagCloudModel cloudModel = new DefaultTagCloudModel();
-        for (Map.Entry<String, Integer> entry : list) {
-            if (entry.getValue() < 10) {
-                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 1));
-            } else if (entry.getValue() < 20) {
-                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 2));
-            } else if (entry.getValue() < 30) {
-                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 3));
-            } else if (entry.getValue() < 40) {
-                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 4));
-            } else {
-                cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 5));
+        for (Map.Entry<String, Long> entry : counts.entrySet()) {
+            if(entry.getKey().length()>= 4) {
+                if (entry.getValue() <= maxEntry.getValue()/5) {
+                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 1));
+                } else if (entry.getValue() <= maxEntry.getValue()/5*2) {
+                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 2));
+                } else if (entry.getValue() <= maxEntry.getValue()/5*3) {
+                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 3));
+                } else if (entry.getValue() <= maxEntry.getValue()/5*4) {
+                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 4));
+                } else {
+                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 5));
+                }
             }
         }
         return cloudModel;
