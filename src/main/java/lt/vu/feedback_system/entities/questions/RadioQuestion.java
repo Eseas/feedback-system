@@ -7,11 +7,13 @@ import lombok.ToString;
 import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
+import org.primefaces.model.chart.PieChartModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @Entity
 @Table(schema = "feedback", name = "radio_questions")
@@ -65,5 +67,8 @@ public class RadioQuestion implements Question {
     public Boolean getRequired() {
         return required;
     }
+
+    @Transient
+    public Future<PieChartModel> model = null;
 }
 

@@ -2,16 +2,15 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.reports.ChartLogic;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.AnsweredSurveyDAO;
 import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
 import lt.vu.feedback_system.dao.SurveyDAO;
-import lt.vu.feedback_system.entities.answers.*;
-import lt.vu.feedback_system.entities.questions.Checkbox;
-import lt.vu.feedback_system.entities.questions.Question;
-import lt.vu.feedback_system.entities.questions.RadioButton;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
+import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 
 @Named
 @ViewScoped
@@ -60,6 +58,9 @@ public class SurveyReportController implements Serializable {
 
     private List<Question> questions = new ArrayList<>();
 
+    @Inject
+    private ChartLogic chartLogic;
+
     public void loadData() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().getSessionMap().put("surveyContext", surveyContext);
@@ -71,28 +72,50 @@ public class SurveyReportController implements Serializable {
         }
     }
 
-    public List<Question> getQuestions() {
-        return Sorter.sortQuestionsAscending(questions);
-    }
+    public String createPieModel(RadioQuestion radioQuestion) {
+        if (radioQuestion.getModel() == null) {
+            radioQuestion.setModel(chartLogic.createPieModel(radioQuestion));
 
-    public int countTextAnswers(String title, Question q){
-        List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(q.getId());
-
-        int count = 0;
-        String[] splitString = {};
-        for (TextAnswer answer: answers) {
-            splitString = answer.getValue().split("\\s");
-            for (String string : splitString) {
-                if (string.equals(title)) {
-                    count++;
-                }
+            return "LOADING";
+        } else {
+            if (radioQuestion.getModel().isDone()) {
+                return "DONE";
+            } else {
+                return "LOADING";
             }
         }
-        return count;
     }
 
-    public List<CheckboxAnswer> getQuestionCheckboxAnswers(Question q) {
-        return answerDAO.getAllCheckboxAnswersByQuestionId(q.getId());
+    public String createBarModel(CheckboxQuestion checkboxQuestion) {
+        if (checkboxQuestion.getModel() == null) {
+            checkboxQuestion.setModel(chartLogic.createBarModel(checkboxQuestion));
+
+            return "LOADING";
+        } else {
+            if (checkboxQuestion.getModel().isDone()) {
+                return "DONE";
+            } else {
+                return "LOADING";
+            }
+        }
+    }
+
+    public String createTagCloudModel(TextQuestion textQuestion) {
+        if (textQuestion.getModel() == null) {
+            textQuestion.setModel(chartLogic.createTagCloud(textQuestion));
+
+            return "LOADING";
+        } else {
+            if (textQuestion.getModel().isDone()) {
+                return "DONE";
+            } else {
+                return "LOADING";
+            }
+        }
+    }
+
+    public List<Question> getQuestions() {
+        return Sorter.sortQuestionsAscending(questions);
     }
 
     public double getAverage(Question q) {
@@ -105,6 +128,7 @@ public class SurveyReportController implements Serializable {
         }
         return round(sum/divider);
     }
+
     public double getMedian(Question q) {
 
         double median;
@@ -119,6 +143,7 @@ public class SurveyReportController implements Serializable {
         }
         return median;
     }
+
     public List<Integer> getMode(Question q) {
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
         List<Integer> numbers = new ArrayList<>();

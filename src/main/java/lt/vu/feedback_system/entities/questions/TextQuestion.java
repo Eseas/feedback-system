@@ -7,11 +7,13 @@ import lombok.ToString;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
+import org.primefaces.model.tagcloud.TagCloudModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @Entity
 @Table(schema = "feedback", name = "text_questions")
@@ -54,5 +56,8 @@ public class TextQuestion implements Question {
     @JoinColumn(name = "section_id", referencedColumnName = "id")
     @ManyToOne
     private Section section;
+
+    @Transient
+    public Future<TagCloudModel> model = null;
 }
 
