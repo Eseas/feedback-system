@@ -7,6 +7,7 @@ import lt.vu.feedback_system.entities.questions.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,29 +17,30 @@ final class ExcelAnswerSheetFiller {
     static void fillAnswerSheet(final Sheet sheet, final Map<Integer, List<Answer>> groupedAnswers, final List<Question> questions) {
         fillAnswerSheetFirstRow(sheet);
         final List<Integer> surveyIds = Lists.newArrayList(groupedAnswers.keySet());
-        surveyIds.forEach(i -> {
-            final List<Answer> answers = groupedAnswers.get(i);
-            answers.forEach(a -> {
-                final Row row = sheet.createRow(answers.indexOf(a) + 1);
+        int currentRowNumber = 1;
+        for (int id : surveyIds) {
+            final List<Answer> answers = groupedAnswers.get(id);
+            for (Answer a : answers) {
                 final Question q = a.getQuestion();
+                final Row row = sheet.createRow(currentRowNumber++);
                 switch (q.getType()) {
                     case HelperValues.EntityQuestionTypes.Text:
-                        fillTextAnswerRow(row, i + 1, (TextAnswer) a,questions.indexOf(q) + 1,  (TextQuestion) q);
+                        fillTextAnswerRow(row, id + 1, (TextAnswer) a,questions.indexOf(q) + 1,  (TextQuestion) q);
                         break;
                     case HelperValues.EntityQuestionTypes.Radio:
-                        fillRadioAnswerRow(row, i + 1, (RadioAnswer) a,questions.indexOf(q) + 1,  (RadioQuestion) q);
+                        fillRadioAnswerRow(row, id + 1, (RadioAnswer) a,questions.indexOf(q) + 1,  (RadioQuestion) q);
                         break;
                     case HelperValues.EntityQuestionTypes.Checkbox:
-                        fillCheckboxAnswerRow(row, i + 1, (CheckboxAnswer) a,questions.indexOf(q) + 1,  (CheckboxQuestion) q);
+                        fillCheckboxAnswerRow(row, id + 1, (CheckboxAnswer) a,questions.indexOf(q) + 1,  (CheckboxQuestion) q);
                         break;
                     case HelperValues.EntityQuestionTypes.Slider:
-                        fillSliderAnswerRow(row, i + 1, (SliderAnswer) a,questions.indexOf(q) + 1,  (SliderQuestion) q);
+                        fillSliderAnswerRow(row, id + 1, (SliderAnswer) a,questions.indexOf(q) + 1,  (SliderQuestion) q);
                         break;
                     default:
                         break;
                 }
-            });
-        });
+            }
+        }
     }
 
     private static void fillTextAnswerRow(final Row row, final int surveyId, final TextAnswer answer, final int questionNumber, final TextQuestion question) {
@@ -72,7 +74,7 @@ final class ExcelAnswerSheetFiller {
     }
 
     private static void fillRemainingColumns(final Row row, final int startAt, final List<Integer> values) {
-        values.forEach(v -> row.createCell(startAt).setCellValue(v));
+        values.forEach(v -> row.createCell(startAt + values.indexOf(v)).setCellValue(v));
     }
 
     private static void fillAnswerSheetFirstRow(final Sheet sheet) {

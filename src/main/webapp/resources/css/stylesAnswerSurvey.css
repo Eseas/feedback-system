@@ -48,9 +48,6 @@ ol{
 .page_title{
     position: relative;
     outline: 0;
-    font-family: 'Josefin Sans', sans-serif !important;
-}
-.page_title h2{
     margin-top: 0;
     width: 100%;
     padding: 100px 0 10px;
@@ -59,6 +56,12 @@ ol{
     color: #00426B;
     font-family: 'Bitter', serif;
 }
+.preview_title h2{
+    font-size: 22px;
+    opacity: 0.5;
+    color: #000;
+}
+
 #j_id_a{
     display: block !important;
     clear: none;
@@ -66,6 +69,9 @@ ol{
 /*page top*/
 
 /*outside elements*/
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+    opacity: 1 !important;
+}
 .tab_form li{
     border-color: #3dae41 !important;
     border-radius: 0;
@@ -83,14 +89,13 @@ ol{
 }
 .tab_form{
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 50px;
     min-width: 600px;
     border: none;
     border-radius: 0;
     font-family: "Roboto", sans-serif;
     font-style: normal;
     box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
-    margin-bottom: 50px;
 }
 .ui-state-active{
     font-weight: normal;
@@ -139,7 +144,7 @@ ol{
 }
 .questions-section textarea {
     border: 1px solid #4f4f4f !important;
-    border-radius: 0px;
+    border-radius: 0;
     box-shadow: none !important;
     max-width: 500px;
     max-height: 150px;
@@ -148,13 +153,15 @@ ol{
 }
 .slider-bound label{
     font-weight: normal;
-    margin: 0 20px 30px 40px;
+    margin: 0 10px 30px 40px;
 }
 .slider-bound input{
-    border: 1px solid #4f4f4f !important;
-    border-radius: 0px;
+    border: 1px solid transparent !important;
+    border-radius: 0;
     box-shadow: none !important;
     width: 60px;
+    opacity: 0.7;
+    padding: 0;
 }
 .form-slider {
     min-width: 250px;
@@ -209,7 +216,13 @@ ol{
     text-shadow: none !important;
     box-shadow: none;
 }
-
+.ui-message-error-icon{
+    display: none !important;
+}
+.message_error{
+    clear: both;
+    margin: 5px 0 0 !important;
+}
 
 /*page bottom*/
 footer{

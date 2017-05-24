@@ -80,7 +80,9 @@ ol{
 }
 table{
     width: 100%;
+    max-width: 1250px;
     table-layout: auto !important;
+    margin: 0 auto;
 }
 
 .reg_users{
@@ -245,6 +247,46 @@ tr {
     background: transparent !important;
     text-shadow: none !important;
     box-shadow: none !important;
+}
+/*edit user*/
+.ui-dialog{
+    max-width: 360px;
+    min-height: 300px;
+}
+.ui-dialog .ui-dialog-titlebar{
+    background: transparent;
+}
+.ui-dialog .ui-dialog-title {
+    margin: 7px 0;
+}
+.ui-icon-check {
+    background-position: -65px -146px;
+}
+.ui-panelgrid .ui-panelgrid-cell{
+    padding: 0 5px 10px 5px;
+}
+.update-button{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    float: right;
+    background: #fff !important;
+    border-color: #3dae41 !important;
+    border-radius: 0;
+    color: #00426B !important;
+    padding: 1px !important;
+}
+.user-detail label{
+    font-size: 14px !important;
+}
+.ui-chkbox .ui-chkbox-box {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    box-shadow: none !important;
+    background: transparent;
+    border-radius: 0  !important;
+    border-color: #909090;
+    vertical-align: middle;
 }
 /* page bottom done*/
 footer{

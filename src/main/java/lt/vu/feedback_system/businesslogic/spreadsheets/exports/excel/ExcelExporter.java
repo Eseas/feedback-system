@@ -4,7 +4,6 @@ import lt.vu.feedback_system.businesslogic.spreadsheets.HelperValues;
 import lt.vu.feedback_system.businesslogic.spreadsheets.exports.SpreadsheetExporter;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.QuestionDAO;
-import lt.vu.feedback_system.dao.SurveyDAO;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.questions.Question;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
@@ -14,9 +13,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,7 +32,8 @@ public class ExcelExporter implements SpreadsheetExporter {
 
     private QuestionDAO questionDAO;
 
-    protected ExcelExporter() {}
+    protected ExcelExporter() {
+    }
 
     @Inject
     public ExcelExporter(AnswerDAO answerDAO, QuestionDAO questionDAO) {

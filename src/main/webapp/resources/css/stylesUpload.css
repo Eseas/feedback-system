@@ -1,0 +1,208 @@
+.top-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #FFF;
+    border-bottom: 0;
+    height: 60px;
+    z-index: 10;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2);
+}
+ol{
+    padding: 0;
+}
+.header #logo{
+    position: relative;
+    font-family: 'Josefin Sans', sans-serif !important;
+    margin-top: -10px;
+    margin-bottom: 0;
+    margin-left: 40px;
+    color: #00426B;
+}
+.header #logo, #user{
+    outline: 0;
+    padding: 0;
+    display: inline-block;
+}
+.header #user{
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
+    color: #00426B;
+    font-style: italic;
+}
+.header em {
+    letter-spacing: 0.09em;
+}
+#user a{
+    color: #00426B;
+}
+.throwLeft{
+    float: left;
+}
+.glyphicon{
+    margin-right: 10px;
+    top: 3px !important;
+}
+.page_title{
+    position: relative;
+    outline: 0;
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+.page_title h2{
+    margin-top: 0;
+    width: 100%;
+    padding: 100px 0 10px;
+    text-align: center;
+    font-size: 2em;
+    color: #00426B;
+    font-family: 'Bitter', serif;
+}
+#j_id_a{
+    display: block !important;
+    clear: none;
+}
+/*page top*/
+.upload-desc h3{
+    font-family: 'Josefin Sans', sans-serif !important;
+    font-size: 20px;
+    font-style: italic;
+    text-align: center;
+    display: block;
+    margin-bottom: 30px;
+}
+.title.throw-left.clearfix {
+    width: 60%;
+}
+.title input, .title textarea{
+    display: block;
+    width: 90%;
+    float: left;
+    background: transparent !important;
+    border: 0;
+    border-bottom: 2px solid #00426B;
+    box-shadow: none !important;
+    top: 28px;
+    position: relative;
+    font-family: 'Bitter', serif;
+    color: #00426B;
+    min-height: 32px;
+    font-size: 18px;
+}
+.switch{
+    float: right;
+    padding-top: 20px;
+    margin: 10px 0;
+}
+.switch label{
+    font-size: 14px;
+    font-weight: normal;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.file-upload{
+    display: block;
+    margin: 100px 0 20px;
+}
+.ui-inputswitch-handle.ui-state-default {
+    background: #fff;
+}
+
+
+.form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    margin: 0 auto;
+    padding: 15px 40px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
+    max-width: 1000px;
+    width: 80%;
+}
+.form button{
+    display: block;
+    font-weight: normal;
+    line-height: normal;
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #3dae41;
+    border: 0;
+    border-radius: 3px;
+    padding: 10px !important;
+    color: #FFFFFF;
+    font-size: 14px;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    text-shadow: none;
+    float: right;
+}
+.form .upload-button {
+    margin: 15px auto;
+    height: 40px;
+}
+.ui-button-text-only .ui-button-text{
+    padding: 0 !important;
+}
+.form .button:hover,.form .button:active,.form .button:focus {
+    background: #43A047 !important;
+}
+.form .message {
+    margin: 15px;
+    color: #000000;
+    font-size: 12px;
+}
+.form .remember {
+    color: #E74C3C;
+    text-decoration: none;
+    font: inherit;
+}
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 300px;
+    margin: 0 auto;
+}
+.container:before, .container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.container .info {
+    margin: 50px auto;
+    text-align: center;
+}
+.container .info span {
+    color: #4d4d4d;
+    font-size: 12px;
+}
+.ui-messages-error-icon{
+    display: none !important;
+}
+.ui-messages-error, .ui-message-error {
+    font-size: 14px;
+    padding: 2px !important;
+    width: 50%;
+    font-family: 'Roboto', sans-serif;
+}
+/* page bottom done*/
+footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 9px;
+    z-index: -999;
+}
+body{
+    background: -webkit-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -moz-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: -o-linear-gradient(right, #EEF0F3, #FFFFFF);
+    background: linear-gradient(to left, #EEF0F3, #FFFFFF);
+    font-family: "Roboto", sans-serif !important;
+    font-weight: normal !important;
+    -webkit-font-smoothing: antialiased;
+}
+

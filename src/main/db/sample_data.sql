@@ -56,10 +56,6 @@ INSERT INTO feedback.answered_surveys VALUES (DEFAULT, 3, TO_TIMESTAMP('2015-07-
 INSERT INTO feedback.slider_answers VALUES (DEFAULT, 1, 1, 5);
 INSERT INTO feedback.slider_answers VALUES (DEFAULT, 2, 2, 5);
 INSERT INTO feedback.slider_answers VALUES (DEFAULT, 3, 3, 5);
-INSERT INTO feedback.slider_answers VALUES (DEFAULT, 1, 1, 1);
-INSERT INTO feedback.slider_answers VALUES (DEFAULT, 1, 1, 6);
-INSERT INTO feedback.slider_answers VALUES (DEFAULT, 1, 1, 6);
-INSERT INTO feedback.slider_answers VALUES (DEFAULT, 1, 1, 2);
 
 INSERT INTO feedback.text_answers VALUES (DEFAULT, 1, 1, 'Perfect!');
 INSERT INTO feedback.text_answers VALUES (DEFAULT, 2, 2, 'Not at all');

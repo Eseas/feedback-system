@@ -18,7 +18,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
-@ToString(of = {"id"})
+@ToString(of = {"id", "checkbox"})
 public class SelectedCheckbox {
     private static final long serialVersionUID = 1L;
     @Id
