@@ -36,8 +36,8 @@
 
                     <p:outputLabel for="description" value="Survey description"
                                    style="display: none !important; clear: both;"/>
-                    <p:inputText id="description" maxlength="100" value="#{createSurveyController.survey.description}"
-                                 placeholder="Add description..." style="margin-bottom: 30px;"/>
+                    <p:inputTextarea id="description" maxlength="100" value="#{createSurveyController.survey.description}"
+                                 placeholder="Add description..." rows="1" cols="40" style="margin-bottom: 30px;"/>
                     <p:message class="message_error" for="description"/>
                 </div>
 

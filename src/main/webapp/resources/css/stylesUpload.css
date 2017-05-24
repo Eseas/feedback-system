@@ -156,6 +156,15 @@ ol {
     text-shadow: none;
     float: right;
 }
+.download-form{
+    text-align: right;
+    margin: 20px 0 10px;
+}
+.download {
+    border: none;
+    background: transparent;
+    text-decoration: underline;
+}
 
 .form .upload-button {
     margin: 15px auto;
@@ -181,7 +190,6 @@ ol {
     text-decoration: none;
     font: inherit;
 }
-
 .container {
     position: relative;
     z-index: 1;
