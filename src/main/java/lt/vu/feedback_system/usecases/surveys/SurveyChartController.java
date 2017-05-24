@@ -3,7 +3,6 @@ package lt.vu.feedback_system.usecases.surveys;
 import lt.vu.feedback_system.dao.AnswerDAO;
 import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
 import lt.vu.feedback_system.entities.questions.*;
-import lt.vu.feedback_system.utils.Sorter;
 import org.primefaces.model.chart.*;
 import org.primefaces.model.tagcloud.DefaultTagCloudItem;
 import org.primefaces.model.tagcloud.DefaultTagCloudModel;

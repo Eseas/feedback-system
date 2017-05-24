@@ -1,17 +1,21 @@
 package lt.vu.feedback_system.businesslogic.spreadsheets;
 
 import com.google.common.collect.ImmutableMap;
+
 import java.util.Map;
 
 public final class HelperValues {
 
-    private HelperValues() {}
+    private HelperValues() {
+    }
 
     public final static class ContentTypes {
         // https://www.sitepoint.com/web-foundations/mime-types-summary-list/
         public static final String Xls = "application/vnd.ms-excel";
         public static final String Xlsx = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        private ContentTypes() {}
+
+        private ContentTypes() {
+        }
     }
 
     public final static class SurveyFirstRow {

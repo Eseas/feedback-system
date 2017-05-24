@@ -88,14 +88,16 @@
                                 <ui:fragment rendered="#{answer.question.type == 'SliderQuestion'}">
                                     <div class="slider-bound">
                                         <p:outputLabel
-                                                value="Pick value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
+                                                value="Choose value between #{answer.question.lowerBound} and #{answer.question.upperBound}:"/>
 
-                                        <h:outputText id="output-not-selected" value="Value is not selected"/>
+                                        <h:outputText id="output-not-selected" value="#{answer.value}"/>
                                         <h:inputHidden id="slider-value" value="#{answer.value}"
+                                                       disabled="#{answerSurveyController.preview}"
                                                        required="#{empty param.noValidation and answer.question.required}"
                                                        requiredMessage="This is a required question"/>
                                         <p:slider for="slider-value" display="output-not-selected"
-                                                  displayTemplate="Selected value: {value}"
+                                                  displayTemplate="{value}"
+                                                  disabled="#{answerSurveyController.preview}"
                                                   minValue="#{answer.question.lowerBound}"
                                                   maxValue="#{answer.question.upperBound}"/>
                                         <p:message for="slider-value"/>

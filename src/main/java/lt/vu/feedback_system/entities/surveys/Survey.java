@@ -10,10 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.User;
-import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
-import lt.vu.feedback_system.entities.questions.RadioQuestion;
-import lt.vu.feedback_system.entities.questions.SliderQuestion;
-import lt.vu.feedback_system.entities.questions.TextQuestion;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
