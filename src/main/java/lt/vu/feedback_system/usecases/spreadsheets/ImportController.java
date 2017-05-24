@@ -9,6 +9,7 @@ import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.entities.User;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.HexStringGen;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import javax.enterprise.inject.Model;
@@ -64,6 +65,10 @@ public class ImportController {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "You have to be logged in to import surveys");
         }
         context.addMessage(null, msg);
+    }
+
+    public StreamedContent getImportExample() {
+        return importer.getImportExample();
     }
 
 }
