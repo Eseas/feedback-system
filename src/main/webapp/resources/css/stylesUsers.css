@@ -62,6 +62,11 @@ ol{
 /*page top done*/
 
 
+.management-tabs a{
+    font-family: 'Bitter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: bold;
+}
 #j_id_e{
     border: none;
     padding: 0;

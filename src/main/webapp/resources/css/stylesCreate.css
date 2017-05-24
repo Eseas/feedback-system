@@ -95,6 +95,11 @@ ol{
     box-shadow: none;
     text-shadow: none;
 }
+.tab_form a {
+    font-family: 'Bitter', sans-serif !important;
+    font-size: 14px;
+    font-weight: bold;
+}
 .ui-tabs .ui-tabs-nav li a {
     cursor: pointer;
     font-family: 'Bitter', serif;

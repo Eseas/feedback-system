@@ -43,7 +43,7 @@ ol{
 }
 .glyphicon{
     margin-right: 10px;
-    top: 3px !important;
+    top: 2px !important;
 }
 .page_title{
     position: relative;
@@ -53,7 +53,7 @@ ol{
 .page_title h2{
     margin-top: 0;
     width: 100%;
-    padding: 30px 0 10px;
+    padding: 30px 0 30px;
     text-align: center;
     font-size: 2em;
     color: #00426B;
@@ -65,9 +65,12 @@ ol{
 }
 .go-back {
     margin-top: 70px;
+    font-weight: normal !important;
     border: none;
+    top: 1px;
     background: transparent;
     color: #00426B;
+    padding: 0 !important;
 }
 i {
     margin:0 0 0 40px !important;
@@ -86,12 +89,20 @@ i {
     margin-bottom: 50px;
     min-height: 400px;
 }
-.tab_form li{
+.ui-tabs-nav li{
     border-color: #3dae41 !important;
     border-radius: 0;
-    background: #e0e0e0;
+    background: #EFF0F3 !important;
     box-shadow: none;
     text-shadow: none;
+}
+.ui-tabs-nav a{
+    font-family: 'Bitter', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: bold;
+}
+.ui-tabs-nav li.ui-tabs-selected {
+    background: #fff !important;
 }
 /*inside report*/
 .question-title {
@@ -99,6 +110,7 @@ i {
     font-weight: normal;
     margin: 10px 0 20px 40px;
     display: block;
+    color: #00426B;
 }
 .question-number {
     font-size: 20px !important;
@@ -106,6 +118,30 @@ i {
     font-weight: bold;
     margin: 10px;
 }
+.text-quest-answ, .slider-quest-answ, .radio-quest-answ, .check-quest-answ {
+    margin-left: 40px;
+    font-size: 16px;
+}
+.ui-tagcloud {
+    margin: 40px;
+    width: 90% !important;
+    border-color: transparent;
+}
+.ui-tagcloud li {
+    padding: 0 10px 0 0;
+    pointer-events: none;
+    background: transparent;
+}
+.pie-chart {
+    margin: 20px auto;
+}
+.jqplot-table-legend{
+    border: none !important;
+}
+.bar-chart {
+    margin: 20px auto;
+}
+
 
 /*page bottom*/
 footer{
