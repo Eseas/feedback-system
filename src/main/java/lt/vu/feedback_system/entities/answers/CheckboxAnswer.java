@@ -4,11 +4,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
-import lt.vu.feedback_system.entities.questions.Checkbox;
 import lt.vu.feedback_system.entities.questions.CheckboxQuestion;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,8 +39,12 @@ public class CheckboxAnswer implements Answer {
     private AnsweredSurvey answeredSurvey;
 
     @OneToMany(mappedBy = "checkboxAnswer", cascade = CascadeType.ALL)
-    private List<SelectedCheckbox> selectedCheckboxes;
+    private List<SelectedCheckbox> selectedCheckboxes = new ArrayList<>();
 
     @Transient
     private List<SelectedCheckbox> availableSelectedCheckboxes;
+
+    public void setSelectedCheckboxes(List<SelectedCheckbox> selectedCheckboxes) {
+        this.selectedCheckboxes = selectedCheckboxes;
+    }
 }
