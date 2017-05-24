@@ -65,7 +65,7 @@ ol{
 }
 
 /*page top*/
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
     opacity: 1 !important;
 }
 .ui-message-error-icon{
@@ -87,7 +87,8 @@ ol{
     box-shadow: 0 0 20px 0 rgba(0, 0, 1, 0.2), 0 5px 5px 0 rgba(0, 0, 1, 0.25);
     margin-bottom: 30px;
 }
-.tab_form li{
+
+.tab_form li {
     border-color: #3dae41 !important;
     border-radius: 0;
     background: #e0e0e0;
@@ -298,7 +299,8 @@ input[type=submit]{
     padding: 3px !important;
     color: #00426B !important;
 }
-.remove-page{
+
+.remove-page {
     top: 21px;
     padding: 1px 0 !important;
     float: left;
@@ -306,7 +308,8 @@ input[type=submit]{
     border: 1px solid #808080;
     color: #808080;
 }
-.add-page{
+
+.add-page {
     float: right;
     margin: 20px 10px 10px 0;
     background: #3dae41 !important;

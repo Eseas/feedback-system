@@ -54,7 +54,7 @@ public class CreateSurveyController implements Serializable {
     private RadioButtonDAO radioButtonDAO;
 
     @Getter
-    private Survey survey = new Survey();
+    private Survey survey;
 
     @Inject
     private SurveyLogic surveyLogic;
@@ -65,10 +65,9 @@ public class CreateSurveyController implements Serializable {
     @PostConstruct
     private void init() {
         this.props = config.getProps();
-        survey.setConfidential(true);
+        survey = new Survey();
         addSection();
         activeTabIndex = 0;
-
     }
 
     public void loadData() {

@@ -186,9 +186,11 @@
                                          update="survey-creation-form"/>
                     </div>
                     <div class="clearfix">
-                        <p:commandButton class="remove-page" value="Remove Page" actionListener="#{createSurveyController.removeSection(section)}"
+                        <p:commandButton class="remove-page" value="Remove Page"
+                                         actionListener="#{createSurveyController.removeSection(section)}"
                                          update="survey-creation-form" disabled="#{createSurveyController.survey.sections.size() le 1 }"/>
-                        <p:commandButton class="add-page" value="Add Page" actionListener="#{createSurveyController.addSection()}"
+                        <p:commandButton class="add-page" value="Add Page"
+                                         actionListener="#{createSurveyController.addSection()}"
                                          update="survey-creation-form" style="text-shadow: none;"/>
                     </div>
                 </p:tab>

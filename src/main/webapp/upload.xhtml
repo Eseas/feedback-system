@@ -22,7 +22,7 @@
     <div class="page_title">
         <h2>Upload a Survey</h2>
     </div>
-    <div class="upload-desc" >
+    <div class="upload-desc">
         <h3>Upload an Excel format Survey file</h3>
     </div>
 
@@ -30,17 +30,20 @@
         <div class="form">
             <h:form class="upload-form" enctype="multipart/form-data">
                 <div class="switch throw-right clearfix">
-                    <o:outputLabel for="private-switch" value="Public results"/>
+                    <o:outputLabel for="private-switch" value="Private results"/>
                     <p:inputSwitch class="private-switch" id="private-switch"
                                    value="#{importController.survey.confidential}" style="top: 5px;"/>
                 </div>
                 <div class="title throw-left clearfix">
-                    <o:outputLabel for="survey-title" value="Survey title" style="display: none !important; clear: both;"/>
+                    <o:outputLabel for="survey-title" value="Survey title"
+                                   style="display: none !important; clear: both;"/>
                     <p:inputText class="input" id="survey-title" maxlength="40" value="#{importController.survey.title}"
                                  required="true" requiredMessage="Survey title is required"
                                  placeholder="Survey title"/>
-                    <o:outputLabel for="survey-description" value="Survey description" style="display: none !important; clear: both;"/>
-                    <p:inputTextarea class="input" id="survey-description" maxlength="100" value="#{importController.survey.description}"
+                    <o:outputLabel for="survey-description" value="Survey description"
+                                   style="display: none !important; clear: both;"/>
+                    <p:inputTextarea class="input" id="survey-description" maxlength="100"
+                                     value="#{importController.survey.description}"
                                      placeholder="Survey description" rows="1" cols="40"/>
                 </div>
                 <div class="file-upload">
@@ -50,7 +53,7 @@
                     <p:commandButton value="Upload" actionListener="#{importController.upload()}" ajax="false"/>
                 </div>
                 <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-        </h:form>
+            </h:form>
         </div>
     </div>
 
