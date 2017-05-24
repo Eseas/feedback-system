@@ -65,10 +65,9 @@ public class CreateSurveyController implements Serializable {
     @PostConstruct
     private void init() {
         this.props = config.getProps();
-        survey = new Survey(true);
+        survey = new Survey();
         addSection();
         activeTabIndex = 0;
-
     }
 
     public void loadData() {
