@@ -15,6 +15,7 @@ import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 import lt.vu.feedback_system.utils.Sorter;
+import org.apache.commons.math3.stat.descriptive.rank.Median;
 
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -130,18 +131,17 @@ public class SurveyReportController implements Serializable {
     }
 
     public double getMedian(Question q) {
-
-        double median;
+        Median median = new Median();
         List<SliderAnswer> answers = answerDAO.getAllSliderAnswersByQuestionId(q.getId());
-        answers = Sorter.sortAnswersByValue(answers);
-        if ((answers.size() % 2) == 0) {
-            median = answers.get(answers.size() / 2 - 1).getValue() + answers.get(answers.size() / 2).getValue();
-            median= median / 2;
+
+        double[] values = new double[answers.size()];
+
+        int i = 0;
+        for (SliderAnswer answer : answers) {
+            values[i++] = answer.getValue();
         }
-        else{
-            median = answers.get(answers.size() / 2).getValue();
-        }
-        return median;
+
+        return median.evaluate(values);
     }
 
     public List<Integer> getMode(Question q) {

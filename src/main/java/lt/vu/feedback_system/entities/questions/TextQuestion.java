@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
@@ -59,5 +60,10 @@ public class TextQuestion implements Question {
 
     @Transient
     public Future<TagCloudModel> model;
+
+    @Override
+    public List<? extends Answer> getAnswers() {
+        return textAnswers;
+    }
 }
 

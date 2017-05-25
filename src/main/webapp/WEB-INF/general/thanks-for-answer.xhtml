@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
 >
 
 <h:head>
@@ -23,7 +23,8 @@
     <div class="answered-survey-page">
         <div class="form">
             <h2 style="font-family: 'Bitter', serif; margin-bottom: 30px">Thank you for your answers!</h2>
-            <h:link outcome="/survey-report?s=#{param['s']}" style="margin-bottom: 20px !important">View survey report</h:link>
+            <h:link outcome="/survey-report?s=#{param['s']}"
+                    style="margin-bottom: 20px !important">View survey report</h:link>
             <br/>
             <h:link outcome="/index" style="margin-bottom: 20px !important">Return to main page</h:link>
         </div>

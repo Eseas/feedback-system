@@ -1,27 +1,39 @@
 package lt.vu.feedback_system.entities.questions;
 
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 
+import java.util.List;
+
 public interface Question {
-    public Integer getId();
-    public void setId(Integer id);
+    Integer getId();
 
-    public String getType();
+    void setId(Integer id);
 
-    public String getTitle();
-    public void setTitle(String title);
+    String getType();
 
-    public Integer getPosition();
-    public void setPosition(Integer position);
+    String getTitle();
 
-    public Boolean getRequired();
-    public void setRequired(Boolean value);
+    void setTitle(String title);
 
-    public Section getSection();
-    public void setSection(Section section);
+    Integer getPosition();
 
-    public Survey getSurvey();
-    public void setSurvey(Survey survey);
+    void setPosition(Integer position);
+
+    Boolean getRequired();
+
+    void setRequired(Boolean value);
+
+    Section getSection();
+
+    void setSection(Section section);
+
+    Survey getSurvey();
+
+    void setSurvey(Survey survey);
+
+    // FRESH FUNCTIONALITY (Kazimieras added)
+    List<? extends Answer> getAnswers();
 
 }

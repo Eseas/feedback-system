@@ -89,18 +89,21 @@ i {
     margin-bottom: 50px;
     min-height: 400px;
 }
-.ui-tabs-nav li{
+
+.ui-tabs-nav li {
     border-color: #3dae41 !important;
     border-radius: 0;
     background: #EFF0F3 !important;
     box-shadow: none;
     text-shadow: none;
 }
-.ui-tabs-nav a{
+
+.ui-tabs-nav a {
     font-family: 'Bitter', sans-serif !important;
     font-size: 16px !important;
     font-weight: bold;
 }
+
 .ui-tabs-nav li.ui-tabs-selected {
     background: #fff !important;
 }
@@ -118,26 +121,32 @@ i {
     font-weight: bold;
     margin: 10px;
 }
+
 .text-quest-answ, .slider-quest-answ, .radio-quest-answ, .check-quest-answ {
     margin-left: 40px;
     font-size: 16px;
 }
-.ui-tagcloud {
-    margin: 40px;
-    width: 90% !important;
-    border-color: transparent;
-}
-.ui-tagcloud li {
-    padding: 0 10px 0 0;
-    pointer-events: none;
-    background: transparent;
-}
+
+/*.ui-tagcloud {*/
+/*margin: 40px;*/
+/*width: 90% !important;*/
+/*border-color: transparent;*/
+/*}*/
+
+/*.ui-tagcloud li {*/
+/*padding: 0 10px 0 0;*/
+/*pointer-events: none;*/
+/*background: transparent;*/
+/*}*/
+
 .pie-chart {
     margin: 20px auto;
 }
-.jqplot-table-legend{
+
+.jqplot-table-legend {
     border: none !important;
 }
+
 .bar-chart {
     margin: 20px auto;
 }

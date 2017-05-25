@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.RadioAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
@@ -70,5 +71,10 @@ public class RadioQuestion implements Question {
 
     @Transient
     public Future<PieChartModel> model;
+
+    @Override
+    public List<? extends Answer> getAnswers() {
+        return radioAnswers;
+    }
 }
 

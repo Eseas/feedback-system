@@ -133,7 +133,7 @@ public class ChartLogic implements Serializable {
         }
 
         try {
-            Thread.sleep(4000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
