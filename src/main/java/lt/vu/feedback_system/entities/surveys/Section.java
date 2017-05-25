@@ -21,7 +21,7 @@ import java.util.List;
 })
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id", "position", "title", "description"})
 @ToString(of = {"id"})
 public class Section {
     private static final long serialVersionUID = 1L;
