@@ -1,54 +1,73 @@
-package lt.vu.feedback_system.usecases.surveys;
+package lt.vu.feedback_system.businesslogic.reports;
 
-import lt.vu.feedback_system.dao.AnswerDAO;
-import lt.vu.feedback_system.dao.SelectedCheckboxDAO;
+import lt.vu.feedback_system.dao.AsyncAnswerDAO;
+import lt.vu.feedback_system.dao.AsyncSelectedCheckboxDAO;
 import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.TextAnswer;
 import lt.vu.feedback_system.entities.questions.*;
+import lt.vu.feedback_system.usecases.surveys.SurveyReportController;
+import org.apache.deltaspike.core.api.future.Futureable;
 import org.primefaces.model.chart.*;
 import org.primefaces.model.tagcloud.DefaultTagCloudItem;
 import org.primefaces.model.tagcloud.DefaultTagCloudModel;
 import org.primefaces.model.tagcloud.TagCloudModel;
 
-import javax.faces.bean.ManagedBean;
+import javax.ejb.AsyncResult;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Named
-@ManagedBean
-public class SurveyChartController implements Serializable {
+@ApplicationScoped
+public class ChartLogic implements Serializable {
     @Inject
     SurveyReportController reportController;
-    @Inject
-    private AnswerDAO answerDAO;
 
     @Inject
-    private SelectedCheckboxDAO selectedCheckboxDAO;
+    private AsyncAnswerDAO asyncAnswerDAO;
 
-    public PieChartModel createPieModel(Question question) {
-        List<RadioButton> radioButtons = ((RadioQuestion)question).getRadioButtons();
+    @Inject
+    private AsyncSelectedCheckboxDAO asyncSelectedCheckboxDAO;
+
+    @Futureable
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public Future<PieChartModel> createPieModel(RadioQuestion radioQuestion) {
+        List<RadioButton> radioButtons = radioQuestion.getRadioButtons();
         PieChartModel pieModel = new PieChartModel();
         for(RadioButton radioButton : radioButtons){
-            int count = answerDAO.getRadioAnswersByRadioButton(radioButton).size();
+            int count = asyncAnswerDAO.getRadioAnswersByRadioButton(radioButton).size();
             pieModel.set(radioButton.getTitle(), count) ;
         }
-        pieModel.setTitle(question.getTitle());
+        pieModel.setTitle(radioQuestion.getTitle());
         pieModel.setLegendPosition("e");
         pieModel.setShowDataLabels(true);
         pieModel.setDiameter(150);
-        return pieModel;
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new AsyncResult<>(pieModel);
     }
 
-    public BarChartModel createBarModel(Question question) {
+
+    @Futureable
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public Future<BarChartModel> createBarModel(CheckboxQuestion checkboxQuestion) {
         int maxAxis = 0;
 
         BarChartModel barModel = new BarChartModel();
         barModel.setShowPointLabels(true);
-        for(Checkbox checkbox : ((CheckboxQuestion)question).getCheckboxes()) {
-            int count = selectedCheckboxDAO.getSelectedCheckboxesByCheckbox(checkbox).size();
+        for (Checkbox checkbox : checkboxQuestion.getCheckboxes()) {
+            int count = asyncSelectedCheckboxDAO.getSelectedCheckboxesByCheckbox(checkbox).size();
             if (count > maxAxis){
                 maxAxis = count;
             }
@@ -59,7 +78,7 @@ public class SurveyChartController implements Serializable {
             barModel.addSeries(series);
         }
 
-        barModel.setTitle(question.getTitle());
+        barModel.setTitle(checkboxQuestion.getTitle());
         barModel.setLegendPosition("ne");
         barModel.setLegendPlacement(LegendPlacement.OUTSIDEGRID);
         Axis yAxis = barModel.getAxis(AxisType.Y);
@@ -67,11 +86,18 @@ public class SurveyChartController implements Serializable {
 
         maxAxis = maxAxis*3/2;
         yAxis.setMax(maxAxis);
-        return barModel;
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new AsyncResult<>(barModel);
     }
 
-    public TagCloudModel createTagCloud(Question question) {
-        List<TextAnswer> answers = answerDAO.getAllTextAnswersByQuestionId(question.getId());
+    @Futureable
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public Future<TagCloudModel> createTagCloud(Question question) {
+        List<TextAnswer> answers = asyncAnswerDAO.getAllTextAnswersByQuestionId(question.getId());
         List<String> result = new ArrayList<>();
         for (Answer answer : answers) {
             List<String> splittedValue = new ArrayList<String>(Arrays.asList(((TextAnswer)answer).getValue().split(" ")));
@@ -105,7 +131,13 @@ public class SurveyChartController implements Serializable {
                 }
             }
         }
-        return cloudModel;
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new AsyncResult<>(cloudModel);
     }
 
 }

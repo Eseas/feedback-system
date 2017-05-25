@@ -1,7 +1,9 @@
 package lt.vu.feedback_system.usecases;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -16,12 +18,25 @@ public class JPAResources {
     private EntityManagerFactory emf;
 
     @Produces
+    @Default
     @RequestScoped
     private EntityManager createJTAEntityManager() {
         return emf.createEntityManager(SynchronizationType.SYNCHRONIZED);
     }
 
-    private void closeUnsynchronizedEntityManager(@Disposes EntityManager em) {
+    @Produces
+    @RescueOrAsync
+    // Savo susikurta anotacija (Qualifier), skirta: 1. Asinchroniniams komponentams 2. JPA klaidoms apdoroti (pvz.: OptimisticLockException)
+    @Dependent
+    private EntityManager createJTATransactionalEntityManager() {
+        return emf.createEntityManager(SynchronizationType.SYNCHRONIZED);
+    }
+
+    private void closeDefaultEntityManager(@Disposes @Default EntityManager em) {
+        em.close();
+    }
+
+    private void closeResqueEntityManager(@Disposes @RescueOrAsync EntityManager em) {
         em.close();
     }
 

@@ -4,14 +4,17 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
+import org.primefaces.model.chart.BarChartModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @Entity
 @Table(schema = "feedback", name = "checkbox_questions")
@@ -59,6 +62,12 @@ public class CheckboxQuestion implements Question {
     @ManyToOne
     private Section section;
 
+    @Transient
+    public Future<BarChartModel> model;
 
+    @Override
+    public List<? extends Answer> getAnswers() {
+        return checkboxAnswers;
+    }
 }
 

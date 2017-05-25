@@ -21,12 +21,10 @@
         <title>Builder of Surveys</title>
     </h:head>
 
-
     <h:body class="report">
         <ui:include src="/WEB-INF/composites/header.xhtml"/>
 
         <i class="glyphicon glyphicon-menu-left"/>
-        <!--<button class="go-back" onclick="goBack()">Back to Surveys</button>-->
 
         <h:button class="go-back" id="surveys" outcome="surveys" value="Back to Surveys"/>
 
@@ -34,76 +32,117 @@
             <h2>#{surveyReportController.survey.title}</h2>
         </div>
 
-        <h:form>
-            <p:tabView class="tab_form" value="#{surveyReportController.survey.sections}"
+        <h:form id="form">
+            <p:tabView class="tab_form" id="tab-view" value="#{surveyReportController.survey.sections}"
                        var="section" effect="slide" style="border: none !important;">
                 <p:tab title="#{section.title}">
-                        <ui:repeat value="#{section.questions}" var="question">
-                            <h:outputText class="question-number"  value="#{question.position}" />
-                            <h:outputText class="question-title" value="#{question.title}" />
+                    <ui:repeat value="#{section.questions}" var="question">
+                        <h:outputText class="question-number" value="#{question.position}"/>
+                        <h:outputText class="question-title" value="#{question.title}"/>
+                        <br/>
+
+                        <ui:fragment rendered="#{question.answers.size() eq 0}">
+                            <!-- Work for Viktorija -->
+                            No answers yet
                             <br/>
+                        </ui:fragment>
 
-                            <ui:fragment rendered="#{question.type == 'TextQuestion'}">
-                                <ui:repeat value="#{question.textAnswers}" var="textAnswer" >
-                                    <h:outputText class="text-quest-answ"  value="#{textAnswer.value}"/>
-                                    <br/>
+                        <ui:fragment rendered="#{question.type == 'TextQuestion' and not empty question.answers}">
+                            <ui:repeat value="#{question.answers}" var="textAnswer">
+                                <h:outputText class="text-quest-answ" value="#{textAnswer.value}"/>
+                                <br/>
+                            </ui:repeat>
+
+                            <p:poll interval="1" update="tag-cloud-panel"
+                                    stop="#{surveyReportController.createTagCloudModel(question) eq 'COMPLETED'}"/>
+
+                            <p:outputPanel id="tag-cloud-panel">
+                                <ui:fragment
+                                        rendered="#{surveyReportController.createTagCloudModel(question) eq 'LOADING'}">
+                                    <p:graphicImage url="/resources/img/Preloader_2.gif"/>
+                                </ui:fragment>
+                                <ui:fragment
+                                        rendered="#{surveyReportController.createTagCloudModel(question) eq 'COMPLETED'}">
+
+                                    <p:tagCloud model="#{question.model.get()}"/>
+                                </ui:fragment>
+                            </p:outputPanel>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{question.type == 'SliderQuestion' and not empty question.answers}">
+
+                            <div class="slider-quest-answ">
+                                <h:outputText value="Average : "/>
+                                <h:outputText value="#{surveyReportController.getAverage(question)}"/>
+                                <br/>
+                                <h:outputText value="Median : "/>
+                                <h:outputText value="#{surveyReportController.getMedian(question)}"/>
+                                <br/>
+                                <h:outputText value="Mode : "/>
+                                <ui:repeat value="#{surveyReportController.getMode(question)}" var="mode">
+                                    <h:outputText value="#{mode} "/>
                                 </ui:repeat>
+                            </div>
 
-                                <p:tagCloud model="#{surveyChartController.createTagCloud(question)}"/>
+                        </ui:fragment>
 
-                            </ui:fragment>
+                        <ui:fragment rendered="#{question.type == 'RadioQuestion' and not empty question.answers}">
 
-                            <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
-                                <div class="slider-quest-answ">
-                                    <h:outputText value="Average : "/>
-                                    <h:outputText value="#{surveyReportController.getAverage(question)}"/>
-                                    <br/>
-                                    <h:outputText value="Median : "/>
-                                    <h:outputText value="#{surveyReportController.getMedian(question)}"/>
-                                    <br/>
-                                    <h:outputText value="Mode : "/>
-                                    <ui:repeat value="#{surveyReportController.getMode(question)}" var="mode" >
-                                        <h:outputText value="#{mode} "/>
-                                    </ui:repeat>
+                            <ui:repeat value="#{question.radioButtons}" var="radioButton">
+                                <div class="radio-quest-answ">
+                                    <h:outputText value="#{radioButton.title}" style="margin-right: 20px"/>
+                                    <h:outputText
+                                            value="#{surveyReportController.countRadioButtonAnswers(radioButton)}"
+                                            style="margin-right: 20px"/>
+                                    <h:outputText
+                                            value="#{surveyReportController.getPercentRadioAnswer(radioButton)} %"/>
                                 </div>
-                            </ui:fragment>
+                            </ui:repeat>
 
-                            <ui:fragment rendered="#{question.type == 'RadioQuestion'}">
-                                <ui:repeat value="#{question.radioButtons}" var="radioButton">
-                                    <div class="radio-quest-answ">
-                                        <h:outputText value="#{radioButton.title}" style="margin-right: 20px"/>
-                                        <h:outputText value="#{surveyReportController.countRadioButtonAnswers(radioButton)}"  style="margin-right: 20px"/>
-                                        <h:outputText value="#{surveyReportController.getPercentRadioAnswer(radioButton)} %" />
-                                    </div>
-                                </ui:repeat>
+                            <p:poll interval="1" update="pie-chart-panel"
+                                    stop="#{surveyReportController.createPieModel(question) eq 'COMPLETED'}"/>
 
-                                <p:chart class="pie-chart" type="pie" model="#{surveyChartController.createPieModel(question)}"
-                                         style="width:400px;height:300px" />
+                            <p:outputPanel id="pie-chart-panel">
+                                <ui:fragment
+                                        rendered="#{surveyReportController.createPieModel(question) eq 'LOADING'}">
+                                    <p:graphicImage url="/resources/img/Preloader_2.gif"/>
+                                </ui:fragment>
+                                <ui:fragment
+                                        rendered="#{surveyReportController.createPieModel(question) eq 'COMPLETED'}">
+                                    <p:chart class="pie-chart" type="pie" model="#{question.model.get()}"
+                                             style="width:400px;height:300px"/>
+                                </ui:fragment>
+                            </p:outputPanel>
+                        </ui:fragment>
 
-                            </ui:fragment>
+                        <ui:fragment rendered="#{question.type == 'CheckboxQuestion' and question.answers.size() ne 0}">
+                            <ui:repeat value="#{question.checkboxes}" var="checkbox">
+                                <div class="check-quest-answ">
+                                    <h:outputText value="#{checkbox.title} "/>
+                                    <h:outputText
+                                            value="#{surveyReportController.countCheckBoxAnswers(checkbox)} "/>
+                                    <h:outputText
+                                            value="#{surveyReportController.getPercentCheckBoxAnswer(checkbox)} %"/>
+                                </div>
+                            </ui:repeat>
 
-                            <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
-                                <ui:repeat value="#{question.checkboxes}" var="checkbox" >
-                                    <div class="check-quest-answ">
-                                        <h:outputText value="#{checkbox.title} "/>
-                                        <h:outputText value="#{surveyReportController.countCheckBoxAnswers(checkbox)} "/>
-                                        <h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(checkbox)} %"/>
-                                    </div>
-                                </ui:repeat>
+                            <p:poll interval="1" update="bar-chart-panel"
+                                    stop="#{surveyReportController.createBarModel(question) eq 'COMPLETED'}"/>
 
-                                <!--<ui:repeat value="#{surveyReportController.getUniqueQuestionCheckboxAnswers(question)}" var="title" >-->
-                                    <!--<h:outputText value="#{title} "/>-->
-                                    <!--<h:outputText value="#{surveyReportController.countCheckBoxAnswers(title,question)} "/>-->
-                                    <!--<h:outputText value="#{surveyReportController.getPercentCheckBoxAnswer(title,question)} %"/>-->
-                                    <!--<br/>-->
-                                <!--</ui:repeat>-->
+                            <p:outputPanel id="bar-chart-panel">
+                                <ui:fragment
+                                        rendered="#{surveyReportController.createBarModel(question) eq 'LOADING'}">
+                                    <p:graphicImage url="/resources/img/Preloader_2.gif"/>
+                                </ui:fragment>
+                                <ui:fragment
+                                        rendered="#{surveyReportController.createBarModel(question) eq 'COMPLETED'}">
+                                    <p:chart class="bar-chart" type="bar" model="#{question.model.get()}"
+                                             style="width:500px;height:300px"/>
+                                </ui:fragment>
+                            </p:outputPanel>
+                        </ui:fragment>
 
-                                <!--<p:chart type="pie" model="#{surveyChartController.createPieModel(question)}" style="width:400px;height:300px" />-->
-                                <p:chart class="bar-chart" type="bar" model="#{surveyChartController.createBarModel(question)}" style="width:500px;height:300px" />
-
-                            </ui:fragment>
-
-                        </ui:repeat>
+                    </ui:repeat>
                 </p:tab>
             </p:tabView>
 

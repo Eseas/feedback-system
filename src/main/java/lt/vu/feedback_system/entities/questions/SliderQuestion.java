@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.Answer;
 import lt.vu.feedback_system.entities.answers.SliderAnswer;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
@@ -60,5 +61,10 @@ public class SliderQuestion implements Question {
     @JoinColumn(name = "section_id", referencedColumnName = "id")
     @ManyToOne
     private Section section;
+
+    @Override
+    public List<? extends Answer> getAnswers() {
+        return sliderAnswers;
+    }
 }
 
