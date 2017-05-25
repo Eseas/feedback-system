@@ -54,7 +54,7 @@
                             </ui:repeat>
 
                             <p:poll interval="1" update="tag-cloud-panel"
-                                    stop="#{surveyReportController.createTagCloudModel(question) eq 'DONE'}"/>
+                                    stop="#{surveyReportController.createTagCloudModel(question) eq 'COMPLETED'}"/>
 
                             <p:outputPanel id="tag-cloud-panel">
                                 <ui:fragment
@@ -62,10 +62,9 @@
                                     <p:graphicImage url="/resources/img/Preloader_2.gif"/>
                                 </ui:fragment>
                                 <ui:fragment
-                                        rendered="#{surveyReportController.createTagCloudModel(question) eq 'DONE'}">
+                                        rendered="#{surveyReportController.createTagCloudModel(question) eq 'COMPLETED'}">
 
                                     <p:tagCloud model="#{question.model.get()}"/>
-                                    okay
                                 </ui:fragment>
                             </p:outputPanel>
                         </ui:fragment>
@@ -101,7 +100,7 @@
                             </ui:repeat>
 
                             <p:poll interval="1" update="pie-chart-panel"
-                                    stop="#{surveyReportController.createPieModel(question) eq 'DONE'}"/>
+                                    stop="#{surveyReportController.createPieModel(question) eq 'COMPLETED'}"/>
 
                             <p:outputPanel id="pie-chart-panel">
                                 <ui:fragment
@@ -109,7 +108,7 @@
                                     <p:graphicImage url="/resources/img/Preloader_2.gif"/>
                                 </ui:fragment>
                                 <ui:fragment
-                                        rendered="#{surveyReportController.createPieModel(question) eq 'DONE'}">
+                                        rendered="#{surveyReportController.createPieModel(question) eq 'COMPLETED'}">
                                     <p:chart class="pie-chart" type="pie" model="#{question.model.get()}"
                                              style="width:400px;height:300px"/>
                                 </ui:fragment>
@@ -128,7 +127,7 @@
                             </ui:repeat>
 
                             <p:poll interval="1" update="bar-chart-panel"
-                                    stop="#{surveyReportController.createBarModel(question) eq 'DONE'}"/>
+                                    stop="#{surveyReportController.createBarModel(question) eq 'COMPLETED'}"/>
 
                             <p:outputPanel id="bar-chart-panel">
                                 <ui:fragment
@@ -136,7 +135,7 @@
                                     <p:graphicImage url="/resources/img/Preloader_2.gif"/>
                                 </ui:fragment>
                                 <ui:fragment
-                                        rendered="#{surveyReportController.createBarModel(question) eq 'DONE'}">
+                                        rendered="#{surveyReportController.createBarModel(question) eq 'COMPLETED'}">
                                     <p:chart class="bar-chart" type="bar" model="#{question.model.get()}"
                                              style="width:500px;height:300px"/>
                                 </ui:fragment>

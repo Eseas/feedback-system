@@ -14,6 +14,7 @@ import lt.vu.feedback_system.entities.questions.*;
 import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
+import lt.vu.feedback_system.enums.AsyncStatus;
 import lt.vu.feedback_system.utils.Sorter;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
 
@@ -73,44 +74,44 @@ public class SurveyReportController implements Serializable {
         }
     }
 
-    public String createPieModel(RadioQuestion radioQuestion) {
+    public AsyncStatus createPieModel(RadioQuestion radioQuestion) {
         if (radioQuestion.getModel() == null) {
             radioQuestion.setModel(chartLogic.createPieModel(radioQuestion));
 
-            return "LOADING";
+            return AsyncStatus.LOADING;
         } else {
             if (radioQuestion.getModel().isDone()) {
-                return "DONE";
+                return AsyncStatus.COMPLETED;
             } else {
-                return "LOADING";
+                return AsyncStatus.LOADING;
             }
         }
     }
 
-    public String createBarModel(CheckboxQuestion checkboxQuestion) {
+    public AsyncStatus createBarModel(CheckboxQuestion checkboxQuestion) {
         if (checkboxQuestion.getModel() == null) {
             checkboxQuestion.setModel(chartLogic.createBarModel(checkboxQuestion));
 
-            return "LOADING";
+            return AsyncStatus.LOADING;
         } else {
             if (checkboxQuestion.getModel().isDone()) {
-                return "DONE";
+                return AsyncStatus.COMPLETED;
             } else {
-                return "LOADING";
+                return AsyncStatus.LOADING;
             }
         }
     }
 
-    public String createTagCloudModel(TextQuestion textQuestion) {
+    public AsyncStatus createTagCloudModel(TextQuestion textQuestion) {
         if (textQuestion.getModel() == null) {
             textQuestion.setModel(chartLogic.createTagCloud(textQuestion));
 
-            return "LOADING";
+            return AsyncStatus.LOADING;
         } else {
             if (textQuestion.getModel().isDone()) {
-                return "DONE";
+                return AsyncStatus.COMPLETED;
             } else {
-                return "LOADING";
+                return AsyncStatus.LOADING;
             }
         }
     }
