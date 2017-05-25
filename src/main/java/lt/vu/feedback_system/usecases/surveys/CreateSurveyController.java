@@ -109,7 +109,9 @@ public class CreateSurveyController implements Serializable {
     }
 
     public void addCheckboxQuestion(Section section) {
-        surveyLogic.addQuestion(section, new CheckboxQuestion());
+        CheckboxQuestion checkboxQuestion = new CheckboxQuestion();
+        checkboxQuestion.getCheckboxes().add(new Checkbox());
+        surveyLogic.addQuestion(section, checkboxQuestion);
     }
 
     public void addCheckbox(CheckboxQuestion checkboxQuestion) {
@@ -123,7 +125,9 @@ public class CreateSurveyController implements Serializable {
     }
 
     public void addRadioQuestion(Section section) {
-        surveyLogic.addQuestion(section, new RadioQuestion());
+        RadioQuestion radioQuestion = new RadioQuestion();
+        radioQuestion.getRadioButtons().add(new RadioButton());
+        surveyLogic.addQuestion(section, radioQuestion);
 
     }
 

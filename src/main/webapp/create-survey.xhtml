@@ -117,6 +117,7 @@
                                                        style="display: none !important; clear: both;"/>
                                         <h:inputText id="radioButtonTitle" value="#{radioButton.title}" required="#{param.validate}"/>
                                         <p:commandButton value="remove"
+                                                         disabled="#{question.radioButtons.size() eq 1}"
                                                          actionListener="#{createSurveyController.removeRadioButton(question, radioButton)}"
                                                          update="survey-creation-form"
                                                          style="border-bottom: 0 !important; color: darkred; font-size: 11px;"/>
@@ -140,6 +141,7 @@
                                                        style="display: none !important; clear: both;"/>
                                         <h:inputText id="checkboxTitle" value="#{checkbox.title}" required="#{param.validate}"/>
                                         <p:commandButton value="remove"
+                                                         disabled="#{question.checkboxes.size() eq 1}"
                                                          action="#{createSurveyController.removeCheckbox(question, checkbox)}"
                                                          update="survey-creation-form"
                                                          style="border-bottom: 0 !important; color: darkred; font-size: 11px;"/>
