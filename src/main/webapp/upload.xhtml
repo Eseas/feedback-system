@@ -55,8 +55,8 @@
 
                 <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
             </h:form>
-            <h:form>
-                <h:commandButton value="Download" ajax="false">
+            <h:form class="download-form">
+                <h:commandButton class="download" value="Download file example" ajax="false">
                     <p:fileDownload value="#{importController.getImportExample()}"/>
                 </h:commandButton>
             </h:form>

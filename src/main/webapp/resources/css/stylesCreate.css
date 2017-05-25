@@ -119,8 +119,16 @@ ol{
     color: #000 ;
 }
 /*form buttons*/
-
-
+/*switch*/
+.ui-inputswitch-handle{
+    width: 23px !important;
+}
+.required-switch .ui-inputswitch {
+    max-width: 50px !important;
+}
+.ui-inputswitch-off span, .ui-inputswitch-on span{
+    max-width: 26.7778px !important;
+}
 /*bottom buttons*/
 input[type=submit]{
     display: inline-block !important;
@@ -362,7 +370,7 @@ html, body {
 #survey-creation-form .form.clearfix .throw-left {
     float: left;
 }
-#survey-creation-form .form.clearfix .throw-left input {
+#survey-creation-form .form.clearfix .throw-left input, #survey-creation-form .form.clearfix .throw-left textarea {
     background: transparent !important;
     border: 0;
     border-bottom: 2px solid #00426B;
@@ -372,7 +380,7 @@ html, body {
     position: relative;
     font-family: 'Bitter', serif;
     color: #00426B;
-
+    overflow-y: hidden !important;
 }
 #survey-creation-form .form.clearfix .throw-left{
     clear: both;
