@@ -25,6 +25,9 @@
 
     <p:tabView class="management-tabs" id="tab_view" cache="false" effect="slide" style="min-height: 400px;">
         <p:tab id="tab_registered" title="Registered Users">
+
+            <p:messages id="edit_user_msg" closable="true"/>
+
             <h:form id="form" class="reg_users">
 
                 <p:fieldset class="registered-fieldset" id="list">
@@ -83,39 +86,9 @@
                             <br/>
                         </p:panelGrid>
                         <p:commandButton class="update-button" value="Update"
-                                         actionListener="#{userManagementController.updateSelectedUser}"
-                                         rendered="#{empty userManagementController.conflictingUser}"
-                                         update=":tab_view:form:userDetail :tab_view:form:list"
-                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('userDialog').hide()" />
-
-                        <p:panelGrid  columns="2" rendered="#{not empty userManagementController.conflictingUser}"
-                                      columnClasses="label,value" styleClass="ui-noborder" style="margin-top: 1em">
-                            <f:facet name="header">Conflicting user</f:facet>
-
-                            <h:outputText value="First name:" style="color: #1a1a1a" />
-                            <h:outputText value="#{userManagementController.conflictingUser.firstName}"/>
-
-                            <h:outputText value="Last name:" style="color: #1a1a1a"/>
-                            <h:outputText value="#{userManagementController.conflictingUser.lastName}"/>
-
-                            <h:outputText value="Email:" style="color: #1a1a1a"/>
-                            <h:outputText value="#{userManagementController.conflictingUser.email}"/>
-
-                            <p:outputLabel for="show_admin" value="Admin:" style="color: #1a1a1a"/>
-                            <p:selectBooleanCheckbox id="show_admin" disabled="true" value="#{userManagementController.conflictingUser.admin}"/>
-
-                            <p:outputLabel for="show_blocked" value="Blocked:" style="color: #1a1a1a"/>
-                            <p:selectBooleanCheckbox id="show_blocked" disabled="true" value="#{userManagementController.conflictingUser.blocked}"/>
-
-                        </p:panelGrid>
-
-                        <p:commandButton class="overwrite-button" value="Overwrite"
-                                         actionListener="#{userManagementController.overwriteUser}"
-                                         rendered="#{not empty userManagementController.conflictingUser}"
-                                         icon="ui-icon-notice" style="margin-top: 1em"
-                                         update=":tab_view:form:userDetail :tab_view:form:list"
-                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('userDialog').hide()" />
-
+                                         action="#{userManagementController.updateSelectedUser}"
+                                         update=":tab_view:form:userDetail :tab_view:form:list :tab_view:edit_user_msg"
+                                         oncomplete="PF('userDialog').hide()" />
                     </p:outputPanel>
                 </p:dialog>
             </h:form>

@@ -1,12 +1,15 @@
 package lt.vu.feedback_system.usecases.users;
 
 import lombok.Getter;
+import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.businesslogic.users.UserLogic;
 import lt.vu.feedback_system.dao.UserDAO;
 import lt.vu.feedback_system.entities.User;
 import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,8 +30,10 @@ public class UserManagementController implements Serializable {
     @Inject
     private UserLogic userLogic;
 
+    @Inject
+    private UserContext userContext;
+
     @Getter private User selectedUser;
-    @Getter private User conflictingUser;
     @Getter private List<User> users;
 
     @PostConstruct
@@ -38,24 +43,29 @@ public class UserManagementController implements Serializable {
 
     public void prepareForEditing(User user) {
         selectedUser = user;
-        conflictingUser = null;
     }
 
     @Transactional
-    public void updateSelectedUser() {
+    public String updateSelectedUser() {
         try {
             userDAO.updateAndFlush(selectedUser);
-            reloadAll();
-        } catch (OptimisticLockException ole) {
-            conflictingUser = userDAO.getUserById(selectedUser.getId());
-            RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
-        }
-    }
 
-    @Transactional
-    public void overwriteUser() {
-        selectedUser.setOptLockVersion(conflictingUser.getOptLockVersion());
-        updateSelectedUser();
+            if (userContext.getUser().getId().equals(selectedUser.getId())) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                return context.getViewRoot().getViewId() + "?faces-redirect=true";
+            } else {
+                reloadAll();
+            }
+        } catch (OptimisticLockException ole) {
+            selectedUser = userDAO.getUserById(selectedUser.getId());
+            RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
+
+            FacesMessage msg = new FacesMessage("Someone has updated this user!");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage("edit_user_msg", msg);
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context.getViewRoot().getViewId();
     }
 
     public void reloadAll() {

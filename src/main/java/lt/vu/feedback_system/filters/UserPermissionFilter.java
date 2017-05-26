@@ -3,6 +3,7 @@ package lt.vu.feedback_system.filters;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 import lt.vu.feedback_system.utils.FacesUtil;
 
+import javax.faces.context.FacesContext;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,7 @@ public class UserPermissionFilter implements Filter {
         if (!response.isCommitted()) {
             UserContext userContext = (UserContext) ((HttpServletRequest) request).getSession().getAttribute("userContext");
 
-            if (userContext == null || !userContext.isLoggedIn()) {
+            if (userContext == null || !userContext.isLoggedIn() || userContext.isBlocked()) {
                 String contextPath = ((HttpServletRequest) request).getContextPath();
                 String redirectUrl = FacesUtil.encodeRedirect(
                         contextPath + "/login.html",
@@ -32,6 +33,11 @@ public class UserPermissionFilter implements Filter {
 
                 ((HttpServletResponse) response)
                         .sendRedirect(redirectUrl);
+
+                if (userContext != null && userContext.isBlocked()) {
+                    userContext.logout();
+                    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+                }
             }
         }
 
