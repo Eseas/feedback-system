@@ -46,6 +46,7 @@
                         </p:column>
                         <p:column class="edit-col">
                             <p:commandButton class="edit" value="Edit" icon="fa fa-fw fa-edit"
+                                             disabled="#{userController.id eq user.id}"
                                              actionListener="#{userManagementController.prepareForEditing(user)}"
                                              update=":tab_view:form:userDetail"
                                              oncomplete="PF('userDialog').show()" style="text-align: center;"/>
@@ -112,7 +113,6 @@
                         <p:commandButton class="overwrite-button" value="Overwrite"
                                          actionListener="#{userManagementController.overwriteUser}"
                                          rendered="#{not empty userManagementController.conflictingUser}"
-                                         icon="ui-icon-notice" style="margin-top: 1em"
                                          update=":tab_view:form:userDetail :tab_view:form:list"
                                          oncomplete="if (args &amp;&amp; !args.validationFailed) PF('userDialog').hide()" />
 
