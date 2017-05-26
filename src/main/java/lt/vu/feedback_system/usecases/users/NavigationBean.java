@@ -56,4 +56,12 @@ public class NavigationBean {
     public String toThanksForAnswer() {
         return "/WEB-INF/general/thanks-for-answer.html";
     }
+
+    public String redirectToUsers() {
+        return "/users.xhtml?faces-redirect=true";
+    }
+
+    public String toUsers() {
+        return "/users.xhtml";
+    }
 }

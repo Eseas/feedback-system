@@ -66,4 +66,11 @@ public class UserContext implements Serializable {
         }
         return false;
     }
+
+    public boolean isBlocked() {
+        if (id != null) {
+            return userDAO.getUserById(id).getBlocked();
+        }
+        return false;
+    }
 }
