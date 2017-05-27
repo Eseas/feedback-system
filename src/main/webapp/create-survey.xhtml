@@ -104,8 +104,12 @@
                                                style="display: none !important; clear: both;"/>
                                 <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound" required="#{param.validate}"/>
                                 <p:message for="upperBound"/>
-                            </ui:fragment>
 
+                                <ui:fragment rendered="#{param.validate}">
+                                    <f:event type="postValidate"
+                                             listener="#{createSurveyController.validateSliderBounds}"/>
+                                </ui:fragment>
+                            </ui:fragment>
                         </div>
 
                         <div class="radio-question clearfix">
