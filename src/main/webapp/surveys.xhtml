@@ -39,7 +39,8 @@
         </ui:fragment>
 
         <h:form>
-            <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}" var="survey">
+            <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}"
+                         var="survey" sortBy="#{survey.title}">
                 <p:column headerText="Title" sortBy="#{survey.title}">
                     <h:outputText value="#{survey.title}" />
                 </p:column>
