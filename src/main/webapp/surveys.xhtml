@@ -36,7 +36,7 @@
             </div>
         </ui:fragment>
 
-        <h:form>
+        <h:form id="form">
             <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}" var="survey">
                 <p:column headerText="Title">
                     <h:outputText value="#{survey.title}" />
@@ -58,21 +58,15 @@
                         <f:param name="p" value="true"/>
                     </p:button>
 
-                    <p:commandButton title="Get link" icon="fa fa-send" type="button"
-                                     onclick="PF('link-dialog').show();"/>
-                    <p:dialog header="Send survey" widgetVar="link-dialog" modal="true" closable="true"
-                              resizable="false"
-                              closeOnEscape="true" showEffect="drop" hideEffect="drop">
-                        <p:outputLabel value="Survey title:" for="dialog-survey-title"/>
-                        <h:outputText id="dialog-survey-title" value="#{survey.title}"/>
-                        <br/>
+                    <!--<p:commandButton title="Get link" icon="fa fa-send" type="button"-->
+                    <!--onclick="PF('link-dialog').show();"/>-->
 
-                        <p:outputLabel value="Link:" for="link-text"/>
+                    <p:commandButton update=":form:survey-link-panel" oncomplete="PF('link-dialog').show()"
+                                     icon="fa fa-send" title="Send link">
+                        <f:setPropertyActionListener value="#{survey}"
+                                                     target="#{requestSurveysController.selectedSurvey}"/>
+                    </p:commandButton>
 
-                        <p:inputText id="link-text" readonly="true"
-                                     value="#{requestSurveysController.formLink('answer-survey.html', survey.link)}"
-                                     size="50"/>
-                    </p:dialog>
 
                     <p:button title="Answer" outcome="answer-survey" icon="fa fa-play">
                         <f:param name="s" value="#{survey.link}"/>
@@ -87,6 +81,25 @@
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
+
+            <p:dialog header="Send survey" widgetVar="link-dialog" modal="true" closable="true"
+                      resizable="false"
+                      closeOnEscape="true" showEffect="drop" hideEffect="drop">
+                <p:outputPanel id="survey-link-panel" style="text-align:center;">
+                    <p:panelGrid columns="2" rendered="#{not empty requestSurveysController.selectedSurvey}">
+                        <p:outputLabel value="Survey title:" for="dialog-survey-title"/>
+                        <h:outputText id="dialog-survey-title"
+                                      value="#{requestSurveysController.selectedSurvey.title}"/>
+
+
+                        <p:outputLabel value="Link:" for="link-text"/>
+
+                        <p:inputText id="link-text" readonly="true"
+                                     value="#{requestSurveysController.formLink('answer-survey.html', requestSurveysController.selectedSurvey.link)}"
+                                     size="50"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
         </h:form>
 
         <ui:include src="/WEB-INF/composites/footer.xhtml"/>
