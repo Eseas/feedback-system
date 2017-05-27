@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.dao;
 
 import lt.vu.feedback_system.entities.PotentialUser;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -17,7 +18,7 @@ public class PotentialUserDAO {
     }
 
     public void delete(PotentialUser potentialUser) {
-        em.remove(potentialUser);
+        em.remove(em.contains(potentialUser) ? potentialUser : em.merge(potentialUser));
     }
 
     public List<PotentialUser> getAllPotentialUsers() {

@@ -22,7 +22,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Random;
 
 @ApplicationScoped
 public class SurveyLogic {
@@ -80,8 +79,6 @@ public class SurveyLogic {
     @Logged
     @Transactional
     public void create(Survey survey) {
-        Random rand = new Random();
-
         survey.setCreator(userContext.getUser());
         survey.setLink(hashGenerator.hash(null));
 
@@ -91,6 +88,12 @@ public class SurveyLogic {
             for (Question question : section.getQuestions())
                 questionDAO.create(question);
         }
+    }
+
+    @Logged
+    @Transactional
+    public void delete(Survey survey) {
+        surveyDAO.delete(survey);
     }
 
     public void loadQuestionsToSection(Section section) {

@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @ApplicationScoped
 public class UserLogic {
@@ -19,6 +20,10 @@ public class UserLogic {
     @Transactional
     public void createPotentialUser(PotentialUser potentialUser) {
         potentialUserDAO.create(potentialUser);
+    }
+
+    public List<PotentialUser> getAllPotentialUsers() {
+        return potentialUserDAO.getAllPotentialUsers();
     }
 
     @Logged

@@ -2,7 +2,6 @@ package lt.vu.feedback_system.usecases.users;
 
 import lombok.Getter;
 import lt.vu.feedback_system.businesslogic.users.UserLogic;
-import lt.vu.feedback_system.dao.PotentialUserDAO;
 import lt.vu.feedback_system.dao.RegKeyDAO;
 import lt.vu.feedback_system.entities.PotentialUser;
 
@@ -23,9 +22,6 @@ public class PotentialUserManagementController implements Serializable {
     private PotentialUser potentialUser = new PotentialUser();
 
     @Inject
-    private PotentialUserDAO potentialUserDAO;
-
-    @Inject
     private RegKeyDAO regKeyDAO;
 
     @Inject
@@ -36,7 +32,7 @@ public class PotentialUserManagementController implements Serializable {
 
     @PostConstruct
     public void reloadAllPotentialUsers() {
-        potentialUsers = potentialUserDAO.getAllPotentialUsers();
+        potentialUsers = userLogic.getAllPotentialUsers();
     }
 
     public void createPotentialUser() {

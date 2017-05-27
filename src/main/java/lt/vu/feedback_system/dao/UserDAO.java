@@ -1,6 +1,7 @@
 package lt.vu.feedback_system.dao;
 
 import lt.vu.feedback_system.entities.User;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,7 +27,7 @@ public class UserDAO {
     }
 
     public void delete(User user) {
-        em.remove(user);
+        em.remove(em.contains(user) ? user : em.merge(user));
     }
 
     public boolean userExists(String email) {

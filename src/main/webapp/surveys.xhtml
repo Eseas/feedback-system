@@ -18,7 +18,7 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
-        <!--<h:outputStylesheet name="css/stylesSurveysMan.css" />-->
+        <h:outputStylesheet name="css/stylesSurveysMan.css"/>
         <title>Builder of Surveys</title>
     </h:head>
 
@@ -58,10 +58,16 @@
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
                 <p:column class="preview" headerText="Options" style="min-width: 180px;">
-                    <p:button title="Preview" outcome="answer-survey" icon="fa fa-search">
+                    <p:button title="Preview" outcome="answer-survey" icon="fa fa-eye">
                         <f:param name="s" value="#{survey.link}"/>
                         <f:param name="p" value="true"/>
                     </p:button>
+
+                    <p:commandButton title="Get link" icon="fa fa-external-link-square" type="button"
+                                     onclick="PF('link-dialog').show();"/>
+                    <p:dialog header="Link" widgetVar="link-dialog">
+                        blblbllsd
+                    </p:dialog>
 
                     <p:button title="Answer" outcome="answer-survey" icon="fa fa-pencil">
                         <f:param name="s" value="#{survey.link}"/>
@@ -74,6 +80,9 @@
                     <p:commandButton title="Download" ajax="false" icon="fa fa-download">
                         <p:fileDownload value="#{exportController.getSpreadsheet(survey)}"/>
                     </p:commandButton>
+
+                    <p:commandButton title="Delete" icon="fa fa-trash"
+                                     actionListener="#{requestSurveysController.delete(survey)}"/>
                 </p:column>
             </p:dataTable>
         </h:form>

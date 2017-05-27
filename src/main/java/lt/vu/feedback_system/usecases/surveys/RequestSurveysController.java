@@ -34,4 +34,8 @@ public class RequestSurveysController implements Serializable {
         else
             surveys = surveyLogic.getUserSurveys(userContext.getUser());
     }
+
+    public void delete(Survey survey) {
+        surveyLogic.delete(survey);
+    }
 }
