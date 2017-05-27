@@ -13,6 +13,11 @@ import lt.vu.feedback_system.usecases.users.NavigationBean;
 import lt.vu.feedback_system.utils.Sorter;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -110,7 +115,9 @@ public class CreateSurveyController implements Serializable {
 
     public void addCheckboxQuestion(Section section) {
         CheckboxQuestion checkboxQuestion = new CheckboxQuestion();
-        checkboxQuestion.getCheckboxes().add(new Checkbox());
+
+        addCheckbox(checkboxQuestion);
+
         surveyLogic.addQuestion(section, checkboxQuestion);
     }
 
@@ -126,7 +133,9 @@ public class CreateSurveyController implements Serializable {
 
     public void addRadioQuestion(Section section) {
         RadioQuestion radioQuestion = new RadioQuestion();
-        radioQuestion.getRadioButtons().add(new RadioButton());
+
+        addRadioButton(radioQuestion);
+
         surveyLogic.addQuestion(section, radioQuestion);
 
     }
@@ -151,5 +160,30 @@ public class CreateSurveyController implements Serializable {
         surveyLogic.create(survey);
 
         return navigationBean.toMySurveys();
+    }
+
+    public void validateSliderBounds(ComponentSystemEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+
+        UIComponent component = event.getComponent();
+
+        UIInput uiInputLowerBound = (UIInput) component.findComponent("lowerBound");
+        UIInput uiInputUpperBound = (UIInput) component.findComponent("upperBound");
+        String upperBoundId = uiInputUpperBound.getClientId();
+
+        Integer lowerBound = (Integer) uiInputLowerBound.getLocalValue();
+        Integer upperBound = (Integer) uiInputUpperBound.getLocalValue();
+
+        if (lowerBound == null || upperBound == null)
+            return;
+
+        if ((Integer) uiInputLowerBound.getLocalValue() < (Integer) uiInputUpperBound.getLocalValue())
+            return;
+        else {
+            FacesMessage msg = new FacesMessage("Lower bound value should be less than upper bound value");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            fc.addMessage(upperBoundId, msg);
+            fc.renderResponse();
+        }
     }
 }
