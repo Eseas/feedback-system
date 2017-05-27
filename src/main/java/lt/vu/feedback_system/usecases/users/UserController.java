@@ -25,6 +25,11 @@ public class UserController {
     }
 
     public Integer getId() {
-        return userContext.getUser().getId();
+        User user = userContext.getUser();
+
+        if (user != null)
+            return user.getId();
+        else
+            return null;
     }
 }

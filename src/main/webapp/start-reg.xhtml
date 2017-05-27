@@ -4,7 +4,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 >
 <h:head>
     <meta charset="utf-8" />
@@ -32,7 +31,8 @@
                         pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
             </p:inputText>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-            <p:commandButton class="button" value="Send link" actionListener="#{keyController.sendEmail(0)}" ajax="false"/>
+            <p:commandButton class="button" value="Get link" actionListener="#{keyController.sendEmail(0)}"
+                             ajax="false"/>
             <p:link class="message" value="Back to login page"  outcome="login"/>
         </h:form>
     </div>
