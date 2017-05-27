@@ -5,7 +5,6 @@ import lt.vu.feedback_system.entities.surveys.Survey;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
@@ -21,7 +20,6 @@ public class SurveyDAO {
         em.merge(survey);
     }
 
-    @Transactional
     public void delete(Integer id) {
         Survey surveyToDelete = getSurveyById(id);
 

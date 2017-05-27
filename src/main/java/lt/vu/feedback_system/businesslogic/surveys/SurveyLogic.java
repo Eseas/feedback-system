@@ -90,6 +90,7 @@ public class SurveyLogic {
         }
     }
 
+    @Transactional
     public void delete(Integer surveyId) {
         surveyDAO.delete(surveyId);
     }
