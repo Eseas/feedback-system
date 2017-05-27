@@ -4,11 +4,13 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
 >
 
 <f:view>
     <f:metadata>
         <f:viewParam name="admin" value="#{requestSurveysController.adminMode}"/>
+        <o:viewAction actionListener="#{requestSurveysController.reloadAllSurveys}"/>
     </f:metadata>
     <h:head>
         <meta charset="utf-8" />
@@ -38,16 +40,18 @@
 
         <h:form>
             <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}" var="survey">
-                <p:column headerText="Title">
+                <p:column headerText="Title" sortBy="#{survey.title}">
                     <h:outputText value="#{survey.title}" />
                 </p:column>
                 <p:column headerText="Description">
                     <h:outputText value="#{survey.description}" />
                 </p:column>
-                <p:column class="confidential" headerText="Private results">
+                <p:column class="confidential" headerText="Private results" sortBy="#{survey.confidential}">
                     <h:outputText value="#{survey.confidential}" />
                 </p:column>
-                <p:column headerText="Creator" rendered="#{userController.admin and requestSurveysController.adminMode}">
+                <p:column headerText="Creator"
+                          rendered="#{userController.admin and requestSurveysController.adminMode}"
+                          sortBy="#{survey.creator.getEmail()}">
                     <h:outputText value="#{survey.creator.getFirstName()} #{survey.creator.getLastName()}" />
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />

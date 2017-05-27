@@ -6,6 +6,7 @@ import lt.vu.feedback_system.dao.PotentialUserDAO;
 import lt.vu.feedback_system.dao.RegKeyDAO;
 import lt.vu.feedback_system.entities.PotentialUser;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -30,8 +31,12 @@ public class PotentialUserManagementController implements Serializable {
     @Inject
     private UserLogic userLogic;
 
-    public List<PotentialUser> getAllPotentialUsers() {
-        return potentialUserDAO.getAllPotentialUsers();
+    @Getter
+    private List<PotentialUser> potentialUsers;
+
+    @PostConstruct
+    public void reloadAllPotentialUsers() {
+        potentialUsers = potentialUserDAO.getAllPotentialUsers();
     }
 
     public void createPotentialUser() {
@@ -45,9 +50,11 @@ public class PotentialUserManagementController implements Serializable {
             userLogic.createPotentialUser(potentialUser);
             potentialUser = new PotentialUser();
         }
+        reloadAllPotentialUsers();
     }
 
     public void removePotentialUser(PotentialUser potentialUser) {
         userLogic.removePotentialUser(potentialUser);
+        reloadAllPotentialUsers();
     }
 }

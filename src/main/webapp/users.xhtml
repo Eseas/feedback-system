@@ -11,7 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet"/>
-    <h:outputStylesheet name="css/stylesUsers.css" />
+    <h:outputStylesheet name="css/stylesUsers.css"/>
     <title>Builder of Surveys</title>
 </h:head>
 
@@ -28,14 +28,16 @@
             <h:form id="form" class="reg_users">
 
                 <p:fieldset class="registered-fieldset" id="list">
-                    <p:dataTable class="registered-table" id="data_table" value="#{userManagementController.users}" var="user">
-                        <p:column class="email" headerText="Email">
+                    <p:dataTable class="registered-table" id="data_table"
+                                 value="#{userManagementController.users}" var="user"
+                                 sortBy="#{user.email}">
+                        <p:column class="email" headerText="Email" sortBy="#{user.email}">
                             <h:outputText value="#{user.email}"/>
                         </p:column>
-                        <p:column class="first-name" headerText="First name">
+                        <p:column class="first-name" headerText="First name" sortBy="#{user.firstName}">
                             <h:outputText value="#{user.firstName}"/>
                         </p:column>
-                        <p:column class="last-name" headerText="Last name">
+                        <p:column class="last-name" headerText="Last name" sortBy="#{user.lastName}">
                             <h:outputText value="#{user.lastName}"/>
                         </p:column>
                         <p:column class="admin" headerText="Admin">
@@ -128,8 +130,10 @@
                         <div class="label_table">
                             <p>Potential users</p>
                         </div>
-                        <p:dataTable class="potential-table" id="potential_user_table" value="#{potentialUserManagementController.getAllPotentialUsers()}" var="potentialUser">
-                            <p:column headerText="Email">
+                        <p:dataTable class="potential-table" id="potential_user_table"
+                                     value="#{potentialUserManagementController.potentialUsers}"
+                                     var="potentialUser" sortBy="#{potentialUser.email}">
+                            <p:column headerText="Email" sortBy="#{potentialUser.email}">
                                 <h:outputText value="#{potentialUser.email}"/>
                             </p:column>
                             <p:column class="remove">
