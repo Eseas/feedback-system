@@ -53,12 +53,28 @@
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
                 <p:column class="preview" headerText="Options" style="min-width: 180px;">
-                    <p:button title="Preview" outcome="answer-survey" icon="fa fa-search">
+                    <p:button title="Preview" outcome="answer-survey" icon="fa fa-eye">
                         <f:param name="s" value="#{survey.link}"/>
                         <f:param name="p" value="true"/>
                     </p:button>
 
-                    <p:button title="Answer" outcome="answer-survey" icon="fa fa-pencil">
+                    <p:commandButton title="Get link" icon="fa fa-send" type="button"
+                                     onclick="PF('link-dialog').show();"/>
+                    <p:dialog header="Send survey" widgetVar="link-dialog" modal="true" closable="true"
+                              resizable="false"
+                              closeOnEscape="true" showEffect="drop" hideEffect="drop">
+                        <p:outputLabel value="Survey title:" for="dialog-survey-title"/>
+                        <h:outputText id="dialog-survey-title" value="#{survey.title}"/>
+                        <br/>
+
+                        <p:outputLabel value="Link:" for="link-text"/>
+
+                        <p:inputText id="link-text" readonly="true"
+                                     value="#{requestSurveysController.formLink('answer-survey.html', survey.link)}"
+                                     size="50"/>
+                    </p:dialog>
+
+                    <p:button title="Answer" outcome="answer-survey" icon="fa fa-play">
                         <f:param name="s" value="#{survey.link}"/>
                     </p:button>
 
