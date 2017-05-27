@@ -55,6 +55,6 @@ public class Survey implements Serializable {
             name="creator_id", nullable=false, updatable=false)
     private User creator;
 
-    @OneToMany(mappedBy = "survey", orphanRemoval = true)
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Section> sections = new ArrayList<>();
 }
