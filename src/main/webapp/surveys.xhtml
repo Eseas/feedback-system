@@ -38,8 +38,8 @@
             </div>
         </ui:fragment>
 
-        <h:form>
-            <p:dataTable class="survey-table" value="#{requestSurveysController.surveys}"
+        <h:form id="form">
+            <p:dataTable class="survey-table" id="survey-datatable" value="#{requestSurveysController.surveys}"
                          var="survey" sortBy="#{survey.title}">
                 <p:column headerText="Title" sortBy="#{survey.title}">
                     <h:outputText value="#{survey.title}" />
@@ -47,8 +47,13 @@
                 <p:column headerText="Description">
                     <h:outputText value="#{survey.description}" />
                 </p:column>
-                <p:column class="confidential" headerText="Private results" sortBy="#{survey.confidential}">
-                    <h:outputText value="#{survey.confidential}" />
+                <p:column class="confidential" headerText="Results" sortBy="#{survey.confidential}">
+                    <ui:fragment rendered="#{survey.confidential}">
+                        <div class="ui-icon fa fa-lock"/>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not survey.confidential}">
+                        <div class="ui-icon fa fa-unlock"/>
+                    </ui:fragment>
                 </p:column>
                 <p:column headerText="Creator"
                           rendered="#{userController.admin and requestSurveysController.adminMode}"
@@ -63,13 +68,22 @@
                         <f:param name="p" value="true"/>
                     </p:button>
 
-                    <p:commandButton title="Get link" icon="fa fa-external-link-square" type="button"
+                    <p:commandButton title="Get link" icon="fa fa-send" type="button"
                                      onclick="PF('link-dialog').show();"/>
-                    <p:dialog header="Link" widgetVar="link-dialog">
-                        blblbllsd
+                    <p:dialog header="Send survey" widgetVar="link-dialog" modal="true" closable="true"
+                              resizable="false"
+                              closeOnEscape="true" showEffect="drop" hideEffect="drop">
+                        <p:outputLabel value="Survey title:" for="dialog-survey-title"/>
+                        <h:outputText id="dialog-survey-title" value="#{survey.title}"/>
+                        <br/>
+
+                        <p:outputLabel value="Link:" for="link-text"/>
+                        <p:inputText id="link-text" readonly="true"
+                                     value="#{requestSurveysController.formLink('answer-survey.html', survey.link)}"
+                                     size="50"/>
                     </p:dialog>
 
-                    <p:button title="Answer" outcome="answer-survey" icon="fa fa-pencil">
+                    <p:button title="Answer" outcome="answer-survey" icon="fa fa-play">
                         <f:param name="s" value="#{survey.link}"/>
                     </p:button>
 
@@ -82,7 +96,8 @@
                     </p:commandButton>
 
                     <p:commandButton title="Delete" icon="fa fa-trash"
-                                     actionListener="#{requestSurveysController.delete(survey)}"/>
+                                     action="#{requestSurveysController.delete(survey.id)}"
+                                     update="form"/>
                 </p:column>
             </p:dataTable>
         </h:form>

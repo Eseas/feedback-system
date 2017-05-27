@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lt.vu.feedback_system.entities.answers.Answer;
-import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.entities.questions.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -40,6 +40,18 @@ public class Section {
     @Size(max = 200)
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "section", orphanRemoval = true)
+    private List<TextQuestion> textQuestions;
+
+    @OneToMany(mappedBy = "section", orphanRemoval = true)
+    private List<SliderQuestion> sliderQuestions;
+
+    @OneToMany(mappedBy = "section", orphanRemoval = true)
+    private List<RadioQuestion> radioQuestions;
+
+    @OneToMany(mappedBy = "section", orphanRemoval = true)
+    private List<CheckboxQuestion> checkboxQuestions;
 
     @Transient
     private List<Question> questions = new ArrayList<>();

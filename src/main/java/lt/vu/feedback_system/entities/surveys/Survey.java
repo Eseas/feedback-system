@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lt.vu.feedback_system.entities.surveys;
 
 import lombok.EqualsAndHashCode;
@@ -52,7 +47,7 @@ public class Survey implements Serializable {
     @Column(name = "is_confidential")
     private Boolean confidential;
 
-    @OneToMany(mappedBy = "survey")
+    @OneToMany(mappedBy = "survey", orphanRemoval = true)
     private List<AnsweredSurvey> answeredSurveys = new ArrayList<>();
 
     @ManyToOne(optional=false)
@@ -60,6 +55,6 @@ public class Survey implements Serializable {
             name="creator_id", nullable=false, updatable=false)
     private User creator;
 
-    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "survey", orphanRemoval = true)
     private List<Section> sections = new ArrayList<>();
 }

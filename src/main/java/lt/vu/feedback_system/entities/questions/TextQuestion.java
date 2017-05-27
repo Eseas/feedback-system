@@ -51,7 +51,7 @@ public class TextQuestion implements Question {
     @ManyToOne
     private Survey survey;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", orphanRemoval = true)
     private List<TextAnswer> textAnswers = new ArrayList<>();
 
     @JoinColumn(name = "section_id", referencedColumnName = "id")

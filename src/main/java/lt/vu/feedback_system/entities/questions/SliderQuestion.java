@@ -55,7 +55,7 @@ public class SliderQuestion implements Question {
     @ManyToOne
     private Survey survey;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", orphanRemoval = true)
     private List<SliderAnswer> sliderAnswers = new ArrayList<>();
 
     @JoinColumn(name = "section_id", referencedColumnName = "id")

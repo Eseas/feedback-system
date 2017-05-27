@@ -1,10 +1,14 @@
 package lt.vu.feedback_system.dao;
 
+import lt.vu.feedback_system.entities.questions.Question;
+import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
+import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.entities.surveys.Survey;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
@@ -20,8 +24,23 @@ public class SurveyDAO {
         em.merge(survey);
     }
 
-    public void delete(Survey survey) {
-        em.remove(em.contains(survey) ? survey : em.merge(survey));
+    @Transactional
+    public void delete(Integer id) {
+        Survey surveyToDelete = getSurveyById(id);
+        for (AnsweredSurvey answeredSurvey : surveyToDelete.getAnsweredSurveys()) {
+            em.remove(answeredSurvey);
+        }
+
+        for (Section section : surveyToDelete.getSections()) {
+
+            for (Question question : section.getQuestions())
+                em.remove(question);
+        }
+
+
+        em.remove(surveyToDelete);
+//        boolean b = em.contains(survey);
+//        em.remove(em.contains(survey) ? survey : em.merge(survey));
     }
 
     public List<Survey> getAllSurveys() {

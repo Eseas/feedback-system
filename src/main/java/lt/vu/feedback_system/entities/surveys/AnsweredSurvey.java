@@ -4,9 +4,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lt.vu.feedback_system.entities.answers.CheckboxAnswer;
+import lt.vu.feedback_system.entities.answers.RadioAnswer;
+import lt.vu.feedback_system.entities.answers.SliderAnswer;
+import lt.vu.feedback_system.entities.answers.TextAnswer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(schema = "feedback", name = "answered_surveys")
@@ -30,4 +35,16 @@ public class AnsweredSurvey implements Serializable {
     @ManyToOne
     @JoinColumn(name="survey_id")
     private Survey survey;
+
+    @OneToMany(mappedBy = "answeredSurvey", orphanRemoval = true)
+    private List<TextAnswer> textAnswers;
+
+    @OneToMany(mappedBy = "answeredSurvey", orphanRemoval = true)
+    private List<SliderAnswer> sliderAnswers;
+
+    @OneToMany(mappedBy = "answeredSurvey", orphanRemoval = true)
+    private List<CheckboxAnswer> checkboxAnswers;
+
+    @OneToMany(mappedBy = "answeredSurvey", orphanRemoval = true)
+    private List<RadioAnswer> radioAnswers;
 }

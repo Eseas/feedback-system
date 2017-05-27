@@ -4,19 +4,27 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
+import lt.vu.feedback_system.config.Configuration;
 import lt.vu.feedback_system.entities.surveys.Survey;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Properties;
 
 @Named
 @ViewScoped
 public class RequestSurveysController implements Serializable {
     @Inject
     private UserContext userContext;
+
+    @Inject
+    private Configuration config;
+
+    private Properties props;
 
     @Getter
     @Setter
@@ -28,6 +36,11 @@ public class RequestSurveysController implements Serializable {
     @Getter
     private List<Survey> surveys;
 
+    @PostConstruct
+    public void loadProps() {
+        props = config.getProps();
+    }
+
     public void reloadAllSurveys() {
         if (userContext.isAdmin() && adminMode)
             surveys = surveyLogic.getAllSurveys();
@@ -35,7 +48,13 @@ public class RequestSurveysController implements Serializable {
             surveys = surveyLogic.getUserSurveys(userContext.getUser());
     }
 
-    public void delete(Survey survey) {
-        surveyLogic.delete(survey);
+    public void delete(Integer surveyId) {
+        surveyLogic.delete(surveyId);
+        reloadAllSurveys();
+    }
+
+    public String formLink(final String page, final String link) {
+        this.props = config.getProps();
+        return String.format("%s/%s?s=%s", props.getProperty("common.baseURL"), page, link);
     }
 }

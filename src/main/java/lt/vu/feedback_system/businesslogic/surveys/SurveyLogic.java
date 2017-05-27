@@ -90,10 +90,8 @@ public class SurveyLogic {
         }
     }
 
-    @Logged
-    @Transactional
-    public void delete(Survey survey) {
-        surveyDAO.delete(survey);
+    public void delete(Integer surveyId) {
+        surveyDAO.delete(surveyId);
     }
 
     public void loadQuestionsToSection(Section section) {
