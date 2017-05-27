@@ -58,15 +58,11 @@
                         <f:param name="p" value="true"/>
                     </p:button>
 
-                    <!--<p:commandButton title="Get link" icon="fa fa-send" type="button"-->
-                    <!--onclick="PF('link-dialog').show();"/>-->
-
                     <p:commandButton update=":form:survey-link-panel" oncomplete="PF('link-dialog').show()"
                                      icon="fa fa-send" title="Send link">
                         <f:setPropertyActionListener value="#{survey}"
                                                      target="#{requestSurveysController.selectedSurvey}"/>
                     </p:commandButton>
-
 
                     <p:button title="Answer" outcome="answer-survey" icon="fa fa-play">
                         <f:param name="s" value="#{survey.link}"/>
@@ -90,7 +86,6 @@
                         <p:outputLabel value="Survey title:" for="dialog-survey-title"/>
                         <h:outputText id="dialog-survey-title"
                                       value="#{requestSurveysController.selectedSurvey.title}"/>
-
 
                         <p:outputLabel value="Link:" for="link-text"/>
 
