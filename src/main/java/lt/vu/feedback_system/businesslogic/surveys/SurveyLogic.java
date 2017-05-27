@@ -93,6 +93,13 @@ public class SurveyLogic {
         }
     }
 
+//    public boolean validateSliderBounds(SliderQuestion q) {
+//        if (q.getLowerBound() < q.getUpperBound())
+//            return true;
+//        else
+//            return false;
+//    }
+
     public void loadQuestionsToSection(Section section) {
 
         section.getQuestions().clear();

@@ -93,19 +93,27 @@
 
                         <div class="slider-question clearfix">
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
+
+
                                 <p:outputLabel maxLenght="3" for="lowerBound" value="Lower bound"
                                                style="display: none !important; clear: both;"/>
-                                <p:inputText id="lowerBound" value="#{question.lowerBound}" placeholder="Lower bound" required="#{param.validate}"/>
+                                <p:inputText id="lowerBound" value="#{question.lowerBound}" placeholder="Lower bound"
+                                             required="#{param.validate}"/>
                                 <p:message for="lowerBound"/>
 
                                 <p:slider class="form-slider" for="lowerBound" disabled="true"/>
 
                                 <p:outputLabel maxLenght="3"  for="upperBound" value="Upper bound"
                                                style="display: none !important; clear: both;"/>
-                                <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound" required="#{param.validate}"/>
+                                <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound"
+                                             required="#{param.validate}"/>
                                 <p:message for="upperBound"/>
-                            </ui:fragment>
 
+                                <ui:fragment rendered="#{param.validate}">
+                                    <f:event type="postValidate"
+                                             listener="#{createSurveyController.validateSliderBounds}"/>
+                                </ui:fragment>
+                            </ui:fragment>
                         </div>
 
                         <div class="radio-question clearfix">
