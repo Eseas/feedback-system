@@ -3,11 +3,9 @@
     <div class="top-bar">
         <ol class="header">
             <li id="logo" >
-                <h:form>
-                    <h:commandLink action="index">
-                        <h:graphicImage value="resources/logo.PNG" style="margin-top: 20px;"/>
-                    </h:commandLink>
-                </h:form>
+                <h:link outcome="index">
+                    <h:graphicImage value="resources/logo.PNG" style="margin-top: 20px;"/>
+                </h:link>
             </li>
             <li id="user">
                 <span class="glyphicon glyphicon-user throwLeft"/>
