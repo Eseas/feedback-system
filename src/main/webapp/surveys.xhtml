@@ -47,7 +47,7 @@
                 <p:column class="confidential" headerText="Private results">
                     <h:outputText value="#{survey.confidential}" />
                 </p:column>
-                <p:column headerText="Creator" rendered="#{userController.admin and requestSurveysController.adminMode}">
+                <p:column headerText="Author" rendered="#{userController.admin and requestSurveysController.adminMode}">
                     <h:outputText value="#{survey.creator.getFirstName()} #{survey.creator.getLastName()}" />
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
