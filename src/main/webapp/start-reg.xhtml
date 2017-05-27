@@ -31,7 +31,7 @@
                         pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
             </p:inputText>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
-            <p:commandButton class="button" value="Get link" actionListener="#{keyController.sendEmail(0)}"
+            <p:commandButton class="button" value="Send link" actionListener="#{keyController.sendEmail(0)}"
                              ajax="false"/>
             <p:link class="message" value="Back to login page"  outcome="login"/>
         </h:form>
