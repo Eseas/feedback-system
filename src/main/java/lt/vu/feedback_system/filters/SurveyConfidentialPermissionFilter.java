@@ -27,11 +27,11 @@ public class SurveyConfidentialPermissionFilter implements Filter {
                         + ((HttpServletRequest) request).getQueryString());
             } else {
                 try {
-                    Integer surveyId = Integer.parseInt(request.getParameter("id"));
+                    String surveyLink = request.getParameter("s");
 
-                    if (surveyContext.isSurveyConfidential(surveyId)
+                    if (surveyContext.isSurveyConfidential(surveyLink)
                             && (userContext == null || (!userContext.isAdmin()
-                            && !surveyContext.isSurveyCreator(surveyId)))) {
+                            && !surveyContext.isSurveyCreator(surveyLink)))) {
                         String contextPath = ((HttpServletRequest) request).getContextPath();
 
                         ((HttpServletResponse) response).sendRedirect(
