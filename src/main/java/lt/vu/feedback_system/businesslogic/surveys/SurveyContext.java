@@ -18,9 +18,9 @@ public class SurveyContext implements Serializable {
     @Inject
     private UserContext userContext;
 
-    public boolean isSurveyCreator(Integer surveyId) {
+    public boolean isSurveyCreator(String surveyLink) {
         try {
-            Integer surveyCreatorId = surveyDAO.getSurveyById(surveyId).getCreator().getId();
+            Integer surveyCreatorId = surveyDAO.getSurveyByLink(surveyLink).getCreator().getId();
             Integer userContextId = userContext.getUser().getId();
 
             if (surveyCreatorId.equals(userContextId)) {
@@ -33,9 +33,9 @@ public class SurveyContext implements Serializable {
         return false;
     }
 
-    public boolean isSurveyConfidential(Integer surveyId) {
+    public boolean isSurveyConfidential(String surveyLink) {
         try {
-            return surveyDAO.getSurveyById(surveyId).getConfidential();
+            return surveyDAO.getSurveyByLink(surveyLink).getConfidential();
         } catch (javax.persistence.NoResultException ex) {
         } catch (NullPointerException ex) {
         }

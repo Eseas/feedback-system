@@ -21,9 +21,9 @@ public class SurveyCreatorPermissionFilter implements Filter {
             SurveyContext surveyContext = (SurveyContext) ((HttpServletRequest) request).getSession().getAttribute("surveyContext");
 
             try {
-                Integer surveyId = Integer.parseInt(request.getParameter("id"));
+                String surveyLink = request.getParameter("s");
 
-                if (!userContext.isAdmin() && !surveyContext.isSurveyCreator(surveyId)) {
+                if (!userContext.isAdmin() && !surveyContext.isSurveyCreator(surveyLink)) {
                     String contextPath = ((HttpServletRequest) request).getContextPath();
                     ((HttpServletResponse) response).sendRedirect(contextPath + "/index.html");
                 }
