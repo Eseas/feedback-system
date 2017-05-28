@@ -50,13 +50,13 @@
                     <p:fileUpload value="#{importController.file}" mode="simple"/>
                 </div>
                 <div class="upload-button">
-                    <p:commandButton value="Upload" actionListener="#{importController.upload()}" ajax="false"/>
+                    <p:commandButton value="Upload" actionListener="#{importController.upload()}"/>
                 </div>
 
                 <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
             </h:form>
             <h:form class="download-form">
-                <h:commandButton class="download" value="Download file example" ajax="false">
+                <h:commandButton class="download" value="Download file example">
                     <p:fileDownload value="#{importController.getImportExample()}"/>
                 </h:commandButton>
             </h:form>
