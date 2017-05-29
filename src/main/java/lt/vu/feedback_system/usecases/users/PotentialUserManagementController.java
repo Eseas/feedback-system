@@ -35,6 +35,7 @@ public class PotentialUserManagementController implements Serializable {
     }
 
     public void createPotentialUser() {
+        potentialUser.setEmail(potentialUser.getEmail().toLowerCase());
         final String email = potentialUser.getEmail();
 
         if (!userLogic.isEmailFree(email)) {
