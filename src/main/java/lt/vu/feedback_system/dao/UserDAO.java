@@ -25,12 +25,8 @@ public class UserDAO {
         em.flush();
     }
 
-    public void delete(User user) {
-        em.remove(user);
-    }
-
     public boolean userExists(String email) {
-        return em.createNamedQuery("User.countByEmail", Long.class).setParameter("email", email).getSingleResult() > 0;
+        return em.createNamedQuery("User.countByEmail", Long.class).setParameter("email", email.toLowerCase()).getSingleResult() > 0;
     }
 
     public User getUserById(int id) {
@@ -39,7 +35,7 @@ public class UserDAO {
 
     public User getUserByEmail(String email) {
         return em.createNamedQuery("User.findByEmail", User.class)
-                .setParameter("email", email)
+                .setParameter("email", email.toLowerCase())
                 .getSingleResult();
     }
 
