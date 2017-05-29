@@ -78,7 +78,7 @@
                         <div class="question-title">
                             <p:outputLabel id="question_label" for="questionTitle"
                                            value="#{question.getPosition().toString()}"/>
-                            <p:inputText maxlength="60" id="questionTitle" value="#{question.title}"
+                            <p:inputText maxlength="40" id="questionTitle" value="#{question.title}"
                                          placeholder="Question title" required="#{param.validate}"/>
                             <p:message for="questionTitle"/>
                         </div>
@@ -119,7 +119,7 @@
                                         <img src="resources/grey-circle.png" alt="Radio button" height="15" width="15"/>
                                         <p:outputLabel for="radioButtonTitle" value="Radio Button"
                                                        style="display: none !important; clear: both;"/>
-                                        <h:inputText id="radioButtonTitle" value="#{radioButton.title}" required="#{param.validate}"/>
+                                        <h:inputText id="radioButtonTitle" maxlength="40" value="#{radioButton.title}" required="#{param.validate}"/>
                                         <p:commandButton value="remove"
                                                          disabled="#{question.radioButtons.size() eq 1}"
                                                          actionListener="#{createSurveyController.removeRadioButton(question, radioButton)}"
@@ -143,7 +143,7 @@
                                         <img src="resources/black-square.png" alt="Square button" height="15" width="15"/>
                                         <p:outputLabel for="checkboxTitle" value="Checkbox"
                                                        style="display: none !important; clear: both;"/>
-                                        <h:inputText id="checkboxTitle" value="#{checkbox.title}" required="#{param.validate}"/>
+                                        <h:inputText id="checkboxTitle" maxlength="40" value="#{checkbox.title}" required="#{param.validate}"/>
                                         <p:commandButton value="remove"
                                                          disabled="#{question.checkboxes.size() eq 1}"
                                                          action="#{createSurveyController.removeCheckbox(question, checkbox)}"

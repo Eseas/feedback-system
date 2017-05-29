@@ -35,13 +35,16 @@ public class PotentialUserManagementController implements Serializable {
     }
 
     public void createPotentialUser() {
-        if (!userLogic.isEmailFree(potentialUser.getEmail())) {
+        potentialUser.setEmail(potentialUser.getEmail().toLowerCase());
+        final String email = potentialUser.getEmail();
+
+        if (!userLogic.isEmailFree(email)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Duplicate", "This email is already in the list"));
         }
-        if (!userLogic.isEmailFormatValid(potentialUser.getEmail())) {
+        if (!userLogic.isEmailFormatValid(email)) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid format", "This email is of invalid format"));
         }
-        if (userLogic.isEmailFree(potentialUser.getEmail()) && userLogic.isEmailFormatValid(potentialUser.getEmail())) {
+        if (userLogic.isEmailFree(email) && userLogic.isEmailFormatValid(email)) {
             userLogic.createPotentialUser(potentialUser);
             potentialUser = new PotentialUser();
         }

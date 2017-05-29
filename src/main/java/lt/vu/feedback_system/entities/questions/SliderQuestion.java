@@ -17,8 +17,6 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "slider_questions")
 @NamedQueries({
-        @NamedQuery(name = "SliderQuestion.findAll", query = "SELECT c FROM SliderQuestion c"),
-        @NamedQuery(name = "SliderQuestion.findBySurveyId", query = "SELECT s FROM SliderQuestion s WHERE s.survey = :survey"),
         @NamedQuery(name = "SliderQuestion.findBySectionId", query = "SELECT s FROM SliderQuestion s WHERE s.section.id = :section_id")
 })
 @Getter
@@ -35,7 +33,7 @@ public class SliderQuestion implements Question {
     @Transient
     private final String type = "SliderQuestion";
 
-    @Size(max = 200)
+    @Size(min = 1, max = 40)
     @Column(name = "title")
     private String title;
 

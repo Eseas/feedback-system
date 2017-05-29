@@ -2,6 +2,7 @@ package lt.vu.feedback_system.usecases.surveys;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.vu.feedback_system.businesslogic.interceptors.Logged;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.answers.*;
@@ -65,6 +66,7 @@ public class AnswerSurveyController implements Serializable {
         lastTabIndex = answeredSurvey.getSurvey().getSections().size() - 1; // zero base
     }
 
+    @Logged
     @Transactional
     public String answer() {
         for(Section section : answeredSurvey.getSurvey().getSections()) {
@@ -138,16 +140,10 @@ public class AnswerSurveyController implements Serializable {
     }
 
     public boolean isLastSection() {
-        if (activeTabIndex == lastTabIndex) {
-            return true;
-        }
-        return false;
+        return activeTabIndex == lastTabIndex;
     }
 
     public boolean isFirstSection() {
-        if (activeTabIndex == 0) {
-            return true;
-        }
-        return false;
+        return activeTabIndex == 0;
     }
 }

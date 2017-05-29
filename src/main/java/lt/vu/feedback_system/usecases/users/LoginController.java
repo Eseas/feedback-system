@@ -2,8 +2,6 @@ package lt.vu.feedback_system.usecases.users;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
 
 import javax.enterprise.inject.Model;
@@ -12,7 +10,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 @Model
-@Slf4j
 public class LoginController {
 
     @Getter @Setter

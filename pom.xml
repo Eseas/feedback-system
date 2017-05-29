@@ -131,30 +131,6 @@
             <artifactId>deltaspike-core-impl</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-        <!-- DeltaSpike Data - JPA DAO Repositories -->
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-data-module-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- DeltaSpike Security -->
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-security-module-api</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-security-module-impl</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         
          <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>

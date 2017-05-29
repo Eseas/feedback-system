@@ -33,7 +33,6 @@ public interface Question {
 
     void setSurvey(Survey survey);
 
-    // FRESH FUNCTIONALITY (Kazimieras added)
     List<? extends Answer> getAnswers();
 
 }

@@ -19,8 +19,6 @@ import java.util.concurrent.Future;
 @Entity
 @Table(schema = "feedback", name = "checkbox_questions")
 @NamedQueries({
-        @NamedQuery(name = "CheckboxQuestion.findAll", query = "SELECT c FROM CheckboxQuestion c"),
-        @NamedQuery(name = "CheckboxQuestion.findBySurveyId", query = "SELECT s FROM CheckboxQuestion s WHERE s.survey = :survey"),
         @NamedQuery(name = "CheckboxQuestion.findBySectionId", query = "SELECT s FROM CheckboxQuestion s WHERE s.section.id = :section_id")
 })
 @Getter
@@ -37,7 +35,7 @@ public class CheckboxQuestion implements Question {
     @Transient
     private final String type = "CheckboxQuestion";
 
-    @Size(max = 200)
+    @Size(min = 1, max = 40)
     @Column(name = "title")
     private String title;
 

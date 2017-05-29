@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Table(schema = "feedback", name = "slider_answers")
 @NamedQueries({
         @NamedQuery(name = "SliderAnswer.findAllByQuestionId", query = "SELECT c FROM SliderAnswer c WHERE c.question.id = :id"),
-        @NamedQuery(name = "SliderAnswer.findAll", query = "SELECT c FROM SliderAnswer c"),
         @NamedQuery(name = "SliderAnswer.findBySectionId", query = "SELECT s FROM SliderAnswer s WHERE s.question.section.id = :section_id")
 })
 @Getter

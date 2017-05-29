@@ -19,8 +19,6 @@ import java.util.concurrent.Future;
 @Entity
 @Table(schema = "feedback", name = "text_questions")
 @NamedQueries({
-        @NamedQuery(name = "TextQuestion.findAll", query = "SELECT c FROM TextQuestion c"),
-        @NamedQuery(name = "TextQuestion.findBySurveyId", query = "SELECT s FROM TextQuestion s WHERE s.survey = :survey"),
         @NamedQuery(name = "TextQuestion.findBySectionId", query = "SELECT s FROM TextQuestion s WHERE s.section.id = :section_id")
 })
 @Getter
@@ -37,7 +35,7 @@ public class TextQuestion implements Question {
     @Transient
     private final String type = "TextQuestion";
 
-    @Size(max = 200)
+    @Size(min = 1, max = 40)
     @Column(name = "title")
     private String title;
 

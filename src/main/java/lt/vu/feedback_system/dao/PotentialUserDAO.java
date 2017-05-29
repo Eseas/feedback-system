@@ -26,7 +26,7 @@ public class PotentialUserDAO {
 
     public PotentialUser selectByEmail(String email) {
         return em.createNamedQuery("PotentialUser.selectByEmail", PotentialUser.class)
-                .setParameter("email", email).getSingleResult();
+                .setParameter("email", email.toLowerCase()).getSingleResult();
     }
 
 }

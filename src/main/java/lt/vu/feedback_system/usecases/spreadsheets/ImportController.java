@@ -2,7 +2,6 @@ package lt.vu.feedback_system.usecases.spreadsheets;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import lt.vu.feedback_system.businesslogic.spreadsheets.SpreadsheetException;
 import lt.vu.feedback_system.businesslogic.spreadsheets.imports.SpreadsheetImporter;
 import lt.vu.feedback_system.businesslogic.users.UserContext;
@@ -17,7 +16,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-@Slf4j
 @Model
 public class ImportController {
 
@@ -58,7 +56,6 @@ public class ImportController {
                     msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", cause.getMessage());
                 } else {
                     msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Failed to import survey. If error persists contact system administrator");
-                    log.error(String.format("Failed to import survey: %s", cause.getMessage()));
                 }
             }
         } else {
