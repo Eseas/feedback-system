@@ -14,7 +14,7 @@ CREATE TABLE feedback.users
     email VARCHAR(40) UNIQUE NOT NULL,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL ,
-    password VARCHAR(60) NOT NULL ,
+    password CHAR(60) NOT NULL ,
     is_admin BOOLEAN NOT NULL,
     is_blocked BOOLEAN NOT NULL,
     opt_lock_version INTEGER
@@ -41,11 +41,11 @@ CREATE TABLE feedback.change_pw_keys
 CREATE TABLE feedback.surveys
 (
     id serial PRIMARY KEY,
-    link VARCHAR(10) NOT NULL UNIQUE,
+    link CHAR(10) NOT NULL UNIQUE,
     creator_id INTEGER NOT NULL,
     is_confidential BOOLEAN NOT NULL,
-    title VARCHAR(200) NOT NULL,
-    description VARCHAR(200),
+    title VARCHAR(40) NOT NULL,
+    description VARCHAR(100),
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
 
@@ -54,8 +54,8 @@ CREATE TABLE feedback.sections
   id          SERIAL PRIMARY KEY,
   survey_id   INTEGER NOT NULL,
   position    INTEGER NOT NULL,
-  title       VARCHAR(50),
-  description VARCHAR(200),
+  title       VARCHAR(40),
+  description VARCHAR(40),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys(id)
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE feedback.slider_questions
   is_required BOOLEAN      NOT NULL,
   lower_bound INTEGER      NOT NULL,
   upper_bound INTEGER      NOT NULL,
-  title       VARCHAR(200) NOT NULL,
+  title       VARCHAR(40) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -80,7 +80,7 @@ CREATE TABLE feedback.text_questions
   section_id  INTEGER      NOT NULL,
   position    INTEGER      NOT NULL,
   is_required BOOLEAN      NOT NULL,
-  title       VARCHAR(200) NOT NULL,
+  title       VARCHAR(40) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -92,7 +92,7 @@ CREATE TABLE feedback.checkbox_questions
   section_id  INTEGER      NOT NULL,
   position    INTEGER      NOT NULL,
   is_required BOOLEAN      NOT NULL,
-  title       VARCHAR(200) NOT NULL,
+  title       VARCHAR(40) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -104,7 +104,7 @@ CREATE TABLE feedback.radio_questions
   section_id  INTEGER      NOT NULL,
   position    INTEGER      NOT NULL,
   is_required BOOLEAN      NOT NULL,
-  title       VARCHAR(200) NOT NULL,
+  title       VARCHAR(40) NOT NULL,
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id),
     FOREIGN KEY (section_id) REFERENCES feedback.sections (id)
 );
@@ -113,7 +113,7 @@ CREATE TABLE feedback.checkboxes
 (
   id          SERIAL PRIMARY KEY,
   question_id INTEGER      NOT NULL,
-  title       VARCHAR(200) NOT NULL,
+  title       VARCHAR(40) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.checkbox_questions (id)
 );
 
@@ -121,7 +121,7 @@ CREATE TABLE feedback.radio_buttons
 (
   id          SERIAL PRIMARY KEY,
   question_id INTEGER      NOT NULL,
-  title       VARCHAR(200) NOT NULL,
+  title       VARCHAR(40) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES feedback.radio_questions (id)
 );
 
@@ -129,7 +129,6 @@ CREATE TABLE feedback.answered_surveys
 (
   id        SERIAL PRIMARY KEY,
   survey_id INTEGER   NOT NULL,
-  log_time  TIMESTAMP NOT NULL DEFAULT now(),
     FOREIGN KEY (survey_id) REFERENCES feedback.surveys (id)
 );
 
@@ -185,5 +184,5 @@ CREATE TABLE feedback.logs
 (
     id serial PRIMARY KEY,
     time TIMESTAMP NOT NULL,
-    text VARCHAR(200) NOT NULL
+    text VARCHAR(100) NOT NULL
 );

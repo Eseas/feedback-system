@@ -14,7 +14,6 @@ import java.util.List;
 @Table(schema = "feedback", name = "checkbox_answers")
 @NamedQueries({
         @NamedQuery(name = "CheckboxAnswer.findAllByQuestionId", query = "SELECT c FROM CheckboxAnswer c WHERE c.question.id = :id"),
-        @NamedQuery(name = "CheckboxAnswer.findAll", query = "SELECT c FROM CheckboxAnswer c"),
         @NamedQuery(name = "CheckboxAnswer.findBySectionId", query = "SELECT s FROM CheckboxAnswer s WHERE s.question.section.id = :section_id")
 })
 @Getter

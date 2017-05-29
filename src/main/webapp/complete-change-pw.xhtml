@@ -28,8 +28,8 @@
             <p:password class="input" id="new-password" required="true"
                         placeholder="Enter new password"
                         requiredMessage="Please enter your password"
-                        validatorMessage="Password has to be between 6 to 20 characters in length">
-                <f:validateLength minimum="6" maximum="20"/>
+                        validatorMessage="Password has to be between 6 to 40 characters in length">
+                <f:validateLength minimum="6" maximum="40"/>
             </p:password>
             <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
             <h:commandButton class="button" value="Change password" actionListener="#{keyController.completeChangePw()}" ajax="false"/>

@@ -102,15 +102,6 @@ public class SurveyLogic {
         Sorter.sortQuestionsAscending(section.getQuestions());
     }
 
-    public void loadAnswersToSection(Section section) {
-        section.getAnswers().clear();
-
-        section.getAnswers().addAll(answerDAO.getTextAnswers(section));
-        section.getAnswers().addAll(answerDAO.getSliderAnswers(section));
-        section.getAnswers().addAll(answerDAO.getRadioAnswers(section));
-        section.getAnswers().addAll(answerDAO.getCheckboxAnswers(section));
-    }
-
     public void createEmptyAnswersForSection(AnsweredSurvey answeredSurvey, Section section) {
         for(Question question : section.getQuestions()) {
             switch (question.getType()) {

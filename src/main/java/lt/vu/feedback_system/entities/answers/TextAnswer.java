@@ -29,7 +29,7 @@ public class TextAnswer implements Answer {
     private Integer id;
 
     @Column(name = "value")
-    @Size(max = 300)
+    @Size(min = 1, max = 300)
     private String value;
 
     @JoinColumn(name = "question_id", referencedColumnName = "id")

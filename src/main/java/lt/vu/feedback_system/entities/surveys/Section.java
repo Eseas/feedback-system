@@ -15,9 +15,7 @@ import java.util.List;
 @Entity
 @Table(schema = "feedback", name = "sections")
 @NamedQueries({
-        @NamedQuery(name = "Section.findAll", query = "SELECT c FROM Section c"),
-        @NamedQuery(name = "Section.findById", query = "SELECT c FROM Section c WHERE c.id = :id"),
-        @NamedQuery(name = "Section.findAllBySurveyId", query = "SELECT c FROM Section c WHERE c.survey.id = :id")
+        @NamedQuery(name = "Section.findAll", query = "SELECT c FROM Section c")
 })
 @Getter
 @Setter
@@ -33,11 +31,11 @@ public class Section {
     @Column(name = "position")
     private Integer position;
 
-    @Size(max = 200)
+    @Size(min = 1, max = 40)
     @Column(name = "title")
     private String title;
 
-    @Size(max = 200)
+    @Size(max = 40)
     @Column(name = "description")
     private String description;
 

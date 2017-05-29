@@ -41,11 +41,11 @@ public class Survey implements Serializable {
     @Column(name = "link")
     private String link;
 
-    @Size(max = 200)
+    @Size(min = 1, max = 40)
     @Column(name = "title")
     private String title;
 
-    @Size(max = 200)
+    @Size(max = 100)
     @Column(name = "description")
     private String description;
 

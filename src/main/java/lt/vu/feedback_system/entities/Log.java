@@ -22,7 +22,7 @@ public class Log {
     @Column(name = "time")
     private java.util.Date time;
 
-    @Size(max = 200)
+    @Size(max = 100)
     @Column(name = "text")
     private String text;
 

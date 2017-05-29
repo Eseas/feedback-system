@@ -54,10 +54,7 @@ public class UserContext implements Serializable {
     }
 
     public boolean isLoggedIn() {
-        if (id != null) {
-            return true;
-        }
-        return false;
+        return id != null;
     }
 
     public boolean isAdmin() {

@@ -17,11 +17,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "User.countByEmail", query = "SELECT COUNT(u) FROM User u WHERE u.email = :email"),
         @NamedQuery(name = "User.findAll", query = "SELECT s FROM User s"),
-        @NamedQuery(name = "User.findById", query = "SELECT s FROM User s WHERE s.id = :id"),
-        @NamedQuery(name = "User.findByFirstName", query = "SELECT s FROM User s WHERE s.firstName LIKE :firstName"),
-        @NamedQuery(name = "User.findByLastName", query = "SELECT s FROM User s WHERE s.lastName LIKE :lastName"),
         @NamedQuery(name = "User.findByEmail", query = "SELECT s FROM User s WHERE s.email LIKE :email"),
-        @NamedQuery(name = "User.findByOptLockVersion", query = "SELECT s FROM User s WHERE s.optLockVersion = :optLockVersion"),
 })
 @Getter
 @Setter

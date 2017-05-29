@@ -18,13 +18,6 @@
         </encoder>
     </appender>
 
-    <!-- Hibernate logging -->
-    <!-- http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html/ch03.html#configuration-logging -->
-    <logger name="org.hibernate.SQL" level="INFO" additivity="false">
-        Log all SQL DML statements as they are executed
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
     <root level="INFO">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
