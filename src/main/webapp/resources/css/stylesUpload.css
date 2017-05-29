@@ -126,6 +126,9 @@ ol {
 .ui-inputswitch-handle.ui-state-default {
     background: #fff;
 }
+.ui-inputswitch .ui-inputswitch-on {
+    background: #fff;
+}
 
 .form {
     position: relative;

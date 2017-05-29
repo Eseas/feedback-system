@@ -107,6 +107,12 @@ i {
 .ui-tabs-nav li.ui-tabs-selected {
     background: #fff !important;
 }
+.tab_form img{
+    height: 150px;
+    width: 230px;
+    display: block;
+    margin: 0 auto;
+}
 /*inside report*/
 .question-title {
     font-size: 18px !important;
@@ -121,23 +127,31 @@ i {
     font-weight: bold;
     margin: 10px;
 }
-
-.text-quest-answ, .slider-quest-answ, .radio-quest-answ, .check-quest-answ {
+.slider-quest-answ {
+    margin-bottom: 50px;
+}
+.text-quest-answ, .slider-quest-answ, .radio-quest-answ, .check-quest-answ{
     margin-left: 40px;
     font-size: 16px;
 }
+.no-answ-label {
+    display: block;
+    text-align: center;
+    margin: 50px auto;
+    font-size: 18px;
+    color: #00426B;
+}
+.ui-tagcloud {
+margin: 40px;
+width: 90% !important;
+border-color: transparent;
+}
 
-/*.ui-tagcloud {*/
-/*margin: 40px;*/
-/*width: 90% !important;*/
-/*border-color: transparent;*/
-/*}*/
-
-/*.ui-tagcloud li {*/
-/*padding: 0 10px 0 0;*/
-/*pointer-events: none;*/
-/*background: transparent;*/
-/*}*/
+.ui-tagcloud li {
+padding: 0 10px 0 0;
+pointer-events: none;
+background: transparent;
+}
 
 .pie-chart {
     margin: 20px auto;
