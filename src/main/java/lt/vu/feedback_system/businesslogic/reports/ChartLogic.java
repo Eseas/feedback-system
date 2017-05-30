@@ -97,43 +97,63 @@ public class ChartLogic implements Serializable {
     @Futureable
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public Future<TagCloudModel> createTagCloud(Question question) {
+
+        TagCloudModel cloudModel = new DefaultTagCloudModel();
+
         List<TextAnswer> answers = asyncAnswerDAO.getAllTextAnswersByQuestionId(question.getId());
-        List<String> result = new ArrayList<>();
+        List<String> allWordsForTagCloud = new ArrayList<>();
+
         for (Answer answer : answers) {
-            List<String> splittedValue = new ArrayList<String>(Arrays.asList(((TextAnswer)answer).getValue().split(" ")));
-            result.addAll(splittedValue);
+            List<String> splittedValues = new ArrayList<String>(Arrays.asList(((TextAnswer) answer).getValue().split(" ")));
+            splittedValues.removeIf(s -> s.length() < 4);
+            allWordsForTagCloud.addAll(splittedValues);
         }
 
-        Map<String, Long> counts = result.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+        Map<String, Long> counts = allWordsForTagCloud.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+
+        if (counts.size() == 0) {
+            cloudModel.addTag(new DefaultTagCloudItem("~Only 4+ symbol words are included in TagCloud~", 1));
+
+            return new AsyncResult<>(cloudModel);
+        }
+
 
         Map.Entry<String, Long> maxEntry = null;
         for (Map.Entry<String, Long> entry : counts.entrySet())
         {
-            if(entry.getKey().length()>=4) {
-                if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
-                    maxEntry = entry;
-                }
-            }
-        }
-        TagCloudModel cloudModel = new DefaultTagCloudModel();
-        for (Map.Entry<String, Long> entry : counts.entrySet()) {
-            if(entry.getKey().length()>= 4) {
-                if (entry.getValue() <= maxEntry.getValue()/5) {
-                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 1));
-                } else if (entry.getValue() <= maxEntry.getValue()/5*2) {
-                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 2));
-                } else if (entry.getValue() <= maxEntry.getValue()/5*3) {
-                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 3));
-                } else if (entry.getValue() <= maxEntry.getValue()/5*4) {
-                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 4));
-                } else {
-                    cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 5));
-                }
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                maxEntry = entry;
             }
         }
 
+        Map.Entry<String, Long> minEntry = null;
+        for (Map.Entry<String, Long> entry : counts.entrySet()) {
+            if (minEntry == null || minEntry.getValue() > entry.getValue()) {
+                minEntry = entry;
+            }
+        }
+
+        Integer smallestFont = 1;
+        Integer largestFont = 5;
+
+        Long largestCount = maxEntry.getValue();
+        Long smallestCount = maxEntry == minEntry ? 0L : minEntry.getValue();
+
+
+
+        for (Map.Entry<String, Long> entry : counts.entrySet()) {
+            // TagCloud formula: https://stackoverflow.com/a/18793324/4726792
+            Long font = (
+                    ((entry.getValue() - smallestCount) * (largestFont - smallestFont))
+                            /
+                            (largestCount - smallestCount)
+            ) + smallestFont;
+
+            cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), Math.toIntExact(font)));
+        }
+
         try {
-            Thread.sleep(4000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
