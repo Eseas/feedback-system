@@ -112,7 +112,7 @@ public class ChartLogic implements Serializable {
         Map<String, Long> counts = allWordsForTagCloud.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 
         if (counts.size() == 0) {
-            cloudModel.addTag(new DefaultTagCloudItem("~Only 4+ symbol words are included in TagCloud~", 1));
+            cloudModel.addTag(new DefaultTagCloudItem("Only greater than 3 symbol words are included in the TagCloud", 1));
 
             return new AsyncResult<>(cloudModel);
         }
