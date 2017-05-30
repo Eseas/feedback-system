@@ -104,6 +104,29 @@ button {
     height: 35px;
     width: 35px !important;
 }
+/*link dialog*/
+
+.ui-dialog {
+    max-width: 600px;
+    min-height: 150px;
+    border-radius: 0;
+    font-family: 'Roboto', sans-serif;
+}
+.ui-draggable .ui-dialog-titlebar {
+    cursor: move;
+    background: transparent;
+}
+.link-panel tr {
+    border: 0 solid transparent;
+}
+.link-panel input {
+    box-shadow: none !important;
+    height: 30px;
+    border-radius: 0;
+}
+.link-panel label {
+    font-weight: normal;
+}
 /**/
 .page_title h2{
     margin-top: 0;

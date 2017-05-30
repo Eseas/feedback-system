@@ -52,7 +52,7 @@
                     <br/>
                     <h:outputText value="#{survey.creator.getEmail()}" />
                 </p:column>
-                <p:column class="preview" headerText="Options" style="min-width: 180px;">
+                <p:column class="preview" headerText="Options" style="min-width: 205px;">
                     <p:button title="Preview" outcome="answer-survey" icon="fa fa-eye">
                         <f:param name="s" value="#{survey.link}"/>
                         <f:param name="p" value="true"/>
@@ -78,10 +78,10 @@
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="Get link" widgetVar="link-dialog" modal="true" closable="true"
+            <p:dialog class="link-dialog" header="Get link" widgetVar="link-dialog" modal="true" closable="true"
                       resizable="false"
                       closeOnEscape="true" showEffect="drop" hideEffect="drop">
-                <p:outputPanel id="survey-link-panel" style="text-align:center;">
+                <p:outputPanel class="link-panel" id="survey-link-panel" >
                     <p:panelGrid columns="2" rendered="#{not empty requestSurveysController.selectedSurvey}">
                         <p:outputLabel value="Survey title:" for="dialog-survey-title"/>
                         <h:outputText id="dialog-survey-title"
