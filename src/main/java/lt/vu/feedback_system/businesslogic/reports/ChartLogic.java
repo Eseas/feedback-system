@@ -115,35 +115,36 @@ public class ChartLogic implements Serializable {
                 }
             }
         }
-
-        TagCloudModel cloudModel = new DefaultTagCloudModel();
-        for (Map.Entry<String, Long> entry : counts.entrySet()) {
-           if(maxEntry.getValue()<= 5){
-               cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), entry.getValue().intValue()));
-           }
-           else {
-               if (entry.getKey().length() >= 4) {
-                   if (entry.getValue() <= maxEntry.getValue() / 5) {
-                       cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 1));
-                   } else if (entry.getValue() <= maxEntry.getValue() / 5 * 2) {
-                       cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 2));
-                   } else if (entry.getValue() <= maxEntry.getValue() / 5 * 3) {
-                       cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 3));
-                   } else if (entry.getValue() <= maxEntry.getValue() / 5 * 4) {
-                       cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 4));
-                   } else {
-                       cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 5));
+        if(maxEntry != null){
+            TagCloudModel cloudModel = new DefaultTagCloudModel();
+            for (Map.Entry<String, Long> entry : counts.entrySet()) {
+               if(maxEntry.getValue()<= 5 ){
+                  cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), entry.getValue().intValue()));
+               }
+               else {
+                   if (entry.getKey().length() >= 4) {
+                       if (entry.getValue() <= maxEntry.getValue() / 5) {
+                           cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 1));
+                       } else if (entry.getValue() <= maxEntry.getValue() / 5 * 2) {
+                           cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 2));
+                       } else if (entry.getValue() <= maxEntry.getValue() / 5 * 3) {
+                         cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 3));
+                       } else if (entry.getValue() <= maxEntry.getValue() / 5 * 4) {
+                           cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 4));
+                       } else {
+                         cloudModel.addTag(new DefaultTagCloudItem(entry.getKey(), 5));
+                      }
                    }
                }
-           }
+            }
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return new AsyncResult<>(cloudModel);
         }
-
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return new AsyncResult<>(cloudModel);
+        return null;
     }
 
 }
