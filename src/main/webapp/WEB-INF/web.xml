@@ -43,6 +43,10 @@
         <filter-class>lt.vu.feedback_system.filters.SurveyConfidentialPermissionFilter</filter-class>
     </filter>
     <filter>
+        <filter-name>SurveyValidFilter</filter-name>
+        <filter-class>lt.vu.feedback_system.filters.SurveyValidFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>NoCacheFilter</filter-name>
         <filter-class>lt.vu.feedback_system.filters.NoCacheFilter</filter-class>
     </filter>
@@ -67,6 +71,10 @@
     <filter-mapping>
         <filter-name>SurveyConfidentialPermissionFilter</filter-name>
         <url-pattern>/survey-report.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SurveyValidFilter</filter-name>
+        <url-pattern>/answer-survey.html</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>

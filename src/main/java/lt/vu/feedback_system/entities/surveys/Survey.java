@@ -54,7 +54,7 @@ public class Survey implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "validate")
-    private java.util.Date time;
+    private java.util.Date validate;
 
     @OneToMany(mappedBy = "survey")
     private List<AnsweredSurvey> answeredSurveys = new ArrayList<>();

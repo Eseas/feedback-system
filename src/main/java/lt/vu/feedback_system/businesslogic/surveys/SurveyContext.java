@@ -6,6 +6,7 @@ import lt.vu.feedback_system.dao.SurveyDAO;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.Calendar;
 
 @ApplicationScoped
 public class SurveyContext implements Serializable {
@@ -36,6 +37,18 @@ public class SurveyContext implements Serializable {
     public boolean isSurveyConfidential(String surveyLink) {
         try {
             return surveyDAO.getSurveyByLink(surveyLink).getConfidential();
+        } catch (javax.persistence.NoResultException ex) {
+        } catch (NullPointerException ex) {
+        }
+
+        return false;
+    }
+
+    public boolean isSurveyValid(String surveyLink) {
+        try {
+            return surveyDAO.getSurveyByLink(surveyLink)
+                    .getValidate()
+                    .before(Calendar.getInstance().getTime());
         } catch (javax.persistence.NoResultException ex) {
         } catch (NullPointerException ex) {
         }
