@@ -49,9 +49,14 @@
                 </div>
             </div>
 
+            <p:outputLabel for="surveyValidUntil" value="Valid until"/>
+            <p:calendar id="surveyValidUntil" value="#{createSurveyController.survey.validate}"
+                        pattern="dd-MM-yyyy" mask="true"
+                        mindate="#{createSurveyController.todayDate}"/>
+
             <p:tabView class="tab_form" id="tab-view" value="#{createSurveyController.survey.sections}" var="section"
                        activeIndex="#{createSurveyController.activeTabIndex}"
-                        effect="fade">
+                       effect="fade">
                 <p:tab id="section-tab" title="#{section.title}">
                     <div class="page_description">
                         <p:outputLabel for="section_title" value="Section title"
@@ -87,7 +92,7 @@
                         <div class="text-question clearfix">
                             <ui:fragment rendered="#{question.type == 'TextQuestion'}">
                                 <p:inputTextarea rows="5" cols="30" maxlength="300" autoResize="false"
-                                disabled="true"/>
+                                                 disabled="true"/>
                             </ui:fragment>
                         </div>
 
@@ -95,14 +100,16 @@
                             <ui:fragment rendered="#{question.type == 'SliderQuestion'}">
                                 <p:outputLabel maxLenght="3" for="lowerBound" value="Lower bound"
                                                style="display: none !important; clear: both;"/>
-                                <p:inputText id="lowerBound" value="#{question.lowerBound}" placeholder="Lower bound" required="#{param.validate}"/>
+                                <p:inputText id="lowerBound" value="#{question.lowerBound}" placeholder="Lower bound"
+                                             required="#{param.validate}"/>
                                 <p:message for="lowerBound"/>
 
                                 <p:slider class="form-slider" for="lowerBound" disabled="true"/>
 
-                                <p:outputLabel maxLenght="3"  for="upperBound" value="Upper bound"
+                                <p:outputLabel maxLenght="3" for="upperBound" value="Upper bound"
                                                style="display: none !important; clear: both;"/>
-                                <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound" required="#{param.validate}"/>
+                                <p:inputText id="upperBound" value="#{question.upperBound}" placeholder="Upper bound"
+                                             required="#{param.validate}"/>
                                 <p:message for="upperBound"/>
 
                                 <ui:fragment rendered="#{param.validate}">
@@ -119,7 +126,8 @@
                                         <img src="resources/grey-circle.png" alt="Radio button" height="15" width="15"/>
                                         <p:outputLabel for="radioButtonTitle" value="Radio Button"
                                                        style="display: none !important; clear: both;"/>
-                                        <h:inputText id="radioButtonTitle" maxlength="40" value="#{radioButton.title}" required="#{param.validate}"/>
+                                        <h:inputText id="radioButtonTitle" maxlength="40" value="#{radioButton.title}"
+                                                     required="#{param.validate}"/>
                                         <p:commandButton value="remove"
                                                          disabled="#{question.radioButtons.size() eq 1}"
                                                          actionListener="#{createSurveyController.removeRadioButton(question, radioButton)}"
@@ -140,10 +148,12 @@
                             <ui:fragment rendered="#{question.type == 'CheckboxQuestion'}">
                                 <h:dataTable value="#{question.checkboxes}" var="checkbox">
                                     <h:column>
-                                        <img src="resources/black-square.png" alt="Square button" height="15" width="15"/>
+                                        <img src="resources/black-square.png" alt="Square button" height="15"
+                                             width="15"/>
                                         <p:outputLabel for="checkboxTitle" value="Checkbox"
                                                        style="display: none !important; clear: both;"/>
-                                        <h:inputText id="checkboxTitle" maxlength="40" value="#{checkbox.title}" required="#{param.validate}"/>
+                                        <h:inputText id="checkboxTitle" maxlength="40" value="#{checkbox.title}"
+                                                     required="#{param.validate}"/>
                                         <p:commandButton value="remove"
                                                          disabled="#{question.checkboxes.size() eq 1}"
                                                          action="#{createSurveyController.removeCheckbox(question, checkbox)}"
@@ -194,7 +204,8 @@
                     <div class="clearfix">
                         <p:commandButton class="remove-page" value="Remove Page"
                                          actionListener="#{createSurveyController.removeSection(section)}"
-                                         update="survey-creation-form" disabled="#{createSurveyController.survey.sections.size() le 1 }"/>
+                                         update="survey-creation-form"
+                                         disabled="#{createSurveyController.survey.sections.size() le 1 }"/>
                         <p:commandButton class="add-page" value="Add Page"
                                          actionListener="#{createSurveyController.addSection()}"
                                          update="survey-creation-form" style="text-shadow: none;"/>

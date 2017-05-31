@@ -23,6 +23,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -185,5 +188,12 @@ public class CreateSurveyController implements Serializable {
             fc.addMessage(upperBoundId, msg);
             fc.renderResponse();
         }
+    }
+
+    public String getTodayDate() {
+//        DateFormat dataFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        return dataFormat.format(date);
     }
 }
