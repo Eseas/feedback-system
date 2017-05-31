@@ -3,7 +3,7 @@
 1. PostgreSQL.
 2. TomEE (Apache) WebProfile.
 3. Hibernate ORM.
-4. (Optional) IntelliJ IDEA
+4. (Optional) IntelliJ IDEA.
 10. (Optional) pgAdmin 3 or 4.
 
 ## Starting up project
