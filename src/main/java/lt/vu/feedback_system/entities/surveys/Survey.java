@@ -52,6 +52,10 @@ public class Survey implements Serializable {
     @Column(name = "is_confidential")
     private Boolean confidential;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "validate")
+    private java.util.Date time;
+
     @OneToMany(mappedBy = "survey")
     private List<AnsweredSurvey> answeredSurveys = new ArrayList<>();
 

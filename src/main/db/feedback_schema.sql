@@ -46,6 +46,7 @@ CREATE TABLE feedback.surveys
     is_confidential BOOLEAN NOT NULL,
     title VARCHAR(40) NOT NULL,
     description VARCHAR(100),
+    validate DATE NOT NULL,
     FOREIGN KEY (creator_id) REFERENCES feedback.users (id)
 );
 
