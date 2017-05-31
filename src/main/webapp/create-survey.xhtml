@@ -49,10 +49,12 @@
                 </div>
             </div>
 
-            <p:outputLabel for="surveyValidUntil" value="Valid until"/>
-            <p:calendar id="surveyValidUntil" value="#{createSurveyController.survey.validate}"
+            <p:outputLabel for="survey-valid-until" value="Valid until"/>
+            <p:calendar id="survey-valid-until" value="#{createSurveyController.survey.validate}" required="true"
+                        requiredMessage="Date is not selected"
                         pattern="dd-MM-yyyy" mask="true"
                         mindate="#{createSurveyController.todayDate}"/>
+            <p:message for="survey-valid-until"/>
 
             <p:tabView class="tab_form" id="tab-view" value="#{createSurveyController.survey.sections}" var="section"
                        activeIndex="#{createSurveyController.activeTabIndex}"
