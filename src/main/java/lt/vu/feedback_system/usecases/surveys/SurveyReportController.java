@@ -65,7 +65,7 @@ public class SurveyReportController implements Serializable {
 
     public void loadData() {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.getExternalContext().getSessionMap().put("surveyContext", surveyContext);
+        context.getExternalContext().getSessionMap().putIfAbsent("surveyContext", surveyContext);
 
         survey = surveyDAO.getSurveyByLink(link);
 

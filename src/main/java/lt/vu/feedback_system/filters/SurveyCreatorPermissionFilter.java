@@ -29,7 +29,6 @@ public class SurveyCreatorPermissionFilter implements Filter {
                 }
 
             } catch (NullPointerException ex) {
-            } catch (NumberFormatException ex) {
             }
         }
 

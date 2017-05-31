@@ -20,26 +20,18 @@ public class SurveyConfidentialPermissionFilter implements Filter {
             UserContext userContext = (UserContext) ((HttpServletRequest) request).getSession().getAttribute("userContext");
             SurveyContext surveyContext = (SurveyContext) ((HttpServletRequest) request).getSession().getAttribute("surveyContext");
 
-            if (surveyContext == null) { // If we can't get context, try to refresh
-                ((HttpServletResponse) response).sendRedirect(
-                        ((HttpServletRequest) request).getRequestURI()
-                        + "?"
-                        + ((HttpServletRequest) request).getQueryString());
-            } else {
-                try {
-                    String surveyLink = request.getParameter("s");
+            try {
+                String surveyLink = request.getParameter("s");
 
-                    if (surveyContext.isSurveyConfidential(surveyLink)
-                            && (userContext == null || (!userContext.isAdmin()
-                            && !surveyContext.isSurveyCreator(surveyLink)))) {
-                        String contextPath = ((HttpServletRequest) request).getContextPath();
+                if (surveyContext.isSurveyConfidential(surveyLink)
+                        && (userContext == null || (!userContext.isAdmin()
+                        && !surveyContext.isSurveyCreator(surveyLink)))) {
+                    String contextPath = ((HttpServletRequest) request).getContextPath();
 
-                        ((HttpServletResponse) response).sendRedirect(
-                                contextPath + "/index.html");
-                    }
-                } catch (NullPointerException ex) {
-                } catch (NumberFormatException ex) {
+                    ((HttpServletResponse) response).sendRedirect(
+                            contextPath + "/index.html");
                 }
+            } catch (NullPointerException ex) {
             }
         }
 

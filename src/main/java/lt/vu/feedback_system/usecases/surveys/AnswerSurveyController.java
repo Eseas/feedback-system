@@ -3,6 +3,7 @@ package lt.vu.feedback_system.usecases.surveys;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.feedback_system.businesslogic.interceptors.Logged;
+import lt.vu.feedback_system.businesslogic.surveys.SurveyContext;
 import lt.vu.feedback_system.businesslogic.surveys.SurveyLogic;
 import lt.vu.feedback_system.dao.*;
 import lt.vu.feedback_system.entities.answers.*;
@@ -11,6 +12,7 @@ import lt.vu.feedback_system.entities.surveys.AnsweredSurvey;
 import lt.vu.feedback_system.entities.surveys.Section;
 import lt.vu.feedback_system.usecases.users.NavigationBean;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -50,12 +52,17 @@ public class AnswerSurveyController implements Serializable {
     private SurveyLogic surveyLogic;
 
     @Inject
+    private SurveyContext surveyContext;
+
+    @Inject
     private NavigationBean navigationBean;
 
     @Getter
     private AnsweredSurvey answeredSurvey = new AnsweredSurvey();
 
     public void loadData() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().putIfAbsent("surveyContext", surveyContext);
 
         answeredSurvey.setSurvey(surveyLogic.loadSurvey(link));
         for (Section section : answeredSurvey.getSurvey().getSections()) {

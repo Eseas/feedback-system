@@ -5,6 +5,7 @@ import lt.vu.feedback_system.dao.SurveyDAO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -44,12 +45,11 @@ public class SurveyContext implements Serializable {
         return false;
     }
 
-    public boolean isSurveyValid(String surveyLink) {
+    public boolean isSurveyValid(String surveyLink) throws NoResultException {
         try {
             return surveyDAO.getSurveyByLink(surveyLink)
                     .getValidate()
-                    .before(Calendar.getInstance().getTime());
-        } catch (javax.persistence.NoResultException ex) {
+                    .after(Calendar.getInstance().getTime());
         } catch (NullPointerException ex) {
         }
 
