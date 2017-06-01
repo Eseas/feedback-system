@@ -31,7 +31,7 @@ public class Section {
     @Column(name = "position")
     private Integer position;
 
-    @Size(min = 1, max = 40)
+    @Size(max = 40)
     @Column(name = "title")
     private String title;
 
