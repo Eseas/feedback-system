@@ -46,7 +46,6 @@ final public class ExcelAnswerSheetParser {
                     } else parsedAnswers = Result.Failure(String.format(
                             "Answer sheet: First three cells of the first row must be filled with the following values: %s, %s and %s",
                             HelperValues.AnswerFirstRow.FirstColValue,
-                            HelperValues.AnswerFirstRow.FirstColValue,
                             HelperValues.AnswerFirstRow.SecondColValue,
                             HelperValues.AnswerFirstRow.ThirdColValue
                     ));
