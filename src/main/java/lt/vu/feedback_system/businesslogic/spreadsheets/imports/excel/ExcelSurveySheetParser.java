@@ -175,17 +175,4 @@ final class ExcelSurveySheetParser {
         return isValid;
     }
 
-    public static boolean surveyFirstRowValueCheck(final Sheet surveySheet, final String value, final int index) {
-        final int firstRowNum = surveySheet.getFirstRowNum();
-        boolean isValid = false;
-
-        if (firstRowNum == 0) {
-            Row firstRow = surveySheet.getRow(firstRowNum);
-            List<Cell> cells = firstRow != null ? Lists.newArrayList(firstRow) : new ArrayList<>();
-            List<String> cellValues = cells.stream().map(formatter::formatCellValue).collect(Collectors.toList());
-            isValid = cellValues.indexOf(value) == index;
-        }
-        return isValid;
-    }
-
 }
