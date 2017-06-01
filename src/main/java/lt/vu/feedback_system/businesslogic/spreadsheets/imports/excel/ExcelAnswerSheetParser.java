@@ -8,10 +8,7 @@ import lt.vu.feedback_system.utils.CollectionUtils;
 import lt.vu.feedback_system.utils.ParserWithDefaults;
 import lt.vu.feedback_system.utils.abstractions.Result;
 import lt.vu.feedback_system.utils.abstractions.Tuple;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,7 +57,7 @@ final public class ExcelAnswerSheetParser {
         final Result<Tuple<Integer, Answer>> parsedAnswer;
         if (ExcelSheetParserHelper.rowIsFilled(row, 3)) {
             final List<Cell> cells = Lists.newArrayList(row.cellIterator());
-            final int surveyId = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)));
+            final int surveyId = (int)cells.get(0).getNumericCellValue();
             final int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(1)));
             if (surveyId > 0 && questionNumber > 0) {
                 final Optional<Question> notSafe = CollectionUtils.findFirst(questions.stream(), q -> q.getPosition() == questionNumber);

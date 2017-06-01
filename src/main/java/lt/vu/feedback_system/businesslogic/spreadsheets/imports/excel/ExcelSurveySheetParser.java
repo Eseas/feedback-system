@@ -58,10 +58,16 @@ final class ExcelSurveySheetParser {
         final Result<Question> parsedQuestion;
         if (ExcelSheetParserHelper.rowIsFilled(row, 3)) {
             final List<Cell> cells = Lists.newArrayList(row.cellIterator());
-            int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(0)), -1);
+            int cellIndex = 0;
+            int questionNumber = ParserWithDefaults.parseInt(formatter.formatCellValue(cells.get(cellIndex++)), -1);
+
             if (questionNumber > 0) {
-                final String questionTitle = formatter.formatCellValue(cells.get(1));
-                final String questionType = formatter.formatCellValue(cells.get(2));
+                if (cells.size() > 4) {
+                    cellIndex++;
+                }
+
+                final String questionTitle = formatter.formatCellValue(cells.get(cellIndex++));
+                final String questionType = formatter.formatCellValue(cells.get(cellIndex++));
                 final Result<List<String>> optionsResult = parseOptionList(cells);
                 switch (questionType.toUpperCase()) {
                     case HelperValues.SpreadsheetQuestionTypes.Text:
@@ -130,7 +136,12 @@ final class ExcelSurveySheetParser {
     private static Result<List<String>> parseOptionList(List<Cell> cells) {
         final Result<List<String>> optionsResult;
         final String failureMsg = String.format("Survey sheet: %s cannot be empty", HelperValues.SurveyFirstRow.FourthColValue);
-        final int optionsStartAt = 4;
+        int optionsStartAt = 4;
+
+        if (cells.size() > 4) {
+            optionsStartAt++;
+        }
+
         if (cells.size() >= optionsStartAt) {
             final List<Cell> fullCells = cells.stream().skip(optionsStartAt - 1).filter(ExcelSheetParserHelper::cellIsFull).collect(Collectors.toList());
             if (fullCells.size() > 0) optionsResult = Result.Success(fullCells.stream().map(formatter::formatCellValue).collect(Collectors.toList()));
@@ -154,10 +165,26 @@ final class ExcelSurveySheetParser {
             List<Cell> cells = firstRow != null ? Lists.newArrayList(firstRow) : new ArrayList<>();
             List<String> cellValues = cells.stream().map(formatter::formatCellValue).collect(Collectors.toList());
             isValid = cellValues.indexOf(HelperValues.SurveyFirstRow.FirstColValue) == 0
-                    && cellValues.indexOf(HelperValues.SurveyFirstRow.SecondColValue) == 1
+                    && ((cellValues.indexOf(HelperValues.SurveyFirstRow.SecondColValue) == 1
                     && cellValues.indexOf(HelperValues.SurveyFirstRow.ThirdColValue) == 2
-                    && cellValues.indexOf(HelperValues.SurveyFirstRow.FourthColValue) == 3;
+                    && cellValues.indexOf(HelperValues.SurveyFirstRow.FourthColValue) == 3)
+                    || (cellValues.indexOf(HelperValues.SurveyFirstRow.SecondColValue) == 2
+                    && cellValues.indexOf(HelperValues.SurveyFirstRow.ThirdColValue) == 3
+                    && cellValues.indexOf(HelperValues.SurveyFirstRow.FourthColValue) == 4));
         } else isValid = false;
+        return isValid;
+    }
+
+    public static boolean surveyFirstRowValueCheck(final Sheet surveySheet, final String value, final int index) {
+        final int firstRowNum = surveySheet.getFirstRowNum();
+        boolean isValid = false;
+
+        if (firstRowNum == 0) {
+            Row firstRow = surveySheet.getRow(firstRowNum);
+            List<Cell> cells = firstRow != null ? Lists.newArrayList(firstRow) : new ArrayList<>();
+            List<String> cellValues = cells.stream().map(formatter::formatCellValue).collect(Collectors.toList());
+            isValid = cellValues.indexOf(value) == index;
+        }
         return isValid;
     }
 
