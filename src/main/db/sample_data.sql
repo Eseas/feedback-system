@@ -7,7 +7,7 @@ INSERT INTO feedback.users VALUES (DEFAULT, 'user.admin2@mailinator.com', 'User'
 INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular1@mailinator.com', 'User', 'Regular1', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
 INSERT INTO feedback.users VALUES (DEFAULT, 'user.regular2@mailinator.com', 'User', 'Regular2', '$2a$10$5z9BfOrt7nIRSR6boXZ5G.6jiuVHLCDxj7GChwJ8b9aWvr0ksS95q', false, false, 1);
 
-INSERT INTO feedback.surveys VALUES (DEFAULT, 'c4ca4238a0', 1, FALSE, 'Workplace Confort', 'Please answer a few questions');
+INSERT INTO feedback.surveys VALUES (DEFAULT, 'c4ca4238a0', 1, FALSE, 'Workplace Comfort', 'Please answer a few questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 'c4ca4238a1', 1, TRUE,'Salary', 'We kindly ask you to answer some questions');
 INSERT INTO feedback.surveys VALUES (DEFAULT, 'c4ca4238a2', 2, TRUE,'Social Security', 'This survey is anonymous');
 
