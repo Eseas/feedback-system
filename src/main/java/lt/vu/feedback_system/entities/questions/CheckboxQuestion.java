@@ -35,7 +35,7 @@ public class CheckboxQuestion implements Question {
     @Transient
     private final String type = "CheckboxQuestion";
 
-    @Size(min = 1, max = 40)
+    @Size(max = 40)
     @Column(name = "title")
     private String title;
 
