@@ -62,15 +62,30 @@
                         <p:panelGrid  columns="3" rendered="#{not empty userManagementController.selectedUser}"
                                       columnClasses="label,value" styleClass="ui-noborder">
                             <p:outputLabel for="edit_firstName" value="First name:"  style="color: #1a1a1a" />
-                            <h:outputText id="edit_firstName" value="#{userManagementController.selectedUser.firstName}"/>
+                            <!--<h:outputText id="edit_firstName" value="#{userManagementController.selectedUser.firstName}"/>-->
+                            <p:inputText id="edit_firstName" value="#{userManagementController.selectedUser.firstName}"
+                                         requiredMessage="Please enter first name"
+                                         validatorMessage="First name has to be between 3 to 20 characters in length">
+                                <f:validateLength minimum="3" maximum="20"/>
+                            </p:inputText>
                             <br/>
 
                             <p:outputLabel for="edit_lastName" value="Last name:"  style="color: #1a1a1a" />
-                            <h:outputText id="edit_lastName" value="#{userManagementController.selectedUser.lastName}"/>
+                            <!--<h:outputText id="edit_lastName" value="#{userManagementController.selectedUser.lastName}"/>-->
+                            <p:inputText id="edit_lastName" value="#{userManagementController.selectedUser.lastName}"
+                                         requiredMessage="Please enter last name"
+                                         validatorMessage="Last name has to be between 3 to 20 characters in length">
+                                <f:validateLength minimum="3" maximum="20"/>
+                            </p:inputText>
                             <br/>
 
                             <p:outputLabel for="edit_email" value="Email:" style="color: #1a1a1a" />
-                            <h:outputText id="edit_email" value="#{userManagementController.selectedUser.email}"/>
+                            <!--<h:outputText id="edit_email" value="#{userManagementController.selectedUser.email}"/>-->
+                            <p:inputText id="edit_email" value="#{userManagementController.selectedUser.email}"
+                                         requiredMessage="Please enter email"
+                                         validatorMessage="Email has to be between 3 to 40 characters in length">
+                                <f:validateLength minimum="3" maximum="40"/>
+                            </p:inputText>
                             <br/>
 
                             <p:outputLabel for="select_admin" value="Admin:" style="color: #1a1a1a" />
@@ -83,6 +98,7 @@
                                                      value="#{userManagementController.selectedUser.blocked}"/>
                             <br/>
                         </p:panelGrid>
+                        <p:messages autoUpdate="true" display="text" showDetail="true" showSummary="false"/>
                         <p:commandButton class="update-button" value="Update"
                                          actionListener="#{userManagementController.updateSelectedUser}"
                                          rendered="#{empty userManagementController.conflictingUser}"

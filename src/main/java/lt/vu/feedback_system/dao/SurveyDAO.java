@@ -20,6 +20,11 @@ public class SurveyDAO {
         em.merge(survey);
     }
 
+    public void delete(Survey survey) {
+        em.remove(survey);
+
+    }
+
     public List<Survey> getAllSurveys() {
         return em.createNamedQuery("Survey.findAll", Survey.class).getResultList();
     }

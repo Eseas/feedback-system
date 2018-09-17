@@ -7,7 +7,7 @@
 10. (Optional) pgAdmin 3 or 4.
 
 ## Starting up project
-0. In pgAdmin change password of user `postgres` to `testpass`  
+0. In pgAdmin change password of user `postgres` to `testpass`
 1. Open pgAdmin 4
 2. Create database `feedbackdb`
 3. Open Feedback System project tree in IntelliJ IDEA
@@ -37,3 +37,27 @@ Short version:
 tomee.jpa.factory.lazy=true`
 
 Long version: [Hibernate User Guide](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html).
+
+### Install PostgreSQL and PgAdmin4 on Ubuntu 18.04
+Install PostgresSQL and PgAdmin as described here and run `pgadmin4`, browser should open.
+https://askubuntu.com/questions/1034035/pgadmin-4-not-working-in-ubuntu-18-04
+```
+service postgresql start
+service postgresql status
+sudo su postgres
+psql
+\l
+alter user postgres with password 'testpass';
+```
+(took from https://youtu.be/-LwI4HMR_Eg?t=5m26s)
+
+go to PgAdmin and add server:
+Host: localhost
+password: testpass
+
+Also, install Lombok plugin to intellij
+
+Intellij -> Database -> + -> Data Source
+Also, configurate schemas
+
+In case emails of getting errors while sending emails: https://stackoverflow.com/a/32373724/4726792

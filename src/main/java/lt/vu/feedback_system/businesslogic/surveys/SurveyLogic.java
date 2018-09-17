@@ -55,6 +55,11 @@ public class SurveyLogic {
         return surveyDAO.getSurveysByCreatorId(user.getId());
     }
 
+    @Transactional
+    public void deleteSurvey(Survey survey) {
+        surveyDAO.delete(survey);
+    }
+
     public void addSection(Survey survey, String title) {
         Integer position = getNewSectionPosition(survey);
 
