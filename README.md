@@ -61,3 +61,12 @@ Intellij -> Database -> + -> Data Source
 Also, configurate schemas
 
 In case emails of getting errors while sending emails: https://stackoverflow.com/a/32373724/4726792
+
+### Software Architecture and Design Lab Assessment 1A
+* Site should allow creating, editing, viewing and deleting of at least one entity that is the main focus of business aplication (no persistence required)
+    1. creating: create potential user, show validation
+    1. deleting: delete potential user and recreate
+    1. viewing: after full creation (show validation) show list and edit view
+    1. edit properties
+
+

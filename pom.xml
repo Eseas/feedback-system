@@ -131,7 +131,7 @@
             <artifactId>deltaspike-core-impl</artifactId>
             <scope>runtime</scope>
         </dependency>
-        
+
          <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -145,6 +145,6 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
-        
+
     </dependencies>
 </project>

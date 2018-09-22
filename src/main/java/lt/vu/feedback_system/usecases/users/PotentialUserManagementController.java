@@ -1,7 +1,8 @@
 package lt.vu.feedback_system.usecases.users;
 
 import lombok.Getter;
-import lt.vu.feedback_system.businesslogic.users.UserLogic;
+//import lt.vu.feedback_system.businesslogic.users.UserLogic;
+import lt.vu.feedback_system.abstraction.UserLogic;
 import lt.vu.feedback_system.dao.PotentialUserDAO;
 import lt.vu.feedback_system.dao.RegKeyDAO;
 import lt.vu.feedback_system.entities.PotentialUser;

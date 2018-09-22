@@ -11,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 @ApplicationScoped
-public class UserLogic {
+public class UserLogic implements lt.vu.feedback_system.abstraction.UserLogic {
     @Inject
     private PotentialUserDAO potentialUserDAO;
 
